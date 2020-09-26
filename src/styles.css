@@ -1,1 +1,421 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --dark-background-1: #557a95;
+    --dark-background-2: #5d5c81;
+    --soft-1: #379683;
+    --soft-2: #b1a296;
+    --accent-1: #7395ae;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+video {
+    max-width: 100%;
+    height: auto;
+}
+
+html {
+    font-family: "Lucida Sans", sans-serif;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+h1 {
+    font-size: 34pt;
+}
+
+h2 {
+    font-size: 26pt;
+}
+
+h3 {
+    font-size: 18pt;
+}
+
+h1.standard-title {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.container {
+    width: 1200px;
+    margin: 0 auto;
+    background-color: #ffffff;
+}
+
+.primary-button {
+    display: inline-block;
+    background-color: #3c6bab;
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+    color: #eeeeee;
+    text-align: center;
+    font-size: 14px;
+    padding: 6px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.edit-link {
+    margin-top: 20px;
+}
+
+.link-button {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: solid 1px #20538D;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: #4479BA;
+    color: #FFF;
+    padding: 4px 8px;
+    text-decoration: none;
+    font-size: 9pt;
+}
+
+ol li {
+    line-height: 28pt;
+    font-size: 16pt;
+}
+
+ul li {
+    line-height: 28pt;
+    font-size: 16pt;
+}
+
+.article-body h2 {
+    margin-top: 60px;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+[class*="col-"] {
+    width: 100%;
+    float: left;
+    padding: 15px;
+}
+
+@media only screen and (min-width: 600px) {
+    .col-sm-1 {
+        width: 8.33%;
+    }
+
+    .col-sm-2 {
+        width: 16.66%;
+    }
+
+    .col-sm-3 {
+        width: 25%;
+    }
+
+    .col-sm-4 {
+        width: 33.33%;
+    }
+
+    .col-sm-5 {
+        width: 41.66%;
+    }
+
+    .col-sm-6 {
+        width: 50%;
+    }
+
+    .col-sm-7 {
+        width: 58.33%;
+    }
+
+    .col-sm-8 {
+        width: 66.66%;
+    }
+
+    .col-sm-9 {
+        width: 75%;
+    }
+
+    .col-sm-10 {
+        width: 83.33%;
+    }
+
+    .col-sm-11 {
+        width: 91.66%;
+    }
+
+    .col-sm-12 {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .col-md-1 {
+        width: 8.33%;
+    }
+
+    .col-md-2 {
+        width: 16.66%;
+    }
+
+    .col-md-3 {
+        width: 25%;
+    }
+
+    .col-md-4 {
+        width: 33.33%;
+    }
+
+    .col-md-5 {
+        width: 41.66%;
+    }
+
+    .col-md-6 {
+        width: 50%;
+    }
+
+    .col-md-7 {
+        width: 58.33%;
+    }
+
+    .col-md-8 {
+        width: 66.66%;
+    }
+
+    .col-md-9 {
+        width: 75%;
+    }
+
+    .col-md-10 {
+        width: 83.33%;
+    }
+
+    .col-md-11 {
+        width: 91.66%;
+    }
+
+    .col-md-12 {
+        width: 100%;
+    }
+
+    .footer {
+        height: 100px;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .col-lg-1 {
+        width: 8.33%;
+    }
+
+    .col-lg-2 {
+        width: 16.66%;
+    }
+
+    .col-lg-3 {
+        width: 25%;
+    }
+
+    .col-lg-4 {
+        width: 33.33%;
+    }
+
+    .col-lg-5 {
+        width: 41.66%;
+    }
+
+    .col-lg-6 {
+        width: 50%;
+    }
+
+    .col-lg-7 {
+        width: 58.33%;
+    }
+
+    .col-lg-8 {
+        width: 66.66%;
+    }
+
+    .col-lg-9 {
+        width: 75%;
+    }
+
+    .col-lg-10 {
+        width: 83.33%;
+    }
+
+    .col-lg-11 {
+        width: 91.66%;
+    }
+
+    .col-lg-12 {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .col-xl-1 {
+        width: 8.33%;
+    }
+
+    .col-xl-2 {
+        width: 16.66%;
+    }
+
+    .col-xl-3 {
+        width: 25%;
+    }
+
+    .col-xl-4 {
+        width: 33.33%;
+    }
+
+    .col-xl-5 {
+        width: 41.66%;
+    }
+
+    .col-xl-6 {
+        width: 50%;
+    }
+
+    .col-xl-7 {
+        width: 58.33%;
+    }
+
+    .col-xl-8 {
+        width: 66.66%;
+    }
+
+    .col-xl-9 {
+        width: 75%;
+    }
+
+    .col-xl-10 {
+        width: 83.33%;
+    }
+
+    .col-xl-11 {
+        width: 91.66%;
+    }
+
+    .col-xl-12 {
+        width: 100%;
+    }
+}
+
+
+@media only screen and (max-width: 768px) {
+    [class*="col-"] {
+        width: 100%;
+    }
+
+    .footer {
+        height: 160px;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .container {
+        max-width: 100%;
+        margin: 0 auto;
+        background-color: #ffffff;
+    }
+}
+
+.header {
+    background-color: #ffffff;
+}
+
+.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    padding: 8px;
+    margin-bottom: 7px;
+    background-color: var(--dark-background-1);
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.menu li:hover {
+    background-color: #0099cc;
+}
+
+.help-block {
+    color: red;
+}
+
+.mb-2 {
+    margin-bottom: 15px;
+}
+
+.mb-4 {
+    margin-bottom: 30px;
+}
+
+.mt-2 {
+    margin-top: 15px;
+}
+
+.mt-4 {
+    margin-top: 30px;
+}
+
+.ml-2 {
+    margin-left: 15px;
+}
+
+.ml-4 {
+    margin-left: 30px;
+}
+
+.mr-2 {
+    margin-right: 15px;
+}
+
+.mr-4 {
+    margin-right: 30px;
+}
+
+.standard-border {
+    border-style: solid;
+    border-radius: 3px;
+    border-width: 1px
+}
+
+.success {
+    color: green;
+    font-weight: bold
+}
+
+.error {
+    color: red;
+    font-weight: bold
+}
+
+.footer {
+    background-color: #3C6BAB;
+    margin-top: 50px;
+}
+
+.footer-link {
+    text-decoration: none !important;
+    color: white !important;
+    font-size: 10pt;
+}
+
