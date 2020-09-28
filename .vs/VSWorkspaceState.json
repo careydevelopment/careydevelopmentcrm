@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src"
+    "\\src",
+    "\\src\\app"
   ],
-  "SelectedNode": "\\src\\styles.css",
+  "SelectedNode": "\\README.md",
   "PreviewInSolutionExplorer": false
 }
