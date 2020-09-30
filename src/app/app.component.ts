@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserService } from './services/user.service';
+import { AuthenticationService } from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +8,10 @@ import { UserService } from './services/user.service';
 })
 export class AppComponent {
 
-    constructor(private userService: UserService) {
-        let hello$ = userService.helloWorld();
+    constructor(private authenticationService: AuthenticationService) {
+        let user$ = authenticationService.login("johnny", "kleptocracy");
 
-        hello$.subscribe(
+        user$.subscribe(
             (data: any) => console.log(data),
             err => console.error(err)
         );
