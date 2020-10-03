@@ -9,7 +9,7 @@ import { AuthenticationService } from './services/authentication.service';
 export class AppComponent {
 
     constructor(private authenticationService: AuthenticationService) {
-        let user$ = authenticationService.login("johnny", "kleptocracy");
+        let user$ = authenticationService.login("darth", "thedarkside");
 
         user$.subscribe(
             (data: any) => console.log(data),
