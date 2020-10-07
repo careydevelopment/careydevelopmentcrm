@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -7,15 +6,5 @@ import { AuthenticationService } from './services/authentication.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
-    constructor(private authenticationService: AuthenticationService) {
-        let user$ = authenticationService.login("darth", "thedarkside");
-
-        user$.subscribe(
-            (data: any) => console.log(data),
-            err => console.error(err)
-        );
-    }
-
-  title = 'careydevelopmentcrm';
+  title = 'Carey Development CRM';
 }

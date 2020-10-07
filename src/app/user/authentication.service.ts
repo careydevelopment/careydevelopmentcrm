@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { JwtRequest } from '../models/jwt-request';
 import { JwtResponse } from '../models/jwt-response';
 import { tap, shareReplay } from 'rxjs/operators';
-import { DateService } from './date.service';
+import { DateService } from '../services/date.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
