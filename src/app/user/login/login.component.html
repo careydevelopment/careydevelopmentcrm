@@ -1,3 +1,44 @@
-<p>
-  login works!
-</p>
+<div fxFlex fxLayout="column" fxLayoutGap="0px">
+  <div fxLayout="row wrap">
+    <div fxFlex="50" fxFlex.lt-md="100" fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="center">
+        <img style="margin-top:30px" src="/assets/img/logo/careydevelopment-logo-sm.png" />
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center">
+        <h3 style="margin-top:100px">Customer Relationship Management</h3>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center">
+        <img src="/assets/img/vector/office-env2.jpg" />
+      </div>
+    </div>
+
+    <div fxFlex="50" fxFlex.lt-md="100" fxLayout="column" class="mat-app-background">
+      <div fxLayout="column" fxLayoutAlign="center" style="margin-top:30px">
+        <div fxLayout="row" fxLayoutAlign="center">
+          <h3>Welcome to the CRM App</h3>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center">
+          <h4>Please sign in below</h4>
+        </div>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="center" style="margin-top:100px">
+        <div fxLayout="row" fxLayoutAlign="center">
+          <mat-form-field appearance="fill">
+            <mat-label>Enter username</mat-label>
+            <input matInput>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center">
+          <mat-form-field appearance="fill">
+            <mat-label>Enter password</mat-label>
+            <input matInput>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div> 
+</div>

@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+
 
 export const routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -12,6 +16,9 @@ export const routes = [
   declarations: [LoginComponent],
   imports: [
       CommonModule,
+      FlexLayoutModule,
+      MatIconModule,
+      MatInputModule,
       RouterModule.forChild(routes)
   ]
 })
