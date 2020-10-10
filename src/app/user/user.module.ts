@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 export const routes = [
@@ -19,6 +21,8 @@ export const routes = [
       FlexLayoutModule,
       MatIconModule,
       MatInputModule,
+      MatButtonModule,
+      ReactiveFormsModule,
       RouterModule.forChild(routes)
   ]
 })
