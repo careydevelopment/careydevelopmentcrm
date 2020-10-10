@@ -11,16 +11,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
     form: FormGroup;
+    formSubmitted: boolean = false;
 
-    constructor(private fb: FormBuilder) {}
-    /*constructor(private authenticationService: AuthenticationService) {
-        let user$ = authenticationService.login("darth", "thedarkside");
-
-        user$.subscribe(
-            (data: any) => console.log(data),
-            err => console.error(err)
-        );
-    }*/
+    constructor(private fb: FormBuilder, private authenticationService: AuthenticationService) { }
 
     ngOnInit() {
         this.form = this.fb.group({
@@ -30,10 +23,21 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit(loginForm) {
+        this.formSubmitted = true;
+
         if (this.form.valid) {
-            console.log("The form is valid");
+            let username = this.form.controls['username'].value;
+            let password = this.form.controls['password'].value;
+
+            let user$ = this.authenticationService.login(username, password);
+
+            user$.subscribe(
+                (data: any) => console.log(data),
+                err => console.error(err)
+            );
         } else {
             console.log("The form is NOT valid");
+            this.formSubmitted = false;
         }
     }
 }

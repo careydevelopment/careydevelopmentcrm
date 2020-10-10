@@ -46,7 +46,7 @@
             </mat-form-field>
           </div>
           <div fxLayoutAlign="center" style="margin-top:20px">
-            <button type="submit" mat-raised-button color="primary">Login</button>
+            <button [disabled]="!form.valid || formSubmitted" type="submit" mat-raised-button color="primary">Login</button>
           </div>
         </form>
       </div>
