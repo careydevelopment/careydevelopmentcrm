@@ -1,21 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../user/authentication.service';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+    styleUrls: ['./home.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit {
-
-    constructor(private authenticationService: AuthenticationService) {
-        let user$ = authenticationService.login("darth", "thedarkside");
-
-        user$.subscribe(
-            (data: any) => console.log(data),
-            err => console.error(err)
-        );
-    }
 
   ngOnInit() {
   }

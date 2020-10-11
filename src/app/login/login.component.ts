@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthenticationService } from '../authentication.service';
+import { AuthenticationService } from './authentication.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 

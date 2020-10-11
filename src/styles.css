@@ -29,5 +29,12 @@ h4 {
   font-size: 14pt;
 }
 
-html, body { height: 100%; }
+.side-nav-item {
+  font-size: 14px;
+  height: 25px;
+}
+
+html, body {
+  height: 100%;
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
