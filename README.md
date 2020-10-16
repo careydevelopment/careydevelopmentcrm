@@ -15,3 +15,7 @@ the directory where this project is located, and typing:
 npm install
 
 That's it. That should do it.
+
+If you're still having issues, you might need to blow away everything in the node_modules directory
+run npm install again.
+
