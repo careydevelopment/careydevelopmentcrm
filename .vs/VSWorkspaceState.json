@@ -2,8 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app"
+    "\\src\\app",
+    "\\src\\app\\features",
+    "\\src\\assets\\img",
+    "\\src\\assets\\img\\logo",
+    "\\src\\assets\\img\\vector"
   ],
-  "SelectedNode": "\\README.md",
+  "SelectedNode": "\\src\\app\\features\\features.component.html",
   "PreviewInSolutionExplorer": false
 }

@@ -1,0 +1,55 @@
+<div fxFlex fxLayout="column" fxLayoutGap="0px">
+  <div fxLayout="row wrap">
+    <div fxFlex="50" fxFlex.lt-md="100" fxLayout="column">
+      <div fxLayoutAlign="center">
+        <img style="margin-top:30px" src="/assets/img/logo/careydevelopment-logo-sm.png" />
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center">
+        <h2 style="margin-top:100px" class="my-primary-text">CRM App</h2>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center">
+        <img src="/assets/img/vector/office-env2.jpg" />
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center">
+        <a href='https://www.freepik.com/vectors/business'>Business vector created by pikisuperstar - www.freepik.com</a>
+      </div>
+    </div>
+
+    <div fxFlex="50" fxFlex.lt-md="100" fxLayout="column" class="mat-app-background">
+      <div fxLayout="column" fxLayoutAlign="center" style="margin-top:30px">
+        <div fxLayout="row" fxLayoutAlign="center">
+          <h3>Welcome to the CRM App</h3>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center">
+          <h4>Please sign in below</h4>
+        </div>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="center" style="margin-top:100px">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+          <div fxLayoutAlign="center">
+            <mat-form-field style="width:50%" appearance="fill">
+              <mat-label>Enter username</mat-label>
+              <input formControlName="username" matInput>
+              <mat-error *ngIf="form.controls['username'].invalid">Please enter a valid username</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayoutAlign="center" style="margin-top:10px">
+            <mat-form-field style="width:50%" appearance="fill">
+              <mat-label>Enter password</mat-label>
+              <input type="password" formControlName="password" matInput>
+              <mat-error *ngIf="form.controls['password'].invalid">Please enter a valid password</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayoutAlign="center" style="margin-top:20px">
+            <button [disabled]="!form.valid || formSubmitted" type="submit" mat-raised-button color="primary">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div> 
+</div>
