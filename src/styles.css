@@ -1,3 +1,12 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 img {
     max-width: 100%;
     height: auto;
@@ -28,13 +37,7 @@ h3 {
 h4 {
   font-size: 14pt;
 }
-
-.side-nav-item {
-  font-size: 14px;
-  height: 25px;
+ 
+.mat-form-field-flex {
+  background-color: #ffffff !important;
 }
-
-html, body {
-  height: 100%;
-}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
