@@ -4,9 +4,7 @@
 <mat-sidenav-container class="example-container">
   <mat-sidenav mode="side" opened>
     <mat-nav-list>
-      <a mat-list-item class="side-nav-item" routerLink="/home">
-        <mat-icon>home</mat-icon> <span class="nav-caption">Home</span>
-      </a>
+      <app-menu-list-item *ngFor="let item of navItems" [item]="item"></app-menu-list-item>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
