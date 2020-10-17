@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -21,6 +22,7 @@ import { FeaturesComponent } from './features/features.component';
   ],
   imports: [
       BrowserModule,
+      FlexLayoutModule,
       HttpClientModule,
       AppRoutingModule,
       BrowserAnimationsModule,

@@ -6,13 +6,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AccountInfoComponent } from './account-info/account-info.component';
+
 
 export const routes = [
+    { path: '', pathMatch: 'full', redirectTo: 'account-info' },
+    { path: 'account-info', component: AccountInfoComponent }
 ];
 
 
 @NgModule({
-  declarations: [],
+    declarations: [
+        AccountInfoComponent
+    ],
   imports: [
       CommonModule,
       FlexLayoutModule,

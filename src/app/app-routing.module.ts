@@ -11,7 +11,8 @@ const routes: Routes = [
         path: '',
         component: FeaturesComponent,
         children: [
-            { path: 'dashboard', loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule) }
+            { path: 'dashboard', loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule) },
+            { path: 'user', loadChildren: () => import('./features/user/user.module').then(m => m.UserModule) }
         ]
     }
 ];

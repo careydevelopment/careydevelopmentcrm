@@ -1,7 +1,7 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { NavItem } from '../model/nav-item';
 import { Router } from '@angular/router';
-import { NavService } from '../../nav.service';
+import { NavService } from '../service/nav.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
@@ -35,12 +35,10 @@ export class MenuListItemComponent implements OnInit {
     ngOnInit() {
         this.navService.currentUrl.subscribe((url: string) => {
             if (this.item.route && url) {
-                console.log(`Checking '/${this.item.route}' against '${url}'`);
-                console.log("Item.rout is " + this.item.route);
-                console.log("Router active is ", this.router.isActive(this.item.route, true));
+                //console.log(`Checking '/${this.item.route}' against '${url}'`);
                 this.expanded = url.indexOf(`/${this.item.route}`) === 0;
                 this.ariaExpanded = this.expanded;
-                console.log(`${this.item.route} is expanded: ${this.expanded}`);
+                //console.log(`${this.item.route} is expanded: ${this.expanded}`);
             }
         });
     }

@@ -1,8 +1,11 @@
-<mat-toolbar color="primary">
-  <span>My Application</span>
+<mat-toolbar color="primary" style="padding-top:15px">
+  <button mat-icon-button (click)="sidenav.toggle()" class="menu-button" fxHide fxShow.lt-md>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>CRM Application</span>
 </mat-toolbar>
 <mat-sidenav-container class="example-container">
-  <mat-sidenav mode="side" opened>
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened">
     <mat-nav-list>
       <app-menu-list-item *ngFor="let item of navItems" [item]="item"></app-menu-list-item>
     </mat-nav-list>
