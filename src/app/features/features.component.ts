@@ -13,7 +13,6 @@ export class FeaturesComponent implements OnDestroy {
 
     private opened: boolean = true;
     private mediaWatcher: Subscription;
-    private activeMediaQuery: string = '';
     private menu: NavItem[] = menu;
 
     constructor(private media: MediaObserver) {
@@ -23,7 +22,6 @@ export class FeaturesComponent implements OnDestroy {
     }
 
     private handleMediaChange(mediaChange: MediaChange) {
-        this.activeMediaQuery = mediaChange ? mediaChange.mqAlias : '';
         if (this.media.isActive('lt-md')) {
             this.opened = false;
         } else {
