@@ -1,43 +1,37 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { VERSION } from '@angular/material/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NavItem } from './ui/model/nav-item';
-import { NavService } from './ui/service/nav.service';
+import { MediaChange, MediaObserver } from "@angular/flex-layout";
+import { Subscription } from 'rxjs';
+import { menu } from './ui/model/menu';
 
 @Component({
   selector: 'app-features',
   templateUrl: './features.component.html',
   styleUrls: ['./features.component.css']
 })
-export class FeaturesComponent implements AfterViewInit {
+export class FeaturesComponent implements OnDestroy {
 
-    //@ViewChild('appDrawer') appDrawer: ElementRef;
-    version = VERSION;
-    opened: boolean = true;
+    private opened: boolean = true;
+    private mediaWatcher: Subscription;
+    private activeMediaQuery: string = '';
+    private menu: NavItem[] = menu;
 
-    navItems: NavItem[] = [
-        {
-            displayName: 'Dashboard',
-            iconName: 'dashboard',
-            route: 'dashboard'
-        },
-        {
-        displayName: 'User',
-        iconName: 'face',
-        route: 'user',
-        children: [
-            {
-                displayName: 'Account Info',
-                iconName: 'account_box',
-                route: 'user/account-info'
-            }
-          ]
-        }
-    ];
-
-    constructor(private navService: NavService) {
+    constructor(private media: MediaObserver) {
+        this.mediaWatcher = this.media.media$.subscribe((mediaChange: MediaChange) => {
+            this.handleMediaChange(mediaChange);
+        })
     }
 
-    ngAfterViewInit() {
-    //    this.navService.appDrawer = this.appDrawer;
+    private handleMediaChange(mediaChange: MediaChange) {
+        this.activeMediaQuery = mediaChange ? mediaChange.mqAlias : '';
+        if (this.media.isActive('lt-md')) {
+            this.opened = false;
+        } else {
+            this.opened = true;
+        }
+    }
+
+    ngOnDestroy() {
+        this.mediaWatcher.unsubscribe();
     }
 }

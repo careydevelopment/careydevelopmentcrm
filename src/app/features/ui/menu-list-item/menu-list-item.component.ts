@@ -35,10 +35,8 @@ export class MenuListItemComponent implements OnInit {
     ngOnInit() {
         this.navService.currentUrl.subscribe((url: string) => {
             if (this.item.route && url) {
-                //console.log(`Checking '/${this.item.route}' against '${url}'`);
                 this.expanded = url.indexOf(`/${this.item.route}`) === 0;
                 this.ariaExpanded = this.expanded;
-                //console.log(`${this.item.route} is expanded: ${this.expanded}`);
             }
         });
     }
@@ -46,7 +44,6 @@ export class MenuListItemComponent implements OnInit {
     onItemSelected(item: NavItem) {
         if (!item.children || !item.children.length) {
             this.router.navigate([item.route]);
-            //this.navService.closeNav();
         }
         if (item.children && item.children.length) {
             this.expanded = !this.expanded;

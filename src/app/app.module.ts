@@ -5,7 +5,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MenuListItemComponent } from './features/ui/menu-list-item/menu-list-item.component';
-import { TopNavComponent } from './features/ui/top-nav/top-nav.component';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,7 +16,6 @@ import { FeaturesComponent } from './features/features.component';
   declarations: [
         AppComponent,
         MenuListItemComponent,
-        TopNavComponent,
         FeaturesComponent
   ],
   imports: [
