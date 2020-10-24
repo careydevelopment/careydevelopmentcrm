@@ -45,6 +45,7 @@ export class MenuListItemComponent implements OnInit {
         if (!item.children || !item.children.length) {
             this.router.navigate([item.route]);
         }
+
         if (item.children && item.children.length) {
             this.expanded = !this.expanded;
         }
