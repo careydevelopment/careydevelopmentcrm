@@ -17,7 +17,5 @@ export const routes = [
     ]
 })
 export class DashboardModule {
-    constructor() {
-        console.log("In module");
-    }
+    constructor() { }
 }

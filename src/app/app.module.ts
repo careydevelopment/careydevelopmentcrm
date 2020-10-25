@@ -13,23 +13,23 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FeaturesComponent } from './features/features.component';
 
 @NgModule({
-  declarations: [
+    declarations: [
         AppComponent,
         MenuListItemComponent,
         FeaturesComponent
-  ],
-  imports: [
-      BrowserModule,
-      FlexLayoutModule,
-      HttpClientModule,
-      AppRoutingModule,
-      BrowserAnimationsModule,
-      MatToolbarModule,
-      MatSidenavModule,
-      MatListModule,
-      MatIconModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    ],
+    imports: [
+        BrowserModule,
+        FlexLayoutModule,
+        HttpClientModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule,
+        MatIconModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

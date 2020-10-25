@@ -17,5 +17,9 @@ export let menu: NavItem[] = [
         route: 'user/account-info'
       }
     ]
+  },
+  {
+      displayName: 'Sign Out',
+      iconName: 'highlight_off'
   }
 ];
