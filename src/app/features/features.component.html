@@ -1,12 +1,13 @@
 <mat-toolbar color="primary">
-  <span>My Application</span>
+  <button mat-icon-button (click)="sidenav.toggle()" class="menu-button" fxHide fxShow.lt-md>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>CRM Application</span>
 </mat-toolbar>
-<mat-sidenav-container class="example-container">
-  <mat-sidenav mode="side" opened>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" [opened]="opened">
     <mat-nav-list>
-      <a mat-list-item class="side-nav-item" routerLink="/home">
-        <mat-icon>home</mat-icon> <span class="nav-caption">Home</span>
-      </a>
+      <app-menu-list-item *ngFor="let item of menu" [item]="item"></app-menu-list-item>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
