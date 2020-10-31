@@ -2,6 +2,8 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { NavItem } from '../model/nav-item';
 import { Router } from '@angular/router';
 import { NavService } from '../service/nav.service';
+import { AuthenticationService } from '../../../services/authentication.service';
+
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
@@ -25,8 +27,9 @@ export class MenuListItemComponent implements OnInit {
     @Input() item: NavItem;
     @Input() depth: number;
 
-    constructor(public navService: NavService,
-        public router: Router) {
+    constructor(public navService: NavService, public router: Router,
+        private authenticationService: AuthenticationService) {
+
         if (this.depth === undefined) {
             this.depth = 0;
         }
@@ -43,11 +46,25 @@ export class MenuListItemComponent implements OnInit {
 
     onItemSelected(item: NavItem) {
         if (!item.children || !item.children.length) {
-            this.router.navigate([item.route]);
-        }
+            if (item.route) {
+                this.router.navigate([item.route]);
+            } else {
+                this.handleSpecial(item);
+            }
+        } 
 
         if (item.children && item.children.length) {
             this.expanded = !this.expanded;
         }
+    }
+
+    handleSpecial(item: NavItem) {
+        if (item.displayName == 'Sign Out') {
+            this.handleSignOut();
+        }
+    }
+
+    handleSignOut() {
+        this.authenticationService.logout();
     }
 }
