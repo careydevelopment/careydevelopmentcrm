@@ -36,8 +36,8 @@ export class MenuListItemComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.navService.currentUrl.subscribe((url: string) => {
-            if (this.item.route && url) {
+        this.navService.getCurrentUrl().subscribe((url: string) => {
+            if (this.item.route) {
                 this.expanded = url.indexOf(`/${this.item.route}`) === 0;
                 this.ariaExpanded = this.expanded;
             }
