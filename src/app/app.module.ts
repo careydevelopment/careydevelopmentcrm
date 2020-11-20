@@ -4,8 +4,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
 import { MenuListItemComponent } from './features/ui/menu-list-item/menu-list-item.component';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -13,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FeaturesComponent } from './features/features.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 import { ConfirmationDialogComponent } from './ui/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
@@ -35,7 +35,6 @@ import { ConfirmationDialogComponent } from './ui/confirmation-dialog/confirmati
         MatDialogModule,
         MatButtonModule
     ],
-    entryComponents: [ConfirmationDialogComponent],
     providers: [],
     bootstrap: [AppComponent]
 })
