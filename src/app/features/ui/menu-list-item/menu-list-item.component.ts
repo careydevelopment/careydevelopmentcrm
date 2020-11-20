@@ -3,7 +3,9 @@ import { NavItem } from '../model/nav-item';
 import { Router } from '@angular/router';
 import { NavService } from '../service/nav.service';
 import { AuthenticationService } from '../../../services/authentication.service';
-
+import { ConfirmationDialogComponent } from '../../../ui/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogModel } from '../../../ui/confirmation-dialog/confirmation-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
@@ -28,7 +30,7 @@ export class MenuListItemComponent implements OnInit {
     @Input() depth: number;
 
     constructor(public navService: NavService, public router: Router,
-        private authenticationService: AuthenticationService) {
+        private authenticationService: AuthenticationService, private dialog: MatDialog) {
 
         if (this.depth === undefined) {
             this.depth = 0;
@@ -45,6 +47,8 @@ export class MenuListItemComponent implements OnInit {
     }
 
     onItemSelected(item: NavItem) {
+        this.dialog.closeAll();
+
         if (!item.children || !item.children.length) {
             if (item.route) {
                 this.router.navigate([item.route]);
@@ -65,6 +69,17 @@ export class MenuListItemComponent implements OnInit {
     }
 
     handleSignOut() {
-        this.authenticationService.logout();
+        const dialogData = new ConfirmationDialogModel('Confirm', 'Are you sure you want to logout?');
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            maxWidth: '400px',
+            closeOnNavigation: true,
+            data: dialogData
+        })
+
+        dialogRef.afterClosed().subscribe(dialogResult => {
+            if (dialogResult) {
+                this.authenticationService.logout();
+            }
+        });
     }
 }
