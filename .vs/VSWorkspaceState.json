@@ -4,10 +4,13 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\features",
+    "\\src\\app\\features\\ui",
+    "\\src\\app\\features\\user",
+    "\\src\\app\\features\\user\\profile-image",
+    "\\src\\assets",
     "\\src\\assets\\img",
-    "\\src\\assets\\img\\logo",
-    "\\src\\assets\\img\\vector"
+    "\\src\\assets\\img\\app"
   ],
-  "SelectedNode": "\\src\\app\\features\\features.component.html",
+  "SelectedNode": "\\src\\app\\features\\user\\profile-image\\profile-image.component.html",
   "PreviewInSolutionExplorer": false
 }
