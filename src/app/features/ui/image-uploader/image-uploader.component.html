@@ -1,0 +1,10 @@
+<button mat-raised-button color="primary" (click)="clickFileInput()">
+  <span *ngIf="!image">Select Image</span>
+  <span *ngIf="image">Change Image</span>
+</button>
+<input type="file" id="file-upload" (change)="fileChange(input)" #input />
+
+<div class="image-wrapper">
+  <img [attr.src]="image" *ngIf="image" style="width:200px">
+  <img src="assets/img/app/no-image.png" *ngIf="!image" style="width:200px">
+</div>

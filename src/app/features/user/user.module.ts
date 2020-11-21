@@ -7,17 +7,22 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AccountInfoComponent } from './account-info/account-info.component';
+import { ProfileImageComponent } from './profile-image/profile-image.component';
+import { ImageUploaderComponent } from '../ui/image-uploader/image-uploader.component';
 
 
 export const routes = [
     { path: '', pathMatch: 'full', redirectTo: 'account-info' },
-    { path: 'account-info', component: AccountInfoComponent }
+    { path: 'account-info', component: AccountInfoComponent },
+    { path: 'profile-image', component: ProfileImageComponent }
 ];
 
 
 @NgModule({
     declarations: [
-        AccountInfoComponent
+        AccountInfoComponent,
+        ProfileImageComponent,
+        ImageUploaderComponent
     ],
   imports: [
       CommonModule,
