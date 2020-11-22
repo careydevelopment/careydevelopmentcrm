@@ -1,24 +1,17 @@
 <div>
   <div>
-    <div>
-      <div>
-        <h5>Profile Image</h5>
-        <p>Upload a square image no smaller than 200x200.</p>
-        <div *ngIf="imageError">
-          <strong>{{imageError}}</strong>
-        </div>
-      </div>
-      <div>
-        <div>
-          <div>
-            <app-image-uploader (uploadedImage)="onUploadedImage($event)">
-            </app-image-uploader>
-          </div>
-          <div>
-            <button mat-raised-button color="primary" [disabled]="!currentFileUpload" (click)="upload()">Save Image</button>
-          </div>
-        </div>
-      </div>
+    <h5>Profile Image</h5>
+    <p>Upload a square image no smaller than 200x200.</p>
+    <div *ngIf="imageError" class="errorMessage">
+      <strong class="mat-error">{{imageError}}</strong>
     </div>
+  </div>
+  <div>
+      <div>
+        <app-image-uploader (uploadedImage)="onUploadedImage($event)"></app-image-uploader>
+      </div>
+      <div>
+        <button mat-raised-button color="primary" [disabled]="!currentFileUpload" (click)="upload()">Save Image</button>
+      </div>
   </div>
 </div>

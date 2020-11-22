@@ -41,7 +41,6 @@ export class ImageUploaderComponent {
             }
 
             if (this.imageService.validExtension(uploadImage)) {
-                //console.log("Reading file");
                 reader.readAsDataURL(file);
             } else {
                 emitter.emit(uploadImage);
