@@ -12,23 +12,7 @@ export class UploadFileService {
         const data: FormData = new FormData();
         data.append('file', file);
 
-        const newRequest = new HttpRequest('POST', url, data, {
-            reportProgress: true,
-            responseType: 'text'
-        });
-
-        return this.handler.handle(newRequest).pipe(catchError(this.handleError));
-    }
-
-    pushFileToStorageWithObject(file: File, objectName: string, object: any, url: string): Observable<HttpEvent<{}>> {
-        const data: FormData = new FormData();
-        data.append('file', file);
-        data.append(objectName, object);
-
-        const newRequest = new HttpRequest('POST', url, data, {
-            reportProgress: true,
-            responseType: 'text'
-        });
+        const newRequest = new HttpRequest('POST', url, data);
 
         return this.handler.handle(newRequest).pipe(catchError(this.handleError));
     }

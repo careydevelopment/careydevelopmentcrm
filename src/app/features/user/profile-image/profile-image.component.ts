@@ -5,7 +5,7 @@ import { UserService } from '../../service/user.service';
 import { UploadedImage } from '../../ui/model/uploaded-image';
 import { ImageService } from '../../ui/service/image-service';
 
-const profileImageUploadUrl: string = 'http://localhost:8080/user/saveProfileImage';
+const profileImageUploadUrl: string = 'http://localhost:8080/user/profileImage';
 
 @Component({
     selector: 'app-profile-image',
