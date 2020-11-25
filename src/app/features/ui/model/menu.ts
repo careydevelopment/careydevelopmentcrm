@@ -15,6 +15,11 @@ export let menu: NavItem[] = [
         displayName: 'Account Info',
         iconName: 'account_box',
         route: 'user/account-info'
+      },
+      {
+          displayName: 'Profile Image',
+          iconName: 'image',
+          route: 'user/profile-image'
       }
     ]
   },

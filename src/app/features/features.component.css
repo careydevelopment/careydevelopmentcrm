@@ -6,6 +6,10 @@ mat-sidenav-container, mat-sidenav-content, mat-sidenav {
   width: 220px;
 }
 
+mat-sidenav-content {
+  padding-left: 15px;
+}
+
 button.menu-button {
   color: inherit;
   background: transparent;

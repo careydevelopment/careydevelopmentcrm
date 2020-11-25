@@ -4,10 +4,13 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\features",
+    "\\src\\app\\features\\ui",
+    "\\src\\app\\features\\ui\\image-uploader",
+    "\\src\\app\\features\\ui\\service",
+    "\\src\\assets",
     "\\src\\assets\\img",
-    "\\src\\assets\\img\\logo",
-    "\\src\\assets\\img\\vector"
+    "\\src\\assets\\img\\app"
   ],
-  "SelectedNode": "\\src\\app\\features\\features.component.html",
+  "SelectedNode": "\\src\\app\\features\\ui\\service\\image-service.ts",
   "PreviewInSolutionExplorer": false
 }
