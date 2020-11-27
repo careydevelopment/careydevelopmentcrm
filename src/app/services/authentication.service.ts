@@ -4,66 +4,70 @@ import { Observable } from 'rxjs';
 import { JwtRequest } from '../models/jwt-request';
 import { JwtResponse } from '../models/jwt-response';
 import { tap, shareReplay } from 'rxjs/operators';
-import { DateService } from '../services/date.service';
 import { Router } from '@angular/router';
 
+const TOKEN_NAME = 'id_token';
+const EXPIRES_AT = 'expires_at';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
 
-    constructor(private http: HttpClient, private dateService: DateService,
-      private router: Router) { }
+    constructor(private http: HttpClient, private router: Router) { }
 
     login(username: string, password: string): Observable<JwtResponse> {
-        let jwtRequest: JwtRequest = { username: username, password: password };
+      let jwtRequest: JwtRequest = { username: username, password: password };
 
-        return this.http.post<JwtResponse>('http://localhost:8080/authenticate',
-            jwtRequest).pipe(
-                tap((resp: JwtResponse) => this.setSession(resp)),
-                shareReplay()
-            );
+      return this.http.post<JwtResponse>('http://localhost:8080/authenticate',
+          jwtRequest).pipe(
+              tap((resp: JwtResponse) => this.setSession(resp)),
+              shareReplay()
+          );
     }
 
     private setSession(authResult: JwtResponse) {
-        const expiresAt = authResult.expirationDate;
-        //console.log("Token expires at " + expiresAt);
-        //console.log("Token date and time is " + this.dateService.getShortDateAndTimeDisplay(expiresAt));
+      const expiresAt = authResult.expirationDate;
+      //console.log("Token expires at " + expiresAt);
+      //console.log("Token date and time is " + this.dateService.getShortDateAndTimeDisplay(expiresAt));
 
-        localStorage.setItem('id_token', authResult.token);
-        localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
+      localStorage.setItem(TOKEN_NAME, authResult.token);
+      localStorage.setItem(EXPIRES_AT, JSON.stringify(expiresAt.valueOf()));
     }
 
     logout() {
-        localStorage.removeItem("id_token");
-        localStorage.removeItem("expires_at");
+      localStorage.removeItem(TOKEN_NAME);
+      localStorage.removeItem(EXPIRES_AT);
 
-        this.router.navigate(["/login"]);
+      this.router.navigate(['/login']);
     }
 
     isLoggedIn(): boolean {
-        let loggedIn: boolean = false;
-        let expiration = this.getExpiration();
+      let loggedIn: boolean = false;
+      let expiration = this.getExpiration();
 
-        if (expiration) {
-            return Date.now() < expiration;
-        }
+      if (expiration) {
+          return Date.now() < expiration;
+      }
 
-        return loggedIn;
+      return loggedIn;
     }
 
     isLoggedOut(): boolean {
-        return !this.isLoggedIn();
+      return !this.isLoggedIn();
     }
 
     private getExpiration(): number {
-        let expiresAt: number = null;
-        
-        const expiration = localStorage.getItem("expires_at");
+      let expiresAt: number = null;
+
+      const expiration = localStorage.getItem(EXPIRES_AT);
 
         if (expiration) {
             expiresAt = JSON.parse(expiration);
         }
 
         return expiresAt;
-    }    
+  }
+
+  token(): string {
+    return localStorage.getItem(TOKEN_NAME);
+  }
 }

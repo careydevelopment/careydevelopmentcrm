@@ -9,12 +9,13 @@ export class UploadFileService {
     constructor(private handler: HttpHandler) { }
 
     pushFileToStorage(file: File, url: string): Observable<HttpEvent<{}>> {
-        const data: FormData = new FormData();
-        data.append('file', file);
+      console.log("Pushing file to " + url);
+      const data: FormData = new FormData();
+      data.append('file', file);
 
-        const newRequest = new HttpRequest('POST', url, data);
+      const newRequest = new HttpRequest('POST', url, data);
 
-        return this.handler.handle(newRequest).pipe(catchError(this.handleError));
+      return this.handler.handle(newRequest).pipe(catchError(this.handleError));
     }
 
     private handleError(error: HttpErrorResponse) {
