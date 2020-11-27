@@ -14,28 +14,29 @@ import { FeaturesComponent } from './features/features.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ConfirmationDialogComponent } from './ui/confirmation-dialog/confirmation-dialog.component';
+import { JwtInterceptor } from './util/jwt-interceptor';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        MenuListItemComponent,
-        FeaturesComponent,
-        ConfirmationDialogComponent
+      AppComponent,
+      MenuListItemComponent,
+      FeaturesComponent,
+      ConfirmationDialogComponent
     ],
     imports: [
-        BrowserModule,
-        FlexLayoutModule,
-        HttpClientModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatListModule,
-        MatIconModule,
-        MatDialogModule,
-        MatButtonModule
+      BrowserModule,
+      FlexLayoutModule,
+      HttpClientModule,
+      AppRoutingModule,
+      BrowserAnimationsModule,
+      MatToolbarModule,
+      MatSidenavModule,
+      MatListModule,
+      MatIconModule,
+      MatDialogModule,
+      MatButtonModule
     ],
-    providers: [],
+    providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

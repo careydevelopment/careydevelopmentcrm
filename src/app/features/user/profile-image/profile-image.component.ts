@@ -37,17 +37,16 @@ export class ProfileImageComponent implements OnInit {
                 err => this.handleError(err));
     }
 
-    handleEvent(event: HttpEvent<{}>) {
-        if (event instanceof HttpResponse) {
-            let body = event.body;
-            this.handleResponse(body);
+    handleEvent(event: HttpEvent<any>) {
+      if (event instanceof HttpResponse) {
+        let response: HttpResponse<any> = <HttpResponse<any>>event;
+        if (response.status == 200) {
+          this.handleGoodResponse();
         }
-
-        this.currentFileUpload = undefined;
+      }
     }
 
-    handleResponse(data: any) {
-        console.log(data);
+    handleGoodResponse() {
         this.currentFileUpload = undefined;
         this.clicked = false;
     }

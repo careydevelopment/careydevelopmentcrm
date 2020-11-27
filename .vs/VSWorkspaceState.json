@@ -4,13 +4,13 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\features",
-    "\\src\\app\\features\\ui",
-    "\\src\\app\\features\\ui\\image-uploader",
-    "\\src\\app\\features\\ui\\service",
-    "\\src\\assets",
-    "\\src\\assets\\img",
-    "\\src\\assets\\img\\app"
+    "\\src\\app\\features\\ui\\model",
+    "\\src\\app\\features\\user",
+    "\\src\\app\\features\\user\\profile-image",
+    "\\src\\app\\login",
+    "\\src\\app\\services",
+    "\\src\\app\\util"
   ],
-  "SelectedNode": "\\src\\app\\features\\ui\\service\\image-service.ts",
+  "SelectedNode": "\\src\\app\\features\\user\\profile-image\\profile-image.component.html",
   "PreviewInSolutionExplorer": false
 }
