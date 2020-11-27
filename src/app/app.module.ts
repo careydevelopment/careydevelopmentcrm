@@ -18,25 +18,25 @@ import { JwtInterceptor } from './util/jwt-interceptor';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        MenuListItemComponent,
-        FeaturesComponent,
-        ConfirmationDialogComponent
+      AppComponent,
+      MenuListItemComponent,
+      FeaturesComponent,
+      ConfirmationDialogComponent
     ],
     imports: [
-        BrowserModule,
-        FlexLayoutModule,
-        HttpClientModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatListModule,
-        MatIconModule,
-        MatDialogModule,
-        MatButtonModule
+      BrowserModule,
+      FlexLayoutModule,
+      HttpClientModule,
+      AppRoutingModule,
+      BrowserAnimationsModule,
+      MatToolbarModule,
+      MatSidenavModule,
+      MatListModule,
+      MatIconModule,
+      MatDialogModule,
+      MatButtonModule
     ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
+    providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
