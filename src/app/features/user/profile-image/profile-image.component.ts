@@ -15,53 +15,53 @@ const profileImageUploadUrl: string = 'http://localhost:8080/user/profileImage';
 })
 export class ProfileImageComponent implements OnInit {
 
-    currentFileUpload: UploadedImage;
-    changeImage = false;
-    clicked: boolean = false;
-    imageError: string = null;
+  currentFileUpload: UploadedImage;
+  changeImage: boolean = false;
+  imageError: string = null;
+  uploading: boolean = false;
 
-    constructor(private uploadService: UploadFileService, private userService: UserService,
-        private imageService: ImageService) { }
+  constructor(private uploadService: UploadFileService, private userService: UserService,
+    private imageService: ImageService) { }
 
-    ngOnInit() { }
+  ngOnInit() { }
 
-    change($event) {
-        this.changeImage = true;
-    }
+  change($event) {
+    this.changeImage = true;
+  }
 
-    upload() {
-        this.clicked = true;
+  upload() {
+    this.uploading = true;
 
-        this.uploadService.pushFileToStorage(this.currentFileUpload.file, profileImageUploadUrl)
-            .subscribe(event => this.handleEvent(event),
-                err => this.handleError(err));
-    }
+    this.uploadService.pushFileToStorage(this.currentFileUpload.file, profileImageUploadUrl)
+        .subscribe(event => this.handleEvent(event),
+            err => this.handleError(err));
+  }
 
-    handleEvent(event: HttpEvent<any>) {
-      if (event instanceof HttpResponse) {
-        let response: HttpResponse<any> = <HttpResponse<any>>event;
-        if (response.status == 200) {
-          this.handleGoodResponse();
-        }
+  handleEvent(event: HttpEvent<any>) {
+    if (event instanceof HttpResponse) {
+      let response: HttpResponse<any> = <HttpResponse<any>>event;
+      if (response.status == 200) {
+        this.handleGoodResponse();
       }
     }
+  }
 
-    handleGoodResponse() {
-        this.currentFileUpload = undefined;
-        this.clicked = false;
+  handleGoodResponse() {
+    this.currentFileUpload = undefined;
+    this.uploading = false;
+  }
+
+  handleError(err: Error) {
+    console.error("Error is", err);
+    this.imageError = err.message;
+    this.uploading = false;
+  }
+
+  onUploadedImage(image: UploadedImage) {
+    this.imageError = this.imageService.validateImage(image);
+
+    if (!this.imageError) {
+        this.currentFileUpload = image;
     }
-
-    handleError(err: Error) {
-      console.error("Error is", err);
-      this.imageError = err.message;
-      this.clicked = false;
-    }
-
-    onUploadedImage(image: UploadedImage) {
-        this.imageError = this.imageService.validateImage(image);
-
-        if (!this.imageError) {
-            this.currentFileUpload = image;
-        }
-    }
+  }
 }
