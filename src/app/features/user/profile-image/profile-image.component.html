@@ -1,20 +1,25 @@
-<div>
-  <div>
-    <h5>Profile Image</h5>
-    <p>Upload a square image no smaller than 200x200.</p>
-    <div class="alert-section">
-      <alert></alert>
-    </div>
-  </div>
-  <div>
-    <div>
-      <app-image-uploader (uploadedImage)="onUploadedImage($event)"></app-image-uploader>
-    </div>
-    <div *ngIf="!uploading">
-      <button mat-raised-button color="primary" [disabled]="!currentFileUpload" (click)="upload()">Save Image</button>
-    </div>
-    <div *ngIf="uploading" style="margin-left:10px">
-      <mat-spinner [diameter]="50"></mat-spinner>
-    </div>
-  </div>
+<div class="centered-card">
+  <mat-card style="width: 70%">
+    <mat-card-header>
+      Profile Image
+    </mat-card-header>
+    <mat-card-content>
+      <div class="alert-section">
+        <alert></alert>
+      </div>
+      <div>
+        <div style="text-align: center">
+          <app-image-uploader (uploadedImage)="onUploadedImage($event)"></app-image-uploader>
+        </div>
+        <div *ngIf="!uploading" style="text-align:center">
+          <button mat-raised-button color="primary" [disabled]="!currentFileUpload" (click)="upload()">Save Image</button>
+        </div>
+        <div *ngIf="uploading">
+          <mat-spinner [diameter]="50" class="center-div"></mat-spinner>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+    </mat-card-actions>
+  </mat-card>
 </div>
