@@ -35,7 +35,7 @@ import { JwtInterceptor } from './util/jwt-interceptor';
       MatIconModule,
       MatDialogModule,
       MatButtonModule
-    ],
+  ],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
     bootstrap: [AppComponent]
 })
