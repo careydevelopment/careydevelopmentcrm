@@ -1,0 +1,42 @@
+.alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.42rem;
+}
+
+.alert-primary {
+  background-color: #b1c3ff;
+  border-color: #97a9ff;
+  color: #3E50B4;
+}
+
+.alert-success {
+  background-color: #beffc2;
+  border-color: #8bee8f;
+  color: #4BAE4F;
+}
+
+.alert-info {
+  background-color: #a6ffff;
+  border-color: #40fbff;
+  color: #00BBD3;
+}
+
+.alert-warning {
+  background-color: #ffffa6;
+  border-color: #fff059;
+  color: #FE9700;
+}
+
+.alert-danger {
+  background-color: #ffb5a8;
+  border-color: #ff9b8e;
+  color: #F34235;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+}

@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AccountInfoComponent } from './account-info/account-info.component';
 import { ProfileImageComponent } from './profile-image/profile-image.component';
 import { ImageUploaderComponent } from '../ui/image-uploader/image-uploader.component';
+import { AlertModule } from '../../ui/alert/alert.module';
 
 
 export const routes = [
@@ -32,6 +33,7 @@ export const routes = [
     MatButtonModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
+    AlertModule,
     RouterModule.forChild(routes)
   ]
 })
