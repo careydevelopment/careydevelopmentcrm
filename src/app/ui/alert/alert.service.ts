@@ -9,12 +9,10 @@ export class AlertService {
   private subject = new BehaviorSubject<Alert>(null);
   private defaultId = 'default-alert';
 
-  // enable subscribing to alerts observable
   onAlert(id = this.defaultId): Observable<Alert> {
     return this.subject.asObservable().pipe(filter(x => x && x.id === id));
   }
 
-  // convenience methods
   success(message: string, options?: any) {
     this.alert(new Alert({ ...options, alertType: AlertSettings.SUCCESS, message }));
   }
@@ -31,14 +29,11 @@ export class AlertService {
     this.alert(new Alert({ ...options, alertType: AlertSettings.WARNING, message }));
   }
 
-  // main alert method    
   alert(alert: Alert) {
-    //console.log("Alerting with ", alert);
     alert.id = alert.id || this.defaultId;
     this.subject.next(alert);
   }
 
-  // clear alerts
   clear(id = this.defaultId) {
     this.subject.next(new Alert({ id }));
   }

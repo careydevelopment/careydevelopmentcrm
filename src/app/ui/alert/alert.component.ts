@@ -18,22 +18,19 @@ export class AlertComponent implements OnInit, OnDestroy {
   alerts: Alert[] = [];
   alertSubscription: Subscription;
   routeSubscription: Subscription;
-  previousUrl: string;
 
   constructor(private router: Router, private alertService: AlertService) { }
 
   ngOnInit() {
-    // subscribe to new alert notifications
     this.alertSubscription = this.alertService.onAlert(this.id)
       .subscribe(alert => {
         if (!alert.message) {
           this.alerts = [];
           return;
         }
-        // add alert to array
+
         this.alerts.push(alert);
 
-        // auto close alert if required
         if (alert.autoClose) {
           setTimeout(() => this.removeAlert(alert), 3000);
         }
@@ -55,19 +52,15 @@ export class AlertComponent implements OnInit, OnDestroy {
   }
 
   removeAlert(alert: Alert) {
-    // check if already removed to prevent error on auto close
     if (!this.alerts.includes(alert)) return;
 
     if (this.fade) {
-      // fade out alert
       this.alerts.find(x => x === alert).fade = true;
 
-      // remove alert after faded out
       setTimeout(() => {
           this.alerts = this.alerts.filter(x => x !== alert);
       }, 250);
     } else {
-      // remove alert
       this.alerts = this.alerts.filter(x => x !== alert);
     }
   }
