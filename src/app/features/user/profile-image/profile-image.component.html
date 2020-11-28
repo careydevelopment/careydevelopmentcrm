@@ -13,7 +13,7 @@
     <div *ngIf="!uploading">
       <button mat-raised-button color="primary" [disabled]="!currentFileUpload" (click)="upload()">Save Image</button>
     </div>
-    <div *ngIf="uploading" style="text-align:center; margin-left:10px">
+    <div *ngIf="uploading" style="margin-left:10px">
       <mat-spinner [diameter]="50"></mat-spinner>
     </div>
   </div>
