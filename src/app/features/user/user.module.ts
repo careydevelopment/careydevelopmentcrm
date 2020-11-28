@@ -5,11 +5,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AccountInfoComponent } from './account-info/account-info.component';
 import { ProfileImageComponent } from './profile-image/profile-image.component';
 import { ImageUploaderComponent } from '../ui/image-uploader/image-uploader.component';
+import { AlertModule } from '../../ui/alert/alert.module';
 
 
 export const routes = [
@@ -31,7 +33,9 @@ export const routes = [
     MatInputModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    MatCardModule,
     ReactiveFormsModule,
+    AlertModule,
     RouterModule.forChild(routes)
   ]
 })
