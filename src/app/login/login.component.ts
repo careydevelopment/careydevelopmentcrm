@@ -17,11 +17,13 @@ export class LoginComponent implements OnInit {
     constructor(private fb: FormBuilder, private authenticationService: AuthenticationService,
       private router: Router, private route: ActivatedRoute, private urlService: UrlService) { }
 
-    ngOnInit() {
-        this.form = this.fb.group({
-            'username': ['', Validators.compose([Validators.required])],
-            'password': ['', Validators.compose([Validators.required])]
-        });
+  ngOnInit() {
+    this.authenticationService.clearStorage();
+
+    this.form = this.fb.group({
+        'username': ['', Validators.compose([Validators.required])],
+        'password': ['', Validators.compose([Validators.required])]
+    });
     }
 
     onSubmit(loginForm) {

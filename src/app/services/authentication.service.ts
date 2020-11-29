@@ -12,59 +12,71 @@ const EXPIRES_AT = 'expires_at';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
 
-    constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
-    login(username: string, password: string): Observable<JwtResponse> {
-      let jwtRequest: JwtRequest = { username: username, password: password };
+  login(username: string, password: string): Observable<JwtResponse> {
+    let jwtRequest: JwtRequest = { username: username, password: password };
 
-      return this.http.post<JwtResponse>('http://localhost:8080/authenticate',
-          jwtRequest).pipe(
-              tap((resp: JwtResponse) => this.setSession(resp)),
-              shareReplay()
-          );
+    return this.http.post<JwtResponse>('http://localhost:8080/authenticate',
+        jwtRequest).pipe(
+            tap((resp: JwtResponse) => this.setSession(resp)),
+            shareReplay()
+        );
+  }
+
+  private setSession(authResult: JwtResponse) {
+    const expiresAt = authResult.expirationDate;
+    //console.log("Token expires at " + expiresAt);
+    //console.log("Token date and time is " + this.dateService.getShortDateAndTimeDisplay(expiresAt));
+
+    localStorage.setItem(TOKEN_NAME, authResult.token);
+    localStorage.setItem(EXPIRES_AT, JSON.stringify(expiresAt.valueOf()));
+  }
+
+  clearStorage() {
+    localStorage.removeItem(TOKEN_NAME);
+    localStorage.removeItem(EXPIRES_AT);
+  }
+
+  logout() {
+    this.clearStorage();
+    this.router.navigate(['/login']);
+  }
+
+  isTokenExpired(): boolean {
+    let expiration = this.getExpiration();
+
+    if (expiration) {
+      return !(Date.now() < expiration);
     }
 
-    private setSession(authResult: JwtResponse) {
-      const expiresAt = authResult.expirationDate;
-      //console.log("Token expires at " + expiresAt);
-      //console.log("Token date and time is " + this.dateService.getShortDateAndTimeDisplay(expiresAt));
+    return false;
+  }
 
-      localStorage.setItem(TOKEN_NAME, authResult.token);
-      localStorage.setItem(EXPIRES_AT, JSON.stringify(expiresAt.valueOf()));
+  isLoggedIn(): boolean {
+    let loggedIn: boolean = false;
+
+    if (this.token()) {
+      loggedIn = !this.isTokenExpired();
     }
 
-    logout() {
-      localStorage.removeItem(TOKEN_NAME);
-      localStorage.removeItem(EXPIRES_AT);
+    return loggedIn;
+  }
 
-      this.router.navigate(['/login']);
-    }
+  isLoggedOut(): boolean {
+    return !this.isLoggedIn();
+  }
 
-    isLoggedIn(): boolean {
-      let loggedIn: boolean = false;
-      let expiration = this.getExpiration();
+  private getExpiration(): number {
+    let expiresAt: number = null;
+
+    const expiration = localStorage.getItem(EXPIRES_AT);
 
       if (expiration) {
-          return Date.now() < expiration;
+          expiresAt = JSON.parse(expiration);
       }
 
-      return loggedIn;
-    }
-
-    isLoggedOut(): boolean {
-      return !this.isLoggedIn();
-    }
-
-    private getExpiration(): number {
-      let expiresAt: number = null;
-
-      const expiration = localStorage.getItem(EXPIRES_AT);
-
-        if (expiration) {
-            expiresAt = JSON.parse(expiration);
-        }
-
-        return expiresAt;
+      return expiresAt;
   }
 
   token(): string {

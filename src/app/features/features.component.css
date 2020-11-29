@@ -1,13 +1,9 @@
 mat-sidenav-container, mat-sidenav-content, mat-sidenav {
-  height: 100%;
+  height: 100vh;
 }
 
 .mat-sidenav {
   width: 220px;
-}
-
-mat-sidenav-content {
-  padding-left: 15px;
 }
 
 button.menu-button {
@@ -17,3 +13,4 @@ button.menu-button {
   border: none;
   outline: none;
 }
+

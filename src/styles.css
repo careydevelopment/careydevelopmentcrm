@@ -60,3 +60,8 @@ h4 {
 .card-content {
   font-size: 12pt;
 }
+
+/* Prevents horizontal scrollbar from appearing on left nav side bar */
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+  width: 94% !important;
+}

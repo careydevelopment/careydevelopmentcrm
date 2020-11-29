@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { RouteMessageModule } from '../ui/route-message/route-message.module';
 
 export const routes = [
     { path: '', component: LoginComponent }
@@ -17,13 +17,14 @@ export const routes = [
 @NgModule({
   declarations: [LoginComponent],
   imports: [
-      CommonModule,
-      FlexLayoutModule,
-      MatIconModule,
-      MatInputModule,
-      MatButtonModule,
-      ReactiveFormsModule,
-      RouterModule.forChild(routes)
+    CommonModule,
+    FlexLayoutModule,
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    RouteMessageModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class LoginModule { }
