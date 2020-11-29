@@ -62,6 +62,7 @@ h4 {
 }
 
 /* Prevents horizontal scrollbar from appearing on left nav side bar */
-.mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
-  width: 94% !important;
+/* Gotta account for the left-hand padding in child menu items */
+.menu-child a.mat-list-item {
+  box-sizing: border-box;
 }
