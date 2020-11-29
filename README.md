@@ -20,7 +20,7 @@ If you're still having issues, you might need to blow away everything in the nod
 run npm install again.
 
 Keep in mind: this Angular app runs alongside a microservice architecture. Here's a list of the current
-microservices the app uses along with links to their source code on GitHub.
+microservices the app uses as well as links to their source code on GitHub.
 
 <a href="https://github.com/careydevelopment/ecosystem-user-service">User Service</a> - handles authentication and features related to user info (updating account details, adding a profile image, etc.)
 
