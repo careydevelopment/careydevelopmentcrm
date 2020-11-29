@@ -15,7 +15,7 @@ export class RouteMessageComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentMessage = this.routeMessageService.message;
-    this.alertService.info(this.currentMessage);
+    if (this.currentMessage) this.alertService.info(this.currentMessage);
   }
 
 }

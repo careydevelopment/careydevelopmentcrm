@@ -23,12 +23,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         let errorMessage = '';
         if (returnedError.error instanceof ErrorEvent) {
           errorMessage = `Error: ${returnedError.error.message}`;
-        } else {
+        } else if (returnedError instanceof HttpErrorResponse) {
           errorMessage = `Error Status: ${returnedError.status}: ${returnedError.error.error} - ${returnedError.error.message}`;
           handled = this.handleServerSideError(returnedError);
         }
 
         console.error(errorMessage);
+
         if (!handled) {
           return throwError(errorMessage);
         } else {
