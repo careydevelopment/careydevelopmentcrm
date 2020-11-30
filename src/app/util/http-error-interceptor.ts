@@ -20,18 +20,23 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     .pipe(
       retry(1),
       catchError((returnedError) => {
-        let errorMessage = '';
+        let errorMessage = null;
+
         if (returnedError.error instanceof ErrorEvent) {
           errorMessage = `Error: ${returnedError.error.message}`;
         } else if (returnedError instanceof HttpErrorResponse) {
-          errorMessage = `Error Status: ${returnedError.status}: ${returnedError.error.error} - ${returnedError.error.message}`;
+          errorMessage = `Error Status ${returnedError.status}: ${returnedError.error.error} - ${returnedError.error.message}`;
           handled = this.handleServerSideError(returnedError);
-        }
+        } 
 
-        console.error(errorMessage);
+        console.error(errorMessage ? errorMessage : returnedError);
 
         if (!handled) {
-          return throwError(errorMessage);
+          if (errorMessage) {
+            return throwError(errorMessage);
+          } else {
+            return throwError("Unexpected problem occurred");
+          }
         } else {
           return of(returnedError);
         }
