@@ -21,6 +21,10 @@
     <div fxFlex="50" fxFlex.lt-md="100" fxLayout="column" class="mat-app-background">
       <div fxLayout="column" fxLayoutAlign="center" style="margin-top:30px">
         <div fxLayout="row" fxLayoutAlign="center">
+          <route-message style="width:100%"></route-message>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center">
           <h3>Welcome to the CRM App</h3>
         </div>
 
@@ -49,7 +53,7 @@
             <button [disabled]="!form.valid || formSubmitted" type="submit" mat-raised-button color="primary">Login</button>
           </div>
         </form>
-      </div>
+        </div>
     </div>
   </div> 
 </div>

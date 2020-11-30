@@ -10,3 +10,7 @@
   justify-content: center;
   align-items: center;
 }
+
+.mat-card {
+    height: 95vh;
+}

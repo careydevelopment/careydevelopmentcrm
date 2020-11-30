@@ -60,3 +60,9 @@ h4 {
 .card-content {
   font-size: 12pt;
 }
+
+/* Prevents horizontal scrollbar from appearing on left nav side bar */
+/* Gotta account for the left-hand padding in child menu items */
+.menu-child a.mat-list-item {
+  box-sizing: border-box;
+}

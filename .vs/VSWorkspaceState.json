@@ -4,13 +4,13 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\features",
-    "\\src\\app\\features\\ui\\model",
+    "\\src\\app\\features\\ui",
+    "\\src\\app\\features\\ui\\image-uploader",
     "\\src\\app\\features\\user",
     "\\src\\app\\features\\user\\profile-image",
-    "\\src\\app\\login",
-    "\\src\\app\\services",
-    "\\src\\app\\util"
+    "\\src\\app\\ui",
+    "\\src\\app\\ui\\alert"
   ],
-  "SelectedNode": "\\src\\app\\features\\user\\profile-image\\profile-image.component.html",
+  "SelectedNode": "\\README.md",
   "PreviewInSolutionExplorer": false
 }
