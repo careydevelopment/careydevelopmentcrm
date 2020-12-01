@@ -33,8 +33,11 @@
         </div>
       </div>
 
-      <div fxLayout="column" fxLayoutAlign="center" style="margin-top:100px">
+      <div fxLayout="column" fxLayoutAlign="center">
         <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+          <div style="margin-bottom:15px; height:60px">
+            <alert></alert>
+          </div>
           <div fxLayoutAlign="center">
             <mat-form-field style="width:50%" appearance="fill">
               <mat-label>Enter username</mat-label>

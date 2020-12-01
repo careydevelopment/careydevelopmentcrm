@@ -18,7 +18,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     return next.handle(request)
     .pipe(
-      retry(1),
+      //taking out retry for now because it's even retrying on bad credentials
+      //retry(1),
       catchError((returnedError) => {
         let errorMessage = null;
 
@@ -32,11 +33,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         console.error(errorMessage ? errorMessage : returnedError);
 
         if (!handled) {
-          if (errorMessage) {
-            return throwError(errorMessage);
-          } else {
-            return throwError("Unexpected problem occurred");
-          }
+          return throwError(returnedError);
         } else {
           return of(returnedError);
         }
@@ -49,9 +46,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     switch (error.status) {
       case 401:
-        this.routeMessageService.message = "Please login again.";
-        this.authenticationService.logout();
-        handled = true;
+        //we don't want to redirect people to the login page when they're already on
+        //the login page
+        if (this.router.url != '/login') {
+          this.routeMessageService.message = "Please login again.";
+          this.authenticationService.logout();
+          handled = true;
+        }
         break;
       case 403:
         this.routeMessageService.message = "Please login again.";

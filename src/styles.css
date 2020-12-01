@@ -48,21 +48,19 @@ h4 {
   background-color: #ffffff !important;
 }
 
-.mat-card-header-text {
-  margin: 0 0px !important;
-}
-
-.mat-card-header {
-  font-size: 16pt;
-  margin-bottom: 30px;
-}
-
-.card-content {
-  font-size: 12pt;
-}
-
 /* Prevents horizontal scrollbar from appearing on left nav side bar */
 /* Gotta account for the left-hand padding in child menu items */
 .menu-child a.mat-list-item {
   box-sizing: border-box;
+}
+
+.route-content {
+  padding-left: 10px;
+}
+
+.upload-image-box {
+  border: solid 1px #3F51B5;
+  padding: 10px 5px 10px 5px;
+  margin: 0px 5px 0px 0px;
+  border-radius: 5px;
 }

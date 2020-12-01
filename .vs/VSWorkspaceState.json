@@ -3,14 +3,12 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\features",
-    "\\src\\app\\features\\ui",
-    "\\src\\app\\features\\ui\\image-uploader",
-    "\\src\\app\\features\\user",
+    "\\src\\app\\features\\ui\\menu-list-item",
     "\\src\\app\\features\\user\\profile-image",
+    "\\src\\app\\login",
     "\\src\\app\\ui",
-    "\\src\\app\\ui\\alert"
+    "\\src\\app\\util"
   ],
-  "SelectedNode": "\\README.md",
+  "SelectedNode": "\\src\\app\\app.module.ts",
   "PreviewInSolutionExplorer": false
 }
