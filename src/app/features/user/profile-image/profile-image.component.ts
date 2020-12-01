@@ -5,6 +5,7 @@ import { UserService } from '../../service/user.service';
 import { UploadedImage } from '../../ui/model/uploaded-image';
 import { ImageService } from '../../ui/service/image-service';
 import { AlertService} from '../../../ui/alert/alert.service';
+import { User } from '../../../models/user';
 
 const profileImageUploadUrl: string = 'http://localhost:8080/user/profileImage';
 
@@ -19,11 +20,41 @@ export class ProfileImageComponent implements OnInit {
   currentFileUpload: UploadedImage;
   changeImage: boolean = false;
   uploading: boolean = false;
+  imageToShow: any = null;
+  user: User = null;
+  showSpinner: boolean = true;
 
   constructor(private uploadService: UploadFileService, private userService: UserService,
     private imageService: ImageService, private alertService: AlertService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.user = this.userService.user;
+
+    this.userService.fetchProfileImage(this.user.id)
+      .subscribe(image => this.createImage(image),
+        err => this.handleImageRetrievalError(err));
+  }
+
+  private handleImageRetrievalError(err: Error) {
+    console.error(err);
+    this.showSpinner = false;
+    this.alertService.error("Problem retrieving profile photo.");
+  }
+
+  private createImage(image: Blob) {
+    if (image && image.size > 0) {
+      let reader = new FileReader();
+
+      reader.addEventListener("load", () => {
+        this.imageToShow = reader.result;
+        this.showSpinner = false;
+      }, false);
+
+      reader.readAsDataURL(image);
+    } else {
+      this.showSpinner = false;
+    }
+  }
 
   change($event) {
     this.changeImage = true;

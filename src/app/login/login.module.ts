@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouteMessageModule } from '../ui/route-message/route-message.module';
+import { AlertModule } from '../ui/alert/alert.module';
 
 export const routes = [
     { path: '', component: LoginComponent }
@@ -24,6 +25,7 @@ export const routes = [
     MatButtonModule,
     ReactiveFormsModule,
     RouteMessageModule,
+    AlertModule,
     RouterModule.forChild(routes)
   ]
 })

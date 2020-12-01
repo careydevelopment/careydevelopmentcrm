@@ -5,7 +5,8 @@
   </button>
 </div>
 <div class="image-wrapper">
-  <img [attr.src]="image" *ngIf="image" style="width:200px">
-  <img src="assets/img/app/no-image.png" *ngIf="!image" style="width:200px">
+  <mat-spinner *ngIf="showSpinner" [diameter]="80" class="center-div"></mat-spinner>
+  <img [attr.src]="image" *ngIf="image" style="width:200px; max-height: 200px">
+  <img src="assets/img/app/no-image.png" *ngIf="!image && !showSpinner" style="width:200px">
 </div>
 <input type="file" id="file-upload" (change)="fileChange(input)" #input />
