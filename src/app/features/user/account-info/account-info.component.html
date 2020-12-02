@@ -1,1 +1,66 @@
-<p>account-info works!</p>
+<div fxFlex fxLayout="column" fxLayoutGap="0px" class="route-content">
+  <div fxLayout="row wrap">
+    <div fxFlex="100" fxLayout="column">
+      <div>
+        <h4>Account Info</h4>
+      </div>
+      <div>
+        <alert></alert>
+      </div>
+      <div>
+        <div>
+          <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+            <div class="vertical-form-field">
+              <div class="label"><label for="firstName">First Name</label></div>
+              <div>
+                <mat-form-field appearance="fill" style="width:30%">
+                  <mat-label>Enter first name</mat-label>
+                  <input formControlName="firstName" matInput>
+                  <mat-error *ngIf="form.controls['firstName'].invalid">Please enter a valid first name</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label"><label for="lastName">Last Name</label></div>
+              <div>
+                <mat-form-field appearance="fill" style="width:30%">
+                  <mat-label>Enter last name</mat-label>
+                  <input formControlName="lastName" matInput>
+                  <mat-error *ngIf="form.controls['lastName'].invalid">Please enter a valid last name</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label"><label for="street1">Street1</label></div>
+              <div>
+                <mat-form-field appearance="fill" style="width:50%">
+                  <mat-label>Enter street address</mat-label>
+                  <input formControlName="street1" matInput>
+                  <mat-error *ngIf="form.controls['street1'].invalid">Please enter a valid street name</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label"><label for="street2">Street2</label></div>
+              <div>
+                <mat-form-field appearance="fill" style="width:50%">
+                  <mat-label>Enter street address</mat-label>
+                  <input formControlName="street2" matInput>
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+         </div>
+        <div>
+          <button mat-raised-button color="primary" (click)="upload()">Save Info</button>
+        </div>
+        <div *ngIf="uploading">
+          <mat-spinner [diameter]="50" class="center-div"></mat-spinner>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

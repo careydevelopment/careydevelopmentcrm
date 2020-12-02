@@ -12,5 +12,4 @@ export interface User {
 	authorityNames: string[];
 	username: string;
 	country: string;
-	profileImageFileName: string;
 }

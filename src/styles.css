@@ -64,3 +64,15 @@ h4 {
   margin: 0px 5px 0px 0px;
   border-radius: 5px;
 }
+
+.label {
+  text-align: left;
+  margin-bottom: 10px;
+  font-weight: 500;
+  margin-left: 4px;
+  font-size: 12pt;
+}
+
+.vertical-form-field {
+    margin-bottom: 15px;
+}
