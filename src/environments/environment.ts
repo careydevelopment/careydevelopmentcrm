@@ -5,5 +5,5 @@
 export const environment = {
   production: false,
   baseUserServiceUrl: 'http://localhost:8080',
-  baseGeoServiceUrl: 'http://localhost:8080'
+  baseGeoServiceUrl: 'http://localhost'
 };
