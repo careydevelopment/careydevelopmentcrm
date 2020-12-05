@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { Country } from '../models/country';
 import { State } from '../models/state';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { environment } from '../../environments/environment';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-  })
-};
+const baseUrl: string = environment.baseGeoServiceUrl;
 
 @Injectable({ providedIn: 'root' })
 export class GeoService {
@@ -25,30 +24,26 @@ export class GeoService {
     return this._allStates;
   }
 
-  initializeAllCountries() {
-    let countriesObservable$ = this.http.get<Country[]>("http://localhost:8080/utilities/countries", httpOptions);
+  initializeAllCountries(): Observable<Country[]> {
+    let countriesObservable$ = this.http.get<Country[]>(`${baseUrl}/countries`);
 
-    countriesObservable$.subscribe(
-      (countries: Country[]) => this.handleResponseForCountries(countries),
-      err => this.handleError(err)
-    );
+    return countriesObservable$.pipe(
+      map(countries => {
+        this._allCountries = countries;
+        return countries;
+      })
+    )
   }
 
-  initializeAllStates() {
-    let statesObservable$ = this.http.get<State[]>("http://localhost:8080/utilities/states", httpOptions);
+  initializeAllStates(): Observable<State[]> {
+    let statesObservable$ = this.http.get<State[]>(`${baseUrl}/states`);
 
-    statesObservable$.subscribe(
-      (states: State[]) => this.handleResponseForStates(states),
-      err => this.handleError(err)
-    );
-  }
-
-  private handleResponseForStates(states: State[]) {
-    this._allStates = states;
-  }
-
-  private handleResponseForCountries(countries: Country[]) {
-    this._allCountries = countries;
+    return statesObservable$.pipe(
+      map(states => {
+        this._allStates = states;
+        return states;
+      })
+    )
   }
 
   private handleError(error: HttpErrorResponse) {

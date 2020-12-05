@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { GeoService } from './services/geo.service';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +9,6 @@ export class AppComponent {
 
   title = 'Carey Development CRM';
 
-  constructor(private geoService: GeoService) {
-    this.initializeCachedData();
-  }    
+  constructor() { }    
 
-  private initializeCachedData() {
-    this.geoService.initializeAllStates();
-    this.geoService.initializeAllCountries();
-  }
 }

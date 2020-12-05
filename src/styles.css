@@ -76,3 +76,17 @@ h4 {
 .vertical-form-field {
     margin-bottom: 15px;
 }
+
+.no-label-field .mat-form-field-infix {
+  border-top: none;
+}
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
+}
