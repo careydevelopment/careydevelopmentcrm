@@ -89,6 +89,8 @@ export class AccountInfoComponent implements OnInit {
 
   update() {
     this.formSubmitted = true;
+    console.log("Clearing alerts");
+    this.alertService.clear();
 
     let userToSubmit: User = this.createUserToSubmit();
 
@@ -154,6 +156,7 @@ export class AccountInfoComponent implements OnInit {
     userToSubmit.zip = this.form.controls['zip'].value;
     userToSubmit.country = this.form.controls['country'].value;
 
+    //add back data not shown on the form
     userToSubmit.id = this.user.id;
     userToSubmit.authorityNames = this.user.authorityNames;
     userToSubmit.username = this.user.username;

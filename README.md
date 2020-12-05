@@ -27,6 +27,20 @@ microservices the app uses as well as links to their source code on GitHub.
 
 <a href="https://github.com/careydevelopment/ecosystem-user-service">User Service</a> - handles authentication and features related to user info (updating account details, adding a profile image, etc.)
 
+## Configuration
+Speaking of microservices, you'll need to update the code to point to the downstream APIs. To do that,
+you'll need to edit both of the files in src/environments. 
+
+Right now they're just dummied up, so you'll need to put your own URLs in there.
+
+For example, if you deploy the ecosystem-user-service so that it's located at http://mygreathost.com/user,
+then you'll need to set the following property:
+
+baseUserServiceUrl: 'http://mygreathost.com/user'
+
+Keep in mind: environment.ts is meant for non-production systems while environment.prod.ts is meant
+for production systems. So update the values accordingly.
+
 ## Persistence
 The microservices in turn use MongoDB for persistence. For more info about how to set up the MongoDB
 databases and collections used by the microservices, check out 

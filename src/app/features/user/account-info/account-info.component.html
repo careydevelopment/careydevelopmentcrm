@@ -12,12 +12,12 @@
       </div>
       <div *ngIf="!dataLoading">
         <div>
-          <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+          <form [formGroup]="form" (ngSubmit)="update()">
             <div class="vertical-form-field">
               <div class="label">First Name</div>
               <div>
                 <mat-form-field appearance="fill" class="no-label-field" style="width:30%">
-                  <input formControlName="firstName" matInput placeholder="Enter first name">
+                  <input formControlName="firstName" matInput placeholder="Enter first name" maxlength="50">
                   <mat-error *ngIf="form.controls['firstName'].invalid">Please enter a valid first name</mat-error>
                 </mat-form-field>
               </div>
@@ -27,7 +27,7 @@
               <div class="label">Last Name</div>
               <div>
                 <mat-form-field appearance="fill" class="no-label-field" style="width:30%">
-                  <input formControlName="lastName" matInput placeholder="Enter last name">
+                  <input formControlName="lastName" matInput placeholder="Enter last name" maxlength="50">
                   <mat-error *ngIf="form.controls['lastName'].invalid">Please enter a valid last name</mat-error>
                 </mat-form-field>
               </div>
@@ -37,7 +37,7 @@
               <div class="label">Street 1</div>
               <div>
                 <mat-form-field appearance="fill" class="no-label-field" style="width:50%">
-                  <input formControlName="street1" matInput placeholder="Enter street 1 address">
+                  <input formControlName="street1" matInput placeholder="Enter street 1 address" maxlength="80">
                   <mat-error *ngIf="form.controls['street1'].invalid">Please enter a valid street name</mat-error>
                 </mat-form-field>
               </div>
@@ -47,7 +47,7 @@
               <div class="label">Street 2</div>
               <div>
                 <mat-form-field appearance="fill" class="no-label-field" style="width:50%">
-                  <input formControlName="street2" matInput placeholder="Enter street 2 address">
+                  <input formControlName="street2" matInput placeholder="Enter street 2 address" maxlength="80">
                 </mat-form-field>
               </div>
             </div>
@@ -56,7 +56,7 @@
               <div class="label">City</div>
               <div>
                 <mat-form-field appearance="fill" class="no-label-field" style="width:30%">
-                  <input formControlName="city" matInput placeholder="Enter city">
+                  <input formControlName="city" matInput placeholder="Enter city" maxlength="50">
                   <mat-error *ngIf="form.controls['city'].invalid">Please enter a valid city</mat-error>
                 </mat-form-field>
               </div>
@@ -80,7 +80,7 @@
               <div class="label">Zip</div>
               <div>
                 <mat-form-field appearance="fill" class="no-label-field" style="width:30%">
-                  <input formControlName="zip" matInput placeholder="Enter zip code">
+                  <input formControlName="zip" matInput placeholder="Enter zip code" maxlength="12">
                   <mat-error *ngIf="form.controls['zip'].invalid">Please enter a valid zip code</mat-error>
                 </mat-form-field>
               </div>
@@ -104,7 +104,7 @@
               <div class="label">Email</div>
               <div>
                 <mat-form-field appearance="fill" class="no-label-field" style="width:40%">
-                  <input formControlName="email" matInput placeholder="Enter email address">
+                  <input formControlName="email" matInput placeholder="Enter email address" maxlength="50">
                   <mat-error *ngIf="form.controls['email'].invalid">Please enter a valid email address</mat-error>
                 </mat-form-field>
               </div>
@@ -114,18 +114,16 @@
               <div class="label">Phone</div>
               <div>
                 <mat-form-field appearance="fill" class="no-label-field" style="width:40%">
-                  <input formControlName="phoneNumber" matInput placeholder="Enter phone number">
+                  <input formControlName="phoneNumber" matInput placeholder="Enter phone number" maxlength="20">
                   <mat-error *ngIf="form.controls['phoneNumber'].invalid">Please enter a valid phone number</mat-error>
                 </mat-form-field>
               </div>
             </div>
+            <div style="margin-top:10px; margin-bottom:10px">
+              <button type="submit" *ngIf="!formSubmitted" [disabled]="!form.valid" mat-raised-button color="primary">Save Info</button>
+              <mat-spinner *ngIf="formSubmitted" [diameter]="50"></mat-spinner>
+            </div>
           </form>
-        </div>
-        <div style="margin-bottom: 10px">
-          <div>
-            <button *ngIf="!formSubmitted" [disabled]="!form.valid" mat-raised-button color="primary" (click)="update()">Save Info</button>
-            <mat-spinner *ngIf="formSubmitted" [diameter]="50"></mat-spinner>
-          </div>
         </div>
       </div>
     </div>
