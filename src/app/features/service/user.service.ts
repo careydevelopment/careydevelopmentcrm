@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { User } from '../../models/user';
+import { Observable, throwError, of } from 'rxjs';
+import { catchError, retry, map, tap } from 'rxjs/operators';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+  })
+};
+
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -23,5 +31,16 @@ export class UserService {
     console.log("Profile image URL is " + url);
 
     return this.http.get(url, { responseType: 'blob' });
+  }
+
+  update(userId: string, updatedUser: User): Observable<User> {
+    let url = "http://localhost:8080/user/" + userId;
+    console.log("Update user URL is " + url);
+
+    let user$ = this.http.put<User>(url, updatedUser, httpOptions);
+    
+    return user$.pipe(
+      tap(updatedUser => this._user = updatedUser)
+    )
   }
 }

@@ -7,11 +7,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AccountInfoComponent } from './account-info/account-info.component';
 import { ProfileImageComponent } from './profile-image/profile-image.component';
 import { ImageUploaderComponent } from '../ui/image-uploader/image-uploader.component';
 import { AlertModule } from '../../ui/alert/alert.module';
+import { RouteMessageModule } from '../../ui/route-message/route-message.module';
 
 
 export const routes = [
@@ -34,7 +36,9 @@ export const routes = [
     MatButtonModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatSelectModule,
     ReactiveFormsModule,
+    RouteMessageModule,
     AlertModule,
     RouterModule.forChild(routes)
   ]

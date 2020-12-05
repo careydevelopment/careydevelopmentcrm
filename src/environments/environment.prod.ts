@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  baseUserServiceUrl: 'http://remotehost',
+  baseGeoServiceUrl: 'http://remotehost'
 };
