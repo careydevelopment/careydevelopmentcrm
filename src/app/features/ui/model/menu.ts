@@ -8,12 +8,12 @@ export let menu: NavItem[] = [
   },
   {
     displayName: 'Contacts',
-    iconName: 'face',
+    iconName: 'group',
     route: 'contacts',
     children: [
       {
         displayName: 'Add Contact',
-        iconName: 'account_box',
+        iconName: 'add_box',
         route: 'contacts/add-contact'
       }
     ]

@@ -90,3 +90,7 @@ h4 {
   width: 100px;
   height: 100px;
 }
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}

@@ -1,0 +1,12 @@
+<form [formGroup]="phonesFormGroup">
+  <ng-template matStepLabel>Fill out your phones</ng-template>
+  <mat-form-field>
+    <mat-label>Phones</mat-label>
+    <input matInput formControlName="thirdCtrl" placeholder="Ex. 919-554-1212"
+           required>
+  </mat-form-field>
+  <div>
+    <button mat-button matStepperPrevious>Back</button>
+    <button mat-button matStepperNext>Next</button>
+  </div>
+</form>

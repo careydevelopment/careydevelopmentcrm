@@ -1,1 +1,36 @@
-<p>contact-form works!</p>
+<div fxFlex fxLayout="column" fxLayoutGap="0px" class="route-content">
+  <div fxLayout="row wrap">
+    <div fxFlex="100" fxLayout="column">
+      <div>
+        <h4>Add Contact</h4>
+      </div>
+      <div style="margin-bottom:20px">
+        <alert></alert>
+      </div>
+      <div class="absolute-center" *ngIf="dataLoading">
+        <mat-spinner [diameter]="80"></mat-spinner>
+      </div>
+      <div *ngIf="!dataLoading" style="margin-right:10px">
+        <mat-vertical-stepper [linear]="isLinear" #stepper>
+          <mat-step [stepControl]="basicInfoFormGroup" label="Basic Info">
+            <contact-basic-info-form></contact-basic-info-form>
+          </mat-step>
+          <mat-step [stepControl]="addressesFormGroup" label="Addresses">
+            <contact-addresses-form></contact-addresses-form>
+          </mat-step>
+          <mat-step [stepControl]="phonesFormGroup" label="Phones">
+            <contact-phones-form></contact-phones-form>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Confirm</ng-template>
+            <p>You are now done.</p>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button (click)="stepper.reset()">Reset</button>
+            </div>
+          </mat-step>
+        </mat-vertical-stepper>
+      </div>
+    </div>
+  </div>
+</div>
