@@ -27,14 +27,14 @@ export class UserService {
   }
 
   fetchProfileImage(userId: string): Observable<Blob> {
-    let url = "http://localhost:8080/user/" + userId + "/profileImage";
+    let url = "http://localhost:32010/user/" + userId + "/profileImage";
     console.log("Profile image URL is " + url);
 
     return this.http.get(url, { responseType: 'blob' });
   }
 
   update(userId: string, updatedUser: User): Observable<User> {
-    let url = "http://localhost:8080/user/" + userId;
+    let url = "http://localhost:32010/user/" + userId;
     console.log("Update user URL is " + url);
 
     let user$ = this.http.put<User>(url, updatedUser, httpOptions);

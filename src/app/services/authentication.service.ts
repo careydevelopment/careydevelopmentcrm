@@ -17,7 +17,7 @@ export class AuthenticationService {
   login(username: string, password: string): Observable<JwtResponse> {
     let jwtRequest: JwtRequest = { username: username, password: password };
 
-    return this.http.post<JwtResponse>('http://localhost:8080/authenticate',
+    return this.http.post<JwtResponse>('http://localhost:32010/authenticate',
         jwtRequest).pipe(
             tap((resp: JwtResponse) => this.setSession(resp)),
             shareReplay()

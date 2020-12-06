@@ -4,13 +4,13 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\features",
-    "\\src\\app\\features\\service",
     "\\src\\app\\features\\user",
+    "\\src\\app\\features\\user\\account-info",
     "\\src\\app\\features\\user\\profile-image",
-    "\\src\\assets",
+    "\\src\\app\\login",
     "\\src\\assets\\img",
     "\\src\\assets\\img\\app"
   ],
-  "SelectedNode": "\\README.md",
+  "SelectedNode": "\\src\\app\\features\\user\\profile-image\\profile-image.component.ts",
   "PreviewInSolutionExplorer": false
 }

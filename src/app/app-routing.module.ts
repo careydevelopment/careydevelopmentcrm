@@ -11,8 +11,9 @@ const routes: Routes = [
         path: '',
         component: FeaturesComponent,
         children: [
-            { path: 'dashboard', canActivate: [AuthGuard], loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule) },
-            { path: 'user', canActivate: [AuthGuard], loadChildren: () => import('./features/user/user.module').then(m => m.UserModule) }
+          { path: 'dashboard', canActivate: [AuthGuard], loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule) },
+          { path: 'user', canActivate: [AuthGuard], loadChildren: () => import('./features/user/user.module').then(m => m.UserModule) },
+          { path: 'contacts', canActivate: [AuthGuard], loadChildren: () => import('./features/contacts/contacts.module').then(m => m.ContactsModule) }
         ]
     }
 ];
