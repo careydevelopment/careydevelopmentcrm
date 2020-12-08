@@ -4,6 +4,7 @@ import { sources } from '../../../constants/source';
 import { contactStatuses } from '../../../constants/contact-status';
 import { linesOfBusiness } from '../../../constants/line-of-business';
 import { DropdownOption } from '../../../ui/model/dropdown-option'
+import { Contact } from '../../models/contact';
 
 @Component({
   selector: 'contact-basic-info-form',
@@ -12,10 +13,7 @@ import { DropdownOption } from '../../../ui/model/dropdown-option'
 })
 export class BasicInfoFormComponent implements OnInit {
 
-  isLinear = false;
   basicInfoFormGroup: FormGroup;
-  addressesFormGroup: FormGroup;
-  phonesFormGroup: FormGroup;
 
   availableSources: DropdownOption[] = sources;
   availableContactStatuses: DropdownOption[] = contactStatuses;
@@ -38,5 +36,24 @@ export class BasicInfoFormComponent implements OnInit {
       'title': [''],
       'company': ['']
     });
+  }
+
+  validForm(): boolean {
+    return this.basicInfoFormGroup.valid;
+  }
+
+  populateContact(contact: Contact) {
+    let basicInfo: FormGroup = this.basicInfoFormGroup;
+
+    contact.authority = (basicInfo.controls['authority'].value == 'true');
+    contact.company = basicInfo.controls['company'].value.trim();
+    contact.email = basicInfo.controls['email'].value.trim();
+    contact.firstName = basicInfo.controls['firstName'].value.trim();
+    contact.lastName = basicInfo.controls['lastName'].value.trim();
+    contact.linesOfBusiness = [basicInfo.controls['lineOfBusiness'].value];
+    contact.source = basicInfo.controls['source'].value;
+    contact.sourceDetails = basicInfo.controls['sourceDetails'].value.trim();
+    contact.status = basicInfo.controls['status'].value;
+    contact.title = basicInfo.controls['title'].value.trim();
   }
 }

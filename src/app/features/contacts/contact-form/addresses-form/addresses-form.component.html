@@ -1,11 +1,16 @@
-<form [formGroup]="addressesFormGroup">
-  <mat-form-field>
-    <mat-label>Address</mat-label>
-    <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-           required>
-  </mat-form-field>
-  <div>
-    <button mat-button matStepperPrevious>Back</button>
-    <button mat-button matStepperNext>Next</button>
-  </div>
-</form>
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel *ngFor="let addressType of availableAddressTypes">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{addressType.display}} Address
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <contact-address-type-form [addressType]="addressType.value"></contact-address-type-form>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<div class="stepper-navigation">
+  <button mat-button matStepperPrevious>Back</button>
+  <button mat-button matStepperNext>Next</button>
+</div>
+

@@ -94,3 +94,16 @@ h4 {
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
 }
+
+.stepper-navigation {
+  margin-top:30px;
+}
+
+.mat-vertical-stepper-content {
+  margin-top:15px;
+}
+
+.top-level-error-message {
+    font-weight: 400;
+    color: #ff006e;
+}

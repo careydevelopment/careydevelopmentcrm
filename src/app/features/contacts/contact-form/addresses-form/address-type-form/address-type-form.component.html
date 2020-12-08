@@ -1,0 +1,70 @@
+<form [formGroup]="addressTypeFormGroup">
+
+  <div class="vertical-form-field">
+    <div class="label">Street 1</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field" style="width:50%">
+        <input formControlName="street1" matInput placeholder="Enter street 1 address" maxlength="80">
+        <mat-error *ngIf="addressTypeFormGroup.controls['street1'].invalid">Please enter a valid street name</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="vertical-form-field">
+    <div class="label">Street 2</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field" style="width:50%">
+        <input formControlName="street2" matInput placeholder="Enter street 2 address" maxlength="80">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="vertical-form-field">
+    <div class="label">City</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field" style="width:30%">
+        <input formControlName="city" matInput placeholder="Enter city" maxlength="50">
+        <mat-error *ngIf="addressTypeFormGroup.controls['city'].invalid">Please enter a valid city</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="vertical-form-field">
+    <div class="label">State</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field">
+        <mat-select formControlName="state" placeholder="Select a state">
+          <mat-option *ngFor="let state of states" [value]="state.twoLetterCode">
+            {{state.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="addressTypeFormGroup.controls['state'].invalid">Please select a state</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="vertical-form-field">
+    <div class="label">Zip</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field" style="width:30%">
+        <input formControlName="zip" matInput placeholder="Enter zip code" maxlength="12">
+        <mat-error *ngIf="addressTypeFormGroup.controls['zip'].invalid">Please enter a valid zip code</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="vertical-form-field">
+    <div class="label">Country</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field">
+        <mat-select formControlName="country" placeholder="Select a country">
+          <mat-option *ngFor="let country of countries" [value]="country.twoLetterCode">
+            {{country.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="addressTypeFormGroup.controls['country'].invalid">Please select a country</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+</form>

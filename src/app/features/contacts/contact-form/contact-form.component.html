@@ -11,22 +11,32 @@
         <mat-spinner [diameter]="80"></mat-spinner>
       </div>
       <div *ngIf="!dataLoading" style="margin-right:10px">
+        <div *ngIf="errorMessages.length > 0" style="margin-top:10px; margin-bottom:10px">
+          <div *ngFor="let errorMessage of errorMessages">
+            <ul>
+              <li class="top-level-error-message">{{errorMessage}}</li>
+            </ul>
+          </div>
+        </div>
         <mat-vertical-stepper [linear]="isLinear" #stepper>
           <mat-step [stepControl]="basicInfoFormGroup" label="Basic Info">
-            <contact-basic-info-form></contact-basic-info-form>
+            <contact-basic-info-form ></contact-basic-info-form>
           </mat-step>
           <mat-step [stepControl]="addressesFormGroup" label="Addresses">
-            <contact-addresses-form></contact-addresses-form>
+            <contact-addresses-form style="margin-top:15px"></contact-addresses-form>
           </mat-step>
           <mat-step [stepControl]="phonesFormGroup" label="Phones">
             <contact-phones-form></contact-phones-form>
           </mat-step>
           <mat-step>
-            <ng-template matStepLabel>Confirm</ng-template>
-            <p>You are now done.</p>
+            <ng-template matStepLabel>Save Info</ng-template>
+            <p style="margin-left:17px">Please note you can edit contact details later on.</p>
+            <div style="margin-top:10px; margin-bottom:10px; margin-left:16px">
+              <button *ngIf="!formSubmitted" mat-raised-button color="primary" (click)="saveInfo()">Save Info</button>
+              <mat-spinner *ngIf="formSubmitted" [diameter]="50"></mat-spinner>
+            </div>
             <div>
               <button mat-button matStepperPrevious>Back</button>
-              <button mat-button (click)="stepper.reset()">Reset</button>
             </div>
           </mat-step>
         </mat-vertical-stepper>

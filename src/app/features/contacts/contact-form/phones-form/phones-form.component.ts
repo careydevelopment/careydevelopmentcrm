@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DropdownOption } from '../../../ui/model/dropdown-option'
+import { phoneTypes } from '../../../constants/phone-type';
+import { Contact } from '../../models/contact';
+import { Phone } from '../../models/phone';
+import { PhoneTypeFormComponent } from './phone-type-form/phone-type-form.component';
+
 
 @Component({
   selector: 'contact-phones-form',
@@ -9,14 +13,28 @@ import { DropdownOption } from '../../../ui/model/dropdown-option'
 })
 export class PhonesFormComponent implements OnInit {
 
-  isLinear = false;
-  phonesFormGroup: FormGroup;
+  @ViewChildren(PhoneTypeFormComponent) phoneTypeComponents: PhoneTypeFormComponent[];
+
+  availablePhoneTypes = phoneTypes;
 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.phonesFormGroup = this.fb.group({
-      thirdCtrl: ['', Validators.required]
+  }
+
+  populateContact(contact: Contact) {
+    let phones: Phone[] = [];
+
+    this.phoneTypeComponents.forEach((element, index) => {
+      let phone = {} as Phone;
+      let phoneForm: FormGroup = element.phoneTypeFormGroup;
+
+      phone.phoneType = phoneForm.controls['phoneType'].value;
+      phone.phone = phoneForm.controls['phone'].value.trim();
+
+      phones.push(phone);
     });
+
+    contact.phones = phones;
   }
 }

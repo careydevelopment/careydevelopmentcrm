@@ -1,12 +1,16 @@
-<form [formGroup]="phonesFormGroup">
-  <ng-template matStepLabel>Fill out your phones</ng-template>
-  <mat-form-field>
-    <mat-label>Phones</mat-label>
-    <input matInput formControlName="thirdCtrl" placeholder="Ex. 919-554-1212"
-           required>
-  </mat-form-field>
-  <div>
-    <button mat-button matStepperPrevious>Back</button>
-    <button mat-button matStepperNext>Next</button>
-  </div>
-</form>
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel *ngFor="let phoneType of availablePhoneTypes">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{phoneType.display}} Phone
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <contact-phone-type-form [phoneType]="phoneType.value"></contact-phone-type-form>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<div class="stepper-navigation">
+  <button mat-button matStepperPrevious>Back</button>
+  <button mat-button matStepperNext>Next</button>
+</div>
+
