@@ -103,7 +103,19 @@ h4 {
   margin-top:15px;
 }
 
-.top-level-error-message {
-    font-weight: 400;
-    color: red;
+.error-spree {
+  font-weight: 500;
+  font-size: 12pt;
+  line-height: 16pt;
+  color: red;
+}
+
+.error-spree-header {
+  font-size: 14pt;
+  font-weight: 600;
+  color:red;
+}
+
+.mat-step-icon-invalid {
+    background-color: red !important;
 }

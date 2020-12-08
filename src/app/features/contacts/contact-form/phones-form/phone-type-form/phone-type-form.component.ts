@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'contact-phone-type-form',
@@ -21,7 +21,7 @@ export class PhoneTypeFormComponent implements OnInit {
   private initForm() {
     this.phoneTypeFormGroup = this.fb.group({
       'phoneType': [this.phoneType],
-      'phone': ['']
+      'phone': ['9195551212', [Validators.pattern('[A-Za-z0-9\-\_]+')]]
     });
   }
 }

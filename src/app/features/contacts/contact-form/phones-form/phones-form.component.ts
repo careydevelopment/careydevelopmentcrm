@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { phoneTypes } from '../../../constants/phone-type';
+import { phoneTypes } from '../../constants/phone-type';
 import { Contact } from '../../models/contact';
 import { Phone } from '../../models/phone';
 import { PhoneTypeFormComponent } from './phone-type-form/phone-type-form.component';

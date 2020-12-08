@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { addressTypes } from '../../../constants/address-type';
+import { addressTypes } from '../../constants/address-type';
 import { Address } from '../../models/address';
 import { Contact } from '../../models/contact';
 import { AddressTypeFormComponent } from './address-type-form/address-type-form.component';
@@ -33,7 +33,7 @@ export class AddressesFormComponent implements OnInit {
       address.country = addressForm.controls['country'].value.trim();
       address.state = addressForm.controls['state'].value.trim();
       address.street1 = addressForm.controls['street1'].value.trim();
-      address.street2 = addressForm.controls['addressType'].value.trim();
+      address.street2 = addressForm.controls['street2'].value.trim();
       address.zip = addressForm.controls['zip'].value.trim();
 
       if (address.city.length > 0 || address.country.length > 0 || address.state.length > 0) {

@@ -30,12 +30,12 @@ export class AddressTypeFormComponent implements OnInit {
   private initForm() {
     this.addressTypeFormGroup = this.fb.group({
       'addressType': [this.addressType],
-      'street1': [''],
-      'street2': [''],
-      'city': [''],
-      'state': [''],
-      'zip': [''],
-      'country': ['']
+      'street1': ['1300 Teach Spring', [Validators.pattern('^[a-zA-Z0-9, \-\']+')]],
+      'street2': ['Something else', [Validators.pattern('^[a-zA-Z0-9, \-\']+')]],
+      'city': ['Wake Forest', [Validators.pattern('^[a-zA-Z0-9, \-\']+')]],
+      'state': ['NC'],
+      'zip': ['27587'],
+      'country': ['US']
     });
   }
 

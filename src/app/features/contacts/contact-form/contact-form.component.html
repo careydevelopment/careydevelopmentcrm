@@ -14,15 +14,30 @@
         <mat-vertical-stepper #stepper (selectionChange)="onStepChange($event)">
           <mat-step label="Basic Info">
             <contact-basic-info-form></contact-basic-info-form>
+            <div class="stepper-navigation">
+              <button mat-button matStepperNext>Next</button>
+            </div>
           </mat-step>
           <mat-step label="Addresses">
             <contact-addresses-form style="margin-top:15px"></contact-addresses-form>
+            <div class="stepper-navigation">
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
           </mat-step>
           <mat-step label="Phones">
             <contact-phones-form></contact-phones-form>
+            <div class="stepper-navigation">
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
           </mat-step>
           <mat-step label="Review & Save">
             <contact-review-form [contact]="contact" [errorMessages]="errorMessages"></contact-review-form>
+            <div style="margin-top:40px; margin-bottom:20px;">
+              <button *ngIf="!formSubmitted" mat-raised-button color="primary" (click)="saveInfo()">Save Info</button>
+              <mat-spinner *ngIf="formSubmitted" [diameter]="50"></mat-spinner>
+            </div>
             <div>
               <button mat-button matStepperPrevious>Back</button>
             </div>

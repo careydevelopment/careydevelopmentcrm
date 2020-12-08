@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { sources } from '../../../constants/source';
-import { contactStatuses } from '../../../constants/contact-status';
-import { linesOfBusiness } from '../../../constants/line-of-business';
+import { sources } from '../../constants/source';
+import { contactStatuses } from '../../constants/contact-status';
+import { linesOfBusiness } from '../../constants/line-of-business';
 import { DropdownOption } from '../../../ui/model/dropdown-option'
 import { Contact } from '../../models/contact';
 
@@ -23,23 +23,19 @@ export class BasicInfoFormComponent implements OnInit {
 
   ngOnInit() {
     this.basicInfoFormGroup = this.fb.group({
-      'firstName': ['', [Validators.required]],
-      'lastName': ['', [Validators.required]],
-      'email': ['', {
+      'firstName': ['Luke', [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
+      'lastName': ['Skywalker', [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
+      'email': ['luke@tatooine.com', {
         validators: Validators.compose([Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")])
       }],
-      'source': ['', [Validators.required]],
-      'sourceDetails': [''],
+      'source': ['EMAIL', [Validators.required]],
+      'sourceDetails': ['He emailed me', [Validators.pattern('[A-Za-z0-9 \-\_]+')]],
       'status': ['NEW', [Validators.required]],
-      'lineOfBusiness': [''],
+      'lineOfBusiness': ['ANGULAR'],
       'authority': ['false'],
-      'title': [''],
-      'company': ['']
+      'title': ['President', [Validators.pattern('[A-Za-z\-\_]+')]],
+      'company': ['International Business Machines', [Validators.pattern('[A-Za-z0-9 \-\_]+')]]
     });
-  }
-
-  validForm(): boolean {
-    return this.basicInfoFormGroup.valid;
   }
 
   populateContact(contact: Contact) {

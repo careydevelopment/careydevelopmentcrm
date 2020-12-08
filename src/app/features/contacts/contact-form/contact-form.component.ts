@@ -1,56 +1,127 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, ValidationErrors } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AlertService } from '../../../ui/alert/alert.service';
-import { UserService } from '../../service/user.service';
+import { ContactService } from '../../service/contact.service';
 import { Contact } from '../models/contact';
 import { AddressesFormComponent } from './addresses-form/addresses-form.component';
 import { BasicInfoFormComponent } from './basic-info-form/basic-info-form.component';
 import { PhonesFormComponent } from './phones-form/phones-form.component';
+
+const BASIC_INFO_INDEX: number = 0;
+const ADDRESSES_INDEX: number = 1;
+const PHONES_INDEX: number = 2;
+const REVIEW_INDEX: number = 3;
 
 @Component({
   selector: 'app-contact-form',
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.css']
 })
-export class ContactFormComponent implements OnInit {
+export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   errorMessages: string[] = [];
   contact: Contact = {} as Contact;
+  currentStepIndex: number = 0;
+  basicInfoFormSubscription: Subscription;
 
   @ViewChild(BasicInfoFormComponent) basicInfoComponent: BasicInfoFormComponent;
   @ViewChild(AddressesFormComponent) addressesComponent: AddressesFormComponent;
   @ViewChild(PhonesFormComponent) phonesComponent: PhonesFormComponent;
 
-  constructor(private alertService: AlertService, private userService: UserService) { }
+  constructor(private alertService: AlertService, private contactService: ContactService) { }
 
   ngOnInit() {
   }
 
-  onStepChange(event: any) {
-    let previousLabel: string = event.previouslySelectedStep.label;
-    let currentLabel: string = event.selectedStep.label;
+  ngOnDestroy() {
+    this.basicInfoFormSubscription.unsubscribe();
+  }
 
-    if (previousLabel == 'Basic Info') {
-      this.basicInfoComponent.populateContact(this.contact);
-    } else if (previousLabel == 'Addresses') {
-      this.addressesComponent.populateContact(this.contact);
-    } else if (previousLabel == 'Phones') {
-      this.phonesComponent.populateContact(this.contact);
-    }
+  ngAfterViewInit() {
+    //gotta do this here so we have a handle on the child components
+    this.handleSubscriptions();
+  }
 
-    if (currentLabel == 'Review & Save') {
-      this.validateForms();
+  private handleSubscriptions() {
+    this.handleBasicInfoFormSubscription();
+  }
+
+  private handleBasicInfoFormSubscription() {
+    this.basicInfoFormSubscription = this.basicInfoComponent
+      .basicInfoFormGroup
+      .valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged()
+      )
+      .subscribe(
+        (values) => {
+          this.handleFormCheck();
+        }
+      );
+  }
+
+  private handleFormCheck() {
+    this.handleBasicInfoFormCheck();
+  }
+
+  private handleBasicInfoFormCheck() {
+    if (this.currentStepIndex == BASIC_INFO_INDEX
+      && this.basicInfoComponent.basicInfoFormGroup.valid) {
+      this.clearIconError(BASIC_INFO_INDEX);
     }
   }
 
-  validateForms() {
+  onStepChange(event: any) {
+    let previousIndex: number = event.previouslySelectedIndex;
+    let currentIndex: number = event.selectedIndex;
+
+    this.currentStepIndex = currentIndex;
+
+    if (previousIndex == BASIC_INFO_INDEX) {
+      this.basicInfoComponent.populateContact(this.contact);
+
+      let validForm: boolean = (this.basicInfoComponent.basicInfoFormGroup.valid);
+      if (!validForm) this.changeIcon(previousIndex);
+      else this.clearIconError(previousIndex);
+    } else if (previousIndex == ADDRESSES_INDEX) {
+      this.addressesComponent.populateContact(this.contact);
+    } else if (previousIndex == PHONES_INDEX) {
+      this.phonesComponent.populateContact(this.contact);
+    }
+
+    if (currentIndex == REVIEW_INDEX) {
+      this.validateForms(previousIndex);
+    }
+  }
+
+  private clearIconError(index: number) {
+    let iconElement: HTMLElement = this.getIconElementByIndex(index);
+    iconElement.classList.remove('mat-step-icon-invalid');
+  }
+
+  private changeIcon(index: number) {
+    let iconElement: HTMLElement = this.getIconElementByIndex(index);
+    iconElement.classList.add('mat-step-icon-invalid');
+  }
+
+  private getIconElementByIndex(index: number): HTMLElement {
+    let nodeList: NodeList = document.querySelectorAll('.mat-step-icon');
+    let node: Node = nodeList.item(index);
+
+    return (<HTMLElement>node);
+  }
+
+  private validateForms(previousIndex: number) {    
     this.errorMessages = [];
 
     this.validateBasicInfoForm();
     this.validateAtLeastOneContactMethod();
   }
 
-  validateBasicInfoForm() {
+  private validateBasicInfoForm() {
     let basicInfoForm: FormGroup = this.basicInfoComponent.basicInfoFormGroup;
 
     Object.keys(basicInfoForm.controls).forEach(key => {
@@ -61,16 +132,16 @@ export class ContactFormComponent implements OnInit {
     });
   }
 
-  validateAtLeastOneContactMethod() {
+  private validateAtLeastOneContactMethod() {
     if (!this.contact.email
       && (!this.contact.addresses || this.contact.addresses.length == 0)
       && (!this.contact.phones || this.contact.phones.length == 0)) {
 
-      this.errorMessages.push("Please include at least one method of contact (phone, email, address)")
+        this.errorMessages.push("Please include at least one method of contact (phone, email, address)")
     }
   }
 
-  addErrorByKey(key: string) {
+  private addErrorByKey(key: string) {
     if (key == 'firstName') this.errorMessages.push("Please enter a valid first name");
     if (key == 'lastName') this.errorMessages.push("Please enter a valid last name");
     if (key == 'source') this.errorMessages.push("Please select a source");
@@ -81,7 +152,19 @@ export class ContactFormComponent implements OnInit {
   }
 
   private createContact() {
-    console.log(this.contact);
+    this.contactService.create(this.contact)
+      .subscribe(
+        (contact: Contact) => this.handleContactSaveResponse(contact),
+        err => this.handleContactSaveError(err)
+      );
   }
 
+  private handleContactSaveResponse(contact: Contact) {
+    console.log("Save is complete");
+    this.contact = contact;
+  }
+
+  private handleContactSaveError(err) {
+    console.error(err);
+  }
 }

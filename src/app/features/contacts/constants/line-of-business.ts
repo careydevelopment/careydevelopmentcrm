@@ -1,4 +1,4 @@
-import { DropdownOption } from '../ui/model/dropdown-option';
+import { DropdownOption } from '../../ui/model/dropdown-option';
 
 export const linesOfBusiness: DropdownOption[] = [
   { display: 'Java Enterprise', value: 'JAVA_ENTERPRISE' },
