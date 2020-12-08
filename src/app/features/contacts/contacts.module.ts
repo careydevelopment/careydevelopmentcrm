@@ -20,6 +20,7 @@ import { AddressesFormComponent } from './contact-form/addresses-form/addresses-
 import { PhonesFormComponent } from './contact-form/phones-form/phones-form.component';
 import { AddressTypeFormComponent } from './contact-form/addresses-form/address-type-form/address-type-form.component';
 import { PhoneTypeFormComponent } from './contact-form/phones-form/phone-type-form/phone-type-form.component';
+import { ReviewFormComponent } from './contact-form/review-form/review-form.component';
 
 export const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'account-info' },
@@ -34,7 +35,8 @@ export const routes = [
     AddressesFormComponent,
     PhonesFormComponent,
     AddressTypeFormComponent,
-    PhoneTypeFormComponent
+    PhoneTypeFormComponent,
+    ReviewFormComponent
   ],
   imports: [
     CommonModule,

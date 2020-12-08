@@ -1,0 +1,29 @@
+<div *ngIf="errorMessages.length > 0">
+  <div>
+    <h5 style="color:red">Form Contains Errors</h5>
+  </div>
+  <div>
+    <ul>
+      <li *ngFor="let errorMessage of errorMessages" class="top-level-error-message">{{errorMessage}}</li>
+    </ul>
+  </div>
+</div>
+<div *ngIf="errorMessages.length == 0">
+  <div>
+    <h5>Contact Details</h5>
+  </div>
+  <div>
+    <div *ngIf="contact.firstName && contact.lastName">
+      {{contact.firstName}} {{contact.lastName}}
+    </div>
+    <div *ngIf="!contact.firstName || !contact.lastName">
+
+    </div>
+  </div>
+  <div style="margin-top:10px; margin-bottom:10px; margin-left:16px">
+    <button *ngIf="!formSubmitted" mat-raised-button color="primary" (click)="saveInfo()">Save Info</button>
+    <mat-spinner *ngIf="formSubmitted" [diameter]="50"></mat-spinner>
+  </div>
+</div>
+
+

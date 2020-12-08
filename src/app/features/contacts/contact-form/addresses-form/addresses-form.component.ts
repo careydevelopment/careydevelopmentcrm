@@ -24,8 +24,6 @@ export class AddressesFormComponent implements OnInit {
   populateContact(contact: Contact) {
     let addresses: Address[] = [];
 
-    console.log(this.addressTypeComponents);
-
     this.addressTypeComponents.forEach((element, index) => {
       let address = {} as Address;
       let addressForm: FormGroup = element.addressTypeFormGroup;
@@ -38,7 +36,9 @@ export class AddressesFormComponent implements OnInit {
       address.street2 = addressForm.controls['addressType'].value.trim();
       address.zip = addressForm.controls['zip'].value.trim();
 
-      addresses.push(address);
+      if (address.city.length > 0 || address.country.length > 0 || address.state.length > 0) {
+        addresses.push(address);
+      }
     });
 
     contact.addresses = addresses;

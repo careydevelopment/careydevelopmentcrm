@@ -32,7 +32,9 @@ export class PhonesFormComponent implements OnInit {
       phone.phoneType = phoneForm.controls['phoneType'].value;
       phone.phone = phoneForm.controls['phone'].value.trim();
 
-      phones.push(phone);
+      if (phone.phone.length > 0) {
+        phones.push(phone);
+      }
     });
 
     contact.phones = phones;
