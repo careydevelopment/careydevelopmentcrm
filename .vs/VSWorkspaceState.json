@@ -4,13 +4,13 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\features",
-    "\\src\\app\\features\\user",
+    "\\src\\app\\features\\contacts",
+    "\\src\\app\\features\\contacts\\contact-form\\review-form",
+    "\\src\\app\\features\\service",
+    "\\src\\app\\features\\ui\\service",
     "\\src\\app\\features\\user\\account-info",
-    "\\src\\app\\features\\user\\profile-image",
-    "\\src\\app\\login",
-    "\\src\\assets\\img",
-    "\\src\\assets\\img\\app"
+    "\\src\\environments"
   ],
-  "SelectedNode": "\\src\\app\\features\\user\\profile-image\\profile-image.component.ts",
+  "SelectedNode": "\\src\\app\\features\\service\\contact.service.ts",
   "PreviewInSolutionExplorer": false
 }

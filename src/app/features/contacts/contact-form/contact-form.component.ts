@@ -25,6 +25,7 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   contact: Contact = {} as Contact;
   currentStepIndex: number = 0;
   basicInfoFormSubscription: Subscription;
+  formSubmitted: boolean = false;
 
   @ViewChild(BasicInfoFormComponent) basicInfoComponent: BasicInfoFormComponent;
   @ViewChild(AddressesFormComponent) addressesComponent: AddressesFormComponent;
@@ -49,6 +50,9 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private handleBasicInfoFormSubscription() {
+    //tracks changes to the form
+    //if the form becomes invalid, this will light the icon button red
+    //if the invalid form becomes valid, it will turn the icon button to original color
     this.basicInfoFormSubscription = this.basicInfoComponent
       .basicInfoFormGroup
       .valueChanges
@@ -93,7 +97,7 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     if (currentIndex == REVIEW_INDEX) {
-      this.validateForms(previousIndex);
+      this.validateForms();
     }
   }
 
@@ -114,7 +118,7 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
     return (<HTMLElement>node);
   }
 
-  private validateForms(previousIndex: number) {    
+  private validateForms() {    
     this.errorMessages = [];
 
     this.validateBasicInfoForm();
@@ -148,6 +152,8 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   saveInfo() {
+    this.alertService.clear();
+    this.formSubmitted = true;
     this.createContact();
   }
 
@@ -160,11 +166,21 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private handleContactSaveResponse(contact: Contact) {
-    console.log("Save is complete");
     this.contact = contact;
+    this.formSubmitted = false;
+    this.alertService.success("Contact successfully created!");
+    this.scrollToTop();
   }
 
   private handleContactSaveError(err) {
     console.error(err);
+    this.formSubmitted = false;
+    this.alertService.error("There was a problem - please contact support");
+    this.scrollToTop();
+  }
+
+  private scrollToTop() {
+    const element = document.querySelector('mat-sidenav-content') || window;
+    element.scrollTo(0, 0);
   }
 }
