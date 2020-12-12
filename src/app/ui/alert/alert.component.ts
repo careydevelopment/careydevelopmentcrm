@@ -37,10 +37,18 @@ export class AlertComponent implements OnInit, OnDestroy {
       }
     );
 
-    // clear alerts on location change
     this.routeSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        this.alertService.clear(this.id);
+        if (this.alerts) {
+          this.alerts = this.alerts.filter(x => x.keepAfterRouteChange);
+
+          this.alerts.forEach(alert => {
+            alert.keepAfterRouteChange = false;
+          })
+
+          //gotta clear the BehaviorSubject as it's the source of truth
+          if (this.alerts.length == 0) this.alertService.clear();
+        }
       }
     });
   }

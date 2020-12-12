@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { AlertService } from '../ui/alert/alert.service';
 import { AuthenticationService } from './authentication.service';
-import { RouteMessageService } from '../ui/route-message/route-message.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
   constructor(private router: Router, private authenticationService: AuthenticationService,
-    private routeMessageService: RouteMessageService) { }
+    private alertService: AlertService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     let routeMessage: string = null;
@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
       routeMessage = "Your session has expired."
     }
 
-    if (routeMessage) this.routeMessageService.message = routeMessage;
+    if (routeMessage) this.alertService.info(routeMessage, { keepAfterRouteChange: false });
 
     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
     return false;

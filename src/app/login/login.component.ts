@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
 
     if (err instanceof HttpErrorResponse) {
       if (err.status == 401) this.alertService.error("Invalid credentials");
+      else this.alertService.error("Unexpected error - please contact support");
     } 
 
     this.formSubmitted = false;

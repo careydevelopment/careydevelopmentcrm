@@ -4,13 +4,13 @@ import { Observable, throwError, of } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
-import { RouteMessageService } from '../ui/route-message/route-message.service';
+import { AlertService } from '../ui/alert/alert.service';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
   constructor(private authenticationService: AuthenticationService, private router: Router,
-    private routeMessageService: RouteMessageService) { }
+    private alertService: AlertService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -49,13 +49,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         //we don't want to redirect people to the login page when they're already on
         //the login page
         if (this.router.url != '/login') {
-          this.routeMessageService.message = "Please login again.";
+          this.alertService.info("Please login again.", { keepAfterRouteChange: false });
           this.authenticationService.logout();
           handled = true;
         }
         break;
       case 403:
-        this.routeMessageService.message = "Please login again.";
+        this.alertService.info("Please login again.", { keepAfterRouteChange: false });
         this.authenticationService.logout();
         handled = true;
         break;

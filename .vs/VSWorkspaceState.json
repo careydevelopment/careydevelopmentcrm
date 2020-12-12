@@ -3,14 +3,12 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\features",
-    "\\src\\app\\features\\contacts",
-    "\\src\\app\\features\\contacts\\contact-form\\review-form",
-    "\\src\\app\\features\\service",
-    "\\src\\app\\features\\ui\\service",
+    "\\src\\app\\features\\contacts\\contact-form",
     "\\src\\app\\features\\user\\account-info",
+    "\\src\\app\\ui",
+    "\\src\\app\\ui\\alert",
     "\\src\\environments"
   ],
-  "SelectedNode": "\\src\\app\\features\\service\\contact.service.ts",
+  "SelectedNode": "\\src\\app\\ui\\alert\\alert.model.ts",
   "PreviewInSolutionExplorer": false
 }

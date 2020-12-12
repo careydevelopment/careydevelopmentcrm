@@ -21,10 +21,6 @@
     <div fxFlex="50" fxFlex.lt-md="100" fxLayout="column" class="mat-app-background">
       <div fxLayout="column" fxLayoutAlign="center" style="margin-top:30px">
         <div fxLayout="row" fxLayoutAlign="center">
-          <route-message style="width:100%"></route-message>
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="center">
           <h3>Welcome to the CRM App</h3>
         </div>
 
@@ -35,7 +31,7 @@
 
       <div fxLayout="column" fxLayoutAlign="center">
         <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
-          <div style="margin-bottom:15px; height:60px">
+          <div style="margin-bottom:15px; height:75px">
             <alert></alert>
           </div>
           <div fxLayoutAlign="center">
@@ -53,7 +49,8 @@
             </mat-form-field>
           </div>
           <div fxLayoutAlign="center" style="margin-top:20px">
-            <button [disabled]="!form.valid || formSubmitted" type="submit" mat-raised-button color="primary">Login</button>
+            <button *ngIf="!formSubmitted" [disabled]="!form.valid" type="submit" mat-raised-button color="primary">Login</button>
+            <mat-spinner *ngIf="formSubmitted" [diameter]="50"></mat-spinner>
           </div>
         </form>
       </div>

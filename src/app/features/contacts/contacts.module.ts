@@ -14,7 +14,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AlertModule } from '../../ui/alert/alert.module';
-import { RouteMessageModule } from '../../ui/route-message/route-message.module';
 import { BasicInfoFormComponent } from './contact-form/basic-info-form/basic-info-form.component';
 import { AddressesFormComponent } from './contact-form/addresses-form/addresses-form.component';
 import { PhonesFormComponent } from './contact-form/phones-form/phones-form.component';
@@ -50,7 +49,6 @@ export const routes = [
     MatRadioModule,
     MatExpansionModule,
     ReactiveFormsModule,
-    RouteMessageModule,
     AlertModule,
     RouterModule.forChild(routes)
   ]

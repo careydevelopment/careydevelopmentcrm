@@ -4,6 +4,7 @@ export class Alert {
   autoClose: boolean;
   fade: boolean;
   alertType: string;
+  keepAfterRouteChange: boolean = false;
 
   constructor(init?:Partial<Alert>) {
     Object.assign(this, init);
