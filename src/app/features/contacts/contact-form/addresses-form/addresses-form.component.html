@@ -1,0 +1,10 @@
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel *ngFor="let addressType of availableAddressTypes">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{addressType.display}} Address
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <contact-address-type-form [addressType]="addressType.value"></contact-address-type-form>
+  </mat-expansion-panel>
+</mat-accordion>

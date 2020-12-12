@@ -1,0 +1,114 @@
+<form [formGroup]="basicInfoFormGroup">
+
+  <div class="vertical-form-field">
+    <div class="label">First Name</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field" style="width:30%">
+        <input formControlName="firstName" matInput placeholder="Enter first name" maxlength="50">
+        <mat-error *ngIf="basicInfoFormGroup.controls['firstName'].invalid">Please enter a valid first name</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="vertical-form-field">
+    <div class="label">Last Name</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field" style="width:30%">
+        <input formControlName="lastName" matInput placeholder="Enter last name" maxlength="50">
+        <mat-error *ngIf="basicInfoFormGroup.controls['lastName'].invalid">Please enter a valid last name</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="vertical-form-field">
+    <div class="label">Email</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field" style="width:50%">
+        <input formControlName="email" matInput placeholder="Enter email address" maxlength="50">
+        <mat-error *ngIf="basicInfoFormGroup.controls['email'].invalid">Please enter a valid email</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="vertical-form-field">
+    <div class="label">Title</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field" style="width:30%">
+        <input formControlName="title" matInput placeholder="Enter title" maxlength="30">
+        <mat-error *ngIf="basicInfoFormGroup.controls['title'].invalid">Please enter a valid title</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="vertical-form-field">
+    <div class="label">Company</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field" style="width:30%">
+        <input formControlName="company" matInput placeholder="Enter title" maxlength="30">
+        <mat-error *ngIf="basicInfoFormGroup.controls['company'].invalid">Please enter a valid company</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="vertical-form-field">
+    <div class="label">Source</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field">
+        <mat-select formControlName="source" placeholder="Select a source">
+          <mat-option *ngFor="let source of availableSources" [value]="source.value">
+            {{source.display}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="basicInfoFormGroup.controls['source'].invalid">Please select a source</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="vertical-form-field">
+    <div class="label">Source Details</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field" style="width:50%">
+        <input formControlName="sourceDetails" matInput placeholder="Enter source details" maxlength="100">
+        <mat-error *ngIf="basicInfoFormGroup.controls['sourceDetails'].invalid">Please enter valid source details</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="vertical-form-field">
+    <div class="label">Status</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field">
+        <mat-select formControlName="status" placeholder="Select a status">
+          <mat-option *ngFor="let status of availableContactStatuses" [value]="status.value">
+            {{status.display}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="basicInfoFormGroup.controls['status'].invalid">Please select a status</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="vertical-form-field">
+    <div class="label">Line of Business</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field">
+        <mat-select formControlName="lineOfBusiness" placeholder="Select a line of business">
+          <mat-option *ngFor="let lob of availableLinesOfBusiness" [value]="lob.value">
+            {{lob.display}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="basicInfoFormGroup.controls['lineOfBusiness'].invalid">Please select a line of business</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="vertical-form-field">
+    <div class="label">Has Authority</div>
+    <div>
+      <mat-radio-group formControlName="authority">
+        <mat-radio-button value="true">Yes</mat-radio-button>
+        <mat-radio-button value="false">No</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+</form>

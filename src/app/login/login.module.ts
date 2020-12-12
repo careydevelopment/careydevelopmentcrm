@@ -6,8 +6,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouteMessageModule } from '../ui/route-message/route-message.module';
 import { AlertModule } from '../ui/alert/alert.module';
 
 export const routes = [
@@ -23,8 +23,8 @@ export const routes = [
     MatIconModule,
     MatInputModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
-    RouteMessageModule,
     AlertModule,
     RouterModule.forChild(routes)
   ]

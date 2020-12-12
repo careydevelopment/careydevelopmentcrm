@@ -1,0 +1,97 @@
+.review-header {
+  font-size: 14pt;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.name {
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+.title {
+  font-size: 12pt;
+  margin-top: 5px;
+}
+
+.company {
+  font-size: 12pt;
+  margin-top: 5px;
+}
+
+.email {
+  font-size: 12pt;
+  margin-top: 5px;
+}
+
+.address-section {
+  margin-top: 30px;  
+}
+
+.address-type {
+  text-decoration: underline;
+  font-weight:500;
+  margin-bottom: 5px;
+  font-size: 12pt;
+}
+
+.address-line {
+  margin-top: 5px;
+  font-size: 12pt;
+}
+
+.phone-section {
+  margin-top: 30px;
+}
+
+.phone {
+    font-size: 12pt;
+    margin-bottom: 5px;
+}
+
+.phone-header {
+  text-decoration: underline;
+  font-weight: 500;
+  margin-bottom: 5px;
+  font-size: 12pt;
+}
+
+.other-details-section {
+  margin-top: 30px
+}
+
+.other-details-header {
+  text-decoration: underline;
+  font-weight: 500;
+  margin-bottom: 5px;
+  font-size: 12pt;
+}
+
+.other-label {
+  font-size: 12pt;
+  font-weight: 500;
+}
+
+.other-line {
+  margin-bottom: 10px;
+}
+
+.other-value {
+    font-size: 12pt;
+    margin-left: 10px;
+}
+
+.lob-section {
+  margin-top: 30px
+}
+
+.lob-header {
+  text-decoration: underline;
+  font-weight: 500;
+  margin-bottom: 5px;
+  font-size: 12pt;
+}
+
+.lob-line {
+  margin-bottom: 5px;
+}

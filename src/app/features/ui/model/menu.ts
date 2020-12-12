@@ -7,6 +7,18 @@ export let menu: NavItem[] = [
     route: 'dashboard'
   },
   {
+    displayName: 'Contacts',
+    iconName: 'group',
+    route: 'contacts',
+    children: [
+      {
+        displayName: 'Add Contact',
+        iconName: 'add_box',
+        route: 'contacts/add-contact'
+      }
+    ]
+  },
+  {
     displayName: 'User',
     iconName: 'face',
     route: 'user',
@@ -17,9 +29,9 @@ export let menu: NavItem[] = [
         route: 'user/account-info'
       },
       {
-          displayName: 'Profile Image',
-          iconName: 'image',
-          route: 'user/profile-image'
+        displayName: 'Profile Image',
+        iconName: 'image',
+        route: 'user/profile-image'
       }
     ]
   },

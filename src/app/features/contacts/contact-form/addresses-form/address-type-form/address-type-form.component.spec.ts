@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RouteMessageComponent } from './route-message.component';
+import { AddressTypeFormComponent } from './address-type-form.component';
 
-describe('RouteMessageComponent', () => {
-  let component: RouteMessageComponent;
-  let fixture: ComponentFixture<RouteMessageComponent>;
+describe('AddressTypeFormComponent', () => {
+  let component: AddressTypeFormComponent;
+  let fixture: ComponentFixture<AddressTypeFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RouteMessageComponent ]
+      declarations: [ AddressTypeFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RouteMessageComponent);
+    fixture = TestBed.createComponent(AddressTypeFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

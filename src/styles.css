@@ -90,3 +90,32 @@ h4 {
   width: 100px;
   height: 100px;
 }
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.stepper-navigation {
+  margin-top:30px;
+}
+
+.mat-vertical-stepper-content {
+  margin-top:15px;
+}
+
+.error-spree {
+  font-weight: 500;
+  font-size: 12pt;
+  line-height: 16pt;
+  color: red;
+}
+
+.error-spree-header {
+  font-size: 14pt;
+  font-weight: 600;
+  color:red;
+}
+
+.mat-step-icon-invalid {
+    background-color: red !important;
+}

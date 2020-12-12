@@ -3,14 +3,12 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\features",
-    "\\src\\app\\features\\service",
-    "\\src\\app\\features\\user",
-    "\\src\\app\\features\\user\\profile-image",
-    "\\src\\assets",
-    "\\src\\assets\\img",
-    "\\src\\assets\\img\\app"
+    "\\src\\app\\features\\contacts\\contact-form",
+    "\\src\\app\\features\\user\\account-info",
+    "\\src\\app\\ui",
+    "\\src\\app\\ui\\alert",
+    "\\src\\environments"
   ],
-  "SelectedNode": "\\README.md",
+  "SelectedNode": "\\src\\app\\ui\\alert\\alert.model.ts",
   "PreviewInSolutionExplorer": false
 }

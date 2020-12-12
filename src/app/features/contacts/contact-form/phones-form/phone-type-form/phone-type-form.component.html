@@ -1,0 +1,13 @@
+<form [formGroup]="phoneTypeFormGroup">
+
+  <div class="vertical-form-field">
+    <div class="label">Phone Number</div>
+    <div>
+      <mat-form-field appearance="fill" class="no-label-field" style="width:30%">
+        <input formControlName="phone" matInput placeholder="Enter a phone number" maxlength="20">
+        <mat-error *ngIf="phoneTypeFormGroup.controls['phone'].invalid">Please enter a valid phone number</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+</form>
