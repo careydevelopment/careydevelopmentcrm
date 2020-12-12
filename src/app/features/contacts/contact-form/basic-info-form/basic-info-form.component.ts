@@ -23,18 +23,18 @@ export class BasicInfoFormComponent implements OnInit {
 
   ngOnInit() {
     this.basicInfoFormGroup = this.fb.group({
-      'firstName': ['Luke', [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
-      'lastName': ['Skywalker', [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
-      'email': ['luke@tatooine.com', {
+      'firstName': ['', [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
+      'lastName': ['', [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
+      'email': ['', {
         validators: Validators.compose([Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")])
       }],
-      'source': ['EMAIL', [Validators.required]],
-      'sourceDetails': ['He emailed me', [Validators.pattern('[A-Za-z0-9 \-\_]+')]],
+      'source': ['', [Validators.required]],
+      'sourceDetails': ['', [Validators.pattern('[A-Za-z0-9 \-\_]+')]],
       'status': ['NEW', [Validators.required]],
-      'lineOfBusiness': ['ANGULAR'],
+      'lineOfBusiness': [''],
       'authority': ['false'],
-      'title': ['President', [Validators.pattern('[A-Za-z\-\_]+')]],
-      'company': ['International Business Machines', [Validators.pattern('[A-Za-z0-9 \-\_]+')]]
+      'title': ['', [Validators.pattern('[A-Za-z\-\_]+')]],
+      'company': ['', [Validators.pattern('[A-Za-z0-9 \-\_]+')]]
     });
   }
 
