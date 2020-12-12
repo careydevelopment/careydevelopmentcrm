@@ -34,8 +34,8 @@
           </mat-step>
           <mat-step label="Review & Save">
             <contact-review-form [contact]="contact" [errorMessages]="errorMessages"></contact-review-form>
-            <div style="margin-top:40px; margin-bottom:20px;">
-              <button *ngIf="!formSubmitted" mat-raised-button color="primary" (click)="saveInfo()">Save Info</button>
+            <div style="margin-top:40px; margin-bottom:20px;margin-left:17px">
+              <button [disabled]="!allFormsValid" *ngIf="!formSubmitted" mat-raised-button color="primary" (click)="saveInfo()">Save Info</button>
               <mat-spinner *ngIf="formSubmitted" [diameter]="50"></mat-spinner>
             </div>
             <div>

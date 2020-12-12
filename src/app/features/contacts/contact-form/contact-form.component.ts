@@ -26,6 +26,7 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   currentStepIndex: number = 0;
   basicInfoFormSubscription: Subscription;
   formSubmitted: boolean = false;
+  allFormsValid: boolean = false;
 
   @ViewChild(BasicInfoFormComponent) basicInfoComponent: BasicInfoFormComponent;
   @ViewChild(AddressesFormComponent) addressesComponent: AddressesFormComponent;
@@ -72,9 +73,10 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private handleBasicInfoFormCheck() {
-    if (this.currentStepIndex == BASIC_INFO_INDEX
-      && this.basicInfoComponent.basicInfoFormGroup.valid) {
-      this.clearIconError(BASIC_INFO_INDEX);
+    if (this.currentStepIndex == BASIC_INFO_INDEX) {
+      if (this.basicInfoComponent.basicInfoFormGroup.valid) {
+        this.clearIconError(BASIC_INFO_INDEX);
+      }   
     }
   }
 
@@ -88,8 +90,13 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
       this.basicInfoComponent.populateContact(this.contact);
 
       let validForm: boolean = (this.basicInfoComponent.basicInfoFormGroup.valid);
-      if (!validForm) this.changeIcon(previousIndex);
-      else this.clearIconError(previousIndex);
+      if (!validForm) {
+        this.changeIcon(previousIndex);
+        this.allFormsValid = false;
+      } else {
+        this.clearIconError(previousIndex);
+        this.allFormsValid = true;
+      }
     } else if (previousIndex == ADDRESSES_INDEX) {
       this.addressesComponent.populateContact(this.contact);
     } else if (previousIndex == PHONES_INDEX) {
