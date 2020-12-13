@@ -21,7 +21,7 @@ export class PhoneTypeFormComponent implements OnInit {
   private initForm() {
     this.phoneTypeFormGroup = this.fb.group({
       'phoneType': [this.phoneType],
-      'phone': ['9195551212', [Validators.pattern('[A-Za-z0-9\-\_]+')]]
+      'phone': ['', [Validators.pattern('[A-Za-z0-9\-\_]+')]]
     });
   }
 }

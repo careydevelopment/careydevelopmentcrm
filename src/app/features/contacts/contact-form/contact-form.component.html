@@ -13,7 +13,7 @@
       <div *ngIf="!dataLoading" style="margin-right:10px">
         <mat-vertical-stepper #stepper (selectionChange)="onStepChange($event)">
           <mat-step label="Basic Info">
-            <contact-basic-info-form></contact-basic-info-form>
+            <contact-basic-info-form [contact]="contact"></contact-basic-info-form>
             <div class="stepper-navigation">
               <button mat-button matStepperNext>Next</button>
             </div>

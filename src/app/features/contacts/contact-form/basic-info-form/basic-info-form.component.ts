@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { ValidationErrors, FormGroup, AsyncValidatorFn, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { sources } from '../../constants/source';
 import { contactStatuses } from '../../constants/contact-status';
 import { linesOfBusiness } from '../../constants/line-of-business';
 import { DropdownOption } from '../../../ui/model/dropdown-option'
 import { Contact } from '../../models/contact';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ContactService } from '../../../service/contact.service';
 
 @Component({
   selector: 'contact-basic-info-form',
@@ -19,23 +22,36 @@ export class BasicInfoFormComponent implements OnInit {
   availableContactStatuses: DropdownOption[] = contactStatuses;
   availableLinesOfBusiness: DropdownOption[] = linesOfBusiness;
 
-  constructor(private fb: FormBuilder) { }
+  @Input() contact: Contact;
+
+  constructor(private fb: FormBuilder, private contactService: ContactService) { }
 
   ngOnInit() {
     this.basicInfoFormGroup = this.fb.group({
-      'firstName': ['Luke', [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
-      'lastName': ['Skywalker', [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
-      'email': ['luke@tatooine.com', {
-        validators: Validators.compose([Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")])
-      }],
-      'source': ['EMAIL', [Validators.required]],
-      'sourceDetails': ['He emailed me', [Validators.pattern('[A-Za-z0-9 \-\_]+')]],
+      'firstName': ['', [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
+      'lastName': ['', [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
+      'email': ['', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
+        [this.emailExistsValidator()],
+       'blur'
+      ],
+      'source': ['', [Validators.required]],
+      'sourceDetails': ['', [Validators.pattern('[A-Za-z0-9 \-\_]+')]],
       'status': ['NEW', [Validators.required]],
-      'lineOfBusiness': ['ANGULAR'],
+      'lineOfBusiness': [''],
       'authority': ['false'],
-      'title': ['President', [Validators.pattern('[A-Za-z\-\_]+')]],
-      'company': ['International Business Machines', [Validators.pattern('[A-Za-z0-9 \-\_]+')]]
+      'title': ['', [Validators.pattern('[A-Za-z\-\_]+')]],
+      'company': ['', [Validators.pattern('[A-Za-z0-9 \-\_]+')]]
     });
+  }
+
+  private emailExistsValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      return this.contactService.doesEmailExist(control.value).pipe(
+        map(res => {
+          return res ? { emailExists: true } : null;
+        })
+      );
+    };
   }
 
   populateContact(contact: Contact) {

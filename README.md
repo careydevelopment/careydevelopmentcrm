@@ -25,7 +25,9 @@ so if you want to start at the beginning, go to the last page.
 Keep in mind: this Angular app runs alongside a microservice architecture. Here's a list of the current
 microservices the app uses as well as links to their source code on GitHub.
 
-<a href="https://github.com/careydevelopment/ecosystem-user-service">User Service</a> - handles authentication and features related to user info (updating account details, adding a profile image, etc.)
+* <a href="https://github.com/careydevelopment/ecosystem-user-service">User Service</a> - handles authentication and features related to user info (updating account details, adding a profile image, etc.)
+* <a href="https://github.com/careydevelopment/contact-service">Contact Service</a> - handles CRUD activities related to contacts (sales leads, customers, etc.) in the system
+* Geo Service - retrieves lists of geographies such as states and countries (currently not public)
 
 ## Configuration
 Speaking of microservices, you'll need to update the code to point to the downstream APIs. To do that,

@@ -17,4 +17,15 @@ export class ContactService {
 
     return this.http.post<Contact>(url, contact);
   }
+
+  doesEmailExist(email: string): Observable<boolean> {
+    let url = `${baseUrl}/contact/emailcheck`;
+
+    let content: any = {};
+    content.email = email;
+
+    let response$: Observable<boolean> = this.http.post<boolean>(url, content);
+
+    return response$;
+  }
 }
