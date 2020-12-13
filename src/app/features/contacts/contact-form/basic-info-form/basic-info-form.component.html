@@ -25,7 +25,10 @@
     <div>
       <mat-form-field appearance="fill" class="no-label-field" style="width:50%">
         <input formControlName="email" matInput placeholder="Enter email address" maxlength="50">
-        <mat-error *ngIf="basicInfoFormGroup.controls['email'].invalid">Please enter a valid email</mat-error>
+        <mat-error *ngIf="basicInfoFormGroup.get('email').hasError('emailExists'); else otherErrorCheck">That email already exists!</mat-error>
+        <ng-template #otherErrorCheck>
+          <mat-error *ngIf="basicInfoFormGroup.controls['email'].invalid">Please enter a valid email address</mat-error>
+        </ng-template>
       </mat-form-field>
     </div>
   </div>
