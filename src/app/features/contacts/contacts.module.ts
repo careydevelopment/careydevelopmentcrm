@@ -20,6 +20,8 @@ import { PhonesFormComponent } from './contact-form/phones-form/phones-form.comp
 import { AddressTypeFormComponent } from './contact-form/addresses-form/address-type-form/address-type-form.component';
 import { PhoneTypeFormComponent } from './contact-form/phones-form/phone-type-form/phone-type-form.component';
 import { ReviewFormComponent } from './contact-form/review-form/review-form.component';
+import { NgxFlagPickerModule } from 'ngx-flag-picker';
+import { PhoneMaskDirective } from '../../util/phone-mask.directive';
 
 export const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'account-info' },
@@ -35,7 +37,8 @@ export const routes = [
     PhonesFormComponent,
     AddressTypeFormComponent,
     PhoneTypeFormComponent,
-    ReviewFormComponent
+    ReviewFormComponent,
+    PhoneMaskDirective
   ],
   imports: [
     CommonModule,
@@ -50,6 +53,7 @@ export const routes = [
     MatExpansionModule,
     ReactiveFormsModule,
     AlertModule,
+    NgxFlagPickerModule,
     RouterModule.forChild(routes)
   ]
 })

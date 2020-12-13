@@ -3,8 +3,18 @@
   <div class="vertical-form-field">
     <div class="label">Phone Number</div>
     <div>
-      <mat-form-field appearance="fill" class="no-label-field" style="width:30%">
-        <input formControlName="phone" matInput placeholder="Enter a phone number" maxlength="20">
+      <mat-form-field appearance="fill" class="no-label-field" style="width:30%; height:125px">
+        <div style="display: flex">
+          <div style="flex:0 0 35%">
+            <ngx-flag-picker [selectedCountryCode]="selectedCountryCode"
+                             [countryCodes]="countryCodes"
+                             (changedCountryCode)="changeSelectedCountryCode($event)">
+            </ngx-flag-picker>
+          </div>
+          <div style="flex: 1">
+            <input appPhoneMask formControlName="phone" [countryCode]="selectedCountryCode" matInput placeholder="Enter a phone number" maxlength="20">
+          </div>
+        </div>
         <mat-error *ngIf="phoneTypeFormGroup.controls['phone'].invalid">Please enter a valid phone number</mat-error>
       </mat-form-field>
     </div>

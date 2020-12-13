@@ -119,3 +119,7 @@ h4 {
 .mat-step-icon-invalid {
     background-color: red !important;
 }
+
+.list-country-flags {
+  max-height: 100px !important;
+}
