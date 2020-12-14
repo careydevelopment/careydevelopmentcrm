@@ -6,7 +6,7 @@ import { linesOfBusiness } from '../../constants/line-of-business';
 import { DropdownOption } from '../../../ui/model/dropdown-option'
 import { Contact } from '../../models/contact';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, delay, switchMap } from 'rxjs/operators';
 import { ContactService } from '../../../service/contact.service';
 
 @Component({
@@ -34,10 +34,10 @@ export class BasicInfoFormComponent implements OnInit {
         [this.emailExistsValidator()],
        'blur'
       ],
-      'source': ['', [Validators.required]],
+      'source': [null, [Validators.required]],
       'sourceDetails': ['', [Validators.pattern('[A-Za-z0-9 \-\_]+')]],
       'status': ['NEW', [Validators.required]],
-      'lineOfBusiness': [''],
+      'lineOfBusiness': [null],
       'authority': ['false'],
       'title': ['', [Validators.pattern('[A-Za-z\-\_]+')]],
       'company': ['', [Validators.pattern('[A-Za-z0-9 \-\_]+')]]
@@ -46,10 +46,11 @@ export class BasicInfoFormComponent implements OnInit {
 
   private emailExistsValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.contactService.doesEmailExist(control.value).pipe(
-        map(res => {
-          return res ? { emailExists: true } : null;
-        })
+      return of(control.value).pipe(
+        delay(500),
+        switchMap((email) => this.contactService.doesEmailExist(email).pipe(
+          map(emailExists => emailExists ? { emailExists: true } : null)
+        ))
       );
     };
   }
