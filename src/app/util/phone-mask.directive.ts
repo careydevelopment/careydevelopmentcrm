@@ -3,7 +3,7 @@ import { NgControl } from '@angular/forms';
 import { AsYouType } from 'libphonenumber-js'
 
 @Directive({
-  selector: '[formControlName][appPhoneMask]',
+  selector: '[appPhoneMask]',
 })
 export class PhoneMaskDirective {
 
@@ -13,14 +13,24 @@ export class PhoneMaskDirective {
 
   @HostListener('ngModelChange', ['$event'])
   onModelChange(event) {
-    this.onInputChange(event);
+    this.onInputChange(event, false);
   }
 
-  onInputChange(event) {
+  @HostListener('keydown.backspace', ['$event'])
+  keydownBackspace(event) {
+    this.onInputChange(event.target.value, true);
+  }
+
+  onInputChange(event, backspace) {
     let asYouType: AsYouType = this.getFormatter();
 
     if (asYouType) {
       let newVal = event.replace(/\D/g, '');
+
+      if (backspace && newVal.length <= 6) {
+        newVal = newVal.substring(0, newVal.length - 1);
+      }
+
       newVal = asYouType.input(newVal);
 
       this.ngControl.valueAccessor.writeValue(newVal);

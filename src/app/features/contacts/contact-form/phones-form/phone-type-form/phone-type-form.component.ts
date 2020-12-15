@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { GeoService } from '../../../../../services/geo.service';
 
 @Component({
   selector: 'contact-phone-type-form',
@@ -13,9 +14,10 @@ export class PhoneTypeFormComponent implements OnInit {
   @Input() phoneType: string;
 
   selectedCountryCode = 'us';
+  phoneCode = '1';
   countryCodes = ['us', 'ca', 'de', 'mx', 'br', 'pt', 'cn', 'be', 'jp', 'ph', 'lu', 'bs'];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private geoService: GeoService) { }
 
   ngOnInit() {
     this.initForm();
@@ -30,6 +32,7 @@ export class PhoneTypeFormComponent implements OnInit {
 
   changeSelectedCountryCode(value: string): void {
     this.selectedCountryCode = value;
+    this.phoneCode = this.geoService.findCountryCodeByTwoLetterAbbreviation(this.selectedCountryCode);
   }
 
 }

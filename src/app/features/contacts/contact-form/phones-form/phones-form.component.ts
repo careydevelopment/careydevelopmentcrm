@@ -28,9 +28,11 @@ export class PhonesFormComponent implements OnInit {
     this.phoneTypeComponents.forEach((element, index) => {
       let phone = {} as Phone;
       let phoneForm: FormGroup = element.phoneTypeFormGroup;
+      let countryCode: string = element.selectedCountryCode;
 
       phone.phoneType = phoneForm.controls['phoneType'].value;
       phone.phone = phoneForm.controls['phone'].value.trim();
+      phone.countryCode = countryCode;
 
       if (phone.phone.length > 0) {
         phones.push(phone);
