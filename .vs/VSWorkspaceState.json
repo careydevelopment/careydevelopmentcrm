@@ -6,11 +6,11 @@
     "\\src\\app\\features",
     "\\src\\app\\features\\contacts",
     "\\src\\app\\features\\contacts\\contact-form",
-    "\\src\\app\\features\\contacts\\contact-form\\addresses-form",
-    "\\src\\app\\features\\contacts\\contact-form\\basic-info-form",
-    "\\src\\app\\features\\contacts\\contact-form\\phones-form",
-    "\\src\\app\\features\\contacts\\contact-form\\review-form"
+    "\\src\\app\\features\\service",
+    "\\src\\app\\login",
+    "\\src\\app\\services",
+    "\\src\\app\\util"
   ],
-  "SelectedNode": "\\src\\app\\features\\contacts\\contact-form\\contact-form.component.ts",
+  "SelectedNode": "\\src\\app\\util\\phone-mask.directive.ts",
   "PreviewInSolutionExplorer": false
 }

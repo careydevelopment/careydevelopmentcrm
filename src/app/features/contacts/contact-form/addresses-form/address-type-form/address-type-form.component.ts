@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Country } from '../../../../../models/country';
 import { State } from '../../../../../models/state';
 import { GeoService } from '../../../../../services/geo.service';
+import { Address } from '../../../models/address';
+import { Contact } from '../../../models/contact';
 
 @Component({
   selector: 'contact-address-type-form',
@@ -14,6 +16,7 @@ export class AddressTypeFormComponent implements OnInit {
   addressTypeFormGroup: FormGroup;
 
   @Input() addressType: string;
+  @Input() contact: Contact;
 
   states: State[] = [];
   countries: Country[] = [];
@@ -28,14 +31,19 @@ export class AddressTypeFormComponent implements OnInit {
   }
 
   private initForm() {
+    if (!this.contact) this.contact = {} as Contact;
+
+    let address: Address = (this.contact.addresses) ? this.contact.addresses.find(ad => ad.addressType === this.addressType) : null;
+    if (!address) address = {} as Address;
+    
     this.addressTypeFormGroup = this.fb.group({
       'addressType': [this.addressType],
-      'street1': ['', [Validators.pattern('^[a-zA-Z0-9, \-\']+')]],
-      'street2': ['', [Validators.pattern('^[a-zA-Z0-9, \-\']+')]],
-      'city': ['', [Validators.pattern('^[a-zA-Z0-9, \-\']+')]],
-      'state': [''],
-      'zip': [''],
-      'country': ['US']
+      'street1': [address.street1, [Validators.pattern('^[a-zA-Z0-9, \-\']+')]],
+      'street2': [address.street2, [Validators.pattern('^[a-zA-Z0-9, \-\']+')]],
+      'city': [address.city, [Validators.pattern('^[a-zA-Z0-9, \-\']+')]],
+      'state': [address.state],
+      'zip': [address.zip],
+      'country': [address.country]
     });
   }
 

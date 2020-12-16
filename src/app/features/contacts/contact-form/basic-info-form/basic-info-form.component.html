@@ -95,7 +95,7 @@
       <div class="label">Line of Business</div>
       <div>
         <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
-          <mat-select formControlName="lineOfBusiness" placeholder="Select a line of business">
+          <mat-select multiple formControlName="lineOfBusiness" placeholder="Select a line of business">
             <mat-option *ngFor="let lob of availableLinesOfBusiness" [value]="lob.value">
               {{lob.display}}
             </mat-option>

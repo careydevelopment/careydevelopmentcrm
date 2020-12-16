@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChildren, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { addressTypes } from '../../constants/address-type';
 import { Address } from '../../models/address';
@@ -13,6 +13,8 @@ import { AddressTypeFormComponent } from './address-type-form/address-type-form.
 export class AddressesFormComponent implements OnInit {
 
   @ViewChildren(AddressTypeFormComponent) addressTypeComponents: AddressTypeFormComponent[];
+
+  @Input() contact: Contact;
 
   availableAddressTypes = addressTypes;
 

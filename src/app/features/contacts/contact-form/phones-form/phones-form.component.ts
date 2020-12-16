@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChildren, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { phoneTypes } from '../../constants/phone-type';
 import { Contact } from '../../models/contact';
@@ -16,6 +16,8 @@ export class PhonesFormComponent implements OnInit {
   @ViewChildren(PhoneTypeFormComponent) phoneTypeComponents: PhoneTypeFormComponent[];
 
   availablePhoneTypes = phoneTypes;
+
+  @Input() contact: Contact;
 
   constructor(private fb: FormBuilder) { }
 

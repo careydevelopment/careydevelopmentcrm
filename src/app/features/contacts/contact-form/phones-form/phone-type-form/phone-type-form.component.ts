@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GeoService } from '../../../../../services/geo.service';
+import { Contact } from '../../../models/contact';
+import { Phone } from '../../../models/phone';
 
 @Component({
   selector: 'contact-phone-type-form',
@@ -12,6 +14,7 @@ export class PhoneTypeFormComponent implements OnInit {
   phoneTypeFormGroup: FormGroup;
 
   @Input() phoneType: string;
+  @Input() contact: Contact;
 
   selectedCountryCode = 'us';
   phoneCode = '1';
@@ -24,9 +27,14 @@ export class PhoneTypeFormComponent implements OnInit {
   }
 
   private initForm() {
+    if (!this.contact) this.contact = {} as Contact;
+
+    let phone: Phone = (this.contact.phones) ? this.contact.phones.find(ph => ph.phoneType === this.phoneType) : null;
+    let phoneNumber = (phone) ? phone.phone : '';
+
     this.phoneTypeFormGroup = this.fb.group({
       'phoneType': [this.phoneType],
-      'phone': ['', [Validators.pattern('[A-Za-z0-9\-\_ ()]+')]]
+      'phone': [phoneNumber, [Validators.pattern('[A-Za-z0-9\-\_ ()]+')]]
     });
   }
 

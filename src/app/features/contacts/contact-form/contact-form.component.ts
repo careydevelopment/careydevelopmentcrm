@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
 import { FormGroup, ValidationErrors } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -22,7 +22,6 @@ const REVIEW_INDEX: number = 3;
 export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   errorMessages: string[] = [];
-  contact: Contact = {} as Contact;
   currentStepIndex: number = 0;
   basicInfoFormSubscription: Subscription;
   formSubmitted: boolean = false;
@@ -32,9 +31,14 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(AddressesFormComponent) addressesComponent: AddressesFormComponent;
   @ViewChild(PhonesFormComponent) phonesComponent: PhonesFormComponent;
 
+  @Input() contact: Contact;
+
   constructor(private alertService: AlertService, private contactService: ContactService) { }
 
   ngOnInit() {
+    if (!this.contact) {
+      this.contact = {} as Contact;
+    } 
   }
 
   ngOnDestroy() {

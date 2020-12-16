@@ -27,32 +27,40 @@ export class BasicInfoFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private contactService: ContactService) { }
 
   ngOnInit() {
+    if (!this.contact) this.contact = {'status': 'NEW', 'authority': false} as Contact;
+
+    let authority: string = this.contact.authority ? 'true' : 'false';
+
     this.basicInfoFormGroup = this.fb.group({
-      'firstName': ['', [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
-      'lastName': ['', [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
-      'email': ['', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
+      'firstName': [this.contact.firstName, [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
+      'lastName': [this.contact.lastName, [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
+      'email': [this.contact.email, [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
         [this.emailExistsValidator()],
        'blur'
       ],
-      'source': [null, [Validators.required]],
-      'sourceDetails': ['', [Validators.pattern('[A-Za-z0-9 \-\_]+')]],
-      'status': ['NEW', [Validators.required]],
-      'lineOfBusiness': [null],
-      'authority': ['false'],
-      'title': ['', [Validators.pattern('[A-Za-z\-\_]+')]],
-      'company': ['', [Validators.pattern('[A-Za-z0-9 \-\_]+')]]
+      'source': [this.contact.source, [Validators.required]],
+      'sourceDetails': [this.contact.sourceDetails, [Validators.pattern('[A-Za-z0-9 \-\_]+')]],
+      'status': [this.contact.status, [Validators.required]],
+      'lineOfBusiness': [this.contact.linesOfBusiness],
+      'authority': [authority],
+      'title': [this.contact.title, [Validators.pattern('[A-Za-z\-\_]+')]],
+      'company': [this.contact.company, [Validators.pattern('[A-Za-z0-9 \-\_]+')]]
     });
   }
 
   private emailExistsValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      if (control.value && (<string>control.value).trim().length > 0) {
-        return of(control.value).pipe(
-          delay(500),
-          switchMap((email) => this.contactService.doesEmailExist(email).pipe(
-            map(emailExists => emailExists ? { emailExists: true } : null)
-          ))
-        );
+      if (!this.contact.id) {
+        if (control.value && (<string>control.value).trim().length > 0) {
+          return of(control.value).pipe(
+            delay(500),
+            switchMap((email) => this.contactService.doesEmailExist(email).pipe(
+              map(emailExists => emailExists ? { emailExists: true } : null)
+            ))
+          );
+        } else {
+          return of(null);
+        }
       } else {
         return of(null);
       }
@@ -67,7 +75,7 @@ export class BasicInfoFormComponent implements OnInit {
     contact.email = basicInfo.controls['email'].value.trim();
     contact.firstName = basicInfo.controls['firstName'].value.trim();
     contact.lastName = basicInfo.controls['lastName'].value.trim();
-    contact.linesOfBusiness = [basicInfo.controls['lineOfBusiness'].value];
+    contact.linesOfBusiness = basicInfo.controls['lineOfBusiness'].value;
     contact.source = basicInfo.controls['source'].value;
     contact.sourceDetails = basicInfo.controls['sourceDetails'].value.trim();
     contact.status = basicInfo.controls['status'].value;
