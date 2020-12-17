@@ -26,6 +26,7 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   basicInfoFormSubscription: Subscription;
   formSubmitted: boolean = false;
   allFormsValid: boolean = false;
+  pageTitle: string = 'Add Contact';
 
   @ViewChild(BasicInfoFormComponent) basicInfoComponent: BasicInfoFormComponent;
   @ViewChild(AddressesFormComponent) addressesComponent: AddressesFormComponent;
@@ -38,7 +39,9 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     if (!this.contact) {
       this.contact = {} as Contact;
-    } 
+    } else {
+      this.setPageTitle();
+    }
   }
 
   ngOnDestroy() {
@@ -48,6 +51,10 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     //gotta do this here so we have a handle on the child components
     this.handleSubscriptions();
+  }
+
+  private setPageTitle() {
+    this.pageTitle = `Edit Contact ${this.contact.firstName} ${this.contact.lastName}`;
   }
 
   private handleSubscriptions() {
@@ -165,7 +172,17 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   saveInfo() {
     this.alertService.clear();
     this.formSubmitted = true;
-    this.createContact();
+
+    if (!this.contact.id) this.createContact();
+    else this.updateContact();
+  }
+
+  private updateContact() {
+    this.contactService.update(this.contact)
+      .subscribe(
+        (contact: Contact) => this.handleContactSaveResponse(contact),
+        err => this.handleContactSaveError(err)
+      );
   }
 
   private createContact() {
@@ -179,7 +196,8 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   private handleContactSaveResponse(contact: Contact) {
     this.contact = contact;
     this.formSubmitted = false;
-    this.alertService.success("Contact successfully created!");
+    this.alertService.success("Contact successfully saved!");
+    this.setPageTitle();
     this.scrollToTop();
   }
 

@@ -25,7 +25,6 @@ export class GeoService {
   }
 
   initializeAllCountries(): Observable<Country[]> {
-    console.log("Initializing");
     let countriesObservable$ = this.http.get<Country[]>(`${baseUrl}/countries`);
 
     return countriesObservable$.pipe(
@@ -78,7 +77,6 @@ export class GeoService {
       }
     }
 
-    console.log("Country code is " + code);
     return code;
   }
 }

@@ -3,6 +3,8 @@ import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router, Route } from '@angular/router';
 import { ContactService } from '../../service/contact.service';
 import { Contact } from '../models/contact';
+import { AlertService } from '../../../ui/alert/alert.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -15,7 +17,8 @@ export class EditContactComponent implements OnInit {
   loading: boolean = true;
   contact: Contact = {} as Contact;
 
-  constructor(private route: ActivatedRoute, private contactService: ContactService) { }
+  constructor(private route: ActivatedRoute, private contactService: ContactService,
+    private alertService: AlertService) { }
 
   ngOnInit(): void {
     let contact$ = this.route.queryParamMap.pipe(
@@ -37,6 +40,17 @@ export class EditContactComponent implements OnInit {
   private handleError(err: Error) {
     console.log(err);
     this.loading = false;
-  }
 
+    let alertMessage: string = 'Something went wrong, please call support';
+
+    if (err instanceof HttpErrorResponse) {
+      if (err.status) {
+        if (err.status == 404) {
+          alertMessage = 'Contact with that ID does not exist';
+        }
+      }
+    }
+
+    this.alertService.error(alertMessage);
+  }
 }

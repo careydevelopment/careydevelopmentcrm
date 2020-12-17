@@ -33,10 +33,10 @@ export class PhonesFormComponent implements OnInit {
       let countryCode: string = element.selectedCountryCode;
 
       phone.phoneType = phoneForm.controls['phoneType'].value;
-      phone.phone = phoneForm.controls['phone'].value.trim();
+      phone.phone = phoneForm.controls['phone'].value;
       phone.countryCode = countryCode;
 
-      if (phone.phone.length > 0) {
+      if (phone.phone && phone.phone.trim().length > 0) {
         phones.push(phone);
       }
     });
