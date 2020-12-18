@@ -18,6 +18,20 @@ export class ContactService {
     return this.http.post<Contact>(url, contact);
   }
 
+  update(contact: Contact): Observable<Contact> {
+    let url = `${baseUrl}/contact/${contact.id}`;
+    console.log("Update contact URL is " + url);
+
+    return this.http.put<Contact>(url, contact);
+  }
+
+  fetchById(id: string): Observable<Contact> {
+    let url = `${baseUrl}/contact/${id}`;
+    console.log("Fetch contact URL is " + url);
+
+    return this.http.get<Contact>(url);
+  }
+
   doesEmailExist(email: string): Observable<boolean> {
     let url = `${baseUrl}/contact/emailcheck`;
 

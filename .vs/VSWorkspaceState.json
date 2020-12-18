@@ -9,7 +9,7 @@
     "\\src\\app\\features\\contacts\\contact-form\\addresses-form",
     "\\src\\app\\features\\contacts\\contact-form\\basic-info-form",
     "\\src\\app\\features\\contacts\\contact-form\\phones-form",
-    "\\src\\app\\features\\contacts\\contact-form\\review-form"
+    "\\src\\app\\features\\contacts\\contact-form\\phones-form\\phone-type-form"
   ],
   "SelectedNode": "\\src\\app\\features\\contacts\\contact-form\\contact-form.component.ts",
   "PreviewInSolutionExplorer": false

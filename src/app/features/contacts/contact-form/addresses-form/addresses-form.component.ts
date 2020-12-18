@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChildren, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { addressTypes } from '../../constants/address-type';
 import { Address } from '../../models/address';
@@ -14,6 +14,8 @@ export class AddressesFormComponent implements OnInit {
 
   @ViewChildren(AddressTypeFormComponent) addressTypeComponents: AddressTypeFormComponent[];
 
+  @Input() contact: Contact;
+
   availableAddressTypes = addressTypes;
 
   constructor(private fb: FormBuilder) { }
@@ -28,15 +30,18 @@ export class AddressesFormComponent implements OnInit {
       let address = {} as Address;
       let addressForm: FormGroup = element.addressTypeFormGroup;
 
-      address.addressType = addressForm.controls['addressType'].value.trim();
-      address.city = addressForm.controls['city'].value.trim();
-      address.country = addressForm.controls['country'].value.trim();
-      address.state = addressForm.controls['state'].value.trim();
-      address.street1 = addressForm.controls['street1'].value.trim();
-      address.street2 = addressForm.controls['street2'].value.trim();
-      address.zip = addressForm.controls['zip'].value.trim();
+      address.addressType = addressForm.controls['addressType'].value;
+      address.city = addressForm.controls['city'].value;
+      address.country = addressForm.controls['country'].value;
+      address.state = addressForm.controls['state'].value;
+      address.street1 = addressForm.controls['street1'].value;
+      address.street2 = addressForm.controls['street2'].value;
+      address.zip = addressForm.controls['zip'].value;
 
-      if (address.city.length > 0 || address.country.length > 0 || address.state.length > 0) {
+      if ((address.city && address.city.trim().length > 0)
+        || (address.country && address.country.trim().length > 0)
+        || (address.state && address.state.trim().length > 0)) {
+
         addresses.push(address);
       }
     });

@@ -22,10 +22,12 @@ import { PhoneTypeFormComponent } from './contact-form/phones-form/phone-type-fo
 import { ReviewFormComponent } from './contact-form/review-form/review-form.component';
 import { NgxFlagPickerModule } from 'ngx-flag-picker';
 import { PhoneMaskDirective } from '../../util/phone-mask.directive';
+import { EditContactComponent } from './edit-contact/edit-contact.component';
 
 export const routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'account-info' },
-  { path: 'add-contact', component: AddContactComponent }
+  { path: '', pathMatch: 'full', redirectTo: 'add-contact' },
+  { path: 'add-contact', component: AddContactComponent },
+  { path: 'edit-contact', component: EditContactComponent }
 ];
 
 @NgModule({
@@ -38,7 +40,8 @@ export const routes = [
     AddressTypeFormComponent,
     PhoneTypeFormComponent,
     ReviewFormComponent,
-    PhoneMaskDirective
+    PhoneMaskDirective,
+    EditContactComponent
   ],
   imports: [
     CommonModule,

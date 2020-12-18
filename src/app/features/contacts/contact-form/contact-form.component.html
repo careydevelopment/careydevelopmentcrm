@@ -2,7 +2,7 @@
   <div fxLayout="row wrap">
     <div fxFlex="100" fxLayout="column">
       <div>
-        <h4>Add Contact</h4>
+        <h4>{{pageTitle}}</h4>
       </div>
       <div style="margin-bottom:20px">
         <alert></alert>
@@ -19,14 +19,14 @@
             </div>
           </mat-step>
           <mat-step label="Addresses">
-            <contact-addresses-form style="margin-top:15px"></contact-addresses-form>
+            <contact-addresses-form style="margin-top:15px" [contact]="contact"></contact-addresses-form>
             <div class="stepper-navigation">
               <button mat-button matStepperPrevious>Back</button>
               <button mat-button matStepperNext>Next</button>
             </div>
           </mat-step>
           <mat-step label="Phones">
-            <contact-phones-form></contact-phones-form>
+            <contact-phones-form [contact]="contact"></contact-phones-form>
             <div class="stepper-navigation">
               <button mat-button matStepperPrevious>Back</button>
               <button mat-button matStepperNext>Next</button>
