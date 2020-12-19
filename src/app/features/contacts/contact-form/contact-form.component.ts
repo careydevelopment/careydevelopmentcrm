@@ -167,6 +167,7 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
     if (key == 'firstName') this.errorMessages.push("Please enter a valid first name");
     if (key == 'lastName') this.errorMessages.push("Please enter a valid last name");
     if (key == 'source') this.errorMessages.push("Please select a source");
+    if (key == 'status') this.errorMessages.push("Please select a status");
   }
 
   saveInfo() {

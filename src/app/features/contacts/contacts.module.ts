@@ -12,7 +12,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { AlertModule } from '../../ui/alert/alert.module';
 import { BasicInfoFormComponent } from './contact-form/basic-info-form/basic-info-form.component';
 import { AddressesFormComponent } from './contact-form/addresses-form/addresses-form.component';
@@ -23,11 +26,13 @@ import { ReviewFormComponent } from './contact-form/review-form/review-form.comp
 import { NgxFlagPickerModule } from 'ngx-flag-picker';
 import { PhoneMaskDirective } from '../../util/phone-mask.directive';
 import { EditContactComponent } from './edit-contact/edit-contact.component';
+import { ViewContactsComponent } from './view-contacts/view-contacts.component';
 
 export const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'add-contact' },
   { path: 'add-contact', component: AddContactComponent },
-  { path: 'edit-contact', component: EditContactComponent }
+  { path: 'edit-contact', component: EditContactComponent },
+  { path: 'view-contacts', component: ViewContactsComponent }
 ];
 
 @NgModule({
@@ -41,7 +46,8 @@ export const routes = [
     PhoneTypeFormComponent,
     ReviewFormComponent,
     PhoneMaskDirective,
-    EditContactComponent
+    EditContactComponent,
+    ViewContactsComponent
   ],
   imports: [
     CommonModule,
@@ -54,6 +60,9 @@ export const routes = [
     MatStepperModule,
     MatRadioModule,
     MatExpansionModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
     ReactiveFormsModule,
     AlertModule,
     NgxFlagPickerModule,
