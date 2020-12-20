@@ -7,23 +7,13 @@ import { AlertService } from '../../../ui/alert/alert.service';
 import { ContactService } from '../../service/contact.service';
 import { UserService } from '../../service/user.service';
 import { Contact } from '../models/contact';
-
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
-}
-
-/** Constants used to fill up our data base. */
-const COLORS: string[] = [
-  'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
-  'aqua', 'blue', 'navy', 'black', 'gray'
-];
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
-];
+import { DropdownOption } from '../../ui/model/dropdown-option';
+import { addressTypes } from '../constants/address-type';
+import { contactStatuses } from '../constants/contact-status';
+import { linesOfBusiness } from '../constants/line-of-business';
+import { phoneTypes } from '../constants/phone-type';
+import { sources } from '../constants/source';
+import { DropdownService } from '../../ui/service/dropdown.service';
 
 
 @Component({
@@ -38,11 +28,17 @@ export class ViewContactsComponent implements OnInit, AfterViewInit {
   currentUser: User;
   dataLoading: boolean = true;
 
+  availableAddressTypes: DropdownOption[] = addressTypes;
+  availablePhoneTypes: DropdownOption[] = phoneTypes;
+  availableContactStatuses: DropdownOption[] = contactStatuses;
+  availableLinesOfBusiness: DropdownOption[] = linesOfBusiness;
+  availableSources: DropdownOption[] = sources;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private userService: UserService, private contactService: ContactService,
-    private alertService: AlertService) {
+    private alertService: AlertService, private dropdownService: DropdownService) {
   }
 
   ngOnInit(): void {
