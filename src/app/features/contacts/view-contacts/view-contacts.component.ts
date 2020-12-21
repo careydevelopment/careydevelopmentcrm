@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,6 +14,7 @@ import { linesOfBusiness } from '../constants/line-of-business';
 import { phoneTypes } from '../constants/phone-type';
 import { sources } from '../constants/source';
 import { DropdownService } from '../../ui/service/dropdown.service';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -21,7 +22,7 @@ import { DropdownService } from '../../ui/service/dropdown.service';
   templateUrl: './view-contacts.component.html',
   styleUrls: ['./view-contacts.component.css']
 })
-export class ViewContactsComponent implements OnInit, AfterViewInit {
+export class ViewContactsComponent implements OnInit {
 
   displayedColumns: string[] = ['lastName', 'firstName', 'status', 'title', 'company', 'source'];
   dataSource: MatTableDataSource<Contact>;
@@ -37,6 +38,14 @@ export class ViewContactsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  statusFilter = new FormControl('');
+  sourceFilter = new FormControl('');
+
+  filterValues: any = {
+    status: '',
+    source: ''
+  }
+
   constructor(private userService: UserService, private contactService: ContactService,
     private alertService: AlertService, private dropdownService: DropdownService) {
   }
@@ -44,10 +53,42 @@ export class ViewContactsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.currentUser = this.userService.user;
     this.loadContacts();
+    this.fieldListener();
   }
 
-  ngAfterViewInit() {
+  private fieldListener() {
+    this.statusFilter.valueChanges
+      .subscribe(
+        status => {
+          this.filterValues.status = status ? status : "";
+          this.dataSource.filter = JSON.stringify(this.filterValues);
+        }
+      )
+    this.sourceFilter.valueChanges
+      .subscribe(
+        source => {
+          this.filterValues.source = source ? source : "";
+          this.dataSource.filter = JSON.stringify(this.filterValues);
+        }
+      )
   }
+
+  clearFilter() {
+    this.sourceFilter.setValue('');
+    this.statusFilter.setValue('');
+  }
+
+  private createFilter(): (data: any, filter: string) => boolean {
+    let filterFunction = function (data, filter): boolean {
+      let searchTerms = JSON.parse(filter);
+      
+      return data.status.indexOf(searchTerms.status) !== -1
+        && data.source.toString().indexOf(searchTerms.source) !== -1;
+    }
+
+    return filterFunction;
+  }
+
 
   private loadContacts() {
     if (this.currentUser) {
@@ -58,41 +99,20 @@ export class ViewContactsComponent implements OnInit, AfterViewInit {
         );
     } else {
       this.alertService.error("Problem identifying user!");
+      this.dataLoading = false;
     }
   }
 
   private handleContacts(contacts: Contact[]) {
     this.dataLoading = false;
-    console.log(contacts);
     this.dataSource = new MatTableDataSource(contacts);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.filterPredicate = this.createFilter();
   }
 
   private handleContactsError(err) {
     console.error(err);
     this.alertService.error("Problem loading contacts!");
   }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
 }
-
-/*function createNewUser(id: number): UserData {
-  const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-  };
-
-}*/
