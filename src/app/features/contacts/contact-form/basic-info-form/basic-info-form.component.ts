@@ -53,7 +53,7 @@ export class BasicInfoFormComponent implements OnInit {
       'status': [this.contact.status, [Validators.required]],
       'lineOfBusiness': [this.contact.linesOfBusiness],
       'authority': [authority],
-      'title': [this.contact.title, [Validators.pattern('[A-Za-z\-\_]+')]],
+      'title': [this.contact.title, [Validators.pattern('[A-Za-z \-\_]+')]],
       'company': [this.contact.company, [Validators.pattern('[A-Za-z0-9 \-\_]+')]]
     });
   }

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Contact } from '../contacts/models/contact';
 import { environment } from '../../../environments/environment';
+import { User } from '../../models/user';
 
 const baseUrl: string = environment.baseContactServiceUrl;
 
@@ -11,8 +12,15 @@ export class ContactService {
 
   constructor(private http: HttpClient) { }
 
+  fetchMyContacts(): Observable<Contact[]> {
+    let url = `${baseUrl}/contact`;
+    console.log("Fetch my contacts URL is " + url);
+
+    return this.http.get<Contact[]>(url);
+  }
+
   create(contact: Contact): Observable<Contact> {
-    let url = `${baseUrl}/contact/`;
+    let url = `${baseUrl}/contact`;
     console.log("Create contact URL is " + url);
 
     return this.http.post<Contact>(url, contact);

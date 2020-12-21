@@ -1,0 +1,59 @@
+<div class="route-content">
+  <div>
+    <h4>View Contacts</h4>
+  </div>
+  <div style="margin-bottom:20px">
+    <alert></alert>
+  </div>
+  <div class="absolute-center" *ngIf="dataLoading">
+    <mat-spinner [diameter]="80"></mat-spinner>
+  </div>
+  <div [style.visibility]="dataLoading ? 'hidden' : 'visible'">
+    <div class="example-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="lastName">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:20%"> {{row.lastName}} </td><tr>
+        </ng-container>
+
+        <ng-container matColumnDef="firstName">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:15%"> {{row.firstName}} </td></tr>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header style="width:500px"> Status </th></tr>
+          <tr>
+            <td mat-cell *matCellDef="let row" style="width:10%">
+              {{dropdownService.getDisplay(row.status, availableContactStatuses)}}
+            </td>
+          </tr>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header style="width:500px"> Title </th></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:15%"> {{row.title}} </td></tr>
+        </ng-container>
+
+        <ng-container matColumnDef="company">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header style="width:500px"> Company </th></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:15%"> {{row.company}} </td></tr>
+        </ng-container>
+
+        <ng-container matColumnDef="source">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Source </th></tr>
+          <tr>
+            <td mat-cell *matCellDef="let row" [style.color]="row.color" style="width:25%">
+              {{dropdownService.getDisplay(row.source, availableSources)}}
+            </td>
+          </tr>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+</div>
