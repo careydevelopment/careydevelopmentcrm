@@ -2,15 +2,11 @@ table {
   width: 1150px;
 }
 
-.mat-form-field {
-  font-size: 14px;
-  width: 100%;
-}
-
 .example-container {
   width: 100%;
   max-width: 100%;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .mat-row:nth-child(even) {
