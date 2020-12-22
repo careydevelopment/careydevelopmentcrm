@@ -25,6 +25,7 @@ import { FormControl } from '@angular/forms';
 export class ViewContactsComponent implements OnInit {
 
   displayedColumns: string[] = ['lastName', 'firstName', 'status', 'title', 'company', 'source'];
+
   dataSource: MatTableDataSource<Contact>;
   currentUser: User;
   dataLoading: boolean = true;
@@ -60,14 +61,14 @@ export class ViewContactsComponent implements OnInit {
     this.statusFilter.valueChanges
       .subscribe(
         status => {
-          this.filterValues.status = status ? status : "";
+          this.filterValues.status = status;
           this.dataSource.filter = JSON.stringify(this.filterValues);
         }
       )
     this.sourceFilter.valueChanges
       .subscribe(
         source => {
-          this.filterValues.source = source ? source : "";
+          this.filterValues.source = source;
           this.dataSource.filter = JSON.stringify(this.filterValues);
         }
       )
@@ -78,12 +79,12 @@ export class ViewContactsComponent implements OnInit {
     this.statusFilter.setValue('');
   }
 
-  private createFilter(): (data: any, filter: string) => boolean {
-    let filterFunction = function (data, filter): boolean {
+  private createFilter(): (contact: Contact, filter: string) => boolean {
+    let filterFunction = function (contact, filter): boolean {
       let searchTerms = JSON.parse(filter);
-      
-      return data.status.indexOf(searchTerms.status) !== -1
-        && data.source.toString().indexOf(searchTerms.source) !== -1;
+
+      return contact.status.indexOf(searchTerms.status) !== -1
+        && contact.source.indexOf(searchTerms.source) !== -1;
     }
 
     return filterFunction;

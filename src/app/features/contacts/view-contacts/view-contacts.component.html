@@ -21,8 +21,8 @@
           <div class="label">Source</div>
           <div>
             <mat-form-field appearance="fill" class="no-label-field">
-              <mat-select [formControl]="sourceFilter" placeholder="Select a source">
-                <mat-option [value]="">None</mat-option>
+              <mat-select [formControl]="sourceFilter">
+                <mat-option value="">-- Select a Source --</mat-option>
                 <mat-option *ngFor="let source of availableSources" [value]="source.value">
                   {{source.display}}
                 </mat-option>
@@ -35,8 +35,8 @@
           <div class="label">Status</div>
           <div>
             <mat-form-field appearance="fill" class="no-label-field">
-              <mat-select [formControl]="statusFilter" placeholder="Select a status">
-                <mat-option [value]="">None</mat-option>
+              <mat-select [formControl]="statusFilter">
+                <mat-option value="">-- Select a Status --</mat-option>
                 <mat-option *ngFor="let status of availableContactStatuses" [value]="status.value">
                   {{status.display}}
                 </mat-option>
@@ -44,6 +44,7 @@
             </mat-form-field>
           </div>
         </div>
+
         <div>
           <button mat-raised-button color="primary" (click)="clearFilter()">Clear Filter</button>
         </div>
