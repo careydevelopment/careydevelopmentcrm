@@ -15,7 +15,7 @@ import { phoneTypes } from '../constants/phone-type';
 import { sources } from '../constants/source';
 import { DropdownService } from '../../ui/service/dropdown.service';
 import { FormControl } from '@angular/forms';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-contacts',
@@ -48,7 +48,7 @@ export class ViewContactsComponent implements OnInit {
   }
 
   constructor(private userService: UserService, private contactService: ContactService,
-    private alertService: AlertService, private dropdownService: DropdownService) {
+    private alertService: AlertService, private dropdownService: DropdownService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -115,5 +115,10 @@ export class ViewContactsComponent implements OnInit {
   private handleContactsError(err) {
     console.error(err);
     this.alertService.error("Problem loading contacts!");
+  }
+
+  editContact(contact: Contact) {
+    let route = '/contacts/edit-contact';
+    this.router.navigate([route], { queryParams: { id: contact.id } });
   }
 }
