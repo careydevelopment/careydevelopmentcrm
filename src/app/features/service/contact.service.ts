@@ -14,28 +14,28 @@ export class ContactService {
 
   fetchMyContacts(): Observable<Contact[]> {
     let url = `${baseUrl}/contact`;
-    console.log("Fetch my contacts URL is " + url);
+    //console.log("Fetch my contacts URL is " + url);
 
     return this.http.get<Contact[]>(url);
   }
 
   create(contact: Contact): Observable<Contact> {
     let url = `${baseUrl}/contact`;
-    console.log("Create contact URL is " + url);
+    //console.log("Create contact URL is " + url);
 
     return this.http.post<Contact>(url, contact);
   }
 
   update(contact: Contact): Observable<Contact> {
     let url = `${baseUrl}/contact/${contact.id}`;
-    console.log("Update contact URL is " + url);
+    //console.log("Update contact URL is " + url);
 
     return this.http.put<Contact>(url, contact);
   }
 
   fetchById(id: string): Observable<Contact> {
     let url = `${baseUrl}/contact/${id}`;
-    console.log("Fetch contact URL is " + url);
+    //console.log("Fetch contact URL is " + url);
 
     return this.http.get<Contact>(url);
   }
