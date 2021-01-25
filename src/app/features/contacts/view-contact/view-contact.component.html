@@ -79,8 +79,8 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div *ngIf="contact.phones && contact.phones.length > 0">
-              <div *ngFor="let phone of contact.phones">
-                {{dropDownService.getDisplay(phone.phoneType, availablePhoneTypes)}} Phone: {{phone.phone}}
+              <div *ngFor="let phone of contact.phones" style="margin-bottom:10px">
+                <span class="phone-label">{{dropDownService.getDisplay(phone.phoneType, availablePhoneTypes)}} Phone: </span> <span class="normal-detail">{{phone.phone}}</span>
               </div>
             </div>
             <div *ngIf="!contact.phones || contact.phones.length == 0">

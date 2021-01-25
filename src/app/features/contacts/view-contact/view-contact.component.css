@@ -24,6 +24,12 @@
     font-weight: 500;
 }
 
+.phone-label {
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+
 .has-authority {
     font-size: 12pt;
     color: limegreen;
@@ -45,7 +51,7 @@
 
 .column-layout {
   margin-bottom: 20px;
-  margin-right: 60px;
+  margin-right: 80px;
 }
 
 .normal-status {
