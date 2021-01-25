@@ -9,11 +9,84 @@
           <alert></alert>
         </div>
         <div>
-          <mat-card>
-            <h4>{{contact.firstName}} {{contact.lastName}}</h4>
-            <p *ngIf="contact.title">{{contact.title}}</p>
-            <p *ngIf="contact.company">{{contact.company}}</p>
+          <mat-card class="vertical-layout">
+            <div fxLayout="row wrap" style="margin-bottom:20px">
+              <div>
+                <div style="font-size: 22pt; font-weight: 400">{{contact.firstName}} {{contact.lastName}}</div>
+                <div [class.inactive-status]="contact.status == 'INACTIVE'" [class.normal-status]="contact.status != 'INACTIVE'" style="margin-bottom:5px">
+                  {{dropDownService.getDisplay(contact.status, availableContactStatuses)}}
+                </div>
+                <div *ngIf="contact.authority" class="has-authority">Authorized</div>
+                <div *ngIf="!contact.authority" class="no-authority">Not authorized</div>
+              </div>
+              <div fxFlex="auto">&nbsp;</div>
+              <div fxFlex="100px" style="text-align: left">
+                <button mat-icon-button color="primary" (click)="editContact()" title="Edit Contact"><mat-icon>edit</mat-icon></button>
+              </div>
+            </div>
+            <div fxLayout="row wrap">
+              <div class="column-layout">
+                <div *ngIf="contact.title" class="normal-detail">{{contact.title}}</div>
+                <div *ngIf="contact.company" class="normal-detail">{{contact.company}}</div>
+                <div *ngIf="contact.email" class="normal-detail">{{contact.email}}</div>
+              </div>
+              <div class="column-layout" *ngIf="contact.linesOfBusiness">
+                <div class="column-header">
+                  Lines of Business
+                </div>
+                <div *ngFor="let lob of contact.linesOfBusiness" class="normal-detail">
+                  {{dropDownService.getDisplay(lob, availableLobTypes)}}
+                </div>
+              </div>
+              <div class="column-layout">
+                <div class="column-header">
+                  Source
+                </div>
+                <div class="normal-detail" style="margin-bottom:5px">{{dropDownService.getDisplay(contact.source, availableSources)}}</div>
+                <div class="free-text" *ngIf="contact.sourceDetails">{{contact.sourceDetails}}</div>
+              </div>
+            </div>
           </mat-card>
+          <mat-expansion-panel class="vertical-layout">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Addresses
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div *ngIf="contact.addresses && contact.addresses.length > 0" fxLayout="row wrap" fxLayoutGap="40px">
+              <div *ngFor="let address of contact.addresses">
+                <div style="margin-bottom: 30px">
+                  <div class="address-type">{{dropDownService.getDisplay(address.addressType, availableAddressTypes)}} Address</div>
+                  <div class="normal-detail" *ngIf="address.street1">{{address.street1}}</div>
+                  <div class="normal-detail" *ngIf="address.street2">{{address.street2}}</div>
+                  <div class="normal-detail">
+                    <span *ngIf="address.city">{{address.city}}, </span>
+                    <span *ngIf="address.state">{{address.state}} </span>
+                    <span *ngIf="address.zip">{{address.zip}}</span>
+                  </div>
+                  <div class="normal-detail" *ngIf="address.country">{{address.country}}</div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!contact.addresses || contact.addresses.length == 0">
+              <div class="empty-set-status-message">No addresses to display</div>
+            </div>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="vertical-layout">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Phones
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div *ngIf="contact.phones && contact.phones.length > 0">
+              <div *ngFor="let phone of contact.phones">
+                {{dropDownService.getDisplay(phone.phoneType, availablePhoneTypes)}} Phone: {{phone.phone}}
+              </div>
+            </div>
+            <div *ngIf="!contact.phones || contact.phones.length == 0">
+              <div class="empty-set-status-message">No phones to display</div>
+            </div>
+          </mat-expansion-panel>
         </div>
       </div>
     </div>
