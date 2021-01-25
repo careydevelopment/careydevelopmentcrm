@@ -27,12 +27,15 @@ import { NgxFlagPickerModule } from 'ngx-flag-picker';
 import { PhoneMaskDirective } from '../../util/phone-mask.directive';
 import { EditContactComponent } from './edit-contact/edit-contact.component';
 import { ViewContactsComponent } from './view-contacts/view-contacts.component';
+import { ViewContactComponent } from './view-contact/view-contact.component';
+import { MatCardModule } from '@angular/material/card';
 
 export const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'add-contact' },
   { path: 'add-contact', component: AddContactComponent },
   { path: 'edit-contact', component: EditContactComponent },
-  { path: 'view-contacts', component: ViewContactsComponent }
+  { path: 'view-contacts', component: ViewContactsComponent },
+  { path: 'view-contact', component: ViewContactComponent }
 ];
 
 @NgModule({
@@ -47,7 +50,8 @@ export const routes = [
     ReviewFormComponent,
     PhoneMaskDirective,
     EditContactComponent,
-    ViewContactsComponent
+    ViewContactsComponent,
+    ViewContactComponent
   ],
   imports: [
     CommonModule,
@@ -63,6 +67,7 @@ export const routes = [
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
+    MatCardModule,
     ReactiveFormsModule,
     AlertModule,
     NgxFlagPickerModule,

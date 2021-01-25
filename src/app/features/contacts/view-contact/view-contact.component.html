@@ -1,0 +1,21 @@
+<div class="absolute-center" *ngIf="loading">
+  <mat-spinner [diameter]="80"></mat-spinner>
+</div>
+<div *ngIf="!loading">
+  <div fxFlex fxLayout="column" fxLayoutGap="0px" class="route-content">
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxLayout="column">
+        <div style="margin-bottom:20px">
+          <alert></alert>
+        </div>
+        <div>
+          <mat-card>
+            <h4>{{contact.firstName}} {{contact.lastName}}</h4>
+            <p *ngIf="contact.title">{{contact.title}}</p>
+            <p *ngIf="contact.company">{{contact.company}}</p>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
