@@ -24,7 +24,7 @@ import { Router } from '@angular/router';
 })
 export class ViewContactsComponent implements OnInit {
 
-  displayedColumns: string[] = ['lastName', 'firstName', 'status', 'title', 'company', 'source'];
+  displayedColumns: string[] = ['action', 'lastName', 'firstName', 'status', 'title', 'company'];
 
   dataSource: MatTableDataSource<Contact>;
   currentUser: User;
@@ -119,6 +119,11 @@ export class ViewContactsComponent implements OnInit {
 
   editContact(contact: Contact) {
     let route = '/contacts/edit-contact';
+    this.router.navigate([route], { queryParams: { id: contact.id } });
+  }
+
+  viewContact(contact: Contact) {
+    let route = '/contacts/view-contact';
     this.router.navigate([route], { queryParams: { id: contact.id } });
   }
 }

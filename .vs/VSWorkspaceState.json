@@ -3,14 +3,14 @@
     "",
     "\\src",
     "\\src\\app",
+    "\\src\\app\\features",
     "\\src\\app\\features\\contacts",
-    "\\src\\app\\features\\contacts\\contact-form\\addresses-form",
-    "\\src\\app\\features\\contacts\\contact-form\\basic-info-form",
-    "\\src\\app\\features\\contacts\\contact-form\\phones-form",
-    "\\src\\app\\features\\contacts\\contact-form\\phones-form\\phone-type-form",
-    "\\src\\app\\services",
+    "\\src\\app\\features\\contacts\\view-contacts",
+    "\\src\\app\\features\\service",
+    "\\src\\app\\features\\user",
+    "\\src\\app\\features\\user\\profile-image",
     "\\src\\environments"
   ],
-  "SelectedNode": "\\src\\environments\\environment.ts",
+  "SelectedNode": "\\src\\app\\features\\contacts\\view-contacts\\view-contacts.component.ts",
   "PreviewInSolutionExplorer": false
 }
