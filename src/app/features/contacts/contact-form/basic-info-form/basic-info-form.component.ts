@@ -24,7 +24,7 @@ export class BasicInfoFormComponent implements OnInit {
   availableSources: DropdownOption[] = sources;
   availableContactStatuses: DropdownOption[] = contactStatuses;
   availableLinesOfBusiness: DropdownOption[] = linesOfBusiness;
-  availableAccounts: Account[] = [{ name: "Loading....", id: "-1"}];
+  availableAccounts: Account[] = [{ name: "Loading...", id: "-1"}];
   filteredAccounts: Observable<Account[]> = of(this.availableAccounts);
 
   @Input() contact: Contact;
@@ -76,28 +76,27 @@ export class BasicInfoFormComponent implements OnInit {
     let authority: string = this.contact.authority ? 'true' : 'false';
 
     this.basicInfoFormGroup = this.fb.group({
-      'firstName': [this.contact.firstName, [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
-      'lastName': [this.contact.lastName, [Validators.required, Validators.pattern('[A-Za-z \-\_]+')]],
+      'firstName': [this.contact.firstName, [Validators.required, Validators.pattern('^[a-zA-Z \-\]*$')]],
+      'lastName': [this.contact.lastName, [Validators.required, Validators.pattern('^[a-zA-Z \-\]*$')]],
       'email': [this.contact.email, [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
       [this.emailExistsValidator()],
         'blur'
       ],
       'source': [this.contact.source, [Validators.required]],
-      'sourceDetails': [this.contact.sourceDetails, [Validators.pattern('[A-Za-z0-9 \-\_]+')]],
+      'sourceDetails': [this.contact.sourceDetails, [Validators.pattern('^[a-zA-Z0-9 \-\]*$')]],
       'status': [this.contact.status, [Validators.required]],
       'lineOfBusiness': [this.contact.linesOfBusiness],
       'authority': [authority],
-      'title': [this.contact.title, [Validators.pattern('[A-Za-z \-\_]+')]],
-      'account': [this.contact.account, this.accountValidator()]
+      'title': [this.contact.title, [Validators.pattern('^[a-zA-Z \-\]*$')]],
+      'account': [this.contact.account, [this.accountValidator(), Validators.required, Validators.pattern('^[a-zA-Z., \-\]*$')]]
     });
   }
 
   private accountValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      console.log("control is ", control);
-      if (control.value == -1) {
+      if (control.value == 'Loading...') {
         return { 'invalid': true };
-      }
+      } 
 
       return null;
     };
@@ -139,7 +138,7 @@ export class BasicInfoFormComponent implements OnInit {
     let basicInfo: FormGroup = this.basicInfoFormGroup;
 
     contact.authority = (basicInfo.controls['authority'].value == 'true');
-    contact.account = basicInfo.controls['account'].value;
+    contact.account = this.getAccount(basicInfo.controls['account'].value);
     contact.email = basicInfo.controls['email'].value;
     contact.firstName = basicInfo.controls['firstName'].value;
     contact.lastName = basicInfo.controls['lastName'].value;
@@ -149,4 +148,15 @@ export class BasicInfoFormComponent implements OnInit {
     contact.status = basicInfo.controls['status'].value;
     contact.title = basicInfo.controls['title'].value;
   }
+
+  private getAccount(accountName: string): Account {
+    let account: Account = this.availableAccounts.find(a => a.name.toLowerCase().indexOf(accountName.toLowerCase()) === 0);
+
+    if (!account) {
+      account = { name: accountName, id: null };
+    }
+
+    return account;
+  }
 }
+
