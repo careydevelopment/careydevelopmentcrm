@@ -44,11 +44,20 @@
     </div>
 
     <div class="vertical-form-field">
-      <div class="label">Company</div>
+      <div class="label">Account</div>
       <div>
         <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
-          <input formControlName="company" matInput placeholder="Enter title" maxlength="30">
-          <mat-error *ngIf="basicInfoFormGroup.controls['company'].invalid">Please enter a valid company</mat-error>
+          <input type="text"
+                 placeholder="Select or enter account name"
+                 matInput
+                 formControlName="account"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let account of filteredAccounts | async" [value]="account.name">
+              {{account.name}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="basicInfoFormGroup.controls['account'].invalid">Please select a valid account</mat-error>
         </mat-form-field>
       </div>
     </div>

@@ -29,6 +29,7 @@ import { EditContactComponent } from './edit-contact/edit-contact.component';
 import { ViewContactsComponent } from './view-contacts/view-contacts.component';
 import { ViewContactComponent } from './view-contact/view-contact.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 export const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'add-contact' },
@@ -68,6 +69,7 @@ export const routes = [
     MatSortModule,
     MatPaginatorModule,
     MatCardModule,
+    MatAutocompleteModule,
     ReactiveFormsModule,
     AlertModule,
     NgxFlagPickerModule,

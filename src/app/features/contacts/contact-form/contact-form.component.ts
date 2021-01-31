@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AlertService } from '../../../ui/alert/alert.service';
 import { ContactService } from '../../service/contact.service';
+import { Account } from '../models/account';
 import { Contact } from '../models/contact';
 import { AddressesFormComponent } from './addresses-form/addresses-form.component';
 import { BasicInfoFormComponent } from './basic-info-form/basic-info-form.component';
@@ -27,6 +28,7 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   formSubmitted: boolean = false;
   allFormsValid: boolean = false;
   pageTitle: string = 'Add Contact';
+  accounts: Account[];
 
   @ViewChild(BasicInfoFormComponent) basicInfoComponent: BasicInfoFormComponent;
   @ViewChild(AddressesFormComponent) addressesComponent: AddressesFormComponent;
