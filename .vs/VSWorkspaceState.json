@@ -5,11 +5,12 @@
     "\\src\\app",
     "\\src\\app\\features",
     "\\src\\app\\features\\contacts",
+    "\\src\\app\\features\\contacts\\contact-form",
+    "\\src\\app\\features\\contacts\\contact-form\\review-form",
+    "\\src\\app\\features\\contacts\\view-contact",
     "\\src\\app\\features\\contacts\\view-contacts",
-    "\\src\\app\\features\\service",
-    "\\src\\app\\features\\user",
-    "\\src\\app\\features\\user\\profile-image",
-    "\\src\\environments"
+    "\\src\\app\\features\\ui",
+    "\\src\\app\\features\\ui\\service"
   ],
   "SelectedNode": "\\src\\app\\features\\contacts\\view-contacts\\view-contacts.component.ts",
   "PreviewInSolutionExplorer": false

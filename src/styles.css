@@ -125,3 +125,12 @@ h4 {
   max-height: 100px !important;
 }
 
+.badge {
+  border-radius: 10px;
+  padding: 2px 10px 2px 10px;
+  color: #ffffff;
+  font-size: 10pt;
+}
+.badge-info {
+  background-color: #3F51B5;
+}
