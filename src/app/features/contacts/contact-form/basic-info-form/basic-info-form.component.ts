@@ -26,6 +26,7 @@ export class BasicInfoFormComponent implements OnInit {
   availableLinesOfBusiness: DropdownOption[] = linesOfBusiness;
   availableAccounts: Account[] = [{ name: "Loading...", id: "-1"}];
   filteredAccounts: Observable<Account[]> = of(this.availableAccounts);
+  newAccount: boolean = false;
 
   @Input() contact: Contact;
 
@@ -98,6 +99,8 @@ export class BasicInfoFormComponent implements OnInit {
         return { 'invalid': true };
       } 
 
+      this.getAccount(control.value);
+
       return null;
     };
   }
@@ -134,6 +137,13 @@ export class BasicInfoFormComponent implements OnInit {
     }
   }
 
+  leftAccountField() {
+    this.newAccount = false;
+    let account: Account = this.getAccount(this.basicInfoFormGroup.controls['account'].value);
+
+    this.newAccount = (account && !account.id);
+  }
+
   populateContact(contact: Contact) {
     let basicInfo: FormGroup = this.basicInfoFormGroup;
 
@@ -150,10 +160,14 @@ export class BasicInfoFormComponent implements OnInit {
   }
 
   private getAccount(accountName: string): Account {
-    let account: Account = this.availableAccounts.find(a => a.name.toLowerCase().indexOf(accountName.toLowerCase()) === 0);
+    let account: Account = null;
 
-    if (!account) {
-      account = { name: accountName, id: null };
+    if (accountName) {
+      account = this.availableAccounts.find(a => a.name.toLowerCase() == accountName.toLowerCase());
+
+      if (!account) {
+        account = { name: accountName, id: null };
+      }
     }
 
     return account;

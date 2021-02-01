@@ -44,14 +44,15 @@
     </div>
 
     <div class="vertical-form-field">
-      <div class="label">Account</div>
+      <div class="label">Account <span *ngIf="newAccount" class="badge badge-info">New</span></div>
       <div>
         <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
           <input type="text"
                  placeholder="Select or enter account name"
                  matInput
                  formControlName="account"
-                 [matAutocomplete]="auto">
+                 [matAutocomplete]="auto"
+                 (blur)="leftAccountField()">
           <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
             <mat-option *ngFor="let account of filteredAccounts | async" [value]="account.name">
               {{account.name}}
