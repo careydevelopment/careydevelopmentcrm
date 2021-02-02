@@ -16,6 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatListModule } from '@angular/material/list';
 import { AlertModule } from '../../ui/alert/alert.module';
 import { BasicInfoFormComponent } from './contact-form/basic-info-form/basic-info-form.component';
 import { AddressesFormComponent } from './contact-form/addresses-form/addresses-form.component';
@@ -69,6 +70,7 @@ export const routes = [
     MatSortModule,
     MatPaginatorModule,
     MatCardModule,
+    MatListModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
     AlertModule,

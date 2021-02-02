@@ -27,7 +27,7 @@
             <div fxLayout="row wrap">
               <div class="column-layout">
                 <div *ngIf="contact.title" class="normal-detail">{{contact.title}}</div>
-                <div *ngIf="contact.company" class="normal-detail">{{contact.company}}</div>
+                <div *ngIf="contact.account" class="normal-detail">{{contact.account.name}}</div>
                 <div *ngIf="contact.email" class="normal-detail">{{contact.email}}</div>
               </div>
               <div class="column-layout" *ngIf="contact.linesOfBusiness">
