@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Account } from '../contacts/models/account';
 
-const baseUrl: string = environment.baseContactServiceUrl;
+const baseUrl: string = environment.baseCustomerServiceUrl;
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {

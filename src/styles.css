@@ -134,3 +134,8 @@ h4 {
 .badge-info {
   background-color: #3F51B5;
 }
+
+.mat-expansion-panel-header-title {
+  font-size: 16pt;
+  font-weight: 400;
+}

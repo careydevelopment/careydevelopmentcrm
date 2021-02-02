@@ -5,7 +5,7 @@ import { Contact } from '../contacts/models/contact';
 import { environment } from '../../../environments/environment';
 import { User } from '../../models/user';
 
-const baseUrl: string = environment.baseContactServiceUrl;
+const baseUrl: string = environment.baseCustomerServiceUrl;
 
 @Injectable({ providedIn: 'root' })
 export class ContactService {

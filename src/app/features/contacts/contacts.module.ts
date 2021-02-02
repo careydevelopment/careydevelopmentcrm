@@ -31,6 +31,8 @@ import { ViewContactsComponent } from './view-contacts/view-contacts.component';
 import { ViewContactComponent } from './view-contact/view-contact.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ActivitiesModule } from '../activities/activities.module';
+
 
 export const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'add-contact' },
@@ -75,6 +77,7 @@ export const routes = [
     ReactiveFormsModule,
     AlertModule,
     NgxFlagPickerModule,
+    ActivitiesModule,
     RouterModule.forChild(routes)
   ]
 })

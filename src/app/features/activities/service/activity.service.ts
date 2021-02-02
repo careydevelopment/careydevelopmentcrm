@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { Account } from '../contacts/models/account';
+import { environment } from '../../../../environments/environment';
+import { Activity } from '../models/activity';
 
-const baseUrl: string = environment.baseContactServiceUrl;
+const baseUrl: string = environment.baseCrmServiceUrl;
 
 @Injectable({ providedIn: 'root' })
-export class AccountService {
+export class ActivityService {
 
   constructor(private http: HttpClient) { }
 
-  fetchAllAccounts(): Observable<Account[]> {
-    let url = `${baseUrl}/accounts`;
-    console.log("Fetch all accounts URL is " + url);
+  fetchActivitiesByContactId(contactId: string): Observable<Activity[]> {
+    let url = `${baseUrl}/activities/search?contactId=${contactId}`;
+    console.log("Fetch activities by contact URL is " + url);
 
-    return this.http.get<Account[]>(url);
+    return this.http.get<Activity[]>(url);
   }
 }
