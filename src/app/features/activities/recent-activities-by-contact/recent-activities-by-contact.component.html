@@ -1,0 +1,49 @@
+<mat-card>
+  <mat-card-title>
+    Recent Activities
+  </mat-card-title>
+  <mat-card-content>
+    <div class="absolute-center" *ngIf="loading">
+      <mat-spinner [diameter]="80"></mat-spinner>
+    </div>
+    <div *ngIf="!loading" fxLayout="column" style="margin-top: 25px">
+      <div *ngFor="let activity of activities" fxLayout.gt-sm="row wrap" fxLayout.sm="column" class="icon-list-item">
+        <div fxFlex.gt-sm="50px" fxLayoutAlign.gt-sm="center center">
+          <mat-icon>{{activity.type.icon}}</mat-icon>
+        </div>
+        <div>
+          <div fxLayout="column">
+            <div class="icon-list-line" fxLayout="row wrap" fxLayoutGap="15px">
+              <div>{{activity.title}}</div>
+              <div *ngIf="activity.outcome" class="badge badge-info">{{activity.outcome.name}}</div>
+            </div>
+            <div *ngIf="activity.location" class="icon-list-line">
+              {{activity.location}}
+            </div>
+            <div *ngIf="activity.notes" class="icon-list-line">
+              {{activity.notes}}
+            </div>
+            <div class="icon-list-line" style="font-weight: bold">
+              {{dateService.getShortDateAndTimeDisplay(activity.date)}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--<mat-list>
+    <mat-list-item *ngFor="let activity of activities">
+      <mat-icon mat-list-icon>{{activity.type.icon}}</mat-icon>
+      <div mat-line>
+        {{activity.title}} <span *ngIf="activity.outcome" class="badge badge-muted">{{activity.outcome.name}}</span>
+      </div>
+      <div mat-line *ngIf="activity.location">
+        {{activity.location}}
+      </div>
+      <div mat-line *ngIf="activity.notes">
+        {{activity.notes}}
+      </div>
+      <div mat-line>{{dateService.getShortDateAndTimeDisplay(activity.date)}}</div>
+    </mat-list-item>
+  </mat-list>-->
+  </mat-card-content>
+</mat-card>

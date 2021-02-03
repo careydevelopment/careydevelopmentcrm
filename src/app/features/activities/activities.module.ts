@@ -2,20 +2,27 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
-import { ActivitiesByContactComponent } from './activities-by-contact/activities-by-contact.component';
+import { RecentActivitiesByContactComponent } from './recent-activities-by-contact/recent-activities-by-contact.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 export const routes = [];
 
 @NgModule({
-  declarations: [ActivitiesByContactComponent],
+  declarations: [RecentActivitiesByContactComponent],
   exports: [
-    ActivitiesByContactComponent
+    RecentActivitiesByContactComponent
   ],
   imports: [
     CommonModule,
+    FlexLayoutModule,
     MatListModule,
     MatCardModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
     RouterModule.forChild(routes)
   ]
 })

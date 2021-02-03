@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ActivitiesByContactComponent } from './activities-by-contact.component';
+import { RecentActivitiesByContactComponent } from './recent-activities-by-contact.component';
 
 describe('ActivitiesByContactComponent', () => {
-  let component: ActivitiesByContactComponent;
-  let fixture: ComponentFixture<ActivitiesByContactComponent>;
+  let component: RecentActivitiesByContactComponent;
+  let fixture: ComponentFixture<RecentActivitiesByContactComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ActivitiesByContactComponent ]
+      declarations: [ RecentActivitiesByContactComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ActivitiesByContactComponent);
+    fixture = TestBed.createComponent(RecentActivitiesByContactComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
