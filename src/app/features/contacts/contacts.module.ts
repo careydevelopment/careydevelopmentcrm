@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { AlertModule } from '../../ui/alert/alert.module';
 import { BasicInfoFormComponent } from './contact-form/basic-info-form/basic-info-form.component';
 import { AddressesFormComponent } from './contact-form/addresses-form/addresses-form.component';
@@ -32,6 +33,7 @@ import { ViewContactComponent } from './view-contact/view-contact.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ActivitiesModule } from '../activities/activities.module';
+import { ViewContactMenuComponent } from './view-contact/view-contact-menu/view-contact-menu.component';
 
 
 export const routes = [
@@ -55,7 +57,8 @@ export const routes = [
     PhoneMaskDirective,
     EditContactComponent,
     ViewContactsComponent,
-    ViewContactComponent
+    ViewContactComponent,
+    ViewContactMenuComponent
   ],
   imports: [
     CommonModule,
@@ -74,6 +77,7 @@ export const routes = [
     MatCardModule,
     MatListModule,
     MatAutocompleteModule,
+    MatMenuModule,
     ReactiveFormsModule,
     AlertModule,
     NgxFlagPickerModule,

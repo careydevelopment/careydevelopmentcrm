@@ -9,6 +9,7 @@ export interface Activity {
   outcome: ActivityOutcome;
   notes: string;
   location: string;
-  date: number;
+  startDate: number;
+  endDate: number;
   contact: Contact;
 }

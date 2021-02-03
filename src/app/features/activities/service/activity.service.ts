@@ -15,7 +15,7 @@ export class ActivityService {
 
   fetchRecentActivitiesByContactId(contactId: string): Observable<Activity[]> {
     let minDate = this.dateService.getDaysBackwardAsNumber(recentActivitiesDays);
-    let orderBy = 'date';
+    let orderBy = 'startDate';
     let orderType = 'DESC';
 
     let url = `${baseUrl}/activities/search?contactId=${contactId}&minDate=${minDate}&orderBy=${orderBy}&orderType=${orderType}`;

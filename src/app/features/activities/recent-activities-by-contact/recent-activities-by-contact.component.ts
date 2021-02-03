@@ -14,6 +14,7 @@ export class RecentActivitiesByContactComponent implements OnInit {
   @Input() contactId: string;
   activities: Activity[];
   loading: boolean = true;
+  errorLoading: boolean = false;
 
   constructor(private activityService: ActivityService, private dateService: DateService) { }
 
@@ -35,5 +36,7 @@ export class RecentActivitiesByContactComponent implements OnInit {
 
   private handleFetchActivitiesError(err: Error) {
     console.error(err);
+    this.loading = false;
+    this.errorLoading = true;
   }
 }

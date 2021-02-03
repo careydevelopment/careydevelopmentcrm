@@ -18,10 +18,16 @@
                 </div>
                 <div *ngIf="contact.authority" class="has-authority">Authorized</div>
                 <div *ngIf="!contact.authority" class="no-authority">Not authorized</div>
+                <div fxHide.gt-xs="true">
+                  <button mat-icon-button color="primary" (click)="editContact()" title="Edit Contact"><mat-icon>edit</mat-icon></button>
+                </div>
               </div>
               <div fxFlex="auto">&nbsp;</div>
-              <div fxFlex="100px" style="text-align: left">
+              <div fxFlex="40px" style="text-align: left" fxHide.xs="true">
                 <button mat-icon-button color="primary" (click)="editContact()" title="Edit Contact"><mat-icon>edit</mat-icon></button>
+              </div>
+              <div fxFlex="40px" style="text-align:left" fxHide.xs="true">
+                <app-view-contact-menu [contact]="contact"></app-view-contact-menu>
               </div>
             </div>
             <div fxLayout="row wrap">
