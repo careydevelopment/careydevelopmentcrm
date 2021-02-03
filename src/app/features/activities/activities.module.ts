@@ -12,8 +12,23 @@ import { AddActivityComponent } from './add-activity/add-activity.component';
 import { ViewActivityComponent } from './view-activity/view-activity.component';
 import { ViewActivitiesComponent } from './view-activities/view-activities.component';
 import { AlertModule } from '../../ui/alert/alert.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
-export const routes = [];
+
+
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+
+
+
+
+export const routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'add-activity' },
+  { path: 'add-activity', component: AddActivityComponent },
+  { path: 'view-activity', component: ViewActivityComponent },
+  { path: 'view-activities', component: ViewActivitiesComponent }
+];
 
 @NgModule({
   declarations: [
@@ -34,6 +49,10 @@ export const routes = [];
     MatButtonModule,
     MatProgressSpinnerModule,
     AlertModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
     RouterModule.forChild(routes)
   ]
 })

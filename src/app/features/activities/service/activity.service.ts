@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Activity } from '../models/activity';
 import { DateService } from '../../../services/date.service';
+import { ActivityType } from '../models/activity-type';
 
 const baseUrl: string = environment.baseCrmServiceUrl;
 const recentActivitiesDays = 30;
@@ -23,4 +24,9 @@ export class ActivityService {
 
     return this.http.get<Activity[]>(url);
   }
-}
+
+  fetchAllActivityTypes(): Observable<ActivityType[]> {
+    let url = `${baseUrl}/activitytypes`;
+    return this.http.get<ActivityType[]>(url);
+  }
+ }
