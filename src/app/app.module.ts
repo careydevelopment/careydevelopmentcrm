@@ -16,6 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { ConfirmationDialogComponent } from './ui/confirmation-dialog/confirmation-dialog.component';
 import { JwtInterceptor } from './util/jwt-interceptor';
 import { HttpErrorInterceptor } from './util/http-error-interceptor';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 @NgModule({
   declarations: [
@@ -35,11 +37,13 @@ import { HttpErrorInterceptor } from './util/http-error-interceptor';
     MatListModule,
     MatIconModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatNativeDateModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+
   ],
     bootstrap: [AppComponent]
 })

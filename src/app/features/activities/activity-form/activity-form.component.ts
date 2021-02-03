@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Contact } from '../../contacts/models/contact';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -6,10 +6,12 @@ import { AlertService } from '../../../ui/alert/alert.service';
 import { ContactService } from '../../service/contact.service';
 import { DropdownService } from '../../ui/service/dropdown.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ValidationErrors, FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { ValidationErrors, FormControl, FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Activity } from '../models/activity';
 import { ActivityType } from '../models/activity-type';
 import { ActivityService } from '../service/activity.service';
+import { ActivityOutcome } from '../models/activity-outcome';
+import { DateService } from '../../../services/date.service';
 
 @Component({
   selector: 'app-activity-form',
@@ -25,29 +27,57 @@ export class ActivityFormComponent implements OnInit {
   activity: Activity = <Activity>{};
   loadingActivityType: ActivityType = <ActivityType>{ name: 'Loading...' };
   selectedActivityType: ActivityType;
+  contacts: Contact[];
+
+  currentStartDate: number = -1;
+  currentEndDate: number = -1;
+
+  startAmChecked: boolean = true;
+  endAmChecked: boolean = true;
+
+  addingForContact: boolean = false;
+  addingActivityType: boolean = false;
 
   activityFormGroup: FormGroup;
 
   availableActivityTypes: ActivityType[] = [this.loadingActivityType];
-
+  availableActivityOutcomes: ActivityOutcome[] = [];
 
   constructor(private route: ActivatedRoute, private contactService: ContactService,
     private alertService: AlertService, private router: Router,
-    private dropDownService: DropdownService, private fb: FormBuilder, private activityService: ActivityService) { }
+    private fb: FormBuilder, private activityService: ActivityService, private dateService: DateService) { }
 
   ngOnInit(): void {
     this.loadData();
     this.createForm();
+    this.intitializeCalendars();
+  }
+
+  private intitializeCalendars() {
+    this.activityFormGroup.get('startDate').setValue(new Date());
+    this.activityFormGroup.get('startDate').enable();
+
+    this.activityFormGroup.get('endDate').setValue(new Date());
+    this.activityFormGroup.get('endDate').enable();
   }
 
   private loadData() {
+    this.checkForContact();
+    this.checkForActivityType();
+  }
+
+  private checkForActivityType() {
+    this.loadActivityTypes();
+  }
+
+  private checkForContact() {
     if (this.route.snapshot.queryParams['contactId']) {
+      this.addingForContact = true;
       this.loadContact();
     } else {
       this.loading = false;
+      this.loadContacts();
     }
-
-    this.loadActivityTypes();
   }
 
   private loadActivityTypes() {
@@ -59,10 +89,36 @@ export class ActivityFormComponent implements OnInit {
 
   private handleActivityTypesResponse(activityTypes: ActivityType[]) {
     this.availableActivityTypes = activityTypes;
+
+    if (this.route.snapshot.queryParams['activityTypeId']) {
+      this.addingActivityType = true;
+    } else {
+    }
   }
 
   private handleActivityTypesError(err: Error) {
     console.error(err);
+  }
+
+  private loadContacts() {
+    let contacts$ = this.contactService.fetchMyContacts();
+
+    contacts$.subscribe(
+      (contacts: Contact[]) => this.handleContactsResponse(contacts),
+      err => this.handleContactsError(err)
+    );
+  }
+
+  private handleContactsResponse(contacts: Contact[]) {
+    this.contacts = contacts;
+  }
+
+  private handleContactsError(err: Error) {
+    console.log(err);
+
+    let alertMessage: string = 'Something went wrong, please call support';
+
+    this.alertService.error(alertMessage);
   }
 
   private loadContact() {
@@ -83,8 +139,8 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private handleContactError(err: Error) {
-    console.log(err);
     this.loading = false;
+    console.log(err);
 
     let alertMessage: string = 'Something went wrong, please call support';
 
@@ -100,18 +156,54 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private createForm() {
-    //if (!this.contact) this.contact = { 'status': 'NEW', 'authority': false } as Contact;
-
     this.activityFormGroup = this.fb.group({
       'type': [this.activity.type, [Validators.required]],
       'title': [this.activity.title, [Validators.pattern('^[a-zA-Z \-\]*$')]],
-      'location': [this.activity.location, [Validators.pattern('^[a-zA-Z \-\]*$')]]
+      'location': [this.activity.location, [Validators.pattern('^[a-zA-Z \-\]*$')]],
+      'startDate': [null],
+      'startHour': ['12'],
+      'startMinute': ['00'],
+      'startMeridian': ['AM'],
+      'endDate': [null],
+      'endHour': ['12'],
+      'endMinute': ['00'],
+      'endMeridian': ['AM'],
+      'contact': ['', [Validators.required]],
+      'outcome': ['']
     });
   }
 
   activityTypeChanged(name: string) {
     if (this.availableActivityTypes && name) {
       this.selectedActivityType = this.availableActivityTypes.find(type => type.name === name);
+      this.availableActivityOutcomes = this.selectedActivityType.possibleOutcomes;
     }
   }
+
+  startDateChanged() {
+    let date: string = this.activityFormGroup.controls['startDate'].value;
+    let hour: string = this.activityFormGroup.controls['startHour'].value;
+    let minute: string = this.activityFormGroup.controls['startMinute'].value;
+    let meridian: string = this.activityFormGroup.controls['startMeridian'].value;
+
+    let newDateVal: number = this.dateService.getDateVal(date, hour, minute, meridian);
+
+    let disp: string = this.dateService.getShortDateAndTimeDisplay(newDateVal);
+    console.log(disp);
+    this.currentStartDate = newDateVal;
+  }
+
+  endDateChanged() {
+    let date: string = this.activityFormGroup.controls['endDate'].value;
+    let hour: string = this.activityFormGroup.controls['endHour'].value;
+    let minute: string = this.activityFormGroup.controls['endMinute'].value;
+    let meridian: string = this.activityFormGroup.controls['endMeridian'].value;
+
+    let newDateVal: number = this.dateService.getDateVal(date, hour, minute, meridian);
+
+    let disp: string = this.dateService.getShortDateAndTimeDisplay(newDateVal);
+    console.log(disp);
+    this.currentEndDate = newDateVal;
+  }
+
 }

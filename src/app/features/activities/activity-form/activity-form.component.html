@@ -27,6 +27,21 @@
         </div>
 
         <div class="vertical-form-field">
+          <div class="label">Contact</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+              <mat-select formControlName="contact" placeholder="Select a contact">
+                <mat-option *ngFor="let contact of contacts" [value]="contact.id">
+                  {{contact.lastName}}, {{contact.firstName}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="activityFormGroup.controls['contact'].invalid">Please select a contact</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+        <div class="vertical-form-field">
           <div class="label">Title</div>
           <div>
             <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
@@ -42,6 +57,115 @@
             <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
               <input formControlName="location" matInput placeholder="Enter activity location" maxlength="50">
               <mat-error *ngIf="activityFormGroup.controls['location'].invalid">Please enter valid location</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="vertical-form-field" *ngIf="selectedActivityType">
+          <div class="label" *ngIf="selectedActivityType && selectedActivityType.usesEndDate">Start Date/Time</div>
+          <div class="label" *ngIf="selectedActivityType && !selectedActivityType.usesEndDate">Date/Time</div>
+          <div fxLayout="row wrap" fxLayoutGap="30px">
+            <div>
+              <mat-form-field class="no-label-field">
+                <input matInput [matDatepicker]="startPicker" formControlName="startDate" (dateChange)="startDateChanged()">
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="no-label-field" style="width: 50px">
+                <mat-select formControlName="startHour" (selectionChange)="startDateChanged()">
+                  <mat-option [value]="01">01</mat-option>
+                  <mat-option [value]="02">02</mat-option>
+                  <mat-option [value]="03">03</mat-option>
+                  <mat-option [value]="04">04</mat-option>
+                  <mat-option [value]="05">05</mat-option>
+                  <mat-option [value]="06">06</mat-option>
+                  <mat-option [value]="07">07</mat-option>
+                  <mat-option [value]="08">08</mat-option>
+                  <mat-option [value]="09">09</mat-option>
+                  <mat-option [value]="10">10</mat-option>
+                  <mat-option [value]="11">11</mat-option>
+                  <mat-option [value]="12">12</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="no-label-field" style="width: 50px">
+                <mat-select formControlName="startMinute" (selectionChange)="startDateChanged()">
+                  <mat-option [value]="00">00</mat-option>
+                  <mat-option [value]="15">15</mat-option>
+                  <mat-option [value]="30">30</mat-option>
+                  <mat-option [value]="45">45</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div style="padding-top:5px">
+              <mat-radio-group aria-label="Select an option" formControlName="startMeridian" (change)="startDateChanged()" style="width:150px">
+                <mat-radio-button value="AM" [checked]="startAmChecked">AM</mat-radio-button>
+                <mat-radio-button value="PM" [checked]="!startAmChecked">PM</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+        </div>
+
+        <div class="vertical-form-field" *ngIf="selectedActivityType && selectedActivityType.usesEndDate">
+          <div class="label">End Date/Time</div>
+          <div fxLayout="row wrap" fxLayoutGap="30px">
+            <div>
+              <mat-form-field class="no-label-field">
+                <input matInput [matDatepicker]="endPicker" formControlName="endDate" (dateChange)="endDateChanged()">
+                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="no-label-field" style="width: 50px">
+                <mat-select formControlName="endHour" (selectionChange)="endDateChanged()">
+                  <mat-option [value]="01">01</mat-option>
+                  <mat-option [value]="02">02</mat-option>
+                  <mat-option [value]="03">03</mat-option>
+                  <mat-option [value]="04">04</mat-option>
+                  <mat-option [value]="05">05</mat-option>
+                  <mat-option [value]="06">06</mat-option>
+                  <mat-option [value]="07">07</mat-option>
+                  <mat-option [value]="08">08</mat-option>
+                  <mat-option [value]="09">09</mat-option>
+                  <mat-option [value]="10">10</mat-option>
+                  <mat-option [value]="11">11</mat-option>
+                  <mat-option [value]="12">12</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="no-label-field" style="width: 50px">
+                <mat-select formControlName="endMinute" (selectionChange)="endDateChanged()">
+                  <mat-option [value]="00">00</mat-option>
+                  <mat-option [value]="15">15</mat-option>
+                  <mat-option [value]="30">30</mat-option>
+                  <mat-option [value]="45">45</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div style="padding-top:5px">
+              <mat-radio-group aria-label="Select an option" formControlName="endMeridian" style="width:150px" (change)="endDateChanged()">
+                <mat-radio-button value="AM" [checked]="endAmChecked">AM</mat-radio-button>
+                <mat-radio-button value="PM" [checked]="!endAmChecked">PM</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+        </div>
+
+        <div class="vertical-form-field" *ngIf="selectedActivityType">
+          <div class="label">Outcome</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+              <mat-select formControlName="outcome" placeholder="Select an outcome">
+                <mat-option *ngFor="let outcome of availableActivityOutcomes" [value]="outcome.id">
+                  {{outcome.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="activityFormGroup.controls['outcome'].invalid">Please select an outcome</mat-error>
             </mat-form-field>
           </div>
         </div>

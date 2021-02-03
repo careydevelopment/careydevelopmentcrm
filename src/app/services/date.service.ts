@@ -28,6 +28,17 @@ export class DateService {
       return myFormattedDate;
   }
 
+  isInThePast(dateValue: number): boolean {
+    let inPast: boolean = false;
+    let today: number = Date.now();
+
+    if (dateValue < today) {
+      inPast = true;
+    }
+
+    return inPast;
+  }
+
   isToday(dateValue: number): boolean {
       let today = Date.now();
       let todayDate = this.getShortDateDisplay(today);
@@ -115,6 +126,32 @@ export class DateService {
       let midnightDate = new Date(dateString);
 
       return midnightDate.getTime();
+  }
+
+  translateDatePickerValueToNumber(dateString: string): number {
+    let newDate: Date = new Date(dateString);
+    return newDate.getTime();
+  }
+
+  getDateVal(date: string, hour: string, minute: string, meridian: string): number {
+    let dateVal: number = this.translateDatePickerValueToNumber(date);
+
+    if (hour) {
+      let hourValue: number = Number(hour);
+      if (meridian == 'PM') hourValue += 12;
+      else if (hourValue == 12) hourValue = 0;
+
+      hourValue = hourValue * 60 * 60 * 1000;
+      dateVal += hourValue;
+    }
+
+    if (minute) {
+      let minuteValue: number = Number(minute);
+      minuteValue = minuteValue * 60 * 1000;
+      dateVal += minuteValue;
+    }
+
+    return dateVal;
   }
 
   private pad(valNumber: number) {

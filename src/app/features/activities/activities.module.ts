@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RecentActivitiesByContactComponent } from './recent-activities-by-contact/recent-activities-by-contact.component';
@@ -13,15 +13,10 @@ import { ViewActivityComponent } from './view-activity/view-activity.component';
 import { ViewActivitiesComponent } from './view-activities/view-activities.component';
 import { AlertModule } from '../../ui/alert/alert.module';
 import { ReactiveFormsModule } from '@angular/forms';
-
-
-
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
-
-
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 export const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'add-activity' },
@@ -53,6 +48,7 @@ export const routes = [
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
+    MatDatepickerModule,
     RouterModule.forChild(routes)
   ]
 })
