@@ -8,6 +8,16 @@ export class DateService {
 
   constructor() { }
 
+  roundToNearest15Minutes(minutes: number): number {
+    let min: number = 45;
+
+    if (minutes <= 7 || minutes > 52) min = 0;
+    else if (minutes <= 22) min = 15;
+    else if (minutes <= 37) min = 30;
+
+    return min;
+  }
+
   getShortDateDisplay(dateValue: number): string {
       let myFormattedDate = pipe.transform(dateValue, 'shortDate');
       return myFormattedDate;

@@ -40,7 +40,6 @@
           </div>
         </div>
 
-
         <div class="vertical-form-field">
           <div class="label">Title</div>
           <div>
@@ -102,8 +101,8 @@
             </div>
             <div style="padding-top:5px">
               <mat-radio-group aria-label="Select an option" formControlName="startMeridian" (change)="startDateChanged()" style="width:150px">
-                <mat-radio-button value="AM" [checked]="startAmChecked">AM</mat-radio-button>
-                <mat-radio-button value="PM" [checked]="!startAmChecked">PM</mat-radio-button>
+                <mat-radio-button value="AM">AM</mat-radio-button>
+                <mat-radio-button value="PM">PM</mat-radio-button>
               </mat-radio-group>
             </div>
           </div>
@@ -149,8 +148,8 @@
             </div>
             <div style="padding-top:5px">
               <mat-radio-group aria-label="Select an option" formControlName="endMeridian" style="width:150px" (change)="endDateChanged()">
-                <mat-radio-button value="AM" [checked]="endAmChecked">AM</mat-radio-button>
-                <mat-radio-button value="PM" [checked]="!endAmChecked">PM</mat-radio-button>
+                <mat-radio-button value="AM">AM</mat-radio-button>
+                <mat-radio-button value="PM">PM</mat-radio-button>
               </mat-radio-group>
             </div>
           </div>

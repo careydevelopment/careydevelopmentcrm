@@ -32,9 +32,6 @@ export class ActivityFormComponent implements OnInit {
   currentStartDate: number = -1;
   currentEndDate: number = -1;
 
-  startAmChecked: boolean = true;
-  endAmChecked: boolean = true;
-
   addingForContact: boolean = false;
   addingActivityType: boolean = false;
 
@@ -59,6 +56,11 @@ export class ActivityFormComponent implements OnInit {
 
     this.activityFormGroup.get('endDate').setValue(new Date());
     this.activityFormGroup.get('endDate').enable();
+
+    this.startDateChanged();
+    this.endDateChanged();
+
+    this.setCalendarInputs();
   }
 
   private loadData() {
@@ -161,16 +163,42 @@ export class ActivityFormComponent implements OnInit {
       'title': [this.activity.title, [Validators.pattern('^[a-zA-Z \-\]*$')]],
       'location': [this.activity.location, [Validators.pattern('^[a-zA-Z \-\]*$')]],
       'startDate': [null],
-      'startHour': ['12'],
-      'startMinute': ['00'],
+      'startHour': [12],
+      'startMinute': [0],
       'startMeridian': ['AM'],
       'endDate': [null],
-      'endHour': ['12'],
-      'endMinute': ['00'],
+      'endHour': [12],
+      'endMinute': [0],
       'endMeridian': ['AM'],
       'contact': ['', [Validators.required]],
       'outcome': ['']
     });
+  }
+
+  private setCalendarInputs() {
+    let date = new Date();
+    date.setTime(this.currentStartDate);
+    this.setHoursAndMinutes(date, 'start');
+
+    date.setTime(this.currentEndDate);
+    this.setHoursAndMinutes(date, 'end');
+  }
+
+  private setHoursAndMinutes(date: Date, type: string) {
+    let hour = date.getHours();
+
+    if (hour > 11) {
+      hour -= 12;
+      this.activityFormGroup.controls[type + 'Meridian'].setValue('PM');
+    } else {
+      this.activityFormGroup.controls[type + 'Meridian'].setValue('AM');
+    }
+
+    if (date.getMinutes() > 52) hour += 1;
+    let minutes = this.dateService.roundToNearest15Minutes(date.getMinutes());
+
+    this.activityFormGroup.controls[type + 'Hour'].setValue(hour);
+    this.activityFormGroup.controls[type + 'Minute'].setValue(minutes);
   }
 
   activityTypeChanged(name: string) {
@@ -178,6 +206,8 @@ export class ActivityFormComponent implements OnInit {
       this.selectedActivityType = this.availableActivityTypes.find(type => type.name === name);
       this.availableActivityOutcomes = this.selectedActivityType.possibleOutcomes;
     }
+
+    this.setCalendarInputs();
   }
 
   startDateChanged() {
