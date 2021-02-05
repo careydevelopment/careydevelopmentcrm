@@ -5,4 +5,5 @@ export interface ActivityType extends ActivityTypeLightweight {
   requiresOutcome: boolean;
   usesLocation: boolean;
   possibleOutcomes: ActivityOutcome[];
+  usesEndDate: boolean;
 }

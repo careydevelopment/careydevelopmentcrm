@@ -51,14 +51,16 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private intitializeCalendars() {
-    this.activityFormGroup.get('startDate').setValue(new Date());
+    let currentDate: Date = new Date();
+
+    this.activityFormGroup.get('startDate').setValue(currentDate);
     this.activityFormGroup.get('startDate').enable();
 
-    this.activityFormGroup.get('endDate').setValue(new Date());
+    this.activityFormGroup.get('endDate').setValue(currentDate);
     this.activityFormGroup.get('endDate').enable();
 
-    this.startDateChanged();
-    this.endDateChanged();
+    this.currentEndDate = currentDate.getTime();
+    this.currentStartDate = currentDate.getTime();
 
     this.setCalendarInputs();
   }
@@ -212,8 +214,8 @@ export class ActivityFormComponent implements OnInit {
 
   startDateChanged() {
     let date: string = this.activityFormGroup.controls['startDate'].value;
-    let hour: string = this.activityFormGroup.controls['startHour'].value;
-    let minute: string = this.activityFormGroup.controls['startMinute'].value;
+    let hour: number = this.activityFormGroup.controls['startHour'].value;
+    let minute: number = this.activityFormGroup.controls['startMinute'].value;
     let meridian: string = this.activityFormGroup.controls['startMeridian'].value;
 
     let newDateVal: number = this.dateService.getDateVal(date, hour, minute, meridian);
@@ -225,8 +227,8 @@ export class ActivityFormComponent implements OnInit {
 
   endDateChanged() {
     let date: string = this.activityFormGroup.controls['endDate'].value;
-    let hour: string = this.activityFormGroup.controls['endHour'].value;
-    let minute: string = this.activityFormGroup.controls['endMinute'].value;
+    let hour: number = this.activityFormGroup.controls['endHour'].value;
+    let minute: number = this.activityFormGroup.controls['endMinute'].value;
     let meridian: string = this.activityFormGroup.controls['endMeridian'].value;
 
     let newDateVal: number = this.dateService.getDateVal(date, hour, minute, meridian);
@@ -236,4 +238,25 @@ export class ActivityFormComponent implements OnInit {
     this.currentEndDate = newDateVal;
   }
 
+  isDateInPast(): boolean {
+    let inPast: boolean = false;
+
+    if (this.selectedActivityType) {
+      if (this.selectedActivityType.usesEndDate) {
+        if (this.currentEndDate > -1) {
+          if (this.currentEndDate < new Date().getTime()) {
+            inPast = true;
+          }
+        }
+      } else {
+        if (this.currentStartDate > -1) {
+          if (this.currentStartDate < new Date().getTime()) {
+            inPast = true;
+          }
+        }
+      }
+    }
+
+    return inPast;
+  }
 }

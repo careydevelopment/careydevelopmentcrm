@@ -143,21 +143,28 @@ export class DateService {
     return newDate.getTime();
   }
 
-  getDateVal(date: string, hour: string, minute: string, meridian: string): number {
-    let dateVal: number = this.translateDatePickerValueToNumber(date);
+  translateDatePickerValueToNumberAtMidnight(dateString: string): number {
+    let newDate: Date = new Date(dateString);
+    newDate.setHours(0);
+    newDate.setMinutes(0);
+    newDate.setSeconds(0);
+
+    return newDate.getTime();
+  }
+
+  getDateVal(date: string, hour: number, minute: number, meridian: string): number {
+    let dateVal: number = this.translateDatePickerValueToNumberAtMidnight(date);
 
     if (hour) {
-      let hourValue: number = Number(hour);
-      if (meridian == 'PM') hourValue += 12;
-      else if (hourValue == 12) hourValue = 0;
+      if (meridian == 'PM' && hour < 12) hour += 12;
+      else if (meridian == 'AM' && hour == 12) hour = 0;
 
-      hourValue = hourValue * 60 * 60 * 1000;
+      let hourValue = hour * 60 * 60 * 1000;
       dateVal += hourValue;
     }
 
     if (minute) {
-      let minuteValue: number = Number(minute);
-      minuteValue = minuteValue * 60 * 1000;
+      let minuteValue = minute * 60 * 1000;
       dateVal += minuteValue;
     }
 

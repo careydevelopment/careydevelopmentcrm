@@ -74,15 +74,15 @@
             <div>
               <mat-form-field class="no-label-field" style="width: 50px">
                 <mat-select formControlName="startHour" (selectionChange)="startDateChanged()">
-                  <mat-option [value]="01">01</mat-option>
-                  <mat-option [value]="02">02</mat-option>
-                  <mat-option [value]="03">03</mat-option>
-                  <mat-option [value]="04">04</mat-option>
-                  <mat-option [value]="05">05</mat-option>
-                  <mat-option [value]="06">06</mat-option>
-                  <mat-option [value]="07">07</mat-option>
-                  <mat-option [value]="08">08</mat-option>
-                  <mat-option [value]="09">09</mat-option>
+                  <mat-option [value]="1">01</mat-option>
+                  <mat-option [value]="2">02</mat-option>
+                  <mat-option [value]="3">03</mat-option>
+                  <mat-option [value]="4">04</mat-option>
+                  <mat-option [value]="5">05</mat-option>
+                  <mat-option [value]="6">06</mat-option>
+                  <mat-option [value]="7">07</mat-option>
+                  <mat-option [value]="8">08</mat-option>
+                  <mat-option [value]="9">09</mat-option>
                   <mat-option [value]="10">10</mat-option>
                   <mat-option [value]="11">11</mat-option>
                   <mat-option [value]="12">12</mat-option>
@@ -92,7 +92,7 @@
             <div>
               <mat-form-field class="no-label-field" style="width: 50px">
                 <mat-select formControlName="startMinute" (selectionChange)="startDateChanged()">
-                  <mat-option [value]="00">00</mat-option>
+                  <mat-option [value]="0">00</mat-option>
                   <mat-option [value]="15">15</mat-option>
                   <mat-option [value]="30">30</mat-option>
                   <mat-option [value]="45">45</mat-option>
@@ -121,15 +121,15 @@
             <div>
               <mat-form-field class="no-label-field" style="width: 50px">
                 <mat-select formControlName="endHour" (selectionChange)="endDateChanged()">
-                  <mat-option [value]="01">01</mat-option>
-                  <mat-option [value]="02">02</mat-option>
-                  <mat-option [value]="03">03</mat-option>
-                  <mat-option [value]="04">04</mat-option>
-                  <mat-option [value]="05">05</mat-option>
-                  <mat-option [value]="06">06</mat-option>
-                  <mat-option [value]="07">07</mat-option>
-                  <mat-option [value]="08">08</mat-option>
-                  <mat-option [value]="09">09</mat-option>
+                  <mat-option [value]="1">01</mat-option>
+                  <mat-option [value]="2">02</mat-option>
+                  <mat-option [value]="3">03</mat-option>
+                  <mat-option [value]="4">04</mat-option>
+                  <mat-option [value]="5">05</mat-option>
+                  <mat-option [value]="6">06</mat-option>
+                  <mat-option [value]="7">07</mat-option>
+                  <mat-option [value]="8">08</mat-option>
+                  <mat-option [value]="9">09</mat-option>
                   <mat-option [value]="10">10</mat-option>
                   <mat-option [value]="11">11</mat-option>
                   <mat-option [value]="12">12</mat-option>
@@ -139,7 +139,7 @@
             <div>
               <mat-form-field class="no-label-field" style="width: 50px">
                 <mat-select formControlName="endMinute" (selectionChange)="endDateChanged()">
-                  <mat-option [value]="00">00</mat-option>
+                  <mat-option [value]="0">00</mat-option>
                   <mat-option [value]="15">15</mat-option>
                   <mat-option [value]="30">30</mat-option>
                   <mat-option [value]="45">45</mat-option>
@@ -155,7 +155,7 @@
           </div>
         </div>
 
-        <div class="vertical-form-field" *ngIf="selectedActivityType">
+        <div class="vertical-form-field" *ngIf="selectedActivityType && isDateInPast()">
           <div class="label">Outcome</div>
           <div>
             <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
