@@ -19,23 +19,23 @@ export class DateService {
   }
 
   getShortDateDisplay(dateValue: number): string {
-      let myFormattedDate = pipe.transform(dateValue, 'shortDate');
-      return myFormattedDate;
+    let myFormattedDate = pipe.transform(dateValue, 'shortDate');
+    return myFormattedDate;
   }
 
   getMediumDateDisplay(dateValue: number): string {
-      let myFormattedDate = pipe.transform(dateValue, 'mediumDate');
-      return myFormattedDate;
+    let myFormattedDate = pipe.transform(dateValue, 'mediumDate');
+    return myFormattedDate;
   }
 
   getShortDateAndTimeDisplay(dateValue: number): string {
-      let myFormattedDate = pipe.transform(dateValue, 'short');
-      return myFormattedDate;
+    let myFormattedDate = pipe.transform(dateValue, 'short');
+    return myFormattedDate;
   }
 
   getShortTimeDisplay(dateValue: number): string {
-      let myFormattedDate = pipe.transform(dateValue, 'shortTime');
-      return myFormattedDate;
+    let myFormattedDate = pipe.transform(dateValue, 'shortTime');
+    return myFormattedDate;
   }
 
   isInThePast(dateValue: number): boolean {
@@ -50,27 +50,27 @@ export class DateService {
   }
 
   isToday(dateValue: number): boolean {
-      let today = Date.now();
-      let todayDate = this.getShortDateDisplay(today);
-      let otherDate = this.getShortDateDisplay(dateValue);
+    let today = Date.now();
+    let todayDate = this.getShortDateDisplay(today);
+    let otherDate = this.getShortDateDisplay(dateValue);
 
-      let isToday = (todayDate === otherDate);
-      return isToday;
+    let isToday = (todayDate === otherDate);
+    return isToday;
   }
 
   getDaysForwardAsNumber(daysForward: number): number {
-      let dateValue = -1;
+    let dateValue = -1;
 
-      let date: Date = new Date();
-      date.setDate(date.getDate() + daysForward);
-      date.setHours(8);
-      date.setMinutes(0);
-      date.setSeconds(0);
-      date.setMilliseconds(0);
+    let date: Date = new Date();
+    date.setDate(date.getDate() + daysForward);
+    date.setHours(8);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
 
-      dateValue = date.getTime();
+    dateValue = date.getTime();
 
-      return dateValue;
+    return dateValue;
   }
 
   getDaysBackwardAsNumber(daysBackward: number): number {
@@ -89,53 +89,45 @@ export class DateService {
   }
 
   getDaysForwardAtMidnightAsNumber(daysForward: number): number {
-      let dateValue = -1;
+    let dateValue = -1;
 
-      let date: Date = new Date();
-      date.setDate(date.getDate() + daysForward);
-      date.setHours(0);
-      date.setMinutes(0);
-      date.setSeconds(0);
-      date.setMilliseconds(0);
+    let date: Date = new Date();
+    date.setDate(date.getDate() + daysForward);
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
 
-      dateValue = date.getTime();
+    dateValue = date.getTime();
 
-      return dateValue;
+    return dateValue;
   }
 
   getMonthsForwardAsNumber(monthsForward: number): number {
-      let dateValue = -1;
+    let dateValue = -1;
 
-      let date: Date = new Date();
-      date.setMonth(date.getMonth() + monthsForward);
-      date.setHours(8);
-      date.setMinutes(0);
-      date.setSeconds(0);
-      date.setMilliseconds(0);
+    let date: Date = new Date();
+    date.setMonth(date.getMonth() + monthsForward);
+    date.setHours(8);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
 
-      console.log(date);
+    console.log(date);
 
-      dateValue = date.getTime();
+    dateValue = date.getTime();
 
-      return dateValue;
+    return dateValue;
   }
 
   getTodayAtMidnightAsNumber(): number {
-      let today = new Date();
+    let today = new Date();
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setSeconds(0);
+    today.setMilliseconds(0);
 
-      let dateString = "";
-
-      dateString += today.getFullYear();
-      dateString += '-';
-      dateString += this.pad(today.getMonth() + 1);
-      dateString += '-';
-      dateString += this.pad(today.getDate());
-      dateString += 'T';
-      dateString += '00:00:00';
-
-      let midnightDate = new Date(dateString);
-
-      return midnightDate.getTime();
+    return today.getTime();
   }
 
   translateDatePickerValueToNumber(dateString: string): number {
@@ -148,36 +140,31 @@ export class DateService {
     newDate.setHours(0);
     newDate.setMinutes(0);
     newDate.setSeconds(0);
+    newDate.setMilliseconds(0);
 
     return newDate.getTime();
   }
 
   getDateVal(date: string, hour: number, minute: number, meridian: string): number {
-    let dateVal: number = this.translateDatePickerValueToNumberAtMidnight(date);
+    let dateVal: number = -1;
 
-    if (hour) {
-      if (meridian == 'PM' && hour < 12) hour += 12;
-      else if (meridian == 'AM' && hour == 12) hour = 0;
+    if (date) {
+      dateVal = this.translateDatePickerValueToNumberAtMidnight(date);
 
-      let hourValue = hour * 60 * 60 * 1000;
-      dateVal += hourValue;
-    }
+      if (hour) {
+        if (meridian == 'PM' && hour < 12) hour += 12;
+        else if (meridian == 'AM' && hour == 12) hour = 0;
 
-    if (minute) {
-      let minuteValue = minute * 60 * 1000;
-      dateVal += minuteValue;
+        let hourValue = hour * 60 * 60 * 1000;
+        dateVal += hourValue;
+      }
+
+      if (minute) {
+        let minuteValue = minute * 60 * 1000;
+        dateVal += minuteValue;
+      }
     }
 
     return dateVal;
-  }
-
-  private pad(valNumber: number) {
-      let val: string = '' + valNumber;
-
-      if (val.length < 2) {
-          val = '0' + val;
-      }
-
-      return val;
   }
 }

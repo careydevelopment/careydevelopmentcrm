@@ -1,14 +1,14 @@
-<div fxFlex="100" fxLayout="column" fxLayoutGap="0px" class="route-content">
+<div fxFlex="100" fxLayout="column" fxLayoutGap="20px" class="route-content">
   <div>
     <h4>{{pageTitle}}</h4>
-  </div>
-  <div style="margin-bottom:20px">
-    <alert></alert>
   </div>
   <div class="absolute-center" *ngIf="loading">
     <mat-spinner [diameter]="80"></mat-spinner>
   </div>
-  <div *ngIf="!loading" style="margin-right:10px">
+  <div>
+    <alert></alert>
+  </div>
+  <div *ngIf="!loading" style="margin-right:10px;">
     <form [formGroup]="activityFormGroup">
       <div fxLayout="column">
 
@@ -30,7 +30,7 @@
           <div class="label">Contact</div>
           <div>
             <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
-              <mat-select formControlName="contact" placeholder="Select a contact">
+              <mat-select formControlName="contact" placeholder="Select a contact" (selectionChange)="contactChanged($event.value)">
                 <mat-option *ngFor="let contact of contacts" [value]="contact.id">
                   {{contact.lastName}}, {{contact.firstName}}
                 </mat-option>
@@ -55,7 +55,17 @@
           <div>
             <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
               <input formControlName="location" matInput placeholder="Enter activity location" maxlength="50">
-              <mat-error *ngIf="activityFormGroup.controls['location'].invalid">Please enter valid location</mat-error>
+              <mat-error *ngIf="activityFormGroup.controls['location'].invalid">Please enter a valid location</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="vertical-form-field">
+          <div class="label">Notes</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+              <textarea formControlName="notes" matInput placeholder="Enter notes" maxlength="512" rows="5" cols="40"></textarea>
+              <mat-error *ngIf="activityFormGroup.controls['notes'].invalid">Please enter valid notes</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -67,6 +77,7 @@
             <div>
               <mat-form-field class="no-label-field">
                 <input matInput [matDatepicker]="startPicker" formControlName="startDate" (dateChange)="startDateChanged()">
+                <mat-error *ngIf="activityFormGroup.controls['startDate'].invalid">Please enter valid date</mat-error>
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
               </mat-form-field>
@@ -114,6 +125,9 @@
             <div>
               <mat-form-field class="no-label-field">
                 <input matInput [matDatepicker]="endPicker" formControlName="endDate" (dateChange)="endDateChanged()">
+                <mat-error *ngIf="activityFormGroup.controls['endDate'].invalid && activityFormGroup.controls['endDate'].hasError('invalid')">Please enter valid date</mat-error>
+                <mat-error *ngIf="activityFormGroup.controls['endDate'].invalid && activityFormGroup.controls['endDate'].hasError('sequence')">End time is before start time</mat-error>
+                <mat-error *ngIf="activityFormGroup.controls['endDate'].invalid && activityFormGroup.controls['endDate'].hasError('maxAppointmentLength')">Appointments can't last longer than 1 week</mat-error>
                 <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
                 <mat-datepicker #endPicker></mat-datepicker>
               </mat-form-field>
@@ -169,6 +183,9 @@
           </div>
         </div>
 
+        <div style="margin-bottom: 15px">
+          <button mat-raised-button color="primary" (click)="saveActivity()">Save Activity</button>
+        </div>
       </div>
     </form>
   </div>

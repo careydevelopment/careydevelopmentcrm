@@ -1,15 +1,15 @@
-import { Contact } from "../../contacts/models/contact";
+import { ContactLightweight } from "./contact-lightweight";
 import { ActivityOutcome } from "./activity-outcome";
-import { ActivityType } from "./activity-type";
+import { ActivityTypeLightweight } from "./activity-type-lightweight";
 
 export interface Activity {
   id: string;
   title: string;
-  type: ActivityType;
+  type: ActivityTypeLightweight;
   outcome: ActivityOutcome;
   notes: string;
   location: string;
   startDate: number;
   endDate: number;
-  contact: Contact;
+  contact: ContactLightweight;
 }
