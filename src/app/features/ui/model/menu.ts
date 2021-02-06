@@ -24,6 +24,18 @@ export let menu: NavItem[] = [
     ]
   },
   {
+    displayName: 'Activities',
+    iconName: 'list',
+    route: 'activities',
+    children: [
+      {
+        displayName: 'Add Activity',
+        iconName: 'add_task',
+        route: 'activities/add-activity'
+      }
+    ]
+  },
+  {
     displayName: 'User',
     iconName: 'face',
     route: 'user',

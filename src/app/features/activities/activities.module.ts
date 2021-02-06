@@ -17,10 +17,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { EditActivityComponent } from './edit-activity/edit-activity.component';
 
 export const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'add-activity' },
   { path: 'add-activity', component: AddActivityComponent },
+  { path: 'edit-activity', component: EditActivityComponent },
   { path: 'view-activity', component: ViewActivityComponent },
   { path: 'view-activities', component: ViewActivitiesComponent }
 ];
@@ -31,7 +33,8 @@ export const routes = [
     ActivityFormComponent,
     AddActivityComponent,
     ViewActivityComponent,
-    ViewActivitiesComponent
+    ViewActivitiesComponent,
+    EditActivityComponent
   ],
   exports: [
     RecentActivitiesByContactComponent

@@ -188,7 +188,8 @@
         </div>
 
         <div style="margin-bottom: 15px">
-          <button mat-raised-button color="primary" (click)="saveActivity()">Save Activity</button>
+          <button *ngIf="!saving" mat-raised-button color="primary" (click)="saveActivity()">Save Activity</button>
+          <mat-spinner *ngIf="saving" [diameter]="50"></mat-spinner>
         </div>
       </div>
     </form>

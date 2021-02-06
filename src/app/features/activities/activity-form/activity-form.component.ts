@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { Contact } from '../../contacts/models/contact';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AlertService } from '../../../ui/alert/alert.service';
 import { ContactService } from '../../service/contact.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ValidationErrors, FormControl, ValidatorFn, FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { ValidatorFn, FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Activity } from '../models/activity';
 import { ActivityType } from '../models/activity-type';
 import { ActivityService } from '../service/activity.service';
@@ -33,7 +33,7 @@ export class ActivityFormComponent implements OnInit {
   contact: Contact;
   loading: boolean = true;
   pageTitle: string = 'Add Activity';
-  activity: Activity = <Activity>{};
+  @Input() activity: Activity;
   loadingActivityType: ActivityType = <ActivityType>{ name: 'Loading...' };
   selectedActivityType: ActivityType;
   contacts: Contact[];
@@ -49,18 +49,42 @@ export class ActivityFormComponent implements OnInit {
   availableActivityTypes: ActivityType[] = [this.loadingActivityType];
   availableActivityOutcomes: ActivityOutcome[] = [];
 
+  saving: boolean = false;
+
   constructor(private route: ActivatedRoute, private contactService: ContactService,
     private alertService: AlertService, private router: Router,
     private fb: FormBuilder, private activityService: ActivityService,
     private dateService: DateService, private formService: FormService) { }
 
   ngOnInit(): void {
+    if (!this.activity) this.activity = <Activity>{};
+
     this.loadData();
     this.createForm();
     this.intitializeCalendars();
   }
 
   private intitializeCalendars() {
+    if (this.activity.startDate) {
+      this.initializeCalendarsForEdit();
+    } else {
+      this.initializeCalendarsForAdd();
+    }
+  }
+
+  private initializeCalendarsForEdit() {
+    this.currentStartDate = this.activity.startDate;
+    this.currentEndDate = this.activity.endDate;
+    this.setCalendarInputs();
+
+    this.activityFormGroup.get('startDate').setValue(new Date(this.currentStartDate));
+    this.activityFormGroup.get('startDate').enable();
+
+    this.activityFormGroup.get('endDate').setValue(new Date(this.currentEndDate));
+    this.activityFormGroup.get('endDate').enable();
+  }
+
+  private initializeCalendarsForAdd() {
     let currentDate: Date = new Date();
     let endDate: Date = new Date(currentDate.getTime() + (60 * 60 * 1000));
 
@@ -105,7 +129,16 @@ export class ActivityFormComponent implements OnInit {
   private handleActivityTypesResponse(activityTypes: ActivityType[]) {
     this.availableActivityTypes = activityTypes;
 
-    if (this.route.snapshot.queryParams['activityTypeId']) {
+    if (this.activity.type) {
+      //we're editing instead of adding if we get here
+      this.activityFormGroup.controls['type'].setValue(this.activity.type.name);
+      this.selectedActivityType = activityTypes.find(type => this.activity.type.id === type.id);
+      this.availableActivityOutcomes = this.selectedActivityType.possibleOutcomes;
+
+      if (this.activity.outcome) {
+        this.activityFormGroup.controls['outcome'].setValue(this.activity.outcome.id);
+      }
+    } else if (this.route.snapshot.queryParams['activityTypeId']) {
       this.addingActivityType = true;
     } 
   }
@@ -125,6 +158,11 @@ export class ActivityFormComponent implements OnInit {
 
   private handleContactsResponse(contacts: Contact[]) {
     this.contacts = contacts;
+
+    if (this.activity.contact) {
+      //editing
+      this.activityFormGroup.controls['contact'].setValue(this.activity.contact.id);
+    }
   }
 
   private handleContactsError(err: Error) {
@@ -322,6 +360,7 @@ export class ActivityFormComponent implements OnInit {
   }
 
   saveActivity() {
+    this.saving = true;
     this.alertService.clear();
 
     //force all fields to validate one more time just to be sure
@@ -343,11 +382,19 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private handleActivityCreateResponse(activity: Activity) {
-    console.log("got back", activity);
+    //console.log("got back", activity);
+    this.alertService.success("Activity successfully saved!");
+    this.scrollToTop();
+    this.saving = false;
   }
 
   private handleActivityCreateError(err: Error) {
+    this.alertService.error("There was a problem. Please call support.");
+    this.scrollToTop();
+
     console.error(err);
+
+    this.saving = false;
   }
 
   private setActivity() {
@@ -355,6 +402,10 @@ export class ActivityFormComponent implements OnInit {
     let contact: ContactLightweight = { id: this.contact.id, firstName: this.contact.firstName, lastName: this.contact.lastName, account: account };
     let activityType: ActivityTypeLightweight = { id: this.selectedActivityType.id, name: this.selectedActivityType.name, icon: this.selectedActivityType.icon };
     let outcome: ActivityOutcome = this.availableActivityOutcomes.find(outcome => outcome.id == this.activityFormGroup.controls['outcome'].value);
+
+    if (this.isDateInPast()) {
+      outcome = null;
+    }
 
     this.activity.contact = contact;
     this.activity.location = this.activityFormGroup.controls['location'].value;
@@ -366,7 +417,7 @@ export class ActivityFormComponent implements OnInit {
     
     if (this.selectedActivityType.usesEndDate) this.activity.endDate = this.currentEndDate;
 
-    console.log("activity is ", this.activity);
+    //console.log("activity is ", this.activity);
   }
 
   private scrollToTop() {

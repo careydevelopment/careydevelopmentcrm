@@ -34,4 +34,9 @@ export class ActivityService {
     let url = `${baseUrl}/activities`;
     return this.http.post<Activity>(url, activity);
   }
+
+  fetchActivityById(activityId: string): Observable<Activity> {
+    let url = `${baseUrl}/activities/${activityId}`;
+    return this.http.get<Activity>(url);
+  }
  }
