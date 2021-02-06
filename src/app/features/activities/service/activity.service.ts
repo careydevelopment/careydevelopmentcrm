@@ -29,4 +29,9 @@ export class ActivityService {
     let url = `${baseUrl}/activitytypes`;
     return this.http.get<ActivityType[]>(url);
   }
+
+  createActivity(activity: Activity): Observable<Activity> {
+    let url = `${baseUrl}/activities`;
+    return this.http.post<Activity>(url, activity);
+  }
  }

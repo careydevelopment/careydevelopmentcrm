@@ -184,7 +184,7 @@ export class ActivityFormComponent implements OnInit {
       'endMeridian': ['AM'],
       'contact': ['', [Validators.required]],
       'outcome': [''],
-      'notes': [this.activity.notes, [Validators.pattern('^[a-zA-Z \-\]*$')]]
+      'notes': [this.activity.notes, [Validators.pattern('^[a-zA-Z,. \-\]*$')]]
     });
   }
 
@@ -335,7 +335,19 @@ export class ActivityFormComponent implements OnInit {
       this.scrollToTop();
     } else {
       this.setActivity();
+      this.activityService.createActivity(this.activity).subscribe(
+        (activity: Activity) => this.handleActivityCreateResponse(activity),
+        err => this.handleActivityCreateError(err)
+      );
     }
+  }
+
+  private handleActivityCreateResponse(activity: Activity) {
+    console.log("got back", activity);
+  }
+
+  private handleActivityCreateError(err: Error) {
+    console.error(err);
   }
 
   private setActivity() {
