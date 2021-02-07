@@ -17,6 +17,7 @@ export class FormService {
       Object.keys(form.controls).forEach(key => {
         const error = this.getFormErrors(form.get(key));
         if (error !== null) {
+          console.log("Key " + key + " " + error);
           formErrors[key] = error;
         }
       });

@@ -162,6 +162,7 @@ export class ActivityFormComponent implements OnInit {
     if (this.activity.contact) {
       //editing
       this.activityFormGroup.controls['contact'].setValue(this.activity.contact.id);
+      this.contact = contacts.find(contact => this.activity.contact.id === contact.id);
     }
   }
 
@@ -210,8 +211,8 @@ export class ActivityFormComponent implements OnInit {
   private createForm() {
     this.activityFormGroup = this.fb.group({
       'type': [this.activity.type, [Validators.required]],
-      'title': [this.activity.title, [Validators.required, Validators.pattern('^[a-zA-Z \-\]*$')]],
-      'location': [this.activity.location, [Validators.pattern('^[a-zA-Z \-\]*$')]],
+      'title': [this.activity.title, [Validators.required, Validators.pattern('^[a-zA-Z,\' \-\]*$')]],
+      'location': [this.activity.location, [Validators.pattern('^[a-zA-Z,.\' \-\]*$')]],
       'startDate': [null, [this.startDateValidator()]],
       'startHour': [12],
       'startMinute': [0],
@@ -222,7 +223,7 @@ export class ActivityFormComponent implements OnInit {
       'endMeridian': ['AM'],
       'contact': ['', [Validators.required]],
       'outcome': [''],
-      'notes': [this.activity.notes, [Validators.pattern('^[a-zA-Z,. \-\]*$')]]
+      'notes': [this.activity.notes, [Validators.pattern('^[a-zA-Z,.\' \-\]*$')]]
     });
   }
 
@@ -372,23 +373,33 @@ export class ActivityFormComponent implements OnInit {
     if (this.formService.formHasErrors(this.activityFormGroup)) {
       this.alertService.error("Form contains errors. See below.");
       this.scrollToTop();
+      this.saving = false;
     } else {
       this.setActivity();
-      this.activityService.createActivity(this.activity).subscribe(
-        (activity: Activity) => this.handleActivityCreateResponse(activity),
-        err => this.handleActivityCreateError(err)
-      );
+
+      if (this.activity.id) {
+        this.activityService.createActivity(this.activity).subscribe(
+          (activity: Activity) => this.handleActivitySaveResponse(activity),
+          err => this.handleActivitySaveError(err)
+        );
+      } else {
+        this.activityService.updateActivity(this.activity).subscribe(
+          (activity: Activity) => this.handleActivitySaveResponse(activity),
+          err => this.handleActivitySaveError(err)
+        );
+      }
     }
   }
 
-  private handleActivityCreateResponse(activity: Activity) {
+  private handleActivitySaveResponse(activity: Activity) {
     //console.log("got back", activity);
     this.alertService.success("Activity successfully saved!");
+    this.activity = activity;
     this.scrollToTop();
     this.saving = false;
   }
 
-  private handleActivityCreateError(err: Error) {
+  private handleActivitySaveError(err: Error) {
     this.alertService.error("There was a problem. Please call support.");
     this.scrollToTop();
 
