@@ -1,1 +1,4 @@
-<app-activity-form></app-activity-form>
+<div class="absolute-center" *ngIf="loading">
+  <mat-spinner [diameter]="80"></mat-spinner>
+</div>
+<app-activity-form [contact]="contact" *ngIf="!loading"></app-activity-form>

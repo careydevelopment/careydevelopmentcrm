@@ -44,7 +44,7 @@
           <div class="label">Title</div>
           <div>
             <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
-              <input formControlName="title" matInput placeholder="Enter activity title" maxlength="50">
+              <input formControlName="title" matInput placeholder="Enter activity title" maxlength="60">
               <mat-error *ngIf="activityFormGroup.controls['title'].invalid">Please enter valid title</mat-error>
             </mat-form-field>
           </div>
@@ -129,7 +129,7 @@
                 <input matInput [matDatepicker]="endPicker" formControlName="endDate" (dateChange)="endDateChanged()">
                 <mat-error *ngIf="activityFormGroup.controls['endDate'].invalid && activityFormGroup.controls['endDate'].hasError('invalid')">Please enter valid date</mat-error>
                 <mat-error *ngIf="activityFormGroup.controls['endDate'].invalid && activityFormGroup.controls['endDate'].hasError('sequence')">End time is before start time</mat-error>
-                <mat-error *ngIf="activityFormGroup.controls['endDate'].invalid && activityFormGroup.controls['endDate'].hasError('maxAppointmentLength')">Appointments can't last longer than 1 week</mat-error>
+                <mat-error *ngIf="activityFormGroup.controls['endDate'].invalid && activityFormGroup.controls['endDate'].hasError('maxAppointmentLength')">Appointment length too long</mat-error>
                 <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
                 <mat-datepicker #endPicker></mat-datepicker>
               </mat-form-field>
@@ -173,7 +173,7 @@
           </div>
         </div>
 
-        <div class="vertical-form-field" *ngIf="selectedActivityType && isDateInPast()">
+        <div class="vertical-form-field" *ngIf="selectedActivityType && selectedActivityType.requiresOutcome && isDateInPast()">
           <div class="label">Outcome</div>
           <div>
             <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">

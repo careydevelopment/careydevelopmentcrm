@@ -25,7 +25,7 @@ export let menu: NavItem[] = [
   },
   {
     displayName: 'Activities',
-    iconName: 'list',
+    iconName: 'grading',
     route: 'activities',
     children: [
       {

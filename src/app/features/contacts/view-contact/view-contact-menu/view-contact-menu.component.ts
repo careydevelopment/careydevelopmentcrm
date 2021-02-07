@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Contact } from '../../models/contact';
 
 @Component({
@@ -10,7 +11,7 @@ export class ViewContactMenuComponent implements OnInit {
 
   @Input() contact: Contact;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -20,6 +21,7 @@ export class ViewContactMenuComponent implements OnInit {
   }
 
   addActivity() {
-    console.log("Adding activity for " + this.contact);
+    let route = '/activities/add-activity';
+    this.router.navigate([route], { queryParams: { contactId: this.contact.id } });
   }
 }
