@@ -66,7 +66,6 @@ export class ActivityFormComponent implements OnInit {
 
   private intitializeCalendars() {
     if (this.activity.startDate) {
-      console.log("init for edit");
       this.initializeCalendarsForEdit();
     } else {
       this.initializeCalendarsForAdd();

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { ActivityService } from '../service/activity.service';
 import { Activity } from '../models/activity';
 import { DateService } from '../../../services/date.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recent-activities-by-contact',
@@ -16,7 +17,8 @@ export class RecentActivitiesByContactComponent implements OnInit {
   loading: boolean = true;
   errorLoading: boolean = false;
 
-  constructor(private activityService: ActivityService, private dateService: DateService) { }
+  constructor(private activityService: ActivityService, private router: Router,
+    private dateService: DateService) { }
 
   ngOnInit(): void {
     this.loadActivities();
@@ -38,5 +40,10 @@ export class RecentActivitiesByContactComponent implements OnInit {
     console.error(err);
     this.loading = false;
     this.errorLoading = true;
+  }
+
+  editActivity(activityId: string) {
+    let route = '/activities/edit-activity';
+    this.router.navigate([route], { queryParams: { activityId: activityId } });
   }
 }

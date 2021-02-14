@@ -7,7 +7,7 @@ import { DateService } from '../../../services/date.service';
 import { ActivityType } from '../models/activity-type';
 
 const baseUrl: string = environment.baseCrmServiceUrl;
-const recentActivitiesDays = 30;
+const recentActivitiesDays = 60;
 
 @Injectable({ providedIn: 'root' })
 export class ActivityService {

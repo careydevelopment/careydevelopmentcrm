@@ -17,7 +17,9 @@
         <div>
           <div fxLayout="column">
             <div class="icon-list-line" fxLayout="row wrap" fxLayoutGap="15px">
-              <div>{{activity.title}}</div>
+              <div>
+                {{activity.title}}
+              </div>
               <div *ngIf="activity.outcome" class="badge badge-info">{{activity.outcome.name}}</div>
             </div>
             <div *ngIf="activity.location" class="icon-list-line">
@@ -28,6 +30,11 @@
             </div>
             <div class="icon-list-line" style="font-weight: bold">
               {{dateService.getShortDateAndTimeDisplay(activity.startDate)}}
+            </div>
+            <div>
+              <button mat-icon-button class="small-icon" color="primary" aria-label="Edit" (click)="editActivity(activity.id)">
+                <mat-icon class="small-icon">edit</mat-icon>
+              </button>
             </div>
           </div>
         </div>

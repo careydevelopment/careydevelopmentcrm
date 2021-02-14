@@ -4,13 +4,13 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\features",
-    "\\src\\app\\features\\activities\\add-activity",
+    "\\src\\app\\features\\activities",
+    "\\src\\app\\features\\activities\\activity-form",
     "\\src\\app\\features\\activities\\edit-activity",
-    "\\src\\app\\features\\contacts\\view-contact",
-    "\\src\\app\\features\\contacts\\view-contact\\view-contact-menu",
+    "\\src\\app\\features\\activities\\service",
     "\\src\\app\\features\\service",
     "\\src\\app\\features\\ui"
   ],
-  "SelectedNode": "\\src\\app\\features\\service\\contact.service.ts",
+  "SelectedNode": "\\src\\app\\features\\activities\\activity-form\\activity-form.component.ts",
   "PreviewInSolutionExplorer": false
 }
