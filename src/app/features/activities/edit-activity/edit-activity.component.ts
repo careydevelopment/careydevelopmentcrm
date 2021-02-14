@@ -45,7 +45,7 @@ export class EditActivityComponent implements OnInit {
     this.loading = false;
     console.error(err);
 
-    let alertMessage: string = 'Something went wrong, please call support';
+    let alertMessage: string = 'Problem loading activity';
 
     if (err instanceof HttpErrorResponse) {
       if (err.status) {

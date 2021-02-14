@@ -14,6 +14,8 @@ export class ActivityService {
 
   constructor(private http: HttpClient, private dateService: DateService) { }
 
+
+
   fetchRecentActivitiesByContactId(contactId: string): Observable<Activity[]> {
     let minDate = this.dateService.getDaysBackwardAsNumber(recentActivitiesDays);
     let orderBy = 'startDate';

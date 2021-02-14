@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, AfterViewInit, AfterContentInit } from '@angular/core';
 import { Contact } from '../../contacts/models/contact';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AlertService } from '../../../ui/alert/alert.service';
@@ -32,7 +32,6 @@ export class ActivityFormComponent implements OnInit {
   @Input() contact: Contact;
   @Input() activity: Activity;
 
-  loading: boolean = true;
   pageTitle: string = 'Add Activity';
   loadingActivityType: ActivityType = <ActivityType>{ name: 'Loading...' };
   selectedActivityType: ActivityType;
@@ -51,17 +50,39 @@ export class ActivityFormComponent implements OnInit {
 
   saving: boolean = false;
 
+  prohibitedEdit: boolean = false;
+
   constructor(private route: ActivatedRoute, private contactService: ContactService,
     private alertService: AlertService, private router: Router,
     private fb: FormBuilder, private activityService: ActivityService,
     private dateService: DateService, private formService: FormService) { }
 
   ngOnInit(): void {
-    if (!this.activity) this.activity = <Activity>{};
-
+    this.setDefaultActivity();
     this.loadData();
     this.createForm();
     this.intitializeCalendars();
+    this.handleProhibition();
+  }
+
+  private handleProhibition() {
+    if (this.prohibitedEdit) {
+      Object.keys(this.activityFormGroup.controls).forEach(ctrl => {
+        this.activityFormGroup.controls[ctrl].disable();
+      });
+    }
+  }
+
+  private setDefaultActivity() {
+    if (!this.activity) this.activity = <Activity>{};
+    else {
+      this.pageTitle = 'Edit Activity';
+
+      if (!this.activity.type || this.activity.type.activityTypeCreator != 'USER') {
+        this.alertService.error("This activity isn't editable");
+        this.prohibitedEdit = true;
+      } 
+    }
   }
 
   private intitializeCalendars() {
@@ -111,8 +132,6 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private checkForContact() {
-    this.loading = false;
-
     if (this.contact) {
       this.addingForContact = true;
     } 
@@ -146,6 +165,7 @@ export class ActivityFormComponent implements OnInit {
 
   private handleActivityTypesError(err: Error) {
     console.error(err);
+    this.alertService.error("Problem loading activity types")
   }
 
   private loadContacts() {
@@ -171,10 +191,7 @@ export class ActivityFormComponent implements OnInit {
 
   private handleContactsError(err: Error) {
     console.error(err);
-
-    let alertMessage: string = 'Something went wrong, please call support';
-
-    this.alertService.error(alertMessage);
+    this.alertService.error("Problem loading contacts");
   }
 
   private createForm() {
@@ -380,7 +397,7 @@ export class ActivityFormComponent implements OnInit {
   private setActivity() {
     let account: AccountLightweight = { id: this.contact.account.id, name: this.contact.account.name };
     let contact: ContactLightweight = { id: this.contact.id, firstName: this.contact.firstName, lastName: this.contact.lastName, account: account };
-    let activityType: ActivityTypeLightweight = { id: this.selectedActivityType.id, name: this.selectedActivityType.name, icon: this.selectedActivityType.icon };
+    let activityType: ActivityTypeLightweight = { id: this.selectedActivityType.id, name: this.selectedActivityType.name, icon: this.selectedActivityType.icon, activityTypeCreator: this.selectedActivityType.activityTypeCreator };
     let outcome: ActivityOutcome = this.availableActivityOutcomes.find(outcome => outcome.id == this.activityFormGroup.controls['outcome'].value);
 
     if (!this.isDateInPast()) {
