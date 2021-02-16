@@ -7,7 +7,6 @@ import { ValidatorFn, FormGroup, FormBuilder, Validators, AbstractControl } from
 import { Activity } from '../models/activity';
 import { ActivityType } from '../models/activity-type';
 import { ActivityService } from '../service/activity.service';
-
 import { ActivityOutcome } from '../models/activity-outcome';
 import { DateService } from '../../../services/date.service';
 import { FormService } from '../../../services/form.service';
