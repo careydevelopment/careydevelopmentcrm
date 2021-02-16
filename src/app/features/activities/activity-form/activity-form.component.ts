@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewEncapsulation, Input, AfterViewInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { Contact } from '../../contacts/models/contact';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../../ui/alert/alert.service';
 import { ContactService } from '../../service/contact.service';
 import { ValidatorFn, FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
@@ -13,7 +13,7 @@ import { FormService } from '../../../services/form.service';
 import { AccountLightweight } from '../models/account-lightweight';
 import { ContactLightweight } from '../models/contact-lightweight';
 import { ActivityTypeLightweight } from '../models/activity-type-lightweight';
-import { DatePipe } from '@angular/common';
+import { Observable, forkJoin } from 'rxjs';
 
 //5 years
 const maximumTimeSpan: number = 5 * 365 * 24 * 60 * 60 * 1000;
@@ -49,8 +49,12 @@ export class ActivityFormComponent implements OnInit {
   availableActivityOutcomes: ActivityOutcome[] = [];
 
   saving: boolean = false;
+  loading: boolean = true;
 
   prohibitedEdit: boolean = false;
+
+  allActivityTypes$: Observable<ActivityType[]>;
+  contacts$: Observable<Contact[]>;
 
   constructor(private route: ActivatedRoute, private contactService: ContactService,
     private alertService: AlertService, private router: Router,
@@ -67,9 +71,7 @@ export class ActivityFormComponent implements OnInit {
 
   private handleProhibition() {
     if (this.prohibitedEdit) {
-      Object.keys(this.activityFormGroup.controls).forEach(ctrl => {
-        this.activityFormGroup.controls[ctrl].disable();
-      });
+      this.activityFormGroup.disable();
     }
   }
 
@@ -125,6 +127,21 @@ export class ActivityFormComponent implements OnInit {
   private loadData() {
     this.checkForContact();
     this.checkForActivityType();
+
+    forkJoin([
+      this.allActivityTypes$,
+      this.contacts$
+    ]).subscribe(([allActivityTypes, contacts]) => {
+      this.handleActivityTypesResponse(allActivityTypes);
+      this.handleContactsResponse(contacts),
+      this.showForm();
+    },
+      (err) => this.handleDataLoadError(err)
+    );
+  }
+
+  private showForm() {
+    this.loading = false;
   }
 
   private checkForActivityType() {
@@ -140,41 +157,30 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private loadActivityTypes() {
-    this.activityService.fetchAllActivityTypes().subscribe(
-      (activityTypes: ActivityType[]) => this.handleActivityTypesResponse(activityTypes),
-      err => this.handleActivityTypesError(err)
-    );
+    this.allActivityTypes$ = this.activityService.fetchAllActivityTypes();
   }
 
   private handleActivityTypesResponse(activityTypes: ActivityType[]) {
-    this.availableActivityTypes = activityTypes;
+    this.availableActivityTypes = activityTypes.filter(type => type.activityTypeCreator === 'USER');
 
     if (this.activity.type) {
       //we're editing instead of adding if we get here
-      this.activityFormGroup.controls['type'].setValue(this.activity.type.name);
-      this.selectedActivityType = activityTypes.find(type => this.activity.type.id === type.id);
-      this.availableActivityOutcomes = this.selectedActivityType.possibleOutcomes;
+      this.pageTitle = 'Edit Activity';
 
-      if (this.activity.outcome) {
-        this.activityFormGroup.controls['outcome'].setValue(this.activity.outcome.id);
-      }
+      this.selectedActivityType = this.availableActivityTypes.find(type => this.activity.type.id === type.id);
+      this.availableActivityOutcomes = this.selectedActivityType.possibleOutcomes;
     } else if (this.route.snapshot.queryParams['activityTypeId']) {
       this.addingActivityType = true;
     } 
   }
 
-  private handleActivityTypesError(err: Error) {
+  private handleDataLoadError(err: Error) {
     console.error(err);
-    this.alertService.error("Problem loading activity types")
+    this.alertService.error("Problem loading supporting data")
   }
 
   private loadContacts() {
-    let contacts$ = this.contactService.fetchMyContacts();
-
-    contacts$.subscribe(
-      (contacts: Contact[]) => this.handleContactsResponse(contacts),
-      err => this.handleContactsError(err)
-    );
+    this.contacts$ = this.contactService.fetchMyContacts();
   }
 
   private handleContactsResponse(contacts: Contact[]) {
@@ -182,21 +188,13 @@ export class ActivityFormComponent implements OnInit {
 
     if (this.activity.contact) {
       //editing
-      this.activityFormGroup.controls['contact'].setValue(this.activity.contact.id);
-      this.contact = contacts.find(contact => this.activity.contact.id === contact.id);
-    } else if (this.contact) {
-      this.activityFormGroup.controls['contact'].setValue(this.contact.id);
+      this.contact = this.contacts.find(contact => this.activity.contact.id === contact.id);
     }
-  }
-
-  private handleContactsError(err: Error) {
-    console.error(err);
-    this.alertService.error("Problem loading contacts");
   }
 
   private createForm() {
     this.activityFormGroup = this.fb.group({
-      'type': [this.activity.type, [Validators.required]],
+      'type': [this.activity.type.name, [Validators.required]],
       'title': [this.activity.title, [Validators.required, Validators.pattern('^[a-zA-Z0-9,.\' \-\]*$')]],
       'location': [this.activity.location, [Validators.pattern('^[a-zA-Z0-9,.\' \-\]*$')]],
       'startDate': [null, [this.startDateValidator()]],
@@ -207,8 +205,8 @@ export class ActivityFormComponent implements OnInit {
       'endHour': [12],
       'endMinute': [0],
       'endMeridian': ['AM'],
-      'contact': ['', [Validators.required]],
-      'outcome': [''],
+      'contact': [(this.activity.contact) ? this.activity.contact.id : '', [Validators.required]],
+      'outcome': [(this.activity.outcome) ? this.activity.outcome.id : ''],
       'notes': [this.activity.notes, [Validators.pattern('^[a-zA-Z0-9,.\' \-\]*$')]]
     });
   }

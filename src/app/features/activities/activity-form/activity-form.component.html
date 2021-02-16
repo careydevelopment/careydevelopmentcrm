@@ -1,4 +1,7 @@
-<div fxFlex="100" fxLayout="column" fxLayoutGap="20px" class="route-content">
+<div class="absolute-center" *ngIf="loading">
+  <mat-spinner [diameter]="80"></mat-spinner>
+</div>
+<div *ngIf="!loading" fxFlex="100" fxLayout="column" fxLayoutGap="20px" class="route-content">
   <div>
     <h4>{{pageTitle}}</h4>
   </div>
