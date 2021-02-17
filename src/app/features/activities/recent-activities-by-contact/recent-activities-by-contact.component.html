@@ -31,7 +31,7 @@
             <div class="icon-list-line" style="font-weight: bold">
               {{dateService.getShortDateAndTimeDisplay(activity.startDate)}}
             </div>
-            <div>
+            <div *ngIf="activity.type.activityTypeCreator == 'USER'">
               <button mat-icon-button class="small-icon" color="primary" aria-label="Edit" (click)="editActivity(activity.id)">
                 <mat-icon class="small-icon">edit</mat-icon>
               </button>

@@ -14,6 +14,8 @@ import { AccountLightweight } from '../models/account-lightweight';
 import { ContactLightweight } from '../models/contact-lightweight';
 import { ActivityTypeLightweight } from '../models/activity-type-lightweight';
 import { Observable, forkJoin } from 'rxjs';
+import { UserService } from '../../service/user.service';
+import { SalesOwnerLightweight } from '../models/sales-owner-lightweight';
 
 //5 years
 const maximumTimeSpan: number = 5 * 365 * 24 * 60 * 60 * 1000;
@@ -59,7 +61,8 @@ export class ActivityFormComponent implements OnInit {
   constructor(private route: ActivatedRoute, private contactService: ContactService,
     private alertService: AlertService, private router: Router,
     private fb: FormBuilder, private activityService: ActivityService,
-    private dateService: DateService, private formService: FormService) { }
+    private dateService: DateService, private formService: FormService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     this.setDefaultActivity();
@@ -83,7 +86,10 @@ export class ActivityFormComponent implements OnInit {
       if (!this.activity.type || this.activity.type.activityTypeCreator != 'USER') {
         this.alertService.error("This activity isn't editable");
         this.prohibitedEdit = true;
-      } 
+      } else if (!this.activity.contact || this.activity.contact.salesOwner.id != this.userService.user.id) {
+        this.alertService.error("This activity isn't yours to edit");
+        this.prohibitedEdit = true;
+      }
     }
   }
 
@@ -168,7 +174,7 @@ export class ActivityFormComponent implements OnInit {
       this.pageTitle = 'Edit Activity';
 
       this.selectedActivityType = this.availableActivityTypes.find(type => this.activity.type.id === type.id);
-      this.availableActivityOutcomes = this.selectedActivityType.possibleOutcomes;
+      if (this.selectedActivityType) this.availableActivityOutcomes = this.selectedActivityType.possibleOutcomes;
     } else if (this.route.snapshot.queryParams['activityTypeId']) {
       this.addingActivityType = true;
     } 
@@ -194,7 +200,7 @@ export class ActivityFormComponent implements OnInit {
 
   private createForm() {
     this.activityFormGroup = this.fb.group({
-      'type': [this.activity.type.name, [Validators.required]],
+      'type': [(this.activity.type) ? this.activity.type.name : '', [Validators.required]],
       'title': [this.activity.title, [Validators.required, Validators.pattern('^[a-zA-Z0-9,.\' \-\]*$')]],
       'location': [this.activity.location, [Validators.pattern('^[a-zA-Z0-9,.\' \-\]*$')]],
       'startDate': [null, [this.startDateValidator()]],
@@ -350,7 +356,7 @@ export class ActivityFormComponent implements OnInit {
 
     //force all fields to validate one more time just to be sure
     Object.keys(this.activityFormGroup.controls).forEach(field => {
-      const control = this.activityFormGroup.get(field);
+      let control = this.activityFormGroup.get(field);
       control.updateValueAndValidity();
     });
 
@@ -393,8 +399,10 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private setActivity() {
+    let user = this.userService.user;
+    let salesOwner: SalesOwnerLightweight = { id: user.id, firstName: user.firstName, lastName: user.lastName, username: user.username }
     let account: AccountLightweight = { id: this.contact.account.id, name: this.contact.account.name };
-    let contact: ContactLightweight = { id: this.contact.id, firstName: this.contact.firstName, lastName: this.contact.lastName, account: account };
+    let contact: ContactLightweight = { id: this.contact.id, firstName: this.contact.firstName, lastName: this.contact.lastName, account: account, salesOwner: salesOwner };
     let activityType: ActivityTypeLightweight = { id: this.selectedActivityType.id, name: this.selectedActivityType.name, icon: this.selectedActivityType.icon, activityTypeCreator: this.selectedActivityType.activityTypeCreator };
     let outcome: ActivityOutcome = this.availableActivityOutcomes.find(outcome => outcome.id == this.activityFormGroup.controls['outcome'].value);
 
@@ -411,8 +419,6 @@ export class ActivityFormComponent implements OnInit {
     this.activity.type = activityType;
     
     if (this.selectedActivityType.usesEndDate) this.activity.endDate = this.currentEndDate;
-
-    //console.log("activity is ", this.activity);
   }
 
   private scrollToTop() {
