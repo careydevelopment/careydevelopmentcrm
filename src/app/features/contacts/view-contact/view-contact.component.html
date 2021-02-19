@@ -18,16 +18,22 @@
                 </div>
                 <div *ngIf="contact.authority" class="has-authority">Authorized</div>
                 <div *ngIf="!contact.authority" class="no-authority">Not authorized</div>
+                <div fxHide.gt-xs="true">
+                  <button mat-icon-button color="primary" (click)="editContact()" title="Edit Contact"><mat-icon>edit</mat-icon></button>
+                </div>
               </div>
               <div fxFlex="auto">&nbsp;</div>
-              <div fxFlex="100px" style="text-align: left">
+              <div fxFlex="40px" style="text-align: left" fxHide.xs="true">
                 <button mat-icon-button color="primary" (click)="editContact()" title="Edit Contact"><mat-icon>edit</mat-icon></button>
+              </div>
+              <div fxFlex="40px" style="text-align:left" fxHide.xs="true">
+                <app-view-contact-menu [contact]="contact"></app-view-contact-menu>
               </div>
             </div>
             <div fxLayout="row wrap">
               <div class="column-layout">
                 <div *ngIf="contact.title" class="normal-detail">{{contact.title}}</div>
-                <div *ngIf="contact.company" class="normal-detail">{{contact.company}}</div>
+                <div *ngIf="contact.account" class="normal-detail">{{contact.account.name}}</div>
                 <div *ngIf="contact.email" class="normal-detail">{{contact.email}}</div>
               </div>
               <div class="column-layout" *ngIf="contact.linesOfBusiness">
@@ -87,6 +93,7 @@
               <div class="empty-set-status-message">No phones to display</div>
             </div>
           </mat-expansion-panel>
+          <app-recent-activities-by-contact [contactId]="contact.id"></app-recent-activities-by-contact>
         </div>
       </div>
     </div>

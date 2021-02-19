@@ -134,3 +134,26 @@ h4 {
 .badge-info {
   background-color: #3F51B5;
 }
+
+.badge-muted {
+  background-color: #CCCCCC;
+  color: #000000;
+}
+
+.mat-expansion-panel-header-title {
+  font-size: 16pt;
+  font-weight: 400;
+}
+
+.mat-card-title {
+  font-size: 16pt;
+  font-weight: 400;
+}
+
+.icon-list-item {
+  margin-bottom: 30px;
+}
+
+.icon-list-line {
+  margin-bottom: 5px;
+}

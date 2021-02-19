@@ -1,0 +1,200 @@
+<div class="absolute-center" *ngIf="loading">
+  <mat-spinner [diameter]="80"></mat-spinner>
+</div>
+<div *ngIf="!loading" fxFlex="100" fxLayout="column" fxLayoutGap="20px" class="route-content">
+  <div>
+    <h4>{{pageTitle}}</h4>
+  </div>
+  <div class="absolute-center" *ngIf="loading">
+    <mat-spinner [diameter]="80"></mat-spinner>
+  </div>
+  <div>
+    <alert></alert>
+  </div>
+  <div *ngIf="!loading" style="margin-right:10px;">
+    <form [formGroup]="activityFormGroup">
+      <div fxLayout="column">
+
+        <div class="vertical-form-field">
+          <div class="label">Activity Type</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
+              <mat-select formControlName="type" placeholder="Select a type" (selectionChange)="activityTypeChanged($event.value)">
+                <mat-option *ngFor="let type of availableActivityTypes" [value]="type.name">
+                  {{type.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="activityFormGroup.controls['type'].invalid">Please select a type</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="vertical-form-field">
+          <div class="label">Contact</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+              <mat-select formControlName="contact" placeholder="Select a contact" (selectionChange)="contactChanged($event.value)">
+                <mat-option *ngFor="let contact of contacts" [value]="contact.id">
+                  {{contact.lastName}}, {{contact.firstName}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="activityFormGroup.controls['contact'].invalid">Please select a contact</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="vertical-form-field">
+          <div class="label">Title</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+              <input formControlName="title" matInput placeholder="Enter activity title" maxlength="60">
+              <mat-error *ngIf="activityFormGroup.controls['title'].invalid">Please enter valid title</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="vertical-form-field" *ngIf="selectedActivityType && selectedActivityType.usesLocation">
+          <div class="label">Location</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+              <input formControlName="location" matInput placeholder="Enter activity location" maxlength="50">
+              <mat-error *ngIf="activityFormGroup.controls['location'].invalid">Please enter a valid location</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="vertical-form-field">
+          <div class="label">Notes</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+              <textarea formControlName="notes" matInput placeholder="Enter notes" maxlength="512" rows="5" cols="40"></textarea>
+              <mat-error *ngIf="activityFormGroup.controls['notes'].invalid">Please enter valid notes</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="vertical-form-field" *ngIf="selectedActivityType">
+          <div class="label" *ngIf="selectedActivityType && selectedActivityType.usesEndDate">Start Date/Time</div>
+          <div class="label" *ngIf="selectedActivityType && !selectedActivityType.usesEndDate">Date/Time</div>
+          <div fxLayout="column">
+            <div>
+              <mat-form-field class="no-label-field">
+                <input matInput [matDatepicker]="startPicker" formControlName="startDate" (dateChange)="startDateChanged()">
+                <mat-error *ngIf="activityFormGroup.controls['startDate'].invalid">Please enter valid date</mat-error>
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="30px">
+              <div>
+                <mat-form-field class="no-label-field" style="width: 50px">
+                  <mat-select formControlName="startHour" (selectionChange)="startDateChanged()">
+                    <mat-option [value]="1">01</mat-option>
+                    <mat-option [value]="2">02</mat-option>
+                    <mat-option [value]="3">03</mat-option>
+                    <mat-option [value]="4">04</mat-option>
+                    <mat-option [value]="5">05</mat-option>
+                    <mat-option [value]="6">06</mat-option>
+                    <mat-option [value]="7">07</mat-option>
+                    <mat-option [value]="8">08</mat-option>
+                    <mat-option [value]="9">09</mat-option>
+                    <mat-option [value]="10">10</mat-option>
+                    <mat-option [value]="11">11</mat-option>
+                    <mat-option [value]="12">12</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="no-label-field" style="width: 50px">
+                  <mat-select formControlName="startMinute" (selectionChange)="startDateChanged()">
+                    <mat-option [value]="0">00</mat-option>
+                    <mat-option [value]="15">15</mat-option>
+                    <mat-option [value]="30">30</mat-option>
+                    <mat-option [value]="45">45</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div style="padding-top:5px">
+                <mat-radio-group aria-label="Select an option" formControlName="startMeridian" (change)="startDateChanged()" style="width:150px">
+                  <mat-radio-button value="AM">AM</mat-radio-button>
+                  <mat-radio-button value="PM">PM</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vertical-form-field" *ngIf="selectedActivityType && selectedActivityType.usesEndDate">
+          <div class="label">End Date/Time</div>
+          <div fxLayout="column">
+            <div>
+              <mat-form-field class="no-label-field">
+                <input matInput [matDatepicker]="endPicker" formControlName="endDate" (dateChange)="endDateChanged()">
+                <mat-error *ngIf="activityFormGroup.controls['endDate'].invalid && activityFormGroup.controls['endDate'].hasError('invalid')">Please enter valid date</mat-error>
+                <mat-error *ngIf="activityFormGroup.controls['endDate'].invalid && activityFormGroup.controls['endDate'].hasError('sequence')">End time is before start time</mat-error>
+                <mat-error *ngIf="activityFormGroup.controls['endDate'].invalid && activityFormGroup.controls['endDate'].hasError('maxAppointmentLength')">Appointment length too long</mat-error>
+                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="30px">
+              <div>
+                <mat-form-field class="no-label-field" style="width: 50px">
+                  <mat-select formControlName="endHour" (selectionChange)="endDateChanged()">
+                    <mat-option [value]="1">01</mat-option>
+                    <mat-option [value]="2">02</mat-option>
+                    <mat-option [value]="3">03</mat-option>
+                    <mat-option [value]="4">04</mat-option>
+                    <mat-option [value]="5">05</mat-option>
+                    <mat-option [value]="6">06</mat-option>
+                    <mat-option [value]="7">07</mat-option>
+                    <mat-option [value]="8">08</mat-option>
+                    <mat-option [value]="9">09</mat-option>
+                    <mat-option [value]="10">10</mat-option>
+                    <mat-option [value]="11">11</mat-option>
+                    <mat-option [value]="12">12</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="no-label-field" style="width: 50px">
+                  <mat-select formControlName="endMinute" (selectionChange)="endDateChanged()">
+                    <mat-option [value]="0">00</mat-option>
+                    <mat-option [value]="15">15</mat-option>
+                    <mat-option [value]="30">30</mat-option>
+                    <mat-option [value]="45">45</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div style="padding-top:5px">
+                <mat-radio-group aria-label="Select an option" formControlName="endMeridian" style="width:150px" (change)="endDateChanged()">
+                  <mat-radio-button value="AM">AM</mat-radio-button>
+                  <mat-radio-button value="PM">PM</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vertical-form-field" *ngIf="selectedActivityType && selectedActivityType.requiresOutcome && isDateInPast()">
+          <div class="label">Outcome</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+              <mat-select formControlName="outcome" placeholder="Select an outcome">
+                <mat-option *ngFor="let outcome of availableActivityOutcomes" [value]="outcome.id">
+                  {{outcome.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="activityFormGroup.controls['outcome'].invalid">Please select an outcome</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 15px">
+          <button *ngIf="!saving && !prohibitedEdit" mat-raised-button color="primary" (click)="saveActivity()">Save Activity</button>
+          <mat-spinner *ngIf="saving" [diameter]="50"></mat-spinner>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

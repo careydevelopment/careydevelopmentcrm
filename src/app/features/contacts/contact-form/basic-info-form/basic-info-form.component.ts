@@ -30,7 +30,8 @@ export class BasicInfoFormComponent implements OnInit {
 
   @Input() contact: Contact;
 
-  constructor(private fb: FormBuilder, private contactService: ContactService, private accountService: AccountService) { }
+  constructor(private fb: FormBuilder, private contactService: ContactService,
+    private accountService: AccountService) { }
 
   ngOnInit() {
     this.loadData();
@@ -89,7 +90,8 @@ export class BasicInfoFormComponent implements OnInit {
       'lineOfBusiness': [this.contact.linesOfBusiness],
       'authority': [authority],
       'title': [this.contact.title, [Validators.pattern('^[a-zA-Z \-\]*$')]],
-      'account': [this.contact.account, [this.accountValidator(), Validators.required, Validators.pattern('^[a-zA-Z., \-\]*$')]]
+      'account': [(this.contact.account ? this.contact.account.name : ''),
+          [this.accountValidator(), Validators.required, Validators.pattern('^[a-zA-Z., \-\]*$')]]
     });
   }
 
@@ -162,7 +164,7 @@ export class BasicInfoFormComponent implements OnInit {
   private getAccount(accountName: string): Account {
     let account: Account = null;
 
-    if (accountName) {
+    if (accountName && typeof (accountName) === 'string') {
       account = this.availableAccounts.find(a => a.name.toLowerCase() == accountName.toLowerCase());
 
       if (!account) {

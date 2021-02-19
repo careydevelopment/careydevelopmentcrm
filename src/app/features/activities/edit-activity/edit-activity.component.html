@@ -1,0 +1,4 @@
+<div class="absolute-center" *ngIf="loading">
+  <mat-spinner [diameter]="80"></mat-spinner>
+</div>
+<app-activity-form [activity]="activity" *ngIf="!loading"></app-activity-form>

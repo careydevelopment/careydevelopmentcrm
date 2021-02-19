@@ -13,14 +13,15 @@ const routes: Routes = [
         children: [
           { path: 'dashboard', canActivate: [AuthGuard], loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule) },
           { path: 'user', canActivate: [AuthGuard], loadChildren: () => import('./features/user/user.module').then(m => m.UserModule) },
-          { path: 'contacts', canActivate: [AuthGuard], loadChildren: () => import('./features/contacts/contacts.module').then(m => m.ContactsModule) }
+          { path: 'contacts', canActivate: [AuthGuard], loadChildren: () => import('./features/contacts/contacts.module').then(m => m.ContactsModule) },
+          { path: 'activities', canActivate: [AuthGuard], loadChildren: () => import('./features/activities/activities.module').then(m => m.ActivitiesModule) }
         ]
     }
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })
     ],
     exports: [RouterModule],
     providers: []

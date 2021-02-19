@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Contact } from '../contacts/models/contact';
 import { environment } from '../../../environments/environment';
-import { User } from '../../models/user';
 
-const baseUrl: string = environment.baseContactServiceUrl;
+const baseUrl: string = environment.baseCustomerServiceUrl;
 
 @Injectable({ providedIn: 'root' })
 export class ContactService {
@@ -34,10 +33,14 @@ export class ContactService {
   }
 
   fetchById(id: string): Observable<Contact> {
-    let url = `${baseUrl}/contact/${id}`;
-    //console.log("Fetch contact URL is " + url);
+    if (id) {
+      let url = `${baseUrl}/contact/${id}`;
+      //console.log("Fetch contact URL is " + url);
 
-    return this.http.get<Contact>(url);
+      return this.http.get<Contact>(url);
+    } else {
+      return of(null);
+    }
   }
 
   doesEmailExist(email: string): Observable<boolean> {

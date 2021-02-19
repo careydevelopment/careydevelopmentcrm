@@ -1,0 +1,13 @@
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Dropdown Menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="addActivity()">
+    <mat-icon>add_task</mat-icon>
+    <span>Add Activity</span>
+  </button>
+  <button mat-menu-item (click)="addAppointment()">
+    <mat-icon>calendar_today</mat-icon>
+    <span>Add Appointment</span>
+  </button>
+</mat-menu>
