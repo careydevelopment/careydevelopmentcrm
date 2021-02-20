@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationStart, ParamMap, Router, ActivatedRouteSnapshot, UrlSegment, NavigationEnd } from "@angular/router";
 import { menu } from '../model/menu';
-import { filter, map } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { filter, map, distinctUntilChanged } from 'rxjs/operators';
 import { NavItem } from '../model/nav-item';
 import { Breadcrumb } from './breadcrumb';
 
@@ -19,46 +18,90 @@ export class BreadcrumbComponent implements OnInit {
   constructor(private router: Router, private activatedRoute: ActivatedRoute,) { }
 
   ngOnInit() {
+    this.listenForRouteChange();
+  }
+
+  private listenForRouteChange() {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       map(() => this.activatedRoute),
       map(route => {
         while (route.firstChild) {
           route = route.firstChild;
-          console.log(route);
         }
         return route;
-      })
-    ).subscribe((route: ActivatedRoute) => this.handleCurrentRoute(route));
+      }),
+      distinctUntilChanged()
+    ).subscribe(
+      (route: ActivatedRoute) => this.handleCurrentRoute(route)
+    );
+  }
+
+  private setCurrentUrl() {
+    let url: string = this.router.url;
+
+    if (url) {
+      this.currentUrl = url.substring(1);
+
+      //don't need the parameter query list here
+      let paramPos: number = this.currentUrl.indexOf("?");
+      if (paramPos > -1) {
+        this.currentUrl = this.currentUrl.substring(0, paramPos);
+      }
+    }
   }
 
   private handleCurrentRoute(route: ActivatedRoute) {
-    let url: string = this.router.url;
-    if (url) {
-      this.currentUrl = url.substring(1);
-    }
+    this.setCurrentUrl();
 
-    console.log(this.router.url);
-    console.log(menu);
+    console.error("handling", route);
+    //console.log(menu);
 
-    route.data.subscribe((data: any) => console.log(data));
-
-    let navItem: NavItem = this.findRoute(menu, route);
+    let navItem: NavItem = this.findRoute(route, menu);
     console.log("Now I've got ", navItem);
 
     if (navItem) {
-      console.log("Top-level breadcrumb");
-      this.breadcrumbs = [];
-
-      let breadcrumb: Breadcrumb = { name: navItem.displayName, url: navItem.route };
-      this.breadcrumbs.push(breadcrumb);
-      console.log(this.breadcrumbs);
+      //if we get here, the user clicked on item on the sidebar
+      //we'll reset the breadcrumbs to start over
+      this.handleTopLevelBreadcrumb(navItem);
+    } else {
+      //if we get here, the user clicked a link in the main content sectio
+      //we'll add to the breadcrumbs
+      this.addBreadcrumb(route);
     }
-    //let bogus = route.data as BehaviorSubject<any>;
-    //console.log(bogus.getValue()['breadcrumb']);
   }
 
-  private findRoute(navItems: NavItem[], route: ActivatedRoute): NavItem {
+  private addBreadcrumb(route: ActivatedRoute) {
+    console.log(route);
+
+    let breadcrumb: Breadcrumb = {} as Breadcrumb;
+
+    route.data.subscribe((data: any) => {
+      breadcrumb = { name: data.breadcrumb, url: this.currentUrl };
+    });
+
+    route.queryParams.subscribe((queryParams: any) => {
+      if (queryParams) {
+        breadcrumb.queryParams = queryParams;
+      }
+    });
+
+    this.breadcrumbs.push(breadcrumb);
+  }
+
+  private handleTopLevelBreadcrumb(navItem: NavItem) {
+    //console.log("Top-level breadcrumb");
+    this.breadcrumbs = [];
+
+    let breadcrumb: Breadcrumb = { name: navItem.displayName, url: navItem.route };
+
+    this.breadcrumbs.push(breadcrumb);
+    //console.log(this.breadcrumbs);
+  }
+
+  private findRoute(route: ActivatedRoute, navItems?: NavItem[]): NavItem {
+    if (!navItems) navItems = menu;
+
     let returnedItem: NavItem = null;
 
     if (this.currentUrl) {
@@ -67,7 +110,7 @@ export class BreadcrumbComponent implements OnInit {
           returnedItem = item;
           break;
         } else if (item.children) {
-          returnedItem = this.findRoute(item.children, route);
+          returnedItem = this.findRoute(route, item.children);
           if (returnedItem != null) break;
         }
       }
@@ -75,5 +118,14 @@ export class BreadcrumbComponent implements OnInit {
 
     //console.log("Returning ", returnedItem);
     return returnedItem;
+  }
+
+  routeTo(index: number) {
+    console.log(this.breadcrumbs[index]);
+
+    let breadcrumb: Breadcrumb = this.breadcrumbs[index];
+
+    let route = breadcrumb.url;
+    this.router.navigate([route], { queryParams: breadcrumb.queryParams });
   }
 }
