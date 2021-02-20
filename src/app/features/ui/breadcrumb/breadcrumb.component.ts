@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationStart, ParamMap, Router, ActivatedRouteSnapshot, UrlSegment, NavigationEnd } from "@angular/router";
+import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { menu } from '../model/menu';
 import { filter, map, distinctUntilChanged } from 'rxjs/operators';
 import { NavItem } from '../model/nav-item';
 import { Breadcrumb } from './breadcrumb';
+import { UrlService } from '../../../services/url.service';
+import { BreadcrumbService } from './breadcrumb.service';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -15,10 +17,43 @@ export class BreadcrumbComponent implements OnInit {
   breadcrumbs: Breadcrumb[] = [];
   currentUrl: string = '';
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute,) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute,
+    private urlService: UrlService, private breadcrumbService: BreadcrumbService) { }
 
   ngOnInit() {
+    this.setDefaultBreadcrumb();
     this.listenForRouteChange();
+    this.listenForBreadcrumbUpdate();
+  }
+
+  private setDefaultBreadcrumb() {
+    this.setCurrentUrl();
+
+    if (this.currentUrl) {
+      let navItem: NavItem = this.findRoute();
+
+      if (navItem) {
+        let breadcrumb: Breadcrumb = { name: navItem.displayName, url: this.currentUrl };
+        this.breadcrumbs.push(breadcrumb);
+      }
+    }
+  }
+
+  private listenForBreadcrumbUpdate() {
+    this.breadcrumbService.onUpdate().subscribe((str: string) => {
+      this.handleBreadcrumbUpdate(str);
+    });
+  }
+
+  private handleBreadcrumbUpdate(str: string) {
+    //breadcrumb updates only happen on current route
+    //so the breadcrumb we need to update is the latest one
+    let lastBreadcrumb: Breadcrumb = this.breadcrumbs[this.breadcrumbs.length - 1];
+
+    if (!lastBreadcrumb.updated) {
+      lastBreadcrumb.updated = true;
+      lastBreadcrumb.name = lastBreadcrumb.name + ' ' + str;
+    }
   }
 
   private listenForRouteChange() {
@@ -41,65 +76,61 @@ export class BreadcrumbComponent implements OnInit {
     let url: string = this.router.url;
 
     if (url) {
-      this.currentUrl = url.substring(1);
-
-      //don't need the parameter query list here
-      let paramPos: number = this.currentUrl.indexOf("?");
-      if (paramPos > -1) {
-        this.currentUrl = this.currentUrl.substring(0, paramPos);
-      }
+      //don't need the query parameter list here
+      //nor do we need the initial /
+      this.currentUrl = this.urlService.shortenUrlIfNecessary(url.substring(1));
     }
   }
 
   private handleCurrentRoute(route: ActivatedRoute) {
     this.setCurrentUrl();
 
-    console.error("handling", route);
-    //console.log(menu);
-
-    let navItem: NavItem = this.findRoute(route, menu);
-    console.log("Now I've got ", navItem);
+    let navItem: NavItem = this.findRoute(menu);
 
     if (navItem) {
       //if we get here, the user clicked on item on the sidebar
       //we'll reset the breadcrumbs to start over
       this.handleTopLevelBreadcrumb(navItem);
     } else {
-      //if we get here, the user clicked a link in the main content sectio
+      //if we get here, the user clicked a link in the main content section
       //we'll add to the breadcrumbs
       this.addBreadcrumb(route);
     }
   }
 
   private addBreadcrumb(route: ActivatedRoute) {
-    console.log(route);
+    if (this.breadcrumbs.length < 6) {
+      let breadcrumb: Breadcrumb = null;
 
-    let breadcrumb: Breadcrumb = {} as Breadcrumb;
+      route.data.subscribe((data: any) => {
+        breadcrumb = { name: data.breadcrumb, url: this.currentUrl };
+      });
 
-    route.data.subscribe((data: any) => {
-      breadcrumb = { name: data.breadcrumb, url: this.currentUrl };
-    });
+      if (breadcrumb) {
+         //we only add a new breadcrumb if the person isn't visiting a page that's
+         //already in the breadcrumbs array
+        if (breadcrumb.url != this.breadcrumbs[this.breadcrumbs.length - 1].url) {
+          route.queryParams.subscribe((queryParams: any) => {
+            if (queryParams) {
+              breadcrumb.queryParams = queryParams;
+            }
+          });
 
-    route.queryParams.subscribe((queryParams: any) => {
-      if (queryParams) {
-        breadcrumb.queryParams = queryParams;
+          this.breadcrumbs.push(breadcrumb);
+        }
       }
-    });
-
-    this.breadcrumbs.push(breadcrumb);
+    }
   }
 
   private handleTopLevelBreadcrumb(navItem: NavItem) {
-    //console.log("Top-level breadcrumb");
     this.breadcrumbs = [];
 
     let breadcrumb: Breadcrumb = { name: navItem.displayName, url: navItem.route };
 
     this.breadcrumbs.push(breadcrumb);
-    //console.log(this.breadcrumbs);
   }
 
-  private findRoute(route: ActivatedRoute, navItems?: NavItem[]): NavItem {
+  private findRoute(navItems?: NavItem[]): NavItem {
     if (!navItems) navItems = menu;
 
     let returnedItem: NavItem = null;
@@ -110,18 +141,21 @@ export class BreadcrumbComponent implements OnInit {
           returnedItem = item;
           break;
         } else if (item.children) {
-          returnedItem = this.findRoute(route, item.children);
+          returnedItem = this.findRoute(item.children);
           if (returnedItem != null) break;
         }
       }
     }
 
-    //console.log("Returning ", returnedItem);
     return returnedItem;
   }
 
   routeTo(index: number) {
-    console.log(this.breadcrumbs[index]);
+    if (index < this.breadcrumbs.length - 1) {
+      //if the person clicked on a link in the breadcrumbs list,
+      //get rid of every breadcrumb after that point
+      this.breadcrumbs.splice(index + 1);
+    }
 
     let breadcrumb: Breadcrumb = this.breadcrumbs[index];
 

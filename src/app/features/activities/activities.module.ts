@@ -21,10 +21,34 @@ import { EditActivityComponent } from './edit-activity/edit-activity.component';
 
 export const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'add-activity' },
-  { path: 'add-activity', component: AddActivityComponent },
-  { path: 'edit-activity', component: EditActivityComponent },
-  { path: 'view-activity', component: ViewActivityComponent },
-  { path: 'view-activities', component: ViewActivitiesComponent }
+  {
+    path: 'add-activity',
+    component: AddActivityComponent,
+    data: {
+      breadcrumb: 'Add Activity'
+    }
+  },
+  {
+    path: 'edit-activity',
+    component: EditActivityComponent,
+    data: {
+      breadcrumb: 'Edit Activity'
+    }
+  },
+  {
+    path: 'view-activity',
+    component: ViewActivityComponent,
+    data: {
+      breadcrumb: 'View Activity'
+    }
+  },
+  {
+    path: 'view-activities',
+    component: ViewActivitiesComponent,
+    data: {
+      breadcrumb: 'View Activities'
+    }
+  }
 ];
 
 @NgModule({

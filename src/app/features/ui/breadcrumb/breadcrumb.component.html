@@ -1,8 +1,8 @@
 <div class="route-content-top">
   <ol class="breadcrumbs">
     <li *ngFor="let breadcrumb of breadcrumbs; index as i; last as isLast">
-      <span class="breadcrumb-link" (click)="routeTo(i)">{{breadcrumb.name}}</span>
-      <span *ngIf="!isLast"> > </span>
+      <span class="breadcrumb-current-route" [class.breadcrumb-history-link]="!isLast" (click)="routeTo(i)">{{breadcrumb.name}}</span>
+      <span *ngIf="!isLast"> » </span>
     </li>
   </ol>
   <hr/>

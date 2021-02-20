@@ -163,9 +163,14 @@ ol.breadcrumbs li {
   display: inline
 }
 
-.breadcrumb-link {
+.breadcrumb-current-route {
   color: inherit;
   font-weight: 500;
+}
+
+.breadcrumb-history-link {
+  color: #3F51B5;
+  text-decoration: underline;
   cursor: pointer;
 }
 

@@ -13,6 +13,7 @@ import { contactStatuses } from '../constants/contact-status';
 import { sources } from '../constants/source';
 import { DropdownOption } from '../../ui/model/dropdown-option';
 import { DropdownService } from '../../ui/service/dropdown.service';
+import { BreadcrumbService } from '../../ui/breadcrumb/breadcrumb.service';
 
 @Component({
   selector: 'app-view-contact',
@@ -32,7 +33,8 @@ export class ViewContactComponent implements OnInit {
   contact: Contact = {} as Contact;
 
   constructor(private route: ActivatedRoute, private contactService: ContactService,
-    private alertService: AlertService, private router: Router, private dropDownService: DropdownService) { }
+    private alertService: AlertService, private router: Router, private dropDownService: DropdownService,
+    private breadcrumbService: BreadcrumbService) { }
 
   ngOnInit(): void {
     let contact$ = this.route.queryParamMap.pipe(
@@ -49,6 +51,7 @@ export class ViewContactComponent implements OnInit {
   private handleResponse(contact: Contact) {
     this.contact = contact;
     this.loading = false;
+    this.breadcrumbService.updateBreadcrumb(this.contact.firstName + " " + this.contact.lastName);
   }
 
   private handleError(err: Error) {
