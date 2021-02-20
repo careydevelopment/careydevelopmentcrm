@@ -157,3 +157,7 @@ h4 {
 .icon-list-line {
   margin-bottom: 5px;
 }
+
+.breadcrumb-bar {
+  height:30px;
+}

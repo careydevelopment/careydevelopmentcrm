@@ -38,10 +38,33 @@ import { ViewContactMenuComponent } from './view-contact/view-contact-menu/view-
 
 export const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'add-contact' },
-  { path: 'add-contact', component: AddContactComponent },
-  { path: 'edit-contact', component: EditContactComponent },
-  { path: 'view-contacts', component: ViewContactsComponent },
-  { path: 'view-contact', component: ViewContactComponent }
+  {
+    path: 'add-contact',
+    component: AddContactComponent,
+    data: {
+      breadcrumb: 'Add Contact'
+    }
+  },
+  { path: 'edit-contact',
+    component: EditContactComponent,
+    data: {
+      breadcrumb: 'Edit Contact'
+    }
+  },
+  {
+    path: 'view-contacts',
+    component: ViewContactsComponent,
+    data: {
+      breadcrumb: 'View Contacts'
+    }
+  },
+  {
+    path: 'view-contact',
+    component: ViewContactComponent,
+    data: {
+      breadcrumb: 'View Contact'
+    }
+  }
 ];
 
 @NgModule({

@@ -17,6 +17,7 @@ import { ConfirmationDialogComponent } from './ui/confirmation-dialog/confirmati
 import { JwtInterceptor } from './util/jwt-interceptor';
 import { HttpErrorInterceptor } from './util/http-error-interceptor';
 import { MatNativeDateModule } from '@angular/material/core';
+import { BreadcrumbComponent } from './features/ui/breadcrumb/breadcrumb.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     AppComponent,
     MenuListItemComponent,
     FeaturesComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    BreadcrumbComponent
   ],
   imports: [
     BrowserModule,
