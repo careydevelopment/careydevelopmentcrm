@@ -158,11 +158,6 @@ ol.breadcrumbs {
   list-style-type: none;
 }
 
-ol.breadcrumbs li {
-  list-style-type: none;
-  display: inline
-}
-
 .breadcrumb-current-route {
   color: inherit;
   font-weight: 500;
@@ -179,6 +174,18 @@ mat-sidenav-content {
   padding-right: 10px;
 }
 
-.route-content-top {
-  height: 30px;
+ol.breadcrumbs li {
+  list-style-type: none;
 }
+
+@media only screen and (min-width: 960px) {
+  ol.breadcrumbs li {
+    list-style-type: none;
+    display: inline
+  }
+
+  .route-content-top {
+    height: 30px;
+  }
+}
+
