@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
-import { menu } from '../model/menu';
+import { menu } from '../../features/ui/model/menu';
 import { filter, map, distinctUntilChanged } from 'rxjs/operators';
-import { NavItem } from '../model/nav-item';
+import { NavItem } from '../../features/ui/model/nav-item';
 import { Breadcrumb } from './breadcrumb';
-import { UrlService } from '../../../services/url.service';
+import { UrlService } from '../../services/url.service';
 import { BreadcrumbService } from './breadcrumb.service';
 
 @Component({
@@ -50,9 +50,9 @@ export class BreadcrumbComponent implements OnInit {
     //so the breadcrumb we need to update is the latest one
     let lastBreadcrumb: Breadcrumb = this.breadcrumbs[this.breadcrumbs.length - 1];
 
-    if (!lastBreadcrumb.updated) {
-      lastBreadcrumb.updated = true;
-      lastBreadcrumb.name = lastBreadcrumb.name + ' ' + str;
+    if (lastBreadcrumb.pauseDisplay) {
+      lastBreadcrumb.pauseDisplay = false;
+      lastBreadcrumb.name = str;
     }
   }
 
@@ -103,7 +103,7 @@ export class BreadcrumbComponent implements OnInit {
       let breadcrumb: Breadcrumb = null;
 
       route.data.subscribe((data: any) => {
-        breadcrumb = { name: data.breadcrumb, url: this.currentUrl };
+        breadcrumb = { name: data.breadcrumb, url: this.currentUrl, pauseDisplay: data.pauseDisplay };
       });
 
       if (breadcrumb) {

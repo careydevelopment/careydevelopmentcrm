@@ -13,7 +13,7 @@ import { contactStatuses } from '../constants/contact-status';
 import { sources } from '../constants/source';
 import { DropdownOption } from '../../ui/model/dropdown-option';
 import { DropdownService } from '../../ui/service/dropdown.service';
-import { BreadcrumbService } from '../../ui/breadcrumb/breadcrumb.service';
+import { BreadcrumbService } from '../../../ui/breadcrumb/breadcrumb.service';
 
 @Component({
   selector: 'app-view-contact',
@@ -51,7 +51,7 @@ export class ViewContactComponent implements OnInit {
   private handleResponse(contact: Contact) {
     this.contact = contact;
     this.loading = false;
-    this.breadcrumbService.updateBreadcrumb(this.contact.firstName + " " + this.contact.lastName);
+    this.breadcrumbService.updateBreadcrumb("View " + this.contact.firstName + " " + this.contact.lastName);
   }
 
   private handleError(err: Error) {

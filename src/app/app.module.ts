@@ -17,16 +17,14 @@ import { ConfirmationDialogComponent } from './ui/confirmation-dialog/confirmati
 import { JwtInterceptor } from './util/jwt-interceptor';
 import { HttpErrorInterceptor } from './util/http-error-interceptor';
 import { MatNativeDateModule } from '@angular/material/core';
-import { BreadcrumbComponent } from './features/ui/breadcrumb/breadcrumb.component';
-
+import { BreadcrumbModule } from './ui/breadcrumb/breadcrumb.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuListItemComponent,
     FeaturesComponent,
-    ConfirmationDialogComponent,
-    BreadcrumbComponent
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +38,8 @@ import { BreadcrumbComponent } from './features/ui/breadcrumb/breadcrumb.compone
     MatIconModule,
     MatDialogModule,
     MatButtonModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    BreadcrumbModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

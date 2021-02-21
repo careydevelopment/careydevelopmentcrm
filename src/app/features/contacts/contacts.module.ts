@@ -48,7 +48,8 @@ export const routes = [
   { path: 'edit-contact',
     component: EditContactComponent,
     data: {
-      breadcrumb: 'Edit Contact'
+      breadcrumb: 'Edit Contact',
+      pauseDisplay: true
     }
   },
   {
@@ -62,7 +63,8 @@ export const routes = [
     path: 'view-contact',
     component: ViewContactComponent,
     data: {
-      breadcrumb: 'View Contact'
+      breadcrumb: 'View Contact',
+      pauseDisplay: true
     }
   }
 ];

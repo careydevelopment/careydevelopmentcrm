@@ -32,7 +32,8 @@ export const routes = [
     path: 'edit-activity',
     component: EditActivityComponent,
     data: {
-      breadcrumb: 'Edit Activity'
+      breadcrumb: 'Edit Activity',
+      pauseDisplay: true
     }
   },
   {
