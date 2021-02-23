@@ -17,7 +17,7 @@ import { ConfirmationDialogComponent } from './ui/confirmation-dialog/confirmati
 import { JwtInterceptor } from './util/jwt-interceptor';
 import { HttpErrorInterceptor } from './util/http-error-interceptor';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { BreadcrumbModule } from './ui/breadcrumb/breadcrumb.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatIconModule,
     MatDialogModule,
     MatButtonModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    BreadcrumbModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

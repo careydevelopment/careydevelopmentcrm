@@ -54,11 +54,6 @@ h4 {
   box-sizing: border-box;
 }
 
-.route-content {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
 .upload-image-box {
   border: solid 1px #3F51B5;
   padding: 10px 5px 10px 5px;
@@ -157,3 +152,40 @@ h4 {
 .icon-list-line {
   margin-bottom: 5px;
 }
+
+ol.breadcrumbs {
+  padding: 0;
+  list-style-type: none;
+}
+
+.breadcrumb-current-route {
+  color: inherit;
+  font-weight: 500;
+}
+
+.breadcrumb-history-link {
+  color: #3F51B5;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+mat-sidenav-content {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+ol.breadcrumbs li {
+  list-style-type: none;
+}
+
+@media only screen and (min-width: 960px) {
+  ol.breadcrumbs li {
+    list-style-type: none;
+    display: inline
+  }
+
+  .route-content-top {
+    height: 30px;
+  }
+}
+

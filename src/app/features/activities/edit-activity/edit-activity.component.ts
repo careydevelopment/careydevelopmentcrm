@@ -5,6 +5,7 @@ import { AlertService } from '../../../ui/alert/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Activity } from '../models/activity';
 import { ActivityService } from '../service/activity.service';
+import { BreadcrumbService } from '../../../ui/breadcrumb/breadcrumb.service';
 
 @Component({
   selector: 'app-edit-activity',
@@ -18,7 +19,7 @@ export class EditActivityComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, 
     private alertService: AlertService, private router: Router,
-    private activityService: ActivityService) { }
+    private activityService: ActivityService, private breadcrumbService: BreadcrumbService) { }
 
   ngOnInit(): void {
     this.loadActivity();
@@ -39,6 +40,7 @@ export class EditActivityComponent implements OnInit {
   private handleActivityResponse(activity: Activity) {
     this.activity = activity;
     this.loading = false;
+    this.breadcrumbService.updateBreadcrumb("Edit " + this.activity.type.name + " Activity");
   }
 
   private handleActivityError(err: Error) {
