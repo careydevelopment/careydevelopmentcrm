@@ -51,7 +51,10 @@ export class ViewContactComponent implements OnInit {
   private handleResponse(contact: Contact) {
     this.contact = contact;
     this.loading = false;
-    this.breadcrumbService.updateBreadcrumb("View " + this.contact.firstName + " " + this.contact.lastName);
+
+    if (this.contact) {
+      this.breadcrumbService.updateBreadcrumb("View " + this.contact.firstName + " " + this.contact.lastName);
+    }
   }
 
   private handleError(err: Error) {

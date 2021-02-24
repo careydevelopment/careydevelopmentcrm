@@ -34,6 +34,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ActivitiesModule } from '../activities/activities.module';
 import { ViewContactMenuComponent } from './view-contact/view-contact-menu/view-contact-menu.component';
+import { StatusProgressBarComponent } from './status-progress-bar/status-progress-bar.component';
 
 
 export const routes = [
@@ -83,7 +84,8 @@ export const routes = [
     EditContactComponent,
     ViewContactsComponent,
     ViewContactComponent,
-    ViewContactMenuComponent
+    ViewContactMenuComponent,
+    StatusProgressBarComponent
   ],
   imports: [
     CommonModule,

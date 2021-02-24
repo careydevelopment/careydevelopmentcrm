@@ -5,15 +5,18 @@
   <div fxFlex fxLayout="column" fxLayoutGap="0px">
     <div fxLayout="row wrap">
       <div fxFlex="100" fxLayout="column">
-        <div style="margin-bottom:20px">
+        <div>
           <alert></alert>
+        </div>
+        <div *ngIf="contact" style="margin-bottom: 15px" fxHide.lt-md="true">
+          <app-status-progress-bar [contact]="contact"></app-status-progress-bar>
         </div>
         <div>
           <mat-card class="vertical-layout">
             <div fxLayout="row wrap" style="margin-bottom:20px">
               <div>
                 <div style="font-size: 22pt; font-weight: 400">{{contact.firstName}} {{contact.lastName}}</div>
-                <div [class.inactive-status]="contact.status == 'INACTIVE'" [class.normal-status]="contact.status != 'INACTIVE'" style="margin-bottom:5px">
+                <div fxHide.gt-sm="true" [class.inactive-status]="contact.status == 'INACTIVE'" [class.normal-status]="contact.status != 'INACTIVE'" style="margin-bottom:5px">
                   {{dropDownService.getDisplay(contact.status, availableContactStatuses)}}
                 </div>
                 <div *ngIf="contact.authority" class="has-authority">Authorized</div>
