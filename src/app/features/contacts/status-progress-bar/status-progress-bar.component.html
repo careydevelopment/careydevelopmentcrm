@@ -1,0 +1,12 @@
+<div class="progress-div">
+  <ul class="progress">
+    <li *ngFor="let status of availableContactStatuses; index as i; first as isFirst"
+        [class.inactive]="i > contactStatusIndex"
+        [class.completed]="i < contactStatusIndex"
+        [class.not-first]="!isFirst"
+        (click)="updateStatus(i)">
+      <span *ngIf="i >= contactStatusIndex" [class.active-status]="i == contactStatusIndex">{{status.display}}</span>
+      <span *ngIf="i < contactStatusIndex">&#10003;</span>
+    </li>
+  </ul>
+</div>
