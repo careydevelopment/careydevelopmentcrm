@@ -30,14 +30,18 @@ export class StatusProgressBarComponent implements OnInit {
   }
 
   updateStatus(index: number) {
-    let newStatus: DropdownOption = this.availableContactStatuses[index];
-    this.contact.status = newStatus.value;
+    if (index > this.contactStatusIndex) {
+      this.alertService.clear();
 
-    this.contactService.update(this.contact)
-      .subscribe(
-        (contact: Contact) => this.handleContactSaveResponse(contact),
-        err => this.handleContactSaveError(err)
-      );
+      let newStatus: DropdownOption = this.availableContactStatuses[index];
+      this.contact.status = newStatus.value;
+
+      this.contactService.update(this.contact)
+        .subscribe(
+          (contact: Contact) => this.handleContactSaveResponse(contact),
+          err => this.handleContactSaveError(err)
+        );
+    }
   }
 
   handleContactSaveResponse(contact: Contact) {
