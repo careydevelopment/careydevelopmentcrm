@@ -5,13 +5,10 @@
   <div>
     <h4>{{pageTitle}}</h4>
   </div>
-  <div class="absolute-center" *ngIf="loading">
-    <mat-spinner [diameter]="80"></mat-spinner>
-  </div>
   <div>
     <alert></alert>
   </div>
-  <div *ngIf="!loading" style="margin-right:10px;">
+  <div style="margin-right:10px;">
     <form [formGroup]="activityFormGroup">
       <div fxLayout="column">
 

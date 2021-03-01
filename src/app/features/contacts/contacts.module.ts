@@ -33,6 +33,7 @@ import { ViewContactComponent } from './view-contact/view-contact.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ActivitiesModule } from '../activities/activities.module';
+import { DealsModule } from '../deals/deals.module';
 import { ViewContactMenuComponent } from './view-contact/view-contact-menu/view-contact-menu.component';
 import { StatusProgressBarComponent } from './status-progress-bar/status-progress-bar.component';
 
@@ -109,6 +110,7 @@ export const routes = [
     AlertModule,
     NgxFlagPickerModule,
     ActivitiesModule,
+    DealsModule,
     RouterModule.forChild(routes)
   ]
 })

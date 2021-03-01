@@ -96,7 +96,12 @@
               <div class="empty-set-status-message">No phones to display</div>
             </div>
           </mat-expansion-panel>
-          <app-recent-activities-by-contact [contactId]="contact.id"></app-recent-activities-by-contact>
+          <div>
+            <app-recent-activities-by-contact [contactId]="contact.id"></app-recent-activities-by-contact>
+          </div>
+          <div style="margin-top:20px; margin-bottom: 20px">
+            <app-deals-by-contact [contactId]="contact.id"></app-deals-by-contact>
+          </div>
         </div>
       </div>
     </div>

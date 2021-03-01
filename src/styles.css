@@ -125,6 +125,7 @@ h4 {
   padding: 2px 10px 2px 10px;
   color: #ffffff;
   font-size: 10pt;
+  height: 16px;
 }
 .badge-info {
   background-color: #3F51B5;
@@ -151,6 +152,12 @@ h4 {
 
 .icon-list-line {
   margin-bottom: 5px;
+}
+
+.icon-list-title {
+  font-size: 16px;
+  color: #3F51B5;
+  font-weight: 500;
 }
 
 ol.breadcrumbs {

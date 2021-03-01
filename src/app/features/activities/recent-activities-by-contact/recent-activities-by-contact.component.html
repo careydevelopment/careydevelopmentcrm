@@ -17,13 +17,13 @@
         <div>
           <div fxLayout="column">
             <div class="icon-list-line" fxLayout="row wrap" fxLayoutGap="15px">
-              <div>
-                {{activity.title}}
+              <div class="icon-list-line icon-list-title">
+                <span>{{activity.title}}</span>
+                <span *ngIf="activity.location">
+                  @ {{activity.location}}
+                </span>
               </div>
               <div *ngIf="activity.outcome" class="badge badge-info">{{activity.outcome.name}}</div>
-            </div>
-            <div *ngIf="activity.location" class="icon-list-line">
-              {{activity.location}}
             </div>
             <div *ngIf="activity.notes" class="icon-list-line">
               {{activity.notes}}
