@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Deal } from '../models/deal';
+import { Product } from '../models/product';
 import { DealStage } from '../models/deal-stage';
 import { Price } from '../models/price';
 import { AccountLightweight } from '../models/account-lightweight';
-import { DateService } from '../../../services/date.service';
 import { CurrencyService } from '../../../services/currency.service';
 
 
@@ -48,13 +48,7 @@ export class DealService {
     let amount: number = 0;
 
     if (deal.product && deal.product.prices && deal.contact && deal.contact.account) {
-      let prices: Price[] = deal.product.prices;
-      let account: AccountLightweight = deal.contact.account;
-
-      //hardcoding to US for now
-      deal.contact.account.country = 'US';
-
-      let price: Price = prices.find(p => p.currencyType === account.country);
+      let price: Price = this.getPriceByAccount(deal.product, deal.contact.account);
 
       if (price) {
         amount = price.amount * deal.units;
@@ -64,5 +58,22 @@ export class DealService {
     }
 
     return this.currencyService.formatForDollars(amount);
+  }
+
+  public getPriceByAccount(product: Product, account: AccountLightweight) {
+    let price: Price = null;
+
+    if (product && product.prices && account) {
+      let prices: Price[] = product.prices;
+
+      //hardcoding to US for now
+      account.country = 'US';
+
+      price = prices.find(p => p.currencyType === account.country);
+    } else {
+      console.error("Missing key data", price, account);
+    }
+
+    return price;
   }
 }

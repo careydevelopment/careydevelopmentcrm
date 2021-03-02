@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { DropdownOption } from '../model/dropdown-option';
+import { DisplayValueMap } from '../../../models/name-value-map';
 
 @Injectable({ providedIn: 'root' })
-export class DropdownService {
+export class DisplayValueMapService {
 
   constructor() { }
 
-  getDisplay(value: string, list: DropdownOption[]): string {
+  getDisplay(value: string, list: DisplayValueMap[]): string {
     let display = '';
 
     for (let i = 0; i < list.length; i++) {

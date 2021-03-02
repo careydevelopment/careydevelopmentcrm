@@ -145,15 +145,15 @@ export class DateService {
     return newDate.getTime();
   }
 
-  getDateVal(date: string, hour: number, minute: number, meridian: string): number {
+  getDateVal(date: string, hour?: number, minute?: number, meridian?: string): number {
     let dateVal: number = -1;
 
     if (date) {
       dateVal = this.translateDatePickerValueToNumberAtMidnight(date);
 
       if (hour) {
-        if (meridian == 'PM' && hour < 12) hour += 12;
-        else if (meridian == 'AM' && hour == 12) hour = 0;
+        if (meridian && meridian == 'PM' && hour < 12) hour += 12;
+        else if (meridian && meridian == 'AM' && hour == 12) hour = 0;
 
         let hourValue = hour * 60 * 60 * 1000;
         dateVal += hourValue;

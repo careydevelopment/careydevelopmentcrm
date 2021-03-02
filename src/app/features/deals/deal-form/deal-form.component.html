@@ -26,11 +26,13 @@
               </mat-form-field>
             </div>
           </div>
+        </div>
 
+        <div class="vertical-form-field">
           <div class="label">Product</div>
           <div>
             <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
-              <mat-select formControlName="product" placeholder="Select a product">
+              <mat-select formControlName="product" placeholder="Select a product" (selectionChange)="productSelected()">
                 <mat-option *ngFor="let pr of availableProducts" [value]="pr.id">
                   {{pr.name}}
                 </mat-option>
@@ -38,6 +40,13 @@
               <mat-error *ngIf="dealFormGroup.controls['product'].invalid">Please select a product</mat-error>
             </mat-form-field>
           </div>
+        </div>
+
+        <div *ngIf="currentProduct">
+          <mat-card>
+            <mat-card-title>{{currentProduct.name}}</mat-card-title>
+            <mat-card-subtitle>{{currentProduct.description}}</mat-card-subtitle>
+          </mat-card>
         </div>
 
         <div class="vertical-form-field">

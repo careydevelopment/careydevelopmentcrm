@@ -1,6 +1,6 @@
-import { DropdownOption } from '../../ui/model/dropdown-option';
+import { DisplayValueMap } from '../../../models/name-value-map';
 
-export const contactStatuses: DropdownOption[] = [
+export const contactStatuses: DisplayValueMap[] = [
     { display: 'New', value: 'NEW' },
     { display: 'Contacted', value: 'CONTACTED' },
     { display: 'Interested', value: 'INTERESTED' },

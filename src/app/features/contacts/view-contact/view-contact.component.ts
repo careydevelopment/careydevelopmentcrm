@@ -11,9 +11,10 @@ import { addressTypes } from '../constants/address-type';
 import { linesOfBusiness } from '../constants/line-of-business';
 import { contactStatuses } from '../constants/contact-status';
 import { sources } from '../constants/source';
-import { DropdownOption } from '../../ui/model/dropdown-option';
-import { DropdownService } from '../../ui/service/dropdown.service';
 import { BreadcrumbService } from '../../../ui/breadcrumb/breadcrumb.service';
+import { DisplayValueMap } from '../../../models/name-value-map';
+import { DisplayValueMapService } from '../../ui/service/display-map.service';
+
 
 @Component({
   selector: 'app-view-contact',
@@ -23,17 +24,17 @@ import { BreadcrumbService } from '../../../ui/breadcrumb/breadcrumb.service';
 })
 export class ViewContactComponent implements OnInit {
 
-  availableAddressTypes: DropdownOption[] = addressTypes;
-  availablePhoneTypes: DropdownOption[] = phoneTypes;
-  availableLobTypes: DropdownOption[] = linesOfBusiness;
-  availableContactStatuses: DropdownOption[] = contactStatuses;
-  availableSources: DropdownOption[] = sources;
+  availableAddressTypes: DisplayValueMap[] = addressTypes;
+  availablePhoneTypes: DisplayValueMap[] = phoneTypes;
+  availableLobTypes: DisplayValueMap[] = linesOfBusiness;
+  availableContactStatuses: DisplayValueMap[] = contactStatuses;
+  availableSources: DisplayValueMap[] = sources;
 
   loading: boolean = true;
   contact: Contact = {} as Contact;
 
   constructor(private route: ActivatedRoute, private contactService: ContactService,
-    private alertService: AlertService, private router: Router, private dropDownService: DropdownService,
+    private alertService: AlertService, private router: Router, private displayValueMapService: DisplayValueMapService,
     private breadcrumbService: BreadcrumbService) { }
 
   ngOnInit(): void {

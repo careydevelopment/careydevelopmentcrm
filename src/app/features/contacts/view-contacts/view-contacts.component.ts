@@ -7,15 +7,16 @@ import { AlertService } from '../../../ui/alert/alert.service';
 import { ContactService } from '../../service/contact.service';
 import { UserService } from '../../service/user.service';
 import { Contact } from '../models/contact';
-import { DropdownOption } from '../../ui/model/dropdown-option';
 import { addressTypes } from '../constants/address-type';
 import { contactStatuses } from '../constants/contact-status';
 import { linesOfBusiness } from '../constants/line-of-business';
 import { phoneTypes } from '../constants/phone-type';
 import { sources } from '../constants/source';
-import { DropdownService } from '../../ui/service/dropdown.service';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DisplayValueMap } from '../../../models/name-value-map';
+import { DisplayValueMapService } from '../../ui/service/display-map.service';
+
 
 @Component({
   selector: 'app-view-contacts',
@@ -30,11 +31,11 @@ export class ViewContactsComponent implements OnInit {
   currentUser: User;
   dataLoading: boolean = true;
 
-  availableAddressTypes: DropdownOption[] = addressTypes;
-  availablePhoneTypes: DropdownOption[] = phoneTypes;
-  availableContactStatuses: DropdownOption[] = contactStatuses;
-  availableLinesOfBusiness: DropdownOption[] = linesOfBusiness;
-  availableSources: DropdownOption[] = sources;
+  availableAddressTypes: DisplayValueMap[] = addressTypes;
+  availablePhoneTypes: DisplayValueMap[] = phoneTypes;
+  availableContactStatuses: DisplayValueMap[] = contactStatuses;
+  availableLinesOfBusiness: DisplayValueMap[] = linesOfBusiness;
+  availableSources: DisplayValueMap[] = sources;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -48,7 +49,8 @@ export class ViewContactsComponent implements OnInit {
   }
 
   constructor(private userService: UserService, private contactService: ContactService,
-    private alertService: AlertService, private dropdownService: DropdownService, private router: Router) {
+    private alertService: AlertService, private displayValueMapService: DisplayValueMapService,
+    private router: Router) {
   }
 
   ngOnInit(): void {

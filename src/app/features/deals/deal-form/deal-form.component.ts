@@ -17,6 +17,9 @@ import { SalesOwnerLightweight } from '../models/sales-owner-lightweight';
 import { DealService } from '../service/deal.service';
 import { ProductService } from '../service/product.service';
 
+//5 years
+const maximumTimeSpan: number = 5 * 365 * 24 * 60 * 60 * 1000;
+
 @Component({
   selector: 'app-deal-form',
   encapsulation: ViewEncapsulation.None,
@@ -38,6 +41,7 @@ export class DealFormComponent implements OnInit {
   dealFormGroup: FormGroup;
 
   currentClosureDate: number;
+  currentProduct: Product;
 
   availableProducts: Product[] = [this.loadingProduct];
   availableDealStages: DealStage[] = [];
@@ -181,7 +185,7 @@ export class DealFormComponent implements OnInit {
     this.dealFormGroup = this.fb.group({
       'name': [this.deal.name, [Validators.required, Validators.pattern('^[a-zA-Z0-9,.\' \-\]*$')]],
       'description': [this.deal.description, [Validators.pattern('^[a-zA-Z0-9,.\' \-\]*$')]],
-      'units': [this.deal.units, [Validators.required]],
+      'units': [this.deal.units, [Validators.required, Validators.pattern('^\\d*$')]],
       'closureDate': [null, [this.closureDateValidator()]],
       'contact': [(this.deal.contact) ? this.deal.contact.id : '', [Validators.required]],
       'product': [(this.deal.product) ? this.deal.product.id : '', [Validators.required]],
@@ -192,6 +196,17 @@ export class DealFormComponent implements OnInit {
   private closureDateValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       this.closureDateChanged();
+
+      if (!control.value || control.value.toString().trim() == '') {
+        return { 'invalid': true };
+      } else {
+        let today: number = Date.now();
+        let difference = Math.abs(today - this.currentClosureDate);
+        if (difference > maximumTimeSpan) {
+          return { 'threshold': true };
+        }
+      }
+
       return null;
     };
   }
@@ -210,7 +225,7 @@ export class DealFormComponent implements OnInit {
   closureDateChanged() {
     if (this.dealFormGroup) {
       let date: string = this.dealFormGroup.controls['closureDate'].value;
-      let newDateVal: number = this.dateService.getDateVal(date, 0, 0, 'AM');
+      let newDateVal: number = this.dateService.getDateVal(date);
 
       this.currentClosureDate = newDateVal;
     }
@@ -269,7 +284,6 @@ export class DealFormComponent implements OnInit {
     let salesOwner: SalesOwnerLightweight = { id: user.id, firstName: user.firstName, lastName: user.lastName, username: user.username }
     let account: AccountLightweight = { id: this.contact.account.id, name: this.contact.account.name, country: 'US' };
     let contact: ContactLightweight = { id: this.contact.id, firstName: this.contact.firstName, lastName: this.contact.lastName, account: account, salesOwner: salesOwner };
-    let product: Product = { id: this.selectedProduct.id, name: this.selectedProduct.name, description: this.selectedProduct.description, productType: this.selectedProduct.productType, lineOfBusiness: this.selectedProduct.lineOfBusiness, prices: this.selectedProduct.prices };
     let stage: DealStage = this.availableDealStages.find(st => st.id == this.dealFormGroup.controls['stage'].value);
 
     this.deal.contact = contact;
@@ -277,12 +291,17 @@ export class DealFormComponent implements OnInit {
     this.deal.expectedClosureDate = this.currentClosureDate;
     this.deal.name = this.dealFormGroup.controls['name'].value;
     this.deal.description = this.dealFormGroup.controls['description'].value;
-    this.deal.product = product;
+    this.deal.product = this.currentProduct;
     this.deal.units = this.dealFormGroup.controls['units'].value;
   }
 
   private scrollToTop() {
     const element = document.querySelector('mat-sidenav-content') || window;
     element.scrollTo(0, 0);
+  }
+
+  productSelected() {
+    console.log("In here");
+    this.currentProduct = this.availableProducts.find(pr => pr.id == this.dealFormGroup.controls['product'].value);
   }
 }

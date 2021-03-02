@@ -1,6 +1,6 @@
-import { DropdownOption } from '../../ui/model/dropdown-option';
+import { DisplayValueMap } from '../../../models/name-value-map';
 
-export const addressTypes: DropdownOption[] =
+export const addressTypes: DisplayValueMap[] =
   [
     { display: 'Home', value: 'HOME' },
     { display: 'Work', value: 'WORK' }
