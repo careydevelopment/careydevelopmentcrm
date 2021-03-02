@@ -6,10 +6,10 @@ import { linesOfBusiness } from '../../constants/line-of-business';
 import { Contact } from '../../models/contact';
 import { Observable, of } from 'rxjs';
 import { map, delay, switchMap, startWith } from 'rxjs/operators';
-import { ContactService } from '../../../service/contact.service';
-import { AccountService } from '../../../service/account.service';
-import { Account } from '../../models/account';
 import { DisplayValueMap } from '../../../../models/name-value-map';
+import { ContactService } from '../../services/contact.service';
+import { AccountService } from '../../services/account.service';
+import { Account } from '../../models/account';
 
 @Component({
   selector: 'contact-basic-info-form',

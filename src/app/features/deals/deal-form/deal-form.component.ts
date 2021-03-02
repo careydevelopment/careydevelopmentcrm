@@ -2,7 +2,6 @@ import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { Contact } from '../../contacts/models/contact';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../../ui/alert/alert.service';
-import { ContactService } from '../../service/contact.service';
 import { ValidatorFn, FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Deal } from '../models/deal';
 import { Product } from '../models/product';
@@ -16,6 +15,7 @@ import { UserService } from '../../service/user.service';
 import { SalesOwnerLightweight } from '../models/sales-owner-lightweight';
 import { DealService } from '../service/deal.service';
 import { ProductService } from '../service/product.service';
+import { ContactService } from '../../contacts/services/contact.service';
 
 //5 years
 const maximumTimeSpan: number = 5 * 365 * 24 * 60 * 60 * 1000;
@@ -42,6 +42,7 @@ export class DealFormComponent implements OnInit {
 
   currentClosureDate: number;
   currentProduct: Product;
+  showTotalAmount: boolean = false;
 
   availableProducts: Product[] = [this.loadingProduct];
   availableDealStages: DealStage[] = [];
@@ -247,7 +248,8 @@ export class DealFormComponent implements OnInit {
       this.saving = false;
     } else {
       this.setDeal();
-
+      console.log(this.deal);
+      /*
       if (!this.deal.id) {
         this.dealService.createDeal(this.deal).subscribe(
           (deal: Deal) => this.handleDealSaveResponse(deal),
@@ -259,6 +261,7 @@ export class DealFormComponent implements OnInit {
           err => this.handleDealSaveError(err)
         );
       }
+      */
     }
   }
 
@@ -301,7 +304,16 @@ export class DealFormComponent implements OnInit {
   }
 
   productSelected() {
-    console.log("In here");
     this.currentProduct = this.availableProducts.find(pr => pr.id == this.dealFormGroup.controls['product'].value);
+  }
+
+  onUnitChange(unitValue: string) {
+    let units: number = Number(unitValue);
+
+    if (!isNaN(units)) {
+      if (units > 0) this.showTotalAmount = true;
+    } else {
+      this.showTotalAmount = false;
+    }
   }
 }

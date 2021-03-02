@@ -5,7 +5,6 @@ import { linesOfBusiness } from '../constants/line-of-business';
 import { contactStatuses } from '../constants/contact-status';
 import { sources } from '../constants/source';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { ContactService } from '../../service/contact.service';
 import { Contact } from '../models/contact';
 import { switchMap } from 'rxjs/operators';
 import { AlertService } from '../../../ui/alert/alert.service';
@@ -13,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { BreadcrumbService } from '../../../ui/breadcrumb/breadcrumb.service';
 import { DisplayValueMap } from '../../../models/name-value-map';
 import { DisplayValueMapService } from '../../ui/service/display-map.service';
+import { ContactService } from '../services/contact.service';
 
 @Component({
   selector: 'app-edit-contact',

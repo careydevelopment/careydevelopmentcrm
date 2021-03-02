@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { ContactService } from '../../service/contact.service';
 import { Contact } from '../models/contact';
 import { AlertService } from '../../../ui/alert/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -14,6 +13,7 @@ import { sources } from '../constants/source';
 import { BreadcrumbService } from '../../../ui/breadcrumb/breadcrumb.service';
 import { DisplayValueMap } from '../../../models/name-value-map';
 import { DisplayValueMapService } from '../../ui/service/display-map.service';
+import { ContactService } from '../services/contact.service';
 
 
 @Component({

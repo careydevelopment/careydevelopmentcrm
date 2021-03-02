@@ -5,7 +5,7 @@ import { AlertService } from '../../../ui/alert/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Deal } from '../models/deal';
 import { Contact } from '../../contacts/models/contact';
-import { ContactService } from '../../service/contact.service';
+import { ContactService } from '../../contacts/services/contact.service';
 
 
 @Component({

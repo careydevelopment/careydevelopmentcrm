@@ -4,7 +4,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { User } from '../../../models/user';
 import { AlertService } from '../../../ui/alert/alert.service';
-import { ContactService } from '../../service/contact.service';
 import { UserService } from '../../service/user.service';
 import { Contact } from '../models/contact';
 import { addressTypes } from '../constants/address-type';
@@ -16,6 +15,7 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DisplayValueMap } from '../../../models/name-value-map';
 import { DisplayValueMapService } from '../../ui/service/display-map.service';
+import { ContactService } from '../services/contact.service';
 
 
 @Component({

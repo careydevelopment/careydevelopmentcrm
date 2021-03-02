@@ -2,7 +2,6 @@ import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { Contact } from '../../contacts/models/contact';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../../ui/alert/alert.service';
-import { ContactService } from '../../service/contact.service';
 import { ValidatorFn, FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Activity } from '../models/activity';
 import { ActivityType } from '../models/activity-type';
@@ -16,6 +15,7 @@ import { ActivityTypeLightweight } from '../models/activity-type-lightweight';
 import { Observable, forkJoin } from 'rxjs';
 import { UserService } from '../../service/user.service';
 import { SalesOwnerLightweight } from '../models/sales-owner-lightweight';
+import { ContactService } from '../../contacts/services/contact.service';
 
 //5 years
 const maximumTimeSpan: number = 5 * 365 * 24 * 60 * 60 * 1000;

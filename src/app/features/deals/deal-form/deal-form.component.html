@@ -12,6 +12,26 @@
     <form [formGroup]="dealFormGroup">
       <div fxLayout="column">
         <div class="vertical-form-field">
+          <div class="vertical-form-field">
+
+            <div class="label">Name</div>
+            <div>
+              <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+                <input formControlName="name" matInput placeholder="Enter deal name" maxlength="32">
+                <mat-error *ngIf="dealFormGroup.controls['name'].invalid">Please enter valid name</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="vertical-form-field">
+            <div class="label">Description</div>
+            <div>
+              <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+                <input formControlName="description" matInput placeholder="Enter deal description" maxlength="128">
+                <mat-error *ngIf="dealFormGroup.controls['description'].invalid">Please enter valid description</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
 
           <div class="vertical-form-field">
             <div class="label">Contact</div>
@@ -28,7 +48,7 @@
           </div>
         </div>
 
-        <div class="vertical-form-field">
+        <div class="vertical-form-field" *ngIf="contact">
           <div class="label">Product</div>
           <div>
             <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
@@ -42,38 +62,25 @@
           </div>
         </div>
 
-        <div *ngIf="currentProduct">
-          <mat-card>
+        <div *ngIf="currentProduct" style="margin-bottom: 40px">
+          <mat-card fxFlex="50" fxFlex.lt-md="100">
             <mat-card-title>{{currentProduct.name}}</mat-card-title>
             <mat-card-subtitle>{{currentProduct.description}}</mat-card-subtitle>
+            <mat-card-content>
+              <div>
+                <span *ngIf="showTotalAmount">{{dealFormGroup.controls['units'].value}} @ </span>
+                {{dealService.getPriceDisplayByAccount(currentProduct, contact.account)}}
+              <span *ngIf="showTotalAmount"> = {{dealService.getAmountDisplayByAccount(currentProduct, contact.account, dealFormGroup.controls['units'].value)  | currency:'USD':'symbol':'3.0-0'}}</span>
+              </div>
+            </mat-card-content>
           </mat-card>
-        </div>
-
-        <div class="vertical-form-field">
-          <div class="label">Name</div>
-          <div>
-            <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
-              <input formControlName="name" matInput placeholder="Enter deal name" maxlength="32">
-              <mat-error *ngIf="dealFormGroup.controls['name'].invalid">Please enter valid name</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-
-        <div class="vertical-form-field">
-          <div class="label">Description</div>
-          <div>
-            <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
-              <input formControlName="description" matInput placeholder="Enter deal description" maxlength="128">
-              <mat-error *ngIf="dealFormGroup.controls['description'].invalid">Please enter valid description</mat-error>
-            </mat-form-field>
-          </div>
         </div>
 
         <div class="vertical-form-field">
           <div class="label">Units</div>
           <div>
             <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
-              <input formControlName="units" matInput placeholder="Enter # of units" maxlength="4">
+              <input formControlName="units" matInput placeholder="Enter # of units" maxlength="4" (input)="onUnitChange($event.target.value)">
               <mat-error *ngIf="dealFormGroup.controls['units'].invalid">Please enter a valid # of units</mat-error>
             </mat-form-field>
           </div>

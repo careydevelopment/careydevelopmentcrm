@@ -8,6 +8,10 @@ import { DealStage } from '../models/deal-stage';
 import { Price } from '../models/price';
 import { AccountLightweight } from '../models/account-lightweight';
 import { CurrencyService } from '../../../services/currency.service';
+import { DisplayValueMapService } from '../../ui/service/display-map.service';
+import { DisplayValueMap } from '../../../models/name-value-map';
+import { unitTypes } from '../constants/unit-type';
+import { priceTypes } from '../constants/price-type';
 
 
 const baseUrl: string = environment.baseCrmServiceUrl;
@@ -15,7 +19,11 @@ const baseUrl: string = environment.baseCrmServiceUrl;
 @Injectable({ providedIn: 'root' })
 export class DealService {
 
-  constructor(private http: HttpClient, private currencyService: CurrencyService) { }
+  allUnitTypes: DisplayValueMap[] = unitTypes;
+  allPriceTypes: DisplayValueMap[] = priceTypes;
+
+  constructor(private http: HttpClient, private currencyService: CurrencyService,
+    private displayValueMapService: DisplayValueMapService) { }
 
   fetchAllDealStages(): Observable<DealStage[]> {
     let url = `${baseUrl}/dealstages`;
@@ -44,14 +52,18 @@ export class DealService {
     return this.http.put<Deal>(url, deal);
   }
 
-  public getAmount(deal: Deal) {
+  getAmount(deal: Deal): number {
     let amount: number = 0;
 
     if (deal.product && deal.product.prices && deal.contact && deal.contact.account) {
       let price: Price = this.getPriceByAccount(deal.product, deal.contact.account);
 
       if (price) {
-        amount = price.amount * deal.units;
+        if (price.priceType == 'PER_UNIT') {
+          amount = price.amount * deal.units;
+        } else {
+          amount = price.amount;
+        }
       }
     } else {
       console.error("Missing key data", deal);
@@ -60,7 +72,7 @@ export class DealService {
     return this.currencyService.formatForDollars(amount);
   }
 
-  public getPriceByAccount(product: Product, account: AccountLightweight) {
+  getPriceByAccount(product: Product, account: AccountLightweight): Price {
     let price: Price = null;
 
     if (product && product.prices && account) {
@@ -75,5 +87,48 @@ export class DealService {
     }
 
     return price;
+  }
+
+  getPriceDisplayByAccount(product: Product, account: AccountLightweight): string {
+    let amount: string = '';
+    let perUnit: string = '';
+
+    let price: Price = this.getPriceByAccount(product, account);
+    amount = '' + this.currencyService.formatForDollars(price.amount);
+
+    if (price.priceType) {
+      if (price.priceType == 'PER_UNIT') {
+        if (price.unitType) {
+          perUnit = ' per ' + this.displayValueMapService.getDisplay(price.unitType, this.allUnitTypes);
+        }
+      } else if (price.priceType == 'FLAT_RATE') {
+        perUnit = ' Flat Rate';
+      } else if (price.priceType == 'SINGLE_ITEM') {
+        perUnit = ' Each';
+      }
+    }
+
+    let amountDisplay: string = `$${amount}${perUnit}`;
+
+    return amountDisplay;
+  }
+
+
+  getAmountDisplayByAccount(product: Product, account: AccountLightweight, units: number): number {
+    let amount: number = 0;
+
+    let price: Price = this.getPriceByAccount(product, account);
+
+    if (price.priceType) {
+      if (price.priceType == 'PER_UNIT' || price.priceType == 'SINGLE_ITEM') {
+        if (price.unitType) {
+          amount = units * price.amount;
+        }
+      } else if (price.priceType == 'FLAT_RATE') {
+        amount = price.amount;
+      } 
+    }
+
+    return this.currencyService.formatForDollars(amount);
   }
 }
