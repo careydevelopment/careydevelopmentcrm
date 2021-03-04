@@ -1,1 +1,4 @@
-<p>edit-deal works!</p>
+<div class="absolute-center" *ngIf="loading">
+  <mat-spinner [diameter]="80"></mat-spinner>
+</div>
+<app-deal-form [deal]="deal" *ngIf="!loading"></app-deal-form>

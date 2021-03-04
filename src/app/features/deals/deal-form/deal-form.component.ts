@@ -85,6 +85,9 @@ export class DealFormComponent implements OnInit {
         this.alertService.error("This deal isn't yours to edit");
         this.prohibitedEdit = true;
       }
+
+      this.showTotalAmount = true;
+      this.currentProduct = this.deal.product;
     }
   }
 
@@ -163,7 +166,11 @@ export class DealFormComponent implements OnInit {
   private handleContactsResponse(contacts: Contact[]) {
     this.contacts = contacts;
 
-    if (this.deal.contact) {
+    if (this.addingForContact) {
+      //adding
+      this.contact = this.contacts.find(contact => this.contact.id === contact.id);
+      this.dealFormGroup.controls['contact'].setValue(this.contact.id);
+    } else if (this.deal.contact) {
       //editing
       this.contact = this.contacts.find(contact => this.deal.contact.id === contact.id);
     }
@@ -248,8 +255,9 @@ export class DealFormComponent implements OnInit {
       this.saving = false;
     } else {
       this.setDeal();
-      console.log(this.deal);
-      /*
+
+      //console.log("Deal is ", this.deal);
+
       if (!this.deal.id) {
         this.dealService.createDeal(this.deal).subscribe(
           (deal: Deal) => this.handleDealSaveResponse(deal),
@@ -261,12 +269,11 @@ export class DealFormComponent implements OnInit {
           err => this.handleDealSaveError(err)
         );
       }
-      */
     }
   }
 
   private handleDealSaveResponse(deal: Deal) {
-    console.log("got back", deal);
+    //console.log("got back", deal);
     this.alertService.success("Deal successfully saved!");
     this.deal = deal;
     this.scrollToTop();

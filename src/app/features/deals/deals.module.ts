@@ -17,7 +17,7 @@ import { DealFormComponent } from './deal-form/deal-form.component';
 import { EditDealComponent } from './edit-deal/edit-deal.component';
 import { AddDealComponent } from './add-deal/add-deal.component';
 
-
+ 
 export const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'add-deal' },
   {

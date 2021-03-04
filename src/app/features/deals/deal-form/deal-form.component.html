@@ -67,10 +67,10 @@
             <mat-card-title>{{currentProduct.name}}</mat-card-title>
             <mat-card-subtitle>{{currentProduct.description}}</mat-card-subtitle>
             <mat-card-content>
-              <div>
+              <div class="amount-display">
                 <span *ngIf="showTotalAmount">{{dealFormGroup.controls['units'].value}} @ </span>
-                {{dealService.getPriceDisplayByAccount(currentProduct, contact.account)}}
-              <span *ngIf="showTotalAmount"> = {{dealService.getAmountDisplayByAccount(currentProduct, contact.account, dealFormGroup.controls['units'].value)  | currency:'USD':'symbol':'3.0-0'}}</span>
+                <span>{{dealService.getPriceDisplayByAccount(currentProduct, contact.account)}}</span>
+                <span *ngIf="showTotalAmount"> = {{dealService.getAmountByAccount(currentProduct, contact.account, dealFormGroup.controls['units'].value)  | currency:'USD':'symbol':'3.0-0'}}</span>
               </div>
             </mat-card-content>
           </mat-card>
@@ -79,8 +79,8 @@
         <div class="vertical-form-field">
           <div class="label">Units</div>
           <div>
-            <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
-              <input formControlName="units" matInput placeholder="Enter # of units" maxlength="4" (input)="onUnitChange($event.target.value)">
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="10" fxFlex.lt-md="50">
+              <input formControlName="units" matInput placeholder="#" maxlength="4" (input)="onUnitChange($event.target.value)">
               <mat-error *ngIf="dealFormGroup.controls['units'].invalid">Please enter a valid # of units</mat-error>
             </mat-form-field>
           </div>

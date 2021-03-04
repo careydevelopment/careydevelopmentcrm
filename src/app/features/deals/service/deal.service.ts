@@ -42,6 +42,13 @@ export class DealService {
     return this.http.get<Deal[]>(url);
   }
 
+  fetchDealById(id: string): Observable<Deal> {
+    let url = `${baseUrl}/deals/${id}`;
+    console.log("Fetch deal by id URL is " + url);
+
+    return this.http.get<Deal>(url);
+  }
+
   createDeal(deal: Deal): Observable<Deal> {
     let url = `${baseUrl}/deals`;
     return this.http.post<Deal>(url, deal);
@@ -114,7 +121,7 @@ export class DealService {
   }
 
 
-  getAmountDisplayByAccount(product: Product, account: AccountLightweight, units: number): number {
+  getAmountByAccount(product: Product, account: AccountLightweight, units: number): number {
     let amount: number = 0;
 
     let price: Price = this.getPriceByAccount(product, account);

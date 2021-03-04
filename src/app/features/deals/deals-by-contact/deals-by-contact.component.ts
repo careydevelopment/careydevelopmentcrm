@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { Deal } from '../models/deal';
 import { DealService } from '../service/deal.service';
 import { DateService } from '../../../services/date.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-deals-by-contact',
@@ -16,7 +17,8 @@ export class DealsByContactComponent implements OnInit {
   loading: boolean = true;
   errorLoading: boolean = false;
 
-  constructor(private dealService: DealService, private dateService: DateService) { }
+  constructor(private dealService: DealService, private dateService: DateService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.loadDeals();
@@ -39,5 +41,10 @@ export class DealsByContactComponent implements OnInit {
     this.loading = false;
 
     console.error(err);
+  }
+
+  editDeal(dealId: string) {
+    let route = '/deals/edit-deal';
+    this.router.navigate([route], { queryParams: { dealId: dealId } });
   }
 }
