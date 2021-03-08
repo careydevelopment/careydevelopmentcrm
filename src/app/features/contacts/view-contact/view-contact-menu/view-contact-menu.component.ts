@@ -24,4 +24,9 @@ export class ViewContactMenuComponent implements OnInit {
     let route = '/activities/add-activity';
     this.router.navigate([route], { queryParams: { contactId: this.contact.id } });
   }
+
+  addDeal() {
+    let route = '/deals/add-deal';
+    this.router.navigate([route], { queryParams: { contactId: this.contact.id } });
+  }
 }

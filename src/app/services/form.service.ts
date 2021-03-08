@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ValidationErrors, FormControl, FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormControl, FormGroup, AbstractControl } from '@angular/forms';
 
 
 @Injectable({ providedIn: 'root' })
@@ -17,7 +17,7 @@ export class FormService {
       Object.keys(form.controls).forEach(key => {
         const error = this.getFormErrors(form.get(key));
         if (error !== null) {
-          console.log("Key " + key + " " + error);
+          //console.log("Key " + key + " " + error);
           formErrors[key] = error;
         }
       });

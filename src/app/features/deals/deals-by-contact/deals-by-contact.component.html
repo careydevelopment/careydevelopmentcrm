@@ -1,0 +1,50 @@
+<mat-card>
+  <mat-card-title>
+    Deals
+  </mat-card-title>
+  <mat-card-content>
+    <div *ngIf="loading">
+      <mat-spinner [diameter]="40"></mat-spinner>
+    </div>
+    <div *ngIf="errorLoading">
+      <span class="error-spree">Problem loading deals. Please call support.</span>
+    </div>
+    <div *ngIf="!loading && !errorLoading" fxLayout="column" style="margin-top: 25px">
+      <div *ngIf="deals && deals.length > 0">
+        <div *ngFor="let deal of deals" fxLayout.gt-sm="row wrap" fxLayout.sm="column" class="icon-list-item">
+          <div fxFlex.gt-sm="50px" fxLayoutAlign.gt-sm="center center">
+            <mat-icon *ngIf="deal.product.productType == 'PRODUCT'">shopping_cart</mat-icon>
+            <mat-icon *ngIf="deal.product.productType == 'SERVICE'">work</mat-icon>
+          </div>
+          <div>
+            <div fxLayout="column" fxLayoutGap="5px">
+              <div class="icon-list-line" fxLayout="row wrap" fxLayoutGap="15px">
+                <div class="icon-list-line icon-list-title">
+                  {{deal.name}}
+                </div>
+                <div *ngIf="deal.stage" class="badge badge-info">{{deal.stage.name}}</div>
+              </div>
+              <div class="icon-list-line">
+                {{deal.description}}
+              </div>
+              <div class="icon-list-line">
+                Expected to close {{dateService.getShortDateDisplay(deal.expectedClosureDate)}}
+              </div>
+              <div class="icon-list-line" style="font-weight: bold">
+                {{dealService.getAmount(deal) | currency:'USD':'symbol':'3.0-0'}}
+              </div>
+              <div>
+                <button mat-icon-button class="small-icon" color="primary" aria-label="Edit" (click)="editDeal(deal.id)">
+                  <mat-icon class="small-icon">edit</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!deals || deals.length == 0" class="icon-list-line">
+        There are no deals at this time.
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

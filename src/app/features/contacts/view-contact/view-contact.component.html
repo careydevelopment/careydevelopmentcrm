@@ -17,7 +17,7 @@
               <div>
                 <div style="font-size: 22pt; font-weight: 400">{{contact.firstName}} {{contact.lastName}}</div>
                 <div fxHide.gt-sm="true" [class.inactive-status]="contact.status == 'INACTIVE'" [class.normal-status]="contact.status != 'INACTIVE'" style="margin-bottom:5px">
-                  {{dropDownService.getDisplay(contact.status, availableContactStatuses)}}
+                  {{displayValueMapService.getDisplay(contact.status, availableContactStatuses)}}
                 </div>
                 <div *ngIf="contact.authority" class="has-authority">Authorized</div>
                 <div *ngIf="!contact.authority" class="no-authority">Not authorized</div>
@@ -44,14 +44,14 @@
                   Lines of Business
                 </div>
                 <div *ngFor="let lob of contact.linesOfBusiness" class="normal-detail">
-                  {{dropDownService.getDisplay(lob, availableLobTypes)}}
+                  {{displayValueMapService.getDisplay(lob, availableLobTypes)}}
                 </div>
               </div>
               <div class="column-layout">
                 <div class="column-header">
                   Source
                 </div>
-                <div class="normal-detail" style="margin-bottom:5px">{{dropDownService.getDisplay(contact.source, availableSources)}}</div>
+                <div class="normal-detail" style="margin-bottom:5px">{{displayValueMapService.getDisplay(contact.source, availableSources)}}</div>
                 <div class="free-text" *ngIf="contact.sourceDetails">{{contact.sourceDetails}}</div>
               </div>
             </div>
@@ -65,7 +65,7 @@
             <div *ngIf="contact.addresses && contact.addresses.length > 0" fxLayout="row wrap" fxLayoutGap="40px">
               <div *ngFor="let address of contact.addresses">
                 <div style="margin-bottom: 30px">
-                  <div class="address-type">{{dropDownService.getDisplay(address.addressType, availableAddressTypes)}} Address</div>
+                  <div class="address-type">{{displayValueMapService.getDisplay(address.addressType, availableAddressTypes)}} Address</div>
                   <div class="normal-detail" *ngIf="address.street1">{{address.street1}}</div>
                   <div class="normal-detail" *ngIf="address.street2">{{address.street2}}</div>
                   <div class="normal-detail">
@@ -89,14 +89,19 @@
             </mat-expansion-panel-header>
             <div *ngIf="contact.phones && contact.phones.length > 0">
               <div *ngFor="let phone of contact.phones" style="margin-bottom:10px">
-                <span class="phone-label">{{dropDownService.getDisplay(phone.phoneType, availablePhoneTypes)}} Phone: </span> <span class="normal-detail">{{phone.phone}}</span>
+                <span class="phone-label">{{displayValueMapService.getDisplay(phone.phoneType, availablePhoneTypes)}} Phone: </span> <span class="normal-detail">{{phone.phone}}</span>
               </div>
             </div>
             <div *ngIf="!contact.phones || contact.phones.length == 0">
               <div class="empty-set-status-message">No phones to display</div>
             </div>
           </mat-expansion-panel>
-          <app-recent-activities-by-contact [contactId]="contact.id"></app-recent-activities-by-contact>
+          <div>
+            <app-recent-activities-by-contact [contactId]="contact.id"></app-recent-activities-by-contact>
+          </div>
+          <div style="margin-top:20px; margin-bottom: 20px">
+            <app-deals-by-contact [contactId]="contact.id"></app-deals-by-contact>
+          </div>
         </div>
       </div>
     </div>

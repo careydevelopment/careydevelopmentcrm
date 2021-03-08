@@ -30,7 +30,7 @@
     <div *ngIf="contact.addresses && contact.addresses.length > 0" class="address-section">
       <div *ngFor="let address of contact.addresses" style="margin-top:20px">
         <div class="address-type">
-          {{dropdownService.getDisplay(address.addressType, availableAddressTypes)}} Address
+          {{displayValueMapService.getDisplay(address.addressType, availableAddressTypes)}} Address
         </div>
         <div *ngIf="address.street1" class="address-line">
           {{address.street1}}
@@ -48,7 +48,7 @@
       <div class="phone-header">Phone(s)</div>
       <div *ngFor="let phone of contact.phones">
         <div class="phone">
-          {{phone.phone}} ({{dropdownService.getDisplay(phone.phoneType, availablePhoneTypes)}})
+          {{phone.phone}} ({{displayValueMapService.getDisplay(phone.phoneType, availablePhoneTypes)}})
         </div>
       </div>
     </div>
@@ -56,17 +56,17 @@
     <div *ngIf="contact.linesOfBusiness && contact.linesOfBusiness.length > 0" class="lob-section">
       <div class="lob-header">Lines of Business</div>
       <div *ngFor="let lob of contact.linesOfBusiness" class="lob-line">
-        {{dropdownService.getDisplay(lob, availableLinesOfBusiness)}}
+        {{displayValueMapService.getDisplay(lob, availableLinesOfBusiness)}}
       </div>
     </div>
 
     <div class="other-details-section">
       <div class="other-details-header">Other Details</div>
       <div class="other-line" *ngIf="contact.status">
-        <span class="other-label">Status:</span> <span class="other-value">{{dropdownService.getDisplay(contact.status, availableContactStatuses)}}</span>
+        <span class="other-label">Status:</span> <span class="other-value">{{displayValueMapService.getDisplay(contact.status, availableContactStatuses)}}</span>
       </div>
       <div class="other-line" *ngIf="contact.source">
-        <span class="other-label">Source:</span> <span class="other-value">{{dropdownService.getDisplay(contact.source, availableSources)}}</span>
+        <span class="other-label">Source:</span> <span class="other-value">{{displayValueMapService.getDisplay(contact.source, availableSources)}}</span>
       </div>
       <div class="other-line" *ngIf="contact.sourceDetails">
         <span class="other-label">Source Details:</span> <span class="other-value">{{contact.sourceDetails}}</span>

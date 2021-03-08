@@ -36,6 +36,18 @@ export let menu: NavItem[] = [
     ]
   },
   {
+    displayName: 'Deals',
+    iconName: 'paid',
+    route: 'deals',
+    children: [
+      {
+        displayName: 'Add Deal',
+        iconName: 'library_add',
+        route: 'deals/add-deal'
+      }
+    ]
+  },
+  {
     displayName: 'User',
     iconName: 'face',
     route: 'user',

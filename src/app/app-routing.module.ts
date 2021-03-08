@@ -14,7 +14,8 @@ const routes: Routes = [
           { path: 'dashboard', canActivate: [AuthGuard], loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule) },
           { path: 'user', canActivate: [AuthGuard], loadChildren: () => import('./features/user/user.module').then(m => m.UserModule) },
           { path: 'contacts', canActivate: [AuthGuard], loadChildren: () => import('./features/contacts/contacts.module').then(m => m.ContactsModule) },
-          { path: 'activities', canActivate: [AuthGuard], loadChildren: () => import('./features/activities/activities.module').then(m => m.ActivitiesModule) }
+          { path: 'activities', canActivate: [AuthGuard], loadChildren: () => import('./features/activities/activities.module').then(m => m.ActivitiesModule) },
+          { path: 'deals', canActivate: [AuthGuard], loadChildren: () => import('./features/deals/deals.module').then(m => m.DealsModule) }
         ]
     }
 ];

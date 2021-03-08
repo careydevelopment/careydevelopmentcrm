@@ -1,0 +1,110 @@
+<div class="absolute-center" *ngIf="loading">
+  <mat-spinner [diameter]="80"></mat-spinner>
+</div>
+<div *ngIf="!loading" fxFlex="100" fxLayout="column" fxLayoutGap="20px">
+  <div>
+    <h4>{{pageTitle}}</h4>
+  </div>
+  <div>
+    <alert></alert>
+  </div>
+  <div *ngIf="!loading" style="margin-right:10px;">
+    <form [formGroup]="dealFormGroup">
+      <div fxLayout="column">
+        <div class="vertical-form-field">
+          <div class="vertical-form-field">
+
+            <div class="label">Name</div>
+            <div>
+              <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+                <input formControlName="name" matInput placeholder="Enter deal name" maxlength="32">
+                <mat-error *ngIf="dealFormGroup.controls['name'].invalid">Please enter valid name</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="vertical-form-field">
+            <div class="label">Description</div>
+            <div>
+              <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+                <input formControlName="description" matInput placeholder="Enter deal description" maxlength="128">
+                <mat-error *ngIf="dealFormGroup.controls['description'].invalid">Please enter valid description</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="vertical-form-field">
+            <div class="label">Contact</div>
+            <div>
+              <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+                <mat-select formControlName="contact" placeholder="Select a contact" (selectionChange)="contactChanged($event.value)">
+                  <mat-option *ngFor="let contact of contacts" [value]="contact.id">
+                    {{contact.lastName}}, {{contact.firstName}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="dealFormGroup.controls['contact'].invalid">Please select a contact</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="vertical-form-field" *ngIf="contact">
+          <div class="label">Product</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
+              <mat-select formControlName="product" placeholder="Select a product" (selectionChange)="productSelected()">
+                <mat-option *ngFor="let pr of availableProducts" [value]="pr.id">
+                  {{pr.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="dealFormGroup.controls['product'].invalid">Please select a product</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div *ngIf="currentProduct" style="margin-bottom: 40px">
+          <mat-card fxFlex="50" fxFlex.lt-md="100">
+            <mat-card-title>{{currentProduct.name}}</mat-card-title>
+            <mat-card-subtitle>{{currentProduct.description}}</mat-card-subtitle>
+            <mat-card-content>
+              <div class="amount-display">
+                <span *ngIf="showTotalAmount">{{dealFormGroup.controls['units'].value}} @ </span>
+                <span>{{dealService.getPriceDisplayByAccount(currentProduct, contact.account)}}</span>
+                <span *ngIf="showTotalAmount"> = {{dealService.getAmountByAccount(currentProduct, contact.account, dealFormGroup.controls['units'].value)  | currency:'USD':'symbol':'3.0-0'}}</span>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div class="vertical-form-field">
+          <div class="label">Units</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="10" fxFlex.lt-md="50">
+              <input formControlName="units" matInput placeholder="#" maxlength="4" (input)="onUnitChange($event.target.value)">
+              <mat-error *ngIf="dealFormGroup.controls['units'].invalid">Please enter a valid # of units</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="vertical-form-field">
+          <div class="label">Expected Closure Date</div>
+          <div fxLayout="column">
+            <div>
+              <mat-form-field class="no-label-field">
+                <input matInput [matDatepicker]="datePicker" formControlName="closureDate" (dateChange)="closureDateChanged()">
+                <mat-error *ngIf="dealFormGroup.controls['closureDate'].invalid">Please enter valid date</mat-error>
+                <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                <mat-datepicker #datePicker></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 15px">
+          <button *ngIf="!saving && !prohibitedEdit" mat-raised-button color="primary" (click)="saveDeal()">Save Deal</button>
+          <mat-spinner *ngIf="saving" [diameter]="50"></mat-spinner>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

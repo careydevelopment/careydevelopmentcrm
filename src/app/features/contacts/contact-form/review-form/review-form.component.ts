@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DropdownOption } from '../../../ui/model/dropdown-option';
-import { DropdownService } from '../../../ui/service/dropdown.service';
+import { DisplayValueMap } from '../../../../models/name-value-map';
+import { DisplayValueMapService } from '../../../ui/service/display-map.service';
 import { addressTypes } from '../../constants/address-type';
 import { contactStatuses } from '../../constants/contact-status';
 import { linesOfBusiness } from '../../constants/line-of-business';
@@ -18,13 +18,13 @@ export class ReviewFormComponent implements OnInit {
   @Input() contact: Contact;
   @Input() errorMessages: string[] = [];
 
-  availableAddressTypes: DropdownOption[] = addressTypes;
-  availablePhoneTypes: DropdownOption[] = phoneTypes;
-  availableContactStatuses: DropdownOption[] = contactStatuses;
-  availableLinesOfBusiness: DropdownOption[] = linesOfBusiness;
-  availableSources: DropdownOption[] = sources;
+  availableAddressTypes: DisplayValueMap[] = addressTypes;
+  availablePhoneTypes: DisplayValueMap[] = phoneTypes;
+  availableContactStatuses: DisplayValueMap[] = contactStatuses;
+  availableLinesOfBusiness: DisplayValueMap[] = linesOfBusiness;
+  availableSources: DisplayValueMap[] = sources;
 
-  constructor(private dropdownService: DropdownService) { }
+  constructor(private displayValueMapService: DisplayValueMapService) { }
 
   ngOnInit(): void {
   }

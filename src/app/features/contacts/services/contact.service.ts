@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Contact } from '../contacts/models/contact';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
+import { Contact } from '../models/contact';
 
 const baseUrl: string = environment.baseCustomerServiceUrl;
 

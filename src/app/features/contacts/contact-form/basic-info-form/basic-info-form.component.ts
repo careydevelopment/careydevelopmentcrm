@@ -3,12 +3,12 @@ import { ValidationErrors, FormGroup, ValidatorFn, AsyncValidatorFn, FormBuilder
 import { sources } from '../../constants/source';
 import { contactStatuses } from '../../constants/contact-status';
 import { linesOfBusiness } from '../../constants/line-of-business';
-import { DropdownOption } from '../../../ui/model/dropdown-option'
 import { Contact } from '../../models/contact';
 import { Observable, of } from 'rxjs';
 import { map, delay, switchMap, startWith } from 'rxjs/operators';
-import { ContactService } from '../../../service/contact.service';
-import { AccountService } from '../../../service/account.service';
+import { DisplayValueMap } from '../../../../models/name-value-map';
+import { ContactService } from '../../services/contact.service';
+import { AccountService } from '../../services/account.service';
 import { Account } from '../../models/account';
 
 @Component({
@@ -21,9 +21,9 @@ export class BasicInfoFormComponent implements OnInit {
   basicInfoFormGroup: FormGroup;
   originalFormState: Contact;
 
-  availableSources: DropdownOption[] = sources;
-  availableContactStatuses: DropdownOption[] = contactStatuses;
-  availableLinesOfBusiness: DropdownOption[] = linesOfBusiness;
+  availableSources: DisplayValueMap[] = sources;
+  availableContactStatuses: DisplayValueMap[] = contactStatuses;
+  availableLinesOfBusiness: DisplayValueMap[] = linesOfBusiness;
   availableAccounts: Account[] = [{ name: "Loading...", id: "-1"}];
   filteredAccounts: Observable<Account[]> = of(this.availableAccounts);
   newAccount: boolean = false;

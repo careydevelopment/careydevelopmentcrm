@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Contact } from '../models/contact';
 import { contactStatuses } from '../constants/contact-status';
-import { ContactService } from '../../service/contact.service';
-import { DropdownOption } from '../../ui/model/dropdown-option';
 import { AlertService } from '../../../ui/alert/alert.service';
+import { DisplayValueMap } from '../../../models/name-value-map';
+import { ContactService } from '../services/contact.service';
 
 @Component({
   selector: 'app-status-progress-bar',
@@ -14,7 +14,7 @@ export class StatusProgressBarComponent implements OnInit {
 
   @Input() contact: Contact;
 
-  availableContactStatuses: DropdownOption[] = contactStatuses;
+  availableContactStatuses: DisplayValueMap[] = contactStatuses;
   contactStatusIndex: number;
 
   constructor(private contactService: ContactService, private alertService: AlertService) { }
@@ -33,7 +33,7 @@ export class StatusProgressBarComponent implements OnInit {
     if (index > this.contactStatusIndex) {
       this.alertService.clear();
 
-      let newStatus: DropdownOption = this.availableContactStatuses[index];
+      let newStatus: DisplayValueMap = this.availableContactStatuses[index];
       this.contact.status = newStatus.value;
 
       this.contactService.update(this.contact)

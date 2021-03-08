@@ -3,10 +3,8 @@ import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AlertService } from '../../../ui/alert/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Activity } from '../models/activity';
-import { ActivityService } from '../service/activity.service';
 import { Contact } from '../../contacts/models/contact';
-import { ContactService } from '../../service/contact.service';
+import { ContactService } from '../../contacts/services/contact.service';
 
 
 @Component({
