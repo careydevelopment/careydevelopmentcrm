@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormBuilder } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BasicInfoFormComponent } from './basic-info-form.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 describe('BasicInfoFormComponent', () => {
   let component: BasicInfoFormComponent;
@@ -8,7 +10,14 @@ describe('BasicInfoFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BasicInfoFormComponent ]
+      declarations: [BasicInfoFormComponent],
+      imports: [
+        HttpClientTestingModule,
+        MatAutocompleteModule
+      ],
+      providers: [
+        FormBuilder
+      ]
     })
     .compileComponents();
   });

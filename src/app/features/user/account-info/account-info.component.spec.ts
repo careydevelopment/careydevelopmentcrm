@@ -1,5 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormBuilder } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AlertService } from '../../../ui/alert/alert.service';
 import { AccountInfoComponent } from './account-info.component';
 
 describe('AccountInfoComponent', () => {
@@ -8,7 +11,15 @@ describe('AccountInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccountInfoComponent ]
+      declarations: [AccountInfoComponent],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
+      providers: [
+        FormBuilder,
+        AlertService
+      ]
     })
     .compileComponents();
   });

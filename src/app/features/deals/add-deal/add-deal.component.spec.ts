@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AlertService } from '../../../ui/alert/alert.service';
 
 import { AddDealComponent } from './add-deal.component';
 
@@ -8,7 +11,12 @@ describe('AddDealComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddDealComponent ]
+      declarations: [AddDealComponent],
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
+      providers: [AlertService]
     })
     .compileComponents();
   });

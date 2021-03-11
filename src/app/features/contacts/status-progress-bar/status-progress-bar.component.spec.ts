@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { StatusProgressBarComponent } from './status-progress-bar.component';
+import { AlertService } from '../../../ui/alert/alert.service';
 
 describe('StatusProgressBarComponent', () => {
   let component: StatusProgressBarComponent;
@@ -8,7 +9,13 @@ describe('StatusProgressBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StatusProgressBarComponent ]
+      declarations: [StatusProgressBarComponent],
+      imports: [
+        HttpClientTestingModule
+      ],
+      providers: [
+        AlertService
+      ]
     })
     .compileComponents();
   });
