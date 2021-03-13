@@ -1,32 +1,31 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ActivityFormComponent } from './activity-form.component';
 import { AlertService } from '../../../ui/alert/alert.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Activity } from '../models/activity';
-import { ChangeDetectionStrategy } from '@angular/core';
 import { ActivityTypeLightweight } from '../models/activity-type-lightweight';
 import { UserService } from '../../service/user.service';
 import { User } from '../../../models/user';
-import { SalesOwner } from '../../contacts/models/sales-owner';
 import { ContactLightweight } from '../../activities/models/contact-lightweight';
 import { SalesOwnerLightweight } from '../models/sales-owner-lightweight';
-import { goodActivity } from '../testing/activity-helper';
+import { goodActivity } from '../../../../testing/activity-helper';
+import { goodContact, goodContacts } from '../../../../testing/contact-helper';
+import { ContactService } from '../../contacts/services/contact.service';
 
 describe('ActivityFormComponent', () => {
   let component: ActivityFormComponent;
   let fixture: ComponentFixture<ActivityFormComponent>;
 
   const mockAlertService = jasmine.createSpyObj('AlertService', ['error']);
+  const mockContactService = jasmine.createSpyObj('ContactService', ['fetchMyContacts']);
 
-  let mockUserService;
+  const mockUserService = {
+    user: { id: '3' } as User
+  };
 
   beforeEach(async () => {
-    mockUserService = {
-      user: { id: '3' } as User
-    }
-
     await TestBed.configureTestingModule({
       declarations: [ActivityFormComponent],
       imports: [
@@ -41,6 +40,10 @@ describe('ActivityFormComponent', () => {
         {
           provide: UserService,
           useValue: mockUserService
+        },
+        {
+          provide: ContactService,
+          useValue: mockContactService
         },
         FormBuilder
       ]
@@ -93,4 +96,38 @@ describe('ActivityFormComponent', () => {
     expect(component.prohibitedEdit).toBeTruthy();
   });
 
+  it('Verify current dates with input activity', () => {
+    component.activity = goodActivity;
+    fixture.detectChanges();
+    expect(component.currentEndDate).toEqual(goodActivity.endDate);
+    expect(component.currentStartDate).toEqual(goodActivity.startDate);
+  });
+
+  it('Verify form dates with input activity', () => {
+    component.activity = goodActivity;
+    fixture.detectChanges();
+
+    let form: FormGroup = component.activityFormGroup;
+    let endDate = form.get('endDate').value;
+    let startDate = form.get('startDate').value;
+
+    expect(endDate).toEqual(new Date(goodActivity.endDate));
+    expect(startDate).toEqual(new Date(goodActivity.startDate));
+  });
+
+  it('Verify addingForContact with input contact', () => {
+    component.contact = goodContact;
+    fixture.detectChanges();
+
+    expect(component.addingForContact).toBeTruthy();
+  });
+
+  it('Verify contacts loaded', async(() => {
+    mockContactService.fetchMyContacts.and.returnValue(goodContacts);
+
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      expect(mockContactService.fetchMyContacts).toHaveBeenCalled();
+    });
+  }));
 });
