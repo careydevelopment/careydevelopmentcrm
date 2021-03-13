@@ -33,8 +33,8 @@ export class DealService {
     return this.http.get<SalesType[]>(url);
   }
 
-  fetchAllDealStages(): Observable<DealStage[]> {
-    let url = `${baseUrl}/dealstages`;
+  fetchDealStagesBySalesType(salesType: string): Observable<DealStage[]> {
+    let url = `${baseUrl}/dealstages?salesType=${salesType}`;
     console.log("Fetch all deal stages URL is " + url);
 
     return this.http.get<DealStage[]>(url);

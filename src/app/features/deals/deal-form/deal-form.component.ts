@@ -51,12 +51,12 @@ export class DealFormComponent implements OnInit {
 
   saving: boolean = false;
   loading: boolean = true;
+  showDealStagesDropdown: boolean = false;
 
   prohibitedEdit: boolean = false;
 
   allProducts$: Observable<Product[]>;
   contacts$: Observable<Contact[]>;
-  allDealStages$: Observable<DealStage[]>;
   allSalesTypes$: Observable<SalesType[]>;
 
   constructor(private route: ActivatedRoute, private contactService: ContactService,
@@ -87,6 +87,10 @@ export class DealFormComponent implements OnInit {
       if (!this.deal.contact || this.deal.contact.salesOwner.id != this.userService.user.id) {
         this.alertService.error("This deal isn't yours to edit");
         this.prohibitedEdit = true;
+      }
+
+      if (this.deal.stage) {
+        this.loadDealStages(this.deal.stage.salesType);
       }
 
       this.showTotalAmount = true;
@@ -126,18 +130,15 @@ export class DealFormComponent implements OnInit {
   private loadData() {
     this.checkForContact();
     this.loadProducts();
-    this.loadDealStages();
     this.loadSalesTypes();
 
     forkJoin([
       this.allProducts$,
       this.contacts$,
-      this.allDealStages$,
       this.allSalesTypes$
-    ]).subscribe(([allProducts, contacts, dealStages, salesTypes]) => {
+    ]).subscribe(([allProducts, contacts, salesTypes]) => {
       this.handleProductsResponse(allProducts);
       this.handleContactsResponse(contacts),
-      this.handleDealStagesResponse(dealStages),
       this.handleSalesTypesResponse(salesTypes);
       this.showForm();
     },
@@ -161,8 +162,30 @@ export class DealFormComponent implements OnInit {
     this.allProducts$ = this.productService.fetchAllProducts();
   }
 
-  private loadDealStages() {
-    this.allDealStages$ = this.dealService.fetchAllDealStages();
+  private loadDealStages(salesType: string) {
+    this.dealService.fetchDealStagesBySalesType(salesType).subscribe(
+      (dealStages: DealStage[]) => this.handleDealStagesResponse(dealStages),
+      err => this.handleDealStagesError(err));
+  }
+
+  private handleDealStagesError(err: Error) {
+    console.error(err);
+    this.alertService.error("Problem loading deal stages!");
+  }
+
+  private handleDealStagesResponse(dealStages: DealStage[]) {
+    if (dealStages) {
+      this.availableDealStages = dealStages;
+
+      if (this.deal.stage) {
+        this.dealFormGroup.get('stage').setValue(this.deal.stage.id);
+        this.dealFormGroup.get('salesType').setValue(this.deal.stage.salesType);
+      }
+
+      this.showDealStagesDropdown = true;
+    } else {
+      this.alertService.error("Problem retrieving deal stages!");
+    }
   }
 
   private loadSalesTypes() {
@@ -190,10 +213,6 @@ export class DealFormComponent implements OnInit {
     }
   }
 
-  private handleDealStagesResponse(dealStages: DealStage[]) {
-    this.availableDealStages = dealStages;
-  }
-
   private handleDataLoadError(err: Error) {
     console.error(err);
     this.alertService.error("Problem loading supporting data")
@@ -211,7 +230,8 @@ export class DealFormComponent implements OnInit {
       'closureDate': [null, [this.closureDateValidator()]],
       'contact': [(this.deal.contact) ? this.deal.contact.id : '', [Validators.required]],
       'product': [(this.deal.product) ? this.deal.product.id : '', [Validators.required]],
-      'stage': [(this.deal.stage) ? this.deal.stage.id : '']
+      'stage': [(this.deal.stage) ? this.deal.stage.id : ''],
+      'salesType': ['']
     });
   }
 
@@ -329,7 +349,7 @@ export class DealFormComponent implements OnInit {
   }
 
   salesTypeSelected(code: string) {
-    console.log("Val is " + code );
+    this.loadDealStages(code);
   }
 
   onUnitChange(unitValue: string) {

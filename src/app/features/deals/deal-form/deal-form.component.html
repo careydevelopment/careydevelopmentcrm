@@ -90,7 +90,7 @@
           <div class="label">Sales Type</div>
           <div>
             <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
-              <mat-select placeholder="Select a sales type" (selectionChange)="salesTypeSelected($event.source.value)">
+              <mat-select formControlName="salesType" placeholder="Select a sales type" (selectionChange)="salesTypeSelected($event.source.value)">
                 <mat-option *ngFor="let st of availableSalesTypes" [value]="st.code">
                   {{st.name}}
                 </mat-option>
@@ -98,6 +98,20 @@
             </mat-form-field>
           </div>
         </div>
+
+        <div class="vertical-form-field" *ngIf="showDealStagesDropdown">
+          <div class="label">Deal Stage</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
+              <mat-select formControlName="stage" placeholder="Select a deal stage">
+                <mat-option *ngFor="let ds of availableDealStages" [value]="ds.id">
+                  {{ds.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
 
         <div class="vertical-form-field">
           <div class="label">Expected Closure Date</div>
