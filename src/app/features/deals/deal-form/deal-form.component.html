@@ -87,6 +87,19 @@
         </div>
 
         <div class="vertical-form-field">
+          <div class="label">Sales Type</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
+              <mat-select placeholder="Select a sales type" (selectionChange)="salesTypeSelected($event.source.value)">
+                <mat-option *ngFor="let st of availableSalesTypes" [value]="st.code">
+                  {{st.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="vertical-form-field">
           <div class="label">Expected Closure Date</div>
           <div fxLayout="column">
             <div>

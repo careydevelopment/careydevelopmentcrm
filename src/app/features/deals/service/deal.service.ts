@@ -12,6 +12,7 @@ import { DisplayValueMapService } from '../../ui/service/display-map.service';
 import { DisplayValueMap } from '../../../models/name-value-map';
 import { unitTypes } from '../constants/unit-type';
 import { priceTypes } from '../constants/price-type';
+import { SalesType } from '../models/sales-type';
 
 
 const baseUrl: string = environment.baseCrmServiceUrl;
@@ -24,6 +25,13 @@ export class DealService {
 
   constructor(private http: HttpClient, private currencyService: CurrencyService,
     private displayValueMapService: DisplayValueMapService) { }
+
+  fetchAllSalesTypes(): Observable<SalesType[]> {
+    let url = `${baseUrl}/salestypes`;
+    console.log("Fetch all sales types URL is " + url);
+
+    return this.http.get<SalesType[]>(url);
+  }
 
   fetchAllDealStages(): Observable<DealStage[]> {
     let url = `${baseUrl}/dealstages`;

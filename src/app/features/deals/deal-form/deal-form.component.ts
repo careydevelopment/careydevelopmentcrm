@@ -16,6 +16,7 @@ import { SalesOwnerLightweight } from '../models/sales-owner-lightweight';
 import { DealService } from '../service/deal.service';
 import { ProductService } from '../service/product.service';
 import { ContactService } from '../../contacts/services/contact.service';
+import { SalesType } from '../models/sales-type';
 
 //5 years
 const maximumTimeSpan: number = 5 * 365 * 24 * 60 * 60 * 1000;
@@ -46,6 +47,7 @@ export class DealFormComponent implements OnInit {
 
   availableProducts: Product[] = [this.loadingProduct];
   availableDealStages: DealStage[] = [];
+  availableSalesTypes: SalesType[] = [];
 
   saving: boolean = false;
   loading: boolean = true;
@@ -55,6 +57,7 @@ export class DealFormComponent implements OnInit {
   allProducts$: Observable<Product[]>;
   contacts$: Observable<Contact[]>;
   allDealStages$: Observable<DealStage[]>;
+  allSalesTypes$: Observable<SalesType[]>;
 
   constructor(private route: ActivatedRoute, private contactService: ContactService,
     private alertService: AlertService, private fb: FormBuilder,
@@ -77,7 +80,7 @@ export class DealFormComponent implements OnInit {
   }
 
   private setDefaultDeal() {
-    if (!this.deal) this.deal = <Deal>{}; 
+    if (!this.deal) this.deal = <Deal>{};
     else {
       this.pageTitle = 'Edit Deal';
 
@@ -124,15 +127,18 @@ export class DealFormComponent implements OnInit {
     this.checkForContact();
     this.loadProducts();
     this.loadDealStages();
+    this.loadSalesTypes();
 
     forkJoin([
       this.allProducts$,
       this.contacts$,
-      this.allDealStages$
-    ]).subscribe(([allProducts, contacts, dealStages]) => {
+      this.allDealStages$,
+      this.allSalesTypes$
+    ]).subscribe(([allProducts, contacts, dealStages, salesTypes]) => {
       this.handleProductsResponse(allProducts);
       this.handleContactsResponse(contacts),
       this.handleDealStagesResponse(dealStages),
+      this.handleSalesTypesResponse(salesTypes);
       this.showForm();
     },
       (err) => this.handleDataLoadError(err)
@@ -157,6 +163,14 @@ export class DealFormComponent implements OnInit {
 
   private loadDealStages() {
     this.allDealStages$ = this.dealService.fetchAllDealStages();
+  }
+
+  private loadSalesTypes() {
+    this.allSalesTypes$ = this.dealService.fetchAllSalesTypes();
+  }
+
+  private handleSalesTypesResponse(salesTypes: SalesType[]) {
+    this.availableSalesTypes = salesTypes;
   }
 
   private handleProductsResponse(products: Product[]) {
@@ -312,6 +326,10 @@ export class DealFormComponent implements OnInit {
 
   productSelected() {
     this.currentProduct = this.availableProducts.find(pr => pr.id == this.dealFormGroup.controls['product'].value);
+  }
+
+  salesTypeSelected(code: string) {
+    console.log("Val is " + code );
   }
 
   onUnitChange(unitValue: string) {
