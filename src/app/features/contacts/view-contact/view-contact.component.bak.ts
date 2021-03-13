@@ -3,16 +3,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AlertService } from '../../../ui/alert/alert.service';
 import { BreadcrumbService } from '../../../ui/breadcrumb/breadcrumb.service';
+import { Contact } from '../models/contact';
 
-import { EditDealComponent } from './edit-deal.component';
+import { ViewContactComponent } from './view-contact.component';
 
-describe('EditDealComponent', () => {
-  let component: EditDealComponent;
-  let fixture: ComponentFixture<EditDealComponent>;
+describe('ViewContactComponent', () => {
+  let component: ViewContactComponent;
+  let fixture: ComponentFixture<ViewContactComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditDealComponent],
+      declarations: [ViewContactComponent],
       imports: [
         RouterTestingModule,
         HttpClientTestingModule
@@ -26,8 +27,13 @@ describe('EditDealComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditDealComponent);
+    fixture = TestBed.createComponent(ViewContactComponent);
     component = fixture.componentInstance;
+
+    //TODO: fix this
+    let contact: Contact = {} as Contact;
+    component.contact = contact;
+
     fixture.detectChanges();
   });
 

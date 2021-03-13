@@ -120,7 +120,7 @@ export class ActivityFormComponent implements OnInit {
 
     this.activityFormGroup.get('startDate').setValue(currentDate);
     this.activityFormGroup.get('startDate').enable();
-
+ 
     this.activityFormGroup.get('endDate').setValue(endDate);
     this.activityFormGroup.get('endDate').enable();
 
@@ -167,7 +167,7 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private handleActivityTypesResponse(activityTypes: ActivityType[]) {
-    this.availableActivityTypes = activityTypes.filter(type => type.activityTypeCreator === 'USER');
+     this.availableActivityTypes = activityTypes.filter(type => type.activityTypeCreator === 'USER');
 
     if (this.activity.type) {
       //we're editing instead of adding if we get here
