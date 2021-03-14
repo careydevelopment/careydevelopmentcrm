@@ -290,7 +290,7 @@ export class DealFormComponent implements OnInit {
     } else {
       this.setDeal();
 
-      console.log("Deal is ", this.deal);
+      //console.log("Deal is ", this.deal);
 
       if (!this.deal.id) {
         this.dealService.createDeal(this.deal).subscribe(
