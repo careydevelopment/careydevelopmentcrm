@@ -12,10 +12,12 @@ import { FormService } from '../../../services/form.service';
 import { AccountLightweight } from '../models/account-lightweight';
 import { ContactLightweight } from '../models/contact-lightweight';
 import { ActivityTypeLightweight } from '../models/activity-type-lightweight';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 import { UserService } from '../../service/user.service';
 import { SalesOwnerLightweight } from '../models/sales-owner-lightweight';
 import { ContactService } from '../../contacts/services/contact.service';
+import { DealLightweight } from '../../deals/models/deal-lightweight';
+import { DealService } from '../../deals/service/deal.service';
 
 //5 years
 const maximumTimeSpan: number = 5 * 365 * 24 * 60 * 60 * 1000;
@@ -49,6 +51,7 @@ export class ActivityFormComponent implements OnInit {
 
   availableActivityTypes: ActivityType[] = [this.loadingActivityType];
   availableActivityOutcomes: ActivityOutcome[] = [];
+  availableDeals: DealLightweight[] = [];
 
   saving: boolean = false;
   loading: boolean = true;
@@ -57,12 +60,13 @@ export class ActivityFormComponent implements OnInit {
 
   allActivityTypes$: Observable<ActivityType[]>;
   contacts$: Observable<Contact[]>;
+  allDeals$: Observable<DealLightweight[]>;
 
   constructor(private route: ActivatedRoute, private contactService: ContactService,
     private alertService: AlertService, private router: Router,
     private fb: FormBuilder, private activityService: ActivityService,
     private dateService: DateService, private formService: FormService,
-    private userService: UserService) { }
+    private userService: UserService, private dealService: DealService) { }
 
   ngOnInit(): void {
     this.setDefaultActivity();
@@ -133,13 +137,16 @@ export class ActivityFormComponent implements OnInit {
   private loadData() {
     this.checkForContact();
     this.checkForActivityType();
+    this.loadDeals();
 
     forkJoin([
       this.allActivityTypes$,
-      this.contacts$
-    ]).subscribe(([allActivityTypes, contacts]) => {
+      this.contacts$,
+      this.allDeals$
+    ]).subscribe(([allActivityTypes, contacts, deals]) => {
       this.handleActivityTypesResponse(allActivityTypes);
       this.handleContactsResponse(contacts),
+      this.handleDealsResponse(deals),
       this.showForm();
     },
       (err) => this.handleDataLoadError(err)
@@ -162,8 +169,20 @@ export class ActivityFormComponent implements OnInit {
     this.loadContacts();
   }
 
+  private loadDeals() {
+    if (this.contact && this.contact.id) {
+      this.allDeals$ = this.dealService.fetchDealsByContactId(this.contact.id);
+    } else {
+      this.allDeals$ = of([]);
+    }
+  }
+
   private loadActivityTypes() {
     this.allActivityTypes$ = this.activityService.fetchAllActivityTypes();
+  }
+
+  private handleDealsResponse(deals: DealLightweight[]) {
+    console.log("deals is ", deals);
   }
 
   private handleActivityTypesResponse(activityTypes: ActivityType[]) {
