@@ -16,6 +16,7 @@ import { SalesOwnerLightweight } from '../models/sales-owner-lightweight';
 import { DealService } from '../service/deal.service';
 import { ProductService } from '../service/product.service';
 import { ContactService } from '../../contacts/services/contact.service';
+import { SalesType } from '../models/sales-type';
 
 //5 years
 const maximumTimeSpan: number = 5 * 365 * 24 * 60 * 60 * 1000;
@@ -46,15 +47,17 @@ export class DealFormComponent implements OnInit {
 
   availableProducts: Product[] = [this.loadingProduct];
   availableDealStages: DealStage[] = [];
+  availableSalesTypes: SalesType[] = [];
 
   saving: boolean = false;
   loading: boolean = true;
+  showDealStagesDropdown: boolean = false;
 
   prohibitedEdit: boolean = false;
 
   allProducts$: Observable<Product[]>;
   contacts$: Observable<Contact[]>;
-  allDealStages$: Observable<DealStage[]>;
+  allSalesTypes$: Observable<SalesType[]>;
 
   constructor(private route: ActivatedRoute, private contactService: ContactService,
     private alertService: AlertService, private fb: FormBuilder,
@@ -77,13 +80,17 @@ export class DealFormComponent implements OnInit {
   }
 
   private setDefaultDeal() {
-    if (!this.deal) this.deal = <Deal>{}; 
+    if (!this.deal) this.deal = <Deal>{};
     else {
       this.pageTitle = 'Edit Deal';
 
       if (!this.deal.contact || this.deal.contact.salesOwner.id != this.userService.user.id) {
         this.alertService.error("This deal isn't yours to edit");
         this.prohibitedEdit = true;
+      }
+
+      if (this.deal.stage) {
+        this.loadDealStages(this.deal.stage.salesType);
       }
 
       this.showTotalAmount = true;
@@ -123,16 +130,16 @@ export class DealFormComponent implements OnInit {
   private loadData() {
     this.checkForContact();
     this.loadProducts();
-    this.loadDealStages();
+    this.loadSalesTypes();
 
     forkJoin([
       this.allProducts$,
       this.contacts$,
-      this.allDealStages$
-    ]).subscribe(([allProducts, contacts, dealStages]) => {
+      this.allSalesTypes$
+    ]).subscribe(([allProducts, contacts, salesTypes]) => {
       this.handleProductsResponse(allProducts);
       this.handleContactsResponse(contacts),
-      this.handleDealStagesResponse(dealStages),
+      this.handleSalesTypesResponse(salesTypes);
       this.showForm();
     },
       (err) => this.handleDataLoadError(err)
@@ -155,8 +162,38 @@ export class DealFormComponent implements OnInit {
     this.allProducts$ = this.productService.fetchAllProducts();
   }
 
-  private loadDealStages() {
-    this.allDealStages$ = this.dealService.fetchAllDealStages();
+  private loadDealStages(salesType: string) {
+    this.dealService.fetchDealStagesBySalesType(salesType).subscribe(
+      (dealStages: DealStage[]) => this.handleDealStagesResponse(dealStages),
+      err => this.handleDealStagesError(err));
+  }
+
+  private handleDealStagesError(err: Error) {
+    console.error(err);
+    this.alertService.error("Problem loading deal stages!");
+  }
+
+  private handleDealStagesResponse(dealStages: DealStage[]) {
+    if (dealStages) {
+      this.availableDealStages = dealStages;
+
+      if (this.deal.stage) {
+        this.dealFormGroup.get('stage').setValue(this.deal.stage.id);
+        this.dealFormGroup.get('salesType').setValue(this.deal.stage.salesType);
+      }
+
+      this.showDealStagesDropdown = true;
+    } else {
+      this.alertService.error("Problem retrieving deal stages!");
+    }
+  }
+
+  private loadSalesTypes() {
+    this.allSalesTypes$ = this.dealService.fetchAllSalesTypes();
+  }
+
+  private handleSalesTypesResponse(salesTypes: SalesType[]) {
+    this.availableSalesTypes = salesTypes;
   }
 
   private handleProductsResponse(products: Product[]) {
@@ -176,10 +213,6 @@ export class DealFormComponent implements OnInit {
     }
   }
 
-  private handleDealStagesResponse(dealStages: DealStage[]) {
-    this.availableDealStages = dealStages;
-  }
-
   private handleDataLoadError(err: Error) {
     console.error(err);
     this.alertService.error("Problem loading supporting data")
@@ -197,7 +230,8 @@ export class DealFormComponent implements OnInit {
       'closureDate': [null, [this.closureDateValidator()]],
       'contact': [(this.deal.contact) ? this.deal.contact.id : '', [Validators.required]],
       'product': [(this.deal.product) ? this.deal.product.id : '', [Validators.required]],
-      'stage': [(this.deal.stage) ? this.deal.stage.id : '']
+      'stage': [(this.deal.stage) ? this.deal.stage.id : ''],
+      'salesType': ['']
     });
   }
 
@@ -312,6 +346,10 @@ export class DealFormComponent implements OnInit {
 
   productSelected() {
     this.currentProduct = this.availableProducts.find(pr => pr.id == this.dealFormGroup.controls['product'].value);
+  }
+
+  salesTypeSelected(code: string) {
+    this.loadDealStages(code);
   }
 
   onUnitChange(unitValue: string) {
