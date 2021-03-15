@@ -47,4 +47,9 @@ export class DealsByContactComponent implements OnInit {
     let route = '/deals/edit-deal';
     this.router.navigate([route], { queryParams: { dealId: dealId } });
   }
+
+  viewDeal(dealId: string) {
+    let route = '/deals/view-deal';
+    this.router.navigate([route], { queryParams: { dealId: dealId } });
+  }
 }

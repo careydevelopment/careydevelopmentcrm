@@ -182,7 +182,7 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private handleDealsResponse(deals: DealLightweight[]) {
-    console.log("deals is ", deals);
+    this.availableDeals = deals;
   }
 
   private handleActivityTypesResponse(activityTypes: ActivityType[]) {
@@ -214,6 +214,7 @@ export class ActivityFormComponent implements OnInit {
     if (this.activity.contact) {
       //editing
       this.contact = this.contacts.find(contact => this.activity.contact.id === contact.id);
+      this.updateDeals();
     }
   }
 
@@ -232,7 +233,8 @@ export class ActivityFormComponent implements OnInit {
       'endMeridian': ['AM'],
       'contact': [(this.activity.contact) ? this.activity.contact.id : '', [Validators.required]],
       'outcome': [(this.activity.outcome) ? this.activity.outcome.id : ''],
-      'notes': [this.activity.notes, [Validators.pattern('^[a-zA-Z0-9,.\' \-\]*$')]]
+      'notes': [this.activity.notes, [Validators.pattern('^[a-zA-Z0-9,.\' \-\]*$')]],
+      'deal': [(this.activity.deal) ? this.activity.deal.id : '']
     });
   }
 
@@ -319,6 +321,15 @@ export class ActivityFormComponent implements OnInit {
     if (this.contacts && id) {
       this.contact = this.contacts.find(contact => contact.id === id);
     }
+
+    this.updateDeals();
+  }
+
+  private updateDeals() {
+    this.dealService.fetchDealsByContactId(this.contact.id).subscribe(
+      (deals: DealLightweight[]) => this.handleDealsResponse(deals),
+      (err: Error) => this.handleDataLoadError(err)
+    )
   }
 
   startDateChanged() {
@@ -417,6 +428,16 @@ export class ActivityFormComponent implements OnInit {
     this.saving = false;
   }
 
+  private getDealLightweight(): DealLightweight {
+    let deal: DealLightweight = null;
+
+    if (this.activityFormGroup.controls['deal'].value) {
+      deal = this.availableDeals.find(d => d.id === this.activityFormGroup.controls['deal'].value); 
+    }
+
+    return deal;
+  }
+
   private setActivity() {
     let user = this.userService.user;
     let salesOwner: SalesOwnerLightweight = { id: user.id, firstName: user.firstName, lastName: user.lastName, username: user.username }
@@ -424,6 +445,7 @@ export class ActivityFormComponent implements OnInit {
     let contact: ContactLightweight = { id: this.contact.id, firstName: this.contact.firstName, lastName: this.contact.lastName, account: account, salesOwner: salesOwner };
     let activityType: ActivityTypeLightweight = { id: this.selectedActivityType.id, name: this.selectedActivityType.name, icon: this.selectedActivityType.icon, activityTypeCreator: this.selectedActivityType.activityTypeCreator };
     let outcome: ActivityOutcome = this.availableActivityOutcomes.find(outcome => outcome.id == this.activityFormGroup.controls['outcome'].value);
+    let deal: DealLightweight = this.getDealLightweight();
 
     if (!this.isDateInPast()) {
       outcome = null;
@@ -436,7 +458,8 @@ export class ActivityFormComponent implements OnInit {
     this.activity.startDate = this.currentStartDate;
     this.activity.title = this.activityFormGroup.controls['title'].value;
     this.activity.type = activityType;
-    
+    this.activity.deal = deal;
+
     if (this.selectedActivityType.usesEndDate) this.activity.endDate = this.currentEndDate;
   }
 

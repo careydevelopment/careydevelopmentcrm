@@ -16,6 +16,8 @@ import { DealsByContactComponent } from './deals-by-contact/deals-by-contact.com
 import { DealFormComponent } from './deal-form/deal-form.component';
 import { EditDealComponent } from './edit-deal/edit-deal.component';
 import { AddDealComponent } from './add-deal/add-deal.component';
+import { ViewDealComponent } from './view-deal/view-deal.component';
+import { StageProgressBarComponent } from './stage-progress-bar/stage-progress-bar.component';
 
  
 export const routes = [
@@ -34,6 +36,14 @@ export const routes = [
       breadcrumb: 'Edit Deal',
       pauseDisplay: true
     }
+  },
+  {
+    path: 'view-deal',
+    component: ViewDealComponent,
+    data: {
+      breadcrumb: 'View Deal',
+      pauseDisplay: true
+    }
   }
 ];
 
@@ -43,7 +53,9 @@ export const routes = [
     DealsByContactComponent,
     DealFormComponent,
     EditDealComponent,
-    AddDealComponent
+    AddDealComponent,
+    ViewDealComponent,
+    StageProgressBarComponent
   ],
   exports: [
     DealsByContactComponent

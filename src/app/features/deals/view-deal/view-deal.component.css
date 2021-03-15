@@ -1,0 +1,13 @@
+.deal-label {
+  font-weight: 500;
+}
+
+.subtitle {
+  font-weight: 500;
+  font-size: 14pt;
+}
+
+.main-body {
+  border-top: 1px solid #cfcfcf;
+  padding-top: 25px
+}

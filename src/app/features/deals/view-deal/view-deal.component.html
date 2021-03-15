@@ -1,0 +1,50 @@
+<div class="absolute-center" *ngIf="loading">
+  <mat-spinner [diameter]="80"></mat-spinner>
+</div>
+<div *ngIf="!loading" fxFlex="100" fxLayout="column" fxLayoutGap="20px">
+  <div>
+    <div>
+      <alert></alert>
+    </div>
+  </div>
+  <div *ngIf="deal" fxHide.lt-md="true">
+    <app-stage-progress-bar [deal]="deal"></app-stage-progress-bar>
+  </div>
+  <div>
+    <mat-card class="vertical-layout">
+      <div fxLayout="row wrap">
+        <div>
+          <div class="card-header" style="margin-bottom: 10px">{{pageTitle}}</div>
+          <div fxLayout="row wrap" fxLayoutGap="20px">
+            <div class="subtitle">{{deal.contact.account.name}}</div>
+            <div>&#8226;</div>
+            <div><a class="subtitle link" [routerLink]="['/contacts/view-contact']" [queryParams]="{id: deal.contact.id}">{{deal.contact.firstName}} {{deal.contact.lastName}}</a></div>
+            <div>&#8226;</div>
+            <div class="subtitle">{{dealAmount | currency}}</div>
+          </div>
+          <div style="margin-top: 20px" class="deal-description">{{deal.description}}</div>
+        </div>
+        <div fxFlex="auto">&nbsp;</div>
+        <div fxFlex="40px" style="text-align: left" fxHide.xs="true">
+          <button mat-icon-button color="primary" (click)="editDeal()" title="Edit Deal"><mat-icon>edit</mat-icon></button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div>
+    <mat-card class="vertical-layout">
+      <div fxLayout="column" fxLayoutGap="15px">
+        <div class="card-header-medium">Additional Info</div>
+        <div fxLayout="row wrap" fxLayoutGap="30px">
+          <div fxFlex="20%" class="deal-label">Product</div>
+          <div class="product-info">{{deal.product.name}}</div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutGap="30px">
+          <div fxFlex="20%" class="deal-label">Expected Closure</div>
+          <div class="closeure-date">{{closureDate}}</div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

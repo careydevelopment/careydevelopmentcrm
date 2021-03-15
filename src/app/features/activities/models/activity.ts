@@ -1,6 +1,7 @@
 import { ContactLightweight } from "./contact-lightweight";
 import { ActivityOutcome } from "./activity-outcome";
 import { ActivityTypeLightweight } from "./activity-type-lightweight";
+import { DealLightweight } from "../../deals/models/deal-lightweight";
 
 export interface Activity {
   id: string;
@@ -12,4 +13,5 @@ export interface Activity {
   startDate: number;
   endDate: number;
   contact: ContactLightweight;
+  deal: DealLightweight
 }

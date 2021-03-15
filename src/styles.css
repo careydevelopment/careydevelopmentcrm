@@ -264,6 +264,20 @@ ol.breadcrumbs li {
   margin-bottom: 15px;
 }
 
+.link {
+  color: #3F51B5
+}
+
+.card-header {
+  font-size: 22pt;
+  font-weight: 400
+}
+
+.card-header-medium {
+  font-size: 16pt;
+  font-weight: 400
+}
+
 @media only screen and (min-width: 960px) {
   ol.breadcrumbs li {
     list-style-type: none;

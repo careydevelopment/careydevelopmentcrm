@@ -33,10 +33,17 @@
               <div class="icon-list-line" style="font-weight: bold">
                 {{dealService.getAmount(deal) | currency:'USD':'symbol':'3.0-0'}}
               </div>
-              <div>
-                <button mat-icon-button class="small-icon" color="primary" aria-label="Edit" (click)="editDeal(deal.id)">
-                  <mat-icon class="small-icon">edit</mat-icon>
-                </button>
+              <div fxLayout="row wrap" fxLayoutGap="15px">
+                <div>
+                  <button mat-icon-button class="small-icon" color="primary" aria-label="Edit" (click)="editDeal(deal.id)">
+                    <mat-icon class="small-icon">edit</mat-icon>
+                  </button>
+                </div>
+                <div>
+                  <button mat-icon-button class="small-icon" color="primary" aria-label="Edit" (click)="viewDeal(deal.id)">
+                    <mat-icon class="small-icon">preview</mat-icon>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

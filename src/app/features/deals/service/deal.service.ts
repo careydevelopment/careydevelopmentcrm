@@ -26,6 +26,16 @@ export class DealService {
   constructor(private http: HttpClient, private currencyService: CurrencyService,
     private displayValueMapService: DisplayValueMapService) { }
 
+  removeClosingStages(dealStages: DealStage[]): DealStage[] {
+    let stages: DealStage[];
+
+    if (dealStages) {
+      stages = dealStages.filter(stage => stage.name != 'Won' && stage.name != 'Lost');
+    }
+
+    return stages;
+  }
+
   fetchAllSalesTypes(): Observable<SalesType[]> {
     let url = `${baseUrl}/salestypes`;
     console.log("Fetch all sales types URL is " + url);
