@@ -15,12 +15,15 @@
       <div fxLayout="row wrap">
         <div>
           <div class="card-header" style="margin-bottom: 10px">{{pageTitle}}</div>
-          <div fxLayout="row wrap" fxLayoutGap="20px">
+          <div fxLayout.gt-sm="row wrap" fxLayoutGap="20px">
             <div class="subtitle">{{deal.contact.account.name}}</div>
-            <div>&#8226;</div>
+            <div fxHide.lt-md="true">&#8226;</div>
             <div><a class="subtitle link" [routerLink]="['/contacts/view-contact']" [queryParams]="{id: deal.contact.id}">{{deal.contact.firstName}} {{deal.contact.lastName}}</a></div>
-            <div>&#8226;</div>
+            <div fxHide.lt-md="true">&#8226;</div>
             <div class="subtitle">{{dealAmount | currency}}</div>
+          </div>
+          <div fxHide.gt-sm="true" class="deal-stage" [class.won-stage]="deal.stage.name == 'Won'" [class.lost-stage]="deal.stage.name == 'Lost'">
+            {{deal.stage.name}}
           </div>
           <div style="margin-top: 20px" class="deal-description">{{deal.description}}</div>
         </div>
@@ -46,5 +49,12 @@
         </div>
       </div>
     </mat-card>
+  </div>
+
+  <div style="margin-bottom: 15px" *ngIf="deal.stage.name != 'Won' && deal.stage.name != 'Lost'">
+    <button *ngIf="!saving && !prohibitedEdit" mat-raised-button class="won-button" (click)="saveDeal('Won')">Won Deal</button>
+    &nbsp;
+    <button *ngIf="!saving && !prohibitedEdit" mat-raised-button class="lost-button" (click)="saveDeal('Lost')">Lost Deal</button>
+    <mat-spinner *ngIf="saving" [diameter]="50"></mat-spinner>
   </div>
 </div>

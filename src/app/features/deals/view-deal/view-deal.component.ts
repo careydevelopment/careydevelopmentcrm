@@ -7,6 +7,7 @@ import { Deal } from '../models/deal';
 import { BreadcrumbService } from '../../../ui/breadcrumb/breadcrumb.service';
 import { DealService } from '../service/deal.service';
 import { DateService } from '../../../services/date.service';
+import { DealStage } from '../models/deal-stage';
 
 @Component({
   selector: 'app-view-deal',
@@ -21,6 +22,11 @@ export class ViewDealComponent implements OnInit {
   pageTitle: string = 'View Deal';
   dealAmount: number = 0;
   closureDate: string = '';
+  prohibitedEdit: boolean = false;
+  saving: boolean = false;
+
+  wonButtonColor: string = 'green';
+  lostButtonColor: string = 'red';
 
   constructor(private route: ActivatedRoute,
     private alertService: AlertService, private router: Router,
@@ -78,5 +84,9 @@ export class ViewDealComponent implements OnInit {
   editDeal() {
     let route = '/deals/edit-deal';
     this.router.navigate([route], { queryParams: { dealId: this.deal.id } });
+  }
+
+  saveDeal(stage: string) {
+    //let newsStage: DealStage = this.d
   }
 }

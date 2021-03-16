@@ -7,7 +7,20 @@
   font-size: 14pt;
 }
 
-.main-body {
-  border-top: 1px solid #cfcfcf;
-  padding-top: 25px
+.deal-stage {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 14pt;
+  color: #3F51B5;
 }
+
+.won-button {
+  background-color: green !important;
+  color: #ffffff;
+}
+
+.lost-button {
+  background-color: red !important;
+  color: #ffffff;
+}
+
