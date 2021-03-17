@@ -18,10 +18,11 @@ import { EditDealComponent } from './edit-deal/edit-deal.component';
 import { AddDealComponent } from './add-deal/add-deal.component';
 import { ViewDealComponent } from './view-deal/view-deal.component';
 import { StageProgressBarComponent } from './stage-progress-bar/stage-progress-bar.component';
+import { FuturePipelineComponent } from './charts/future-pipeline/future-pipeline.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 
  
 export const routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'add-deal' },
   {
     path: 'add-deal',
     component: AddDealComponent,
@@ -55,10 +56,12 @@ export const routes = [
     EditDealComponent,
     AddDealComponent,
     ViewDealComponent,
-    StageProgressBarComponent
+    StageProgressBarComponent,
+    FuturePipelineComponent
   ],
   exports: [
-    DealsByContactComponent
+    DealsByContactComponent,
+    FuturePipelineComponent
   ],
   imports: [
     CommonModule,
@@ -73,6 +76,9 @@ export const routes = [
     MatSelectModule,
     MatRadioModule,
     MatDatepickerModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
     RouterModule.forChild(routes)
   ]
 })
