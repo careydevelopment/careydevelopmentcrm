@@ -91,6 +91,11 @@ export class DealFormComponent implements OnInit {
 
       if (this.deal.stage) {
         this.loadDealStages(this.deal.stage.salesType);
+
+        if (this.deal.stage.name == 'Won' || this.deal.stage.name == 'Lost') {
+          this.alertService.error(this.deal.stage.name + " deals can't be edited.");
+          this.prohibitedEdit = true;
+        }
       }
 
       this.showTotalAmount = true;

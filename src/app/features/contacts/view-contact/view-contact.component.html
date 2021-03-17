@@ -8,8 +8,13 @@
         <div>
           <alert></alert>
         </div>
-        <div *ngIf="contact" style="margin-bottom: 15px" fxHide.lt-md="true">
-          <app-status-progress-bar [contact]="contact"></app-status-progress-bar>
+        <div *ngIf="contact" style="margin-bottom: 15px">
+          <div *ngIf="contact.status != 'CUSTOMER'" fxHide.lt-md="true">
+            <app-status-progress-bar [contact]="contact"></app-status-progress-bar>
+          </div>
+          <div *ngIf="contact.status == 'CUSTOMER'" class="medium-notification success-background">
+            Customer
+          </div>
         </div>
         <div>
           <mat-card class="vertical-layout">

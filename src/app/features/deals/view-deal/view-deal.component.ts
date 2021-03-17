@@ -8,6 +8,7 @@ import { BreadcrumbService } from '../../../ui/breadcrumb/breadcrumb.service';
 import { DealService } from '../service/deal.service';
 import { DateService } from '../../../services/date.service';
 import { DealStage } from '../models/deal-stage';
+import { ContactService } from '../../contacts/services/contact.service';
 
 @Component({
   selector: 'app-view-deal',
@@ -31,7 +32,7 @@ export class ViewDealComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private alertService: AlertService, private router: Router,
     private dealService: DealService, private breadcrumbService: BreadcrumbService,
-    private dateService: DateService) { }
+    private dateService: DateService, private contactService: ContactService) { }
 
   ngOnInit(): void {
     this.loadDeal();
@@ -87,6 +88,40 @@ export class ViewDealComponent implements OnInit {
   }
 
   saveDeal(stage: string) {
-    //let newsStage: DealStage = this.d
+    this.saving = true;
+    this.dealService.fetchDealStagesBySalesType('INBOUND').subscribe(
+      (stages: DealStage[]) => this.handleDealStagesResponse(stages, stage),
+      (err: Error) => this.handleError(err)
+    );
+  }
+
+  private handleDealStagesResponse(stages: DealStage[], newStageName: string) {
+    let newStage: DealStage = stages.find(st => st.name === newStageName);
+
+    if (newStage) {
+      this.deal.stage = newStage;
+
+      this.dealService.updateDeal(this.deal).subscribe(
+        (deal: Deal) => this.handleDealUpdateResponse(deal),
+        (err: Error) => this.handleError(err)
+      );
+
+      if (this.deal.stage.name == 'Won') {
+        this.contactService.convertContactToCustomer(this.deal.contact.id);
+      }
+    } else {
+      this.alertService.error("Problem finding stage by name!");
+    }
+  }
+
+  private handleDealUpdateResponse(deal: Deal) {
+    //this.alertService.success("Deal successfully updated!");
+    this.saving = false;
+  }
+
+  private handleError(err: Error) {
+    console.error(err);
+    this.alertService.error("Something went wrong. Please call support.");
+    this.saving = false;
   }
 }

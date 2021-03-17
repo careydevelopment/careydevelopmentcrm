@@ -22,7 +22,10 @@
                 <div class="icon-list-line icon-list-title">
                   {{deal.name}}
                 </div>
-                <div *ngIf="deal.stage" class="badge badge-info">{{deal.stage.name}}</div>
+                <div *ngIf="deal.stage" class="badge"
+                     [class.badge-success]="deal.stage.name == 'Won'"
+                     [class.badge-error]="deal.stage.name == 'Lost'"
+                     [class.badge-info]="deal.stage.name != 'Won' && deal.stage.name != 'Lost'">{{deal.stage.name}}</div>
               </div>
               <div class="icon-list-line">
                 {{deal.description}}
@@ -34,7 +37,7 @@
                 {{dealService.getAmount(deal) | currency:'USD':'symbol':'3.0-0'}}
               </div>
               <div fxLayout="row wrap" fxLayoutGap="15px">
-                <div>
+                <div *ngIf="deal.stage && deal.stage.name != 'Won' && deal.stage.name != 'Lost'">
                   <button mat-icon-button class="small-icon" color="primary" aria-label="Edit" (click)="editDeal(deal.id)">
                     <mat-icon class="small-icon">edit</mat-icon>
                   </button>

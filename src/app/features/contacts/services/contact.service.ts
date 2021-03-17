@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Contact } from '../models/contact';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 const baseUrl: string = environment.baseCustomerServiceUrl;
 
@@ -10,6 +11,19 @@ const baseUrl: string = environment.baseCustomerServiceUrl;
 export class ContactService {
 
   constructor(private http: HttpClient) { }
+
+  convertContactToCustomer(contactId: string) {
+    this.fetchById(contactId).pipe(
+      switchMap(contact => {
+        contact.status = 'CUSTOMER';
+        return this.update(contact);
+      })
+    )
+    .subscribe(
+      (contact: Contact) => console.log("Contact status updated successfully", contact),
+      (err: Error) => console.error(err)
+    );
+  }
 
   fetchMyContacts(): Observable<Contact[]> {
     let url = `${baseUrl}/contact`;

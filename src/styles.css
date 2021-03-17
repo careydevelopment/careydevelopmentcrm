@@ -127,8 +127,17 @@ h4 {
   font-size: 10pt;
   height: 16px;
 }
+
 .badge-info {
   background-color: #3F51B5;
+}
+
+.badge-success {
+  background-color: green;
+}
+
+.badge-error {
+  background-color: red;
 }
 
 .badge-muted {
@@ -276,6 +285,23 @@ ol.breadcrumbs li {
 .card-header-medium {
   font-size: 16pt;
   font-weight: 400
+}
+
+.medium-notification {
+  padding: 10px 10px 10px 10px;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 100px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.success-background {
+  background-color: green;
+}
+
+.error-background {
+  background-color: red;
 }
 
 @media only screen and (min-width: 960px) {

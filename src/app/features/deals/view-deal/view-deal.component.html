@@ -1,14 +1,20 @@
 <div class="absolute-center" *ngIf="loading">
   <mat-spinner [diameter]="80"></mat-spinner>
 </div>
-<div *ngIf="!loading" fxFlex="100" fxLayout="column" fxLayoutGap="20px">
+<div *ngIf="!loading" fxFlex="100" fxLayout="column">
   <div>
-    <div>
-      <alert></alert>
-    </div>
+    <alert></alert>
   </div>
-  <div *ngIf="deal" fxHide.lt-md="true">
-    <app-stage-progress-bar [deal]="deal"></app-stage-progress-bar>
+  <div *ngIf="deal" style="margin-bottom: 15px">
+    <div fxHide.lt-md="true" *ngIf="deal.stage.name != 'Won' && deal.stage.name != 'Lost'">
+      <app-stage-progress-bar [deal]="deal"></app-stage-progress-bar>
+    </div>
+    <div *ngIf="deal.stage.name == 'Won'" class="medium-notification success-background">
+      Won Deal
+    </div>
+    <div *ngIf="deal.stage.name == 'Lost'" class="medium-notification error-background">
+      Lost Deal
+    </div>
   </div>
   <div>
     <mat-card class="vertical-layout">
