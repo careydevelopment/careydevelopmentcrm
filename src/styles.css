@@ -87,6 +87,29 @@ h4 {
   height: 100px;
 }
 
+.chart {
+  height: 100%;
+}
+
+.chart-spinner {
+  height: 100%;
+}
+
+.chart-title {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.chart-subtitle {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 12pt;
+}
+
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
 }

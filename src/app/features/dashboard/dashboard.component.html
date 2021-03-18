@@ -1,5 +1,10 @@
-<div fxLayout="column" style="margin-left: 20px">
-  <div fxLayout="row wrap" fxLayoutGap="20px">
-    <div fxFlex="50"><app-future-pipeline></app-future-pipeline></div>
+<div fxLayout="column">
+  <div fxLayout="row wrap" fxLayoutGap="5px">
+    <div fxFlex.gt-md="49" fxFlex="100" class="dashboard-portal"><app-future-pipeline></app-future-pipeline></div>
+    <div fxFlex.gt-md="49" fxFlex="100" class="dashboard-portal"><app-deal-share-by-contact></app-deal-share-by-contact></div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="5px">
+    <div fxFlex.gt-md="49" fxFlex="100" class="dashboard-portal"><app-revenue-contribution></app-revenue-contribution></div>
+    <div fxFlex.gt-md="49" fxFlex="100" class="dashboard-portal"><app-revenue-contribution></app-revenue-contribution></div>
   </div>
 </div>

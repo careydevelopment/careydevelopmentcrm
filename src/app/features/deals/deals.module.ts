@@ -20,6 +20,8 @@ import { ViewDealComponent } from './view-deal/view-deal.component';
 import { StageProgressBarComponent } from './stage-progress-bar/stage-progress-bar.component';
 import { FuturePipelineComponent } from './charts/future-pipeline/future-pipeline.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { DealShareByContactComponent } from './charts/deal-share-by-contact/deal-share-by-contact.component';
+import { RevenueContributionComponent } from './charts/revenue-contribution/revenue-contribution.component';
 
  
 export const routes = [
@@ -57,11 +59,15 @@ export const routes = [
     AddDealComponent,
     ViewDealComponent,
     StageProgressBarComponent,
-    FuturePipelineComponent
+    FuturePipelineComponent,
+    DealShareByContactComponent,
+    RevenueContributionComponent
   ],
   exports: [
     DealsByContactComponent,
-    FuturePipelineComponent
+    FuturePipelineComponent,
+    DealShareByContactComponent,
+    RevenueContributionComponent
   ],
   imports: [
     CommonModule,

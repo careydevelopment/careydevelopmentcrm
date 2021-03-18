@@ -15,6 +15,7 @@ import { priceTypes } from '../constants/price-type';
 import { SalesType } from '../models/sales-type';
 import { switchMap } from 'rxjs/operators';
 import { DateService } from '../../../services/date.service';
+import { DealCriteria } from '../models/deal-criteria';
 
 
 const baseUrl: string = environment.baseCrmServiceUrl;
@@ -62,9 +63,19 @@ export class DealService {
     return this.http.get<Deal[]>(url);
   }
 
-  fetchDealsByUserId(userId: string, orderType?: string): Observable<Deal[]> {
+  fetchDealsByCriteria(criteria: DealCriteria): Observable<Deal[]> {
+    let url = `${baseUrl}/deals/search?salesOwnerId=${criteria.userId}&orderBy=${criteria.orderBy}&`
+      + `orderType=${criteria.orderType}&minDate=${criteria.minDate}&maxDate=${criteria.maxDate}&`
+      + `maxResults=${criteria.maxResults}`;
+
+    console.log("Fetch deals by user URL is " + url);
+
+    return this.http.get<Deal[]>(url);
+  }
+
+  fetchDealsByUserId(userId: string): Observable<Deal[]> {
     let orderBy = 'expectedClosureDate';
-    if (!orderType) orderType = 'DESC';
+    let orderType = 'DESC';
 
     let url = `${baseUrl}/deals/search?salesOwnerId=${userId}&orderBy=${orderBy}&orderType=${orderType}`;
     console.log("Fetch deals by user URL is " + url);

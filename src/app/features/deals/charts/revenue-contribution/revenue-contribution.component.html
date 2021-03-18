@@ -5,7 +5,7 @@
     </div>
     <div fxLayout="column" fxLayoutGap="20px" *ngIf="options">
       <div fxFlex="100" class="chart-title">{{pageTitle}}</div>
-      <div fxFlex="100" class="chart-subtitle">{{pageSubtitle}}</div>
+      <div fxFlex="100" *ngIf="pageSubtitle" class="chart-subtitle">{{pageSubtitle}}</div>
       <div echarts [options]="options"></div>
     </div>
   </mat-card>
