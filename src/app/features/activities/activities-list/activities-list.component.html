@@ -1,0 +1,49 @@
+<mat-card>
+  <mat-card-title>
+    {{title}}
+  </mat-card-title>
+  <mat-card-content>
+    <div *ngIf="loading">
+      <mat-spinner [diameter]="40"></mat-spinner>
+    </div>
+    <div *ngIf="errorLoading">
+      <span class="error-spree">Problem loading activities. Please call support.</span>
+    </div>
+    <div *ngIf="!loading && !errorLoading" fxLayout="column" style="margin-top: 25px">
+      <div *ngIf="activities && activities.length > 0">
+        <div *ngFor="let activity of activities" fxLayout.gt-sm="row wrap" fxLayout.sm="column" class="icon-list-item">
+          <div fxFlex.gt-sm="50px" fxLayoutAlign.gt-sm="center center">
+            <mat-icon>{{activity.type.icon}}</mat-icon>
+          </div>
+          <div>
+            <div fxLayout="column">
+              <div class="icon-list-line" fxLayout="row wrap" fxLayoutGap="15px">
+                <div class="icon-list-line icon-list-title">
+                  <span>{{activity.title}}</span>
+                  <span *ngIf="activity.location">
+                    @ {{activity.location}}
+                  </span>
+                </div>
+                <div *ngIf="activity.outcome" class="badge badge-info">{{activity.outcome.name}}</div>
+              </div>
+              <div *ngIf="activity.notes" class="icon-list-line">
+                {{activity.notes}}
+              </div>
+              <div class="icon-list-line" style="font-weight: bold">
+                {{dateService.getShortDateAndTimeDisplay(activity.startDate)}}
+              </div>
+              <div *ngIf="activity.type.activityTypeCreator == 'USER'">
+                <button mat-icon-button class="small-icon" color="primary" aria-label="Edit" (click)="editActivity(activity.id)">
+                  <mat-icon class="small-icon">edit</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!activities || activities.length == 0" class="icon-list-line">
+        There are no activities at this time.
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

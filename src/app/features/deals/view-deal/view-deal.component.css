@@ -1,0 +1,26 @@
+.deal-label {
+  font-weight: 500;
+}
+
+.subtitle {
+  font-weight: 500;
+  font-size: 14pt;
+}
+
+.deal-stage {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 14pt;
+  color: #3F51B5;
+}
+
+.won-button {
+  background-color: green !important;
+  color: #ffffff;
+}
+
+.lost-button {
+  background-color: red !important;
+  color: #ffffff;
+}
+

@@ -16,10 +16,17 @@ import { DealsByContactComponent } from './deals-by-contact/deals-by-contact.com
 import { DealFormComponent } from './deal-form/deal-form.component';
 import { EditDealComponent } from './edit-deal/edit-deal.component';
 import { AddDealComponent } from './add-deal/add-deal.component';
+import { ViewDealComponent } from './view-deal/view-deal.component';
+import { StageProgressBarComponent } from './stage-progress-bar/stage-progress-bar.component';
+import { FuturePipelineComponent } from './charts/future-pipeline/future-pipeline.component';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { DealShareByContactComponent } from './charts/deal-share-by-contact/deal-share-by-contact.component';
+import { RevenueContributionComponent } from './charts/revenue-contribution/revenue-contribution.component';
+import { AccountsRankedComponent } from './charts/accounts-ranked/accounts-ranked.component';
+import { ActivitiesModule } from '../activities/activities.module';
 
  
 export const routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'add-deal' },
   {
     path: 'add-deal',
     component: AddDealComponent,
@@ -34,6 +41,14 @@ export const routes = [
       breadcrumb: 'Edit Deal',
       pauseDisplay: true
     }
+  },
+  {
+    path: 'view-deal',
+    component: ViewDealComponent,
+    data: {
+      breadcrumb: 'View Deal',
+      pauseDisplay: true
+    }
   }
 ];
 
@@ -43,10 +58,20 @@ export const routes = [
     DealsByContactComponent,
     DealFormComponent,
     EditDealComponent,
-    AddDealComponent
+    AddDealComponent,
+    ViewDealComponent,
+    StageProgressBarComponent,
+    FuturePipelineComponent,
+    DealShareByContactComponent,
+    RevenueContributionComponent,
+    AccountsRankedComponent
   ],
   exports: [
-    DealsByContactComponent
+    DealsByContactComponent,
+    FuturePipelineComponent,
+    DealShareByContactComponent,
+    RevenueContributionComponent,
+    AccountsRankedComponent
   ],
   imports: [
     CommonModule,
@@ -61,6 +86,10 @@ export const routes = [
     MatSelectModule,
     MatRadioModule,
     MatDatepickerModule,
+    ActivitiesModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
     RouterModule.forChild(routes)
   ]
 })

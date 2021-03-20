@@ -40,6 +40,19 @@
           </div>
         </div>
 
+        <div class="vertical-form-field" *ngIf="availableDeals && availableDeals.length > 0">
+          <div class="label">Deal</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+              <mat-select formControlName="deal" placeholder="Select a deal">
+                <mat-option *ngFor="let deal of availableDeals" [value]="deal.id">
+                  {{deal.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
         <div class="vertical-form-field">
           <div class="label">Title</div>
           <div>

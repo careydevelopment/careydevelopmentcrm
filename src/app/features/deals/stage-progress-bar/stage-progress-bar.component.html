@@ -1,0 +1,12 @@
+<div class="progress-div">
+  <ul class="progress">
+    <li *ngFor="let stage of availableDealStages; index as i; first as isFirst"
+        [class.inactive]="i > dealStageIndex"
+        [class.completed]="i < dealStageIndex"
+        [class.not-first]="!isFirst"
+        (click)="updateStage(i)">
+      <span *ngIf="i >= dealStageIndex" [class.active-status]="i == dealStageIndex">{{stage.name}}</span>
+      <span *ngIf="i < dealStageIndex">&#10003;</span>
+    </li>
+  </ul>
+</div>

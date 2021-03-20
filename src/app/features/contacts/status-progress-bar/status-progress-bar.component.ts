@@ -14,7 +14,7 @@ export class StatusProgressBarComponent implements OnInit {
 
   @Input() contact: Contact;
 
-  availableContactStatuses: DisplayValueMap[] = contactStatuses;
+  availableContactStatuses: DisplayValueMap[] = contactStatuses.filter(status => status.value != 'CUSTOMER');
   contactStatusIndex: number;
 
   constructor(private contactService: ContactService, private alertService: AlertService) { }

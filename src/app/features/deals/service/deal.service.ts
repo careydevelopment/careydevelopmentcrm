@@ -13,6 +13,9 @@ import { DisplayValueMap } from '../../../models/name-value-map';
 import { unitTypes } from '../constants/unit-type';
 import { priceTypes } from '../constants/price-type';
 import { SalesType } from '../models/sales-type';
+import { switchMap } from 'rxjs/operators';
+import { DateService } from '../../../services/date.service';
+import { DealCriteria } from '../models/deal-criteria';
 
 
 const baseUrl: string = environment.baseCrmServiceUrl;
@@ -24,7 +27,17 @@ export class DealService {
   allPriceTypes: DisplayValueMap[] = priceTypes;
 
   constructor(private http: HttpClient, private currencyService: CurrencyService,
-    private displayValueMapService: DisplayValueMapService) { }
+    private displayValueMapService: DisplayValueMapService, private dateService: DateService) { }
+
+  removeClosingStages(dealStages: DealStage[]): DealStage[] {
+    let stages: DealStage[];
+
+    if (dealStages) {
+      stages = dealStages.filter(stage => stage.name != 'Won' && stage.name != 'Lost');
+    }
+
+    return stages;
+  }
 
   fetchAllSalesTypes(): Observable<SalesType[]> {
     let url = `${baseUrl}/salestypes`;
@@ -40,12 +53,32 @@ export class DealService {
     return this.http.get<DealStage[]>(url);
   }
 
-  fetchDealsByContactId(contactId: string): Observable<Deal[]> {
+  fetchDealsByContactId(contactId: string, orderType?: string): Observable<Deal[]> {
     let orderBy = 'startDate';
-    let orderType = 'DESC';
+    if (!orderType) orderType = 'DESC';
 
     let url = `${baseUrl}/deals/search?contactId=${contactId}&orderBy=${orderBy}&orderType=${orderType}`;
     console.log("Fetch deals by contact URL is " + url);
+
+    return this.http.get<Deal[]>(url);
+  }
+
+  fetchDealsByCriteria(criteria: DealCriteria): Observable<Deal[]> {
+    let url = `${baseUrl}/deals/search?salesOwnerId=${criteria.userId}&orderBy=${criteria.orderBy}&`
+      + `orderType=${criteria.orderType}&minDate=${criteria.minDate}&maxDate=${criteria.maxDate}&`
+      + `maxResults=${criteria.maxResults}`;
+
+    console.log("Fetch deals by user URL is " + url);
+
+    return this.http.get<Deal[]>(url);
+  }
+
+  fetchDealsByUserId(userId: string): Observable<Deal[]> {
+    let orderBy = 'expectedClosureDate';
+    let orderType = 'DESC';
+
+    let url = `${baseUrl}/deals/search?salesOwnerId=${userId}&orderBy=${orderBy}&orderType=${orderType}`;
+    console.log("Fetch deals by user URL is " + url);
 
     return this.http.get<Deal[]>(url);
   }

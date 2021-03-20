@@ -87,6 +87,29 @@ h4 {
   height: 100px;
 }
 
+.chart {
+  height: 100%;
+}
+
+.chart-spinner {
+  height: 100%;
+}
+
+.chart-title {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.chart-subtitle {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 12pt;
+}
+
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
 }
@@ -127,8 +150,17 @@ h4 {
   font-size: 10pt;
   height: 16px;
 }
+
 .badge-info {
   background-color: #3F51B5;
+}
+
+.badge-success {
+  background-color: green;
+}
+
+.badge-error {
+  background-color: red;
 }
 
 .badge-muted {
@@ -262,6 +294,37 @@ ol.breadcrumbs li {
 
 .route-content-top {
   margin-bottom: 15px;
+}
+
+.link {
+  color: #3F51B5
+}
+
+.card-header {
+  font-size: 22pt;
+  font-weight: 400
+}
+
+.card-header-medium {
+  font-size: 16pt;
+  font-weight: 400
+}
+
+.medium-notification {
+  padding: 10px 10px 10px 10px;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 100px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.success-background {
+  background-color: green;
+}
+
+.error-background {
+  background-color: red;
 }
 
 @media only screen and (min-width: 960px) {
