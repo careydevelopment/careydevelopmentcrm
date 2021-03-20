@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { Activity } from '../models/activity';
 import { DateService } from '../../../services/date.service';
 import { ActivityType } from '../models/activity-type';
+import { ActivitySearchCriteria } from '../models/activity-search-criteria';
 
 const baseUrl: string = environment.baseCrmServiceUrl;
 const recentActivitiesDays = 60;
@@ -13,6 +14,31 @@ const recentActivitiesDays = 60;
 export class ActivityService {
 
   constructor(private http: HttpClient, private dateService: DateService) { }
+
+  fetchActivitiesByCriteria(criteria: ActivitySearchCriteria): Observable<Activity[]> {
+    let minDate: number = criteria.minDate;
+    let maxDate: number = criteria.maxDate;
+    let orderBy: string = criteria.orderBy;
+    let orderType: string = criteria.orderType;
+    let contactId: string = criteria.contactId;
+    let dealId: string = criteria.dealId;
+
+    let url = `${baseUrl}/activities/search?dealId=${dealId}&contactId=${contactId}&minDate=${minDate}&maxDate=${maxDate}&orderBy=${orderBy}&orderType=${orderType}`;
+    console.log("Fetch activities by deal URL is " + url);
+
+    return this.http.get<Activity[]>(url);
+  }
+
+  fetchActivitiesByDealId(dealId: string): Observable<Activity[]> {
+    let minDate = this.dateService.getDaysBackwardAsNumber(recentActivitiesDays);
+    let orderBy = 'startDate';
+    let orderType = 'DESC';
+
+    let url = `${baseUrl}/activities/search?dealId=${dealId}&minDate=${minDate}&orderBy=${orderBy}&orderType=${orderType}`;
+    console.log("Fetch activities by deal URL is " + url);
+
+    return this.http.get<Activity[]>(url);
+  }
 
   fetchRecentActivitiesByContactId(contactId: string): Observable<Activity[]> {
     let minDate = this.dateService.getDaysBackwardAsNumber(recentActivitiesDays);

@@ -22,6 +22,8 @@ import { FuturePipelineComponent } from './charts/future-pipeline/future-pipelin
 import { NgxEchartsModule } from 'ngx-echarts';
 import { DealShareByContactComponent } from './charts/deal-share-by-contact/deal-share-by-contact.component';
 import { RevenueContributionComponent } from './charts/revenue-contribution/revenue-contribution.component';
+import { AccountsRankedComponent } from './charts/accounts-ranked/accounts-ranked.component';
+import { ActivitiesModule } from '../activities/activities.module';
 
  
 export const routes = [
@@ -61,13 +63,15 @@ export const routes = [
     StageProgressBarComponent,
     FuturePipelineComponent,
     DealShareByContactComponent,
-    RevenueContributionComponent
+    RevenueContributionComponent,
+    AccountsRankedComponent
   ],
   exports: [
     DealsByContactComponent,
     FuturePipelineComponent,
     DealShareByContactComponent,
-    RevenueContributionComponent
+    RevenueContributionComponent,
+    AccountsRankedComponent
   ],
   imports: [
     CommonModule,
@@ -82,6 +86,7 @@ export const routes = [
     MatSelectModule,
     MatRadioModule,
     MatDatepickerModule,
+    ActivitiesModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
     }),

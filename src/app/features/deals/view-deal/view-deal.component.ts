@@ -9,6 +9,9 @@ import { DealService } from '../service/deal.service';
 import { DateService } from '../../../services/date.service';
 import { DealStage } from '../models/deal-stage';
 import { ContactService } from '../../contacts/services/contact.service';
+import { ActivityService } from '../../activities/service/activity.service';
+import { Activity } from '../../activities/models/activity';
+import { ActivitySearchCriteria } from '../../activities/models/activity-search-criteria';
 
 @Component({
   selector: 'app-view-deal',
@@ -29,6 +32,8 @@ export class ViewDealComponent implements OnInit {
   wonButtonColor: string = 'green';
   lostButtonColor: string = 'red';
 
+  recentActivitiesCriteria: ActivitySearchCriteria = new ActivitySearchCriteria();
+
   constructor(private route: ActivatedRoute,
     private alertService: AlertService, private router: Router,
     private dealService: DealService, private breadcrumbService: BreadcrumbService,
@@ -36,6 +41,15 @@ export class ViewDealComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDeal();
+  }
+
+  private setCriteria() {
+    this.setRecentActivitiesCriteria();
+    this.loading = false;
+  }
+
+  private setRecentActivitiesCriteria() {
+    this.recentActivitiesCriteria.dealId = this.deal.id;
   }
 
   private loadDeal() {
@@ -55,14 +69,15 @@ export class ViewDealComponent implements OnInit {
     this.pageTitle = this.deal.name;
     this.breadcrumbService.updateBreadcrumb('View ' + this.pageTitle);
 
+    //console.log("Deal is ", deal);
+
     this.loadSupplementalData();
   }
 
   private loadSupplementalData() {
     this.closureDate = this.dateService.getShortDateDisplay(this.deal.expectedClosureDate);
     this.dealAmount = this.dealService.getAmount(this.deal);
-
-    this.loading = false;
+    this.setCriteria();
   }
 
   private handleDealError(err: Error) {

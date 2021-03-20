@@ -1,19 +1,19 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { ActivityService } from '../service/activity.service';
-import { Activity } from '../models/activity';
-import { DateService } from '../../../services/date.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DateService } from '../../../services/date.service';
+import { Activity } from '../models/activity';
+import { ActivitySearchCriteria } from '../models/activity-search-criteria';
+import { ActivityService } from '../service/activity.service';
 
 @Component({
-  selector: 'app-recent-activities-by-contact',
-  encapsulation: ViewEncapsulation.None,
-  templateUrl: './recent-activities-by-contact.component.html',
-  styleUrls: ['./recent-activities-by-contact.component.css']
+  selector: 'app-activities-list',
+  templateUrl: './activities-list.component.html',
+  styleUrls: ['./activities-list.component.css']
 })
-export class RecentActivitiesByContactComponent implements OnInit {
-  
-  @Input() contactId: string;
-  activities: Activity[];
+export class ActivitiesListComponent implements OnInit {
+
+  @Input() activitySearchCriteria: ActivitySearchCriteria;
+  activities: Activity[]
   loading: boolean = true;
   errorLoading: boolean = false;
 
@@ -25,7 +25,7 @@ export class RecentActivitiesByContactComponent implements OnInit {
   }
 
   private loadActivities() {
-    this.activityService.fetchRecentActivitiesByContactId(this.contactId).subscribe(
+    this.activityService.fetchActivitiesByCriteria(this.activitySearchCriteria).subscribe(
       (activities: Activity[]) => this.handleFetchActivitiesResponse(activities),
       err => this.handleFetchActivitiesError(err)
     );
