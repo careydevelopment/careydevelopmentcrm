@@ -33,7 +33,7 @@ export class ViewDealComponent implements OnInit {
   lostButtonColor: string = 'red';
 
   recentActivitiesCriteria: ActivitySearchCriteria = new ActivitySearchCriteria();
-
+  recentActivitiesTitle: string = "Recent Activities";
   constructor(private route: ActivatedRoute,
     private alertService: AlertService, private router: Router,
     private dealService: DealService, private breadcrumbService: BreadcrumbService,

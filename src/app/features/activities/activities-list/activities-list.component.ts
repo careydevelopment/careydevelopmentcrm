@@ -13,9 +13,12 @@ import { ActivityService } from '../service/activity.service';
 export class ActivitiesListComponent implements OnInit {
 
   @Input() activitySearchCriteria: ActivitySearchCriteria;
+  @Input() title: string;
+
   activities: Activity[]
   loading: boolean = true;
   errorLoading: boolean = false;
+
 
   constructor(private activityService: ActivityService, private router: Router,
     private dateService: DateService) { }

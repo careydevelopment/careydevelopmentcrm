@@ -58,7 +58,7 @@
   </div>
 
   <div>
-    <app-activities-list [activitySearchCriteria]="recentActivitiesCriteria"></app-activities-list>
+    <app-activities-list [title]="recentActivitiesTitle" [activitySearchCriteria]="recentActivitiesCriteria"></app-activities-list>
   </div>
 
   <div style="margin-bottom: 15px" *ngIf="deal.stage.name != 'Won' && deal.stage.name != 'Lost'">
