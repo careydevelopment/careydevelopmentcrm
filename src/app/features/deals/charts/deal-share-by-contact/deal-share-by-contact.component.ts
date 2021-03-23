@@ -13,7 +13,6 @@ export class DealShareByContactComponent implements OnInit {
   options: any;
   pageTitle: string = 'Deal Share by Contact';
   chartData: any[] = [];
-  //pageSubtitle: string = 'Next ' + maxDays + ' Days';
 
   constructor(private dealService: DealService) { }
 
@@ -69,25 +68,25 @@ export class DealShareByContactComponent implements OnInit {
 
   private setOptions() {
     this.options = {
-    tooltip: {
-      trigger: 'item'
-    },
-    series: [
-      {
-        type: 'pie',
-        radius: '60%',
-        data: this.chartData,
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)'
+      tooltip: {
+        trigger: 'item'
+      },
+      series: [
+        {
+          type: 'pie',
+          radius: '60%',
+          data: this.chartData,
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
           }
         }
-      }
-    ]
+      ]
     };
-  }
+}
 
   private handleError(err: Error) {
     console.error(err);
