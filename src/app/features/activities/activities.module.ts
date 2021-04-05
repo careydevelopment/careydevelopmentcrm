@@ -21,7 +21,6 @@ import { EditActivityComponent } from './edit-activity/edit-activity.component';
 import { ActivitiesListComponent } from './activities-list/activities-list.component';
 
 export const routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'add-activity' },
   {
     path: 'add-activity',
     component: AddActivityComponent,
