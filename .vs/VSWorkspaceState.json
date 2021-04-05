@@ -5,12 +5,12 @@
     "\\src\\app",
     "\\src\\app\\features",
     "\\src\\app\\features\\activities",
-    "\\src\\app\\features\\activities\\recent-activities-by-contact",
+    "\\src\\app\\features\\dashboard",
     "\\src\\app\\features\\deals",
-    "\\src\\app\\features\\deals\\deals-by-contact",
-    "\\src\\app\\features\\deals\\service",
-    "\\src\\app\\services"
+    "\\src\\app\\features\\deals\\charts",
+    "\\src\\app\\features\\deals\\charts\\deal-share-by-contact",
+    "\\src\\app\\features\\deals\\charts\\revenue-contribution"
   ],
-  "SelectedNode": "\\src\\app\\features\\deals\\service\\deal.service.ts",
+  "SelectedNode": "\\src\\app\\features\\deals\\charts\\deal-share-by-contact\\deal-share-by-contact.component.ts",
   "PreviewInSolutionExplorer": false
 }
