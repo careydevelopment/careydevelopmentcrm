@@ -53,6 +53,11 @@ export let menu: NavItem[] = [
     route: 'user',
     children: [
       {
+        displayName: 'Email',
+        iconName: 'markunread_mailbox',
+        route: 'user/email/inbox'
+      },
+      {
         displayName: 'Account Info',
         iconName: 'account_box',
         route: 'user/account-info'

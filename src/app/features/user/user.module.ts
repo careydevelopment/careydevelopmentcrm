@@ -13,10 +13,16 @@ import { AccountInfoComponent } from './account-info/account-info.component';
 import { ProfileImageComponent } from './profile-image/profile-image.component';
 import { ImageUploaderComponent } from '../ui/image-uploader/image-uploader.component';
 import { AlertModule } from '../../ui/alert/alert.module';
-
+import { InboxComponent } from './email/inbox/inbox.component';
+import { EmailService } from './email/service/email.service';
+import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 export const routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'account-info' },
+  { path: 'email/inbox', component: InboxComponent },
   { path: 'account-info', component: AccountInfoComponent },
   { path: 'profile-image', component: ProfileImageComponent }
 ];
@@ -25,7 +31,8 @@ export const routes = [
   declarations: [
     AccountInfoComponent,
     ProfileImageComponent,
-    ImageUploaderComponent
+    ImageUploaderComponent,
+    InboxComponent
   ],
   imports: [
     CommonModule,
@@ -36,9 +43,15 @@ export const routes = [
     MatProgressSpinnerModule,
     MatCardModule,
     MatSelectModule,
+    MatListModule,
+    MatTableModule,
+    MatSortModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
     ReactiveFormsModule,
     AlertModule,
     RouterModule.forChild(routes)
-  ]
+  ],
+  providers: [EmailService]
 })
 export class UserModule { }
