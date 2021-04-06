@@ -6,4 +6,5 @@ export interface Email {
   from: string;
   to: string;
   id: string;
+  snippet: string;
 }
