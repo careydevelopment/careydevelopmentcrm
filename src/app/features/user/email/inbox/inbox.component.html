@@ -12,7 +12,7 @@
         <ng-container matColumnDef="action">
           <tr><th mat-header-cell *matHeaderCellDef></th></tr>
           <tr>
-            <td mat-cell *matCellDef="let row" style="width:10%">
+            <td mat-cell *matCellDef="let row" style="width:5%">
               <mat-checkbox></mat-checkbox>
             </td>
           <tr>
@@ -20,12 +20,12 @@
 
         <ng-container matColumnDef="from">
           <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> From </th></tr>
-          <tr><td mat-cell *matCellDef="let row" style="width:30%"> {{emailService.getDisplayableFrom(row.from)}} </td><tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:15%"> {{emailService.getDisplayableFrom(row.from)}} </td><tr>
         </ng-container>
 
         <ng-container matColumnDef="subject">
           <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Subject </th></tr>
-          <tr><td mat-cell *matCellDef="let row" style="width:60%"> {{row.subject}} </td></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:80%"> {{row.subject}} - {{row.snippet}} </td></tr>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
