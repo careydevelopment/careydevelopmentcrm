@@ -1,7 +1,3 @@
-table {
-  width: 100%;
-}
-
 .mat-row:nth-child(even) {
   background-color: #F8F8F8;
 }
@@ -14,3 +10,36 @@ table {
   background-color: #E8EAF6;
 }
 
+.checkbox-margin {
+  margin: 0 12px;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding-left: 0px !important;
+}
+
+table {
+  width: 100%
+}
+
+td.action-cell {
+  width: 5%;
+}
+
+td.from-cell {
+  width: 15%;
+  padding-right: 20px;
+}
+
+td.date-cell {
+  width: 10%;
+}
+
+td.subject-cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 70%;
+  max-width: 0;
+  padding-right: 20px;
+}

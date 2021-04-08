@@ -18,6 +18,11 @@ export class DateService {
     return min;
   }
 
+  getCustomDateDisplay(dateValue: number, format: string): string {
+    let myFormattedDate = pipe.transform(dateValue, format);
+    return myFormattedDate;
+  }
+
   getShortDateDisplay(dateValue: number): string {
     let myFormattedDate = pipe.transform(dateValue, 'shortDate');
     return myFormattedDate;
