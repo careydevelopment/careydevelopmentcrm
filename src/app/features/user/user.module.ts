@@ -20,11 +20,39 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MessageComponent } from './email/message/message.component';
+import { NoSanitizePipe } from '../../util/nosanitizepipe';
+
 
 export const routes = [
-  { path: 'email/inbox', component: InboxComponent },
-  { path: 'account-info', component: AccountInfoComponent },
-  { path: 'profile-image', component: ProfileImageComponent }
+  {
+    path: 'email/inbox',
+    component: InboxComponent,
+    data: {
+      breadcrumb: 'View Inbox'
+    }
+  },
+  {
+    path: 'email/message',
+    component: MessageComponent,
+    data: {
+      breadcrumb: 'Read Email'
+    }
+  },
+  {
+    path: 'account-info',
+    component: AccountInfoComponent,
+    data: {
+      breadcrumb: 'Account Info'
+    }
+  },
+  {
+    path: 'profile-image',
+    component: ProfileImageComponent,
+    data: {
+      breadcrumb: 'Profile Image'
+    }
+  }
 ];
 
 @NgModule({
@@ -32,7 +60,9 @@ export const routes = [
     AccountInfoComponent,
     ProfileImageComponent,
     ImageUploaderComponent,
-    InboxComponent
+    InboxComponent,
+    MessageComponent,
+    NoSanitizePipe
   ],
   imports: [
     CommonModule,

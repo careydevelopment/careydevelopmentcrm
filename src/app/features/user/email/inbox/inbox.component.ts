@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { DateService } from '../../../../services/date.service';
 import { StringService } from '../../../../services/string.service';
 import { AlertService } from '../../../../ui/alert/alert.service';
@@ -21,7 +22,7 @@ export class InboxComponent implements OnInit {
 
 
   constructor(private emailService: EmailService, private alertService: AlertService,
-    private dateService: DateService, private stringService: StringService) { }
+    private dateService: DateService, private stringService: StringService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadInbox();
@@ -53,5 +54,10 @@ export class InboxComponent implements OnInit {
 
     let display: string = `${subject} - ${snippet}`;
     return display;
+  }
+
+  viewMessage(id: string) {
+    let route = '/user/email/message';
+    this.router.navigate([route], { queryParams: { id: id } });
   }
 }
