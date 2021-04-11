@@ -13,8 +13,8 @@ import { AlertService } from '../../../../ui/alert/alert.service';
 })
 export class MessageComponent implements OnInit {
 
-  private email: Email;
-  private loading: boolean = true;
+  email: Email;
+  loading: boolean = true;
 
   constructor(private emailService: EmailService, private route: ActivatedRoute,
     private alertService: AlertService) { }
