@@ -19,10 +19,17 @@ export class EmailService {
   constructor(private http: HttpClient) { }
 
   fetchInbox(): Observable<Email[]> {
-    let url = `${baseUrl}/email/inbox`;
+    let url = `${baseUrl}/email/inbox`; 
     console.log("Fetch inbox URL is " + url);
 
     return this.http.get<Email[]>(url);
+  }
+
+  fetchMessageById(id: string): Observable<Email> {
+    let url = `${baseUrl}/email/message/${id}`;
+    console.log("Fetch message URL is " + url);
+
+    return this.http.get<Email>(url);
   }
 
   getDisplayableFrom(from: string): string {

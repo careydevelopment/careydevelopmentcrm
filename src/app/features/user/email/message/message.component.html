@@ -1,0 +1,16 @@
+<div fxFlex fxLayout="column" fxLayoutGap="0px">
+  <div style="margin-bottom:20px">
+    <alert></alert>
+  </div>
+  <div class="absolute-center" *ngIf="loading">
+    <mat-spinner [diameter]="80"></mat-spinner>
+  </div>
+  <div *ngIf="!loading">
+    <mat-card>
+      <mat-card-title>{{email.subject}}</mat-card-title>
+      <mat-card-subtitle>{{email.from}}</mat-card-subtitle>
+      <mat-card-content *ngIf="email.html" [innerHTML]="email.html | noSanitize"></mat-card-content>
+      <mat-card-content *ngIf="!email.html" [innerText]="email.plainText"></mat-card-content>
+    </mat-card>
+  </div>
+</div>
