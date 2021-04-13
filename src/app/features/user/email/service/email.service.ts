@@ -17,7 +17,7 @@ const httpOptions = {
 @Injectable()
 export class EmailService {
 
-  emailMessagesRequest$: Observable<Email[]> = null;
+  private emailMessagesRequest$: Observable<Email[]> = null;
 
   constructor(private http: HttpClient) { }
 
