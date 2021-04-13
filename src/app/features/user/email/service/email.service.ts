@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { Email } from '../models/email';
 import { Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 
 const baseUrl: string = environment.baseEmailServiceUrl;
 
@@ -16,13 +17,21 @@ const httpOptions = {
 @Injectable()
 export class EmailService {
 
+  emailMessagesRequest$: Observable<Email[]> = null;
+
   constructor(private http: HttpClient) { }
 
-  fetchInbox(): Observable<Email[]> {
+  fetchInbox(refresh?: boolean): Observable<Email[]> {
     let url = `${baseUrl}/email/inbox`; 
     console.log("Fetch inbox URL is " + url);
 
-    return this.http.get<Email[]>(url);
+    if (!this.emailMessagesRequest$ || refresh) {
+      this.emailMessagesRequest$ = this.http.get<Email[]>(url).pipe(
+        shareReplay(1)
+      );
+    }
+
+    return this.emailMessagesRequest$;
   }
 
   fetchMessageById(id: string): Observable<Email> {

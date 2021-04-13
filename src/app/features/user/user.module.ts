@@ -23,6 +23,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MessageComponent } from './email/message/message.component';
 import { NoSanitizePipe } from '../../util/nosanitizepipe';
 
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
+
 
 export const routes = [
   {
@@ -78,6 +85,11 @@ export const routes = [
     MatSortModule,
     MatCheckboxModule,
     MatPaginatorModule,
+    MatStepperModule,
+    MatRadioModule,
+    MatExpansionModule,
+    MatMenuModule,
+    MatAutocompleteModule,
     ReactiveFormsModule,
     AlertModule,
     RouterModule.forChild(routes)

@@ -1,11 +1,11 @@
-<div fxFlex fxLayout="column" fxLayoutGap="0px">
+<div>
   <div style="margin-bottom:20px">
     <alert></alert>
   </div>
-  <div class="absolute-center" *ngIf="loading">
+  <div class="absolute-center" *ngIf="dataLoading">
     <mat-spinner [diameter]="80"></mat-spinner>
   </div>
-  <div *ngIf="!loading">
+  <div [style.visibility]="dataLoading ? 'hidden' : 'visible'">
     <div class="table-container mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
 
@@ -37,5 +37,6 @@
         <tr mat-row class="email-row" *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
   </div>
 </div>
