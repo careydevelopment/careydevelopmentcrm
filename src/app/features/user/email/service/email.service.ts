@@ -35,7 +35,7 @@ export class EmailService {
   }
 
   fetchMessageById(id: string): Observable<Email> {
-    let url = `${baseUrl}/email/message/${id}`;
+    let url = `${baseUrl}/email/messages/${id}`;
     console.log("Fetch message URL is " + url);
 
     return this.http.get<Email>(url);
