@@ -4,13 +4,13 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\features",
-    "\\src\\app\\features\\activities",
-    "\\src\\app\\features\\dashboard",
-    "\\src\\app\\features\\deals",
-    "\\src\\app\\features\\deals\\charts",
-    "\\src\\app\\features\\deals\\charts\\deal-share-by-contact",
-    "\\src\\app\\features\\deals\\charts\\revenue-contribution"
+    "\\src\\app\\features\\contacts",
+    "\\src\\app\\features\\contacts\\view-contacts",
+    "\\src\\app\\features\\user",
+    "\\src\\app\\features\\user\\email",
+    "\\src\\app\\features\\user\\email\\inbox",
+    "\\src\\app\\util"
   ],
-  "SelectedNode": "\\src\\app\\features\\deals\\charts\\deal-share-by-contact\\deal-share-by-contact.component.ts",
+  "SelectedNode": "\\src\\app\\features\\user\\email\\service\\email.service.ts",
   "PreviewInSolutionExplorer": false
 }
