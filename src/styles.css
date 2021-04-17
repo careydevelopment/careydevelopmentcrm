@@ -1,3 +1,8 @@
+/*Necessary form Quill*/
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';
+
 html, body {
   height: 100%;
 }
@@ -35,7 +40,7 @@ h3 {
 }
 
 h4 {
-  font-size: 14pt;
+  font-size: 12pt;
 }
 
 .center-div {
