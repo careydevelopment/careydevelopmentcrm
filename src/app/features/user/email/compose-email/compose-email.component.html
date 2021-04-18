@@ -1,0 +1,16 @@
+<div fxLayout="column">
+  <div>
+    <h4>New Email Message</h4>
+  </div>
+  <div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div>
+        <quill-editor [styles]="editorStyle" formControlName="html" placeholder="Enter email message"></quill-editor>
+      </div>
+      <div style="margin-top:20px">
+        <button *ngIf="!formSubmitted" [disabled]="!form.valid" type="submit" mat-raised-button color="primary">Send</button>
+        <mat-spinner *ngIf="formSubmitted" [diameter]="50"></mat-spinner>
+      </div>
+    </form>
+  </div>
+</div>

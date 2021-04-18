@@ -22,14 +22,13 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MessageComponent } from './email/message/message.component';
 import { NoSanitizePipe } from '../../util/nosanitizepipe';
-
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
-
+import { ComposeEmailComponent } from './email/compose-email/compose-email.component';
+import { QuillModule } from 'ngx-quill'
 
 export const routes = [
   {
@@ -44,6 +43,13 @@ export const routes = [
     component: MessageComponent,
     data: {
       breadcrumb: 'Read Email'
+    }
+  },
+  {
+    path: 'email/compose-email',
+    component: ComposeEmailComponent,
+    data: {
+      breadcrumb: 'Compose Email'
     }
   },
   {
@@ -69,7 +75,8 @@ export const routes = [
     ImageUploaderComponent,
     InboxComponent,
     MessageComponent,
-    NoSanitizePipe
+    NoSanitizePipe,
+    ComposeEmailComponent
   ],
   imports: [
     CommonModule,
@@ -92,6 +99,7 @@ export const routes = [
     MatAutocompleteModule,
     ReactiveFormsModule,
     AlertModule,
+    QuillModule.forRoot(),
     RouterModule.forChild(routes)
   ],
   providers: [EmailService]

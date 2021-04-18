@@ -19,6 +19,7 @@ import { HttpErrorInterceptor } from './util/http-error-interceptor';
 import { MatNativeDateModule } from '@angular/material/core';
 import { BreadcrumbModule } from './ui/breadcrumb/breadcrumb.module';
 import { AlertModule } from './ui/alert/alert.module';
+import { QuillModule } from 'ngx-quill'
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AlertModule } from './ui/alert/alert.module';
     MatButtonModule,
     MatNativeDateModule,
     BreadcrumbModule,
-    AlertModule
+    AlertModule,
+    QuillModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
