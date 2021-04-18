@@ -3,9 +3,32 @@
     <h4>New Email Message</h4>
   </div>
   <div>
+    <alert></alert>
+  </div>
+  <div style="margin-bottom: 20px">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="vertical-form-field">
+        <div class="label">To:</div>
+        <div>
+          <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
+            <input autofocus formControlName="to" matInput placeholder="Enter valid email address"
+                   maxlength="50" (blur)="blur('to')">
+            <mat-error *ngIf="form.controls['to'].invalid">Please enter a valid to address</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="vertical-form-field">
+        <div class="label">Subject:</div>
+        <div>
+          <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
+            <input formControlName="subject" matInput placeholder="Enter subject"
+                   maxlength="50"  (blur)="blur('subject')">
+            <mat-error *ngIf="form.controls['subject'].invalid">Please enter a valid subject</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
       <div>
-        <quill-editor [styles]="editorStyle" formControlName="html" placeholder="Enter email message"></quill-editor>
+        <quill-editor #quill [styles]="editorStyle" formControlName="html" placeholder="Enter email message"></quill-editor>
       </div>
       <div style="margin-top:20px">
         <button *ngIf="!formSubmitted" [disabled]="!form.valid" type="submit" mat-raised-button color="primary">Send</button>
