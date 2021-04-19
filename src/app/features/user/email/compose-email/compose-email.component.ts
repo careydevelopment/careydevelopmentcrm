@@ -21,8 +21,6 @@ export class ComposeEmailComponent implements OnInit {
 
   lastField: string = 'to';
 
-  @ViewChild('quill', { static: false }) quill: any;
-
   editorStyle = {
     height: '300px',
     backgroundColor: '#ffffff'
@@ -31,7 +29,8 @@ export class ComposeEmailComponent implements OnInit {
   @HostListener('document:keyup', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.key == 'Tab' && this.lastField == 'subject') {
-      var el: any = document.querySelectorAll('.ql-editor')
+      let el: any = document.querySelectorAll('.ql-editor')
+
       if (el && el.length == 1) {
         el[0].focus();
         this.lastField = 'body';
