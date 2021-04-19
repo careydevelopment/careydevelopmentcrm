@@ -50,4 +50,11 @@ export class EmailService {
 
     return cleanText;
   }
+
+  sendEmail(email: Email): Observable<Email> {
+    let url = `${baseUrl}/email/messages`;
+    console.log("Send email URL is " + url);
+
+    return this.http.post<Email>(url, email);
+  }
 }

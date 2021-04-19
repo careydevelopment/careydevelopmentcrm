@@ -7,6 +7,7 @@ import { AlertService } from '../../../../ui/alert/alert.service';
 import { Email } from '../models/email';
 import { EmailService } from '../service/email.service';
 import { DateService } from '../../../../services/date.service';
+import { UiUtil } from '../../../../util/ui-util';
 
 
 @Component({
@@ -25,11 +26,13 @@ export class InboxComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private alertService: AlertService, private router: Router,
-    private emailService: EmailService, private dateService: DateService) {
+    private emailService: EmailService, private dateService: DateService,
+    private uiUtil: UiUtil) {
   }
 
   ngOnInit(): void {
     this.loadInbox();
+    this.uiUtil.scrollToTop();
   }
 
   ngAfterViewInit(): void {
@@ -57,8 +60,10 @@ export class InboxComponent implements OnInit, AfterViewInit {
     return filterFunction;
   }
 
-  private loadInbox() {
-    this.emailService.fetchInbox().subscribe(
+  private loadInbox(refresh?: boolean) {
+    if (refresh) this.dataLoading = true;
+
+    this.emailService.fetchInbox(refresh).subscribe(
       (emails: Email[]) => this.handleInboxRetrieval(emails),
       (err: Error) => this.handleInboxError(err)
     );
@@ -90,5 +95,10 @@ export class InboxComponent implements OnInit, AfterViewInit {
   viewMessage(id: string) {
     let route = '/user/email/message';
     this.router.navigate([route], { queryParams: { id: id } });
+  }
+
+  composeEmail() {
+    let route = '/user/email/compose-email';
+    this.router.navigate([route]);
   }
 }

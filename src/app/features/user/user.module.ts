@@ -28,7 +28,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ComposeEmailComponent } from './email/compose-email/compose-email.component';
-import { QuillModule } from 'ngx-quill'
+import { QuillModule } from 'ngx-quill';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 export const routes = [
   {
@@ -96,6 +97,7 @@ export const routes = [
     MatRadioModule,
     MatExpansionModule,
     MatMenuModule,
+    MatToolbarModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
     AlertModule,
