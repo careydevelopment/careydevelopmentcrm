@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmailService } from '../service/email.service';
 import { switchMap } from 'rxjs/operators';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Email } from '../models/email';
 import { AlertService } from '../../../../ui/alert/alert.service';
 
@@ -17,7 +17,7 @@ export class MessageComponent implements OnInit {
   loading: boolean = true;
 
   constructor(private emailService: EmailService, private route: ActivatedRoute,
-    private alertService: AlertService) { }
+    private alertService: AlertService, private router: Router) { }
 
   ngOnInit(): void {
     this.fetchEmail();
@@ -45,5 +45,15 @@ export class MessageComponent implements OnInit {
     console.error(err);
     this.alertService.error("Problem - please contact support!");
     this.loading = false;
+  }
+
+  back() {
+    let route = '/user/email/inbox';
+    this.router.navigate([route]);
+  }
+
+  reply() {
+    let route = '/user/email/compose-email';
+    this.router.navigate([route], { state: { currentEmail: this.email } });
   }
 }

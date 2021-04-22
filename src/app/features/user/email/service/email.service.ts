@@ -13,6 +13,7 @@ const httpOptions = {
   })
 };
 
+const replyToHtmlSeparator: string = '<br/><br/><br/>-----<br/><br/>';
 
 @Injectable()
 export class EmailService {
@@ -56,5 +57,47 @@ export class EmailService {
     console.log("Send email URL is " + url);
 
     return this.http.post<Email>(url, email);
+  }
+
+  getEmailHistory(replyToEmail: Email): string {
+    let emailHistory: string = '';
+
+    if (replyToEmail) {
+      if (replyToEmail.html) {
+        emailHistory = replyToHtmlSeparator + replyToEmail.html;
+        console.log(replyToEmail.html);
+      } else {
+        emailHistory = replyToHtmlSeparator + replyToEmail.plainText;
+      }
+    }
+
+    return emailHistory;
+  }
+
+  getEmailAddressFromString(emailAddress: string): string {
+    let justEmail: string = emailAddress;
+
+    if (emailAddress && emailAddress.indexOf("<") > -1) {
+      let regex = /<(.*)>/g;
+      let matches = regex.exec(emailAddress);
+
+      if (matches.length > 0) justEmail = matches[1];
+    }
+
+    return justEmail;
+  }
+
+  getReplySubject(replyToEmail: Email): string {
+    let subject: string = '';
+
+    if (replyToEmail && replyToEmail.subject) {
+      let oldSubject: string = replyToEmail.subject;
+
+      if (!oldSubject.toLowerCase().startsWith('re:')) {
+        subject = 'Re: ' + oldSubject;
+      }
+    }
+
+    return subject;
   }
 }
