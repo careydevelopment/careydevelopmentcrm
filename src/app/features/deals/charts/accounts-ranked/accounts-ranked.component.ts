@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DateService } from '../../../../services/date.service';
-import { UserService } from '../../../service/user.service';
+import { UserService } from 'carey-user';
 import { Deal } from '../../models/deal';
 import { DealCriteria } from '../../models/deal-criteria';
 import { DealService } from '../../service/deal.service';

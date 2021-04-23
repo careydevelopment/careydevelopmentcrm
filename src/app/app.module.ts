@@ -19,6 +19,9 @@ import { HttpErrorInterceptor } from './util/http-error-interceptor';
 import { MatNativeDateModule } from '@angular/material/core';
 import { BreadcrumbModule } from './ui/breadcrumb/breadcrumb.module';
 import { AlertModule } from './ui/alert/alert.module';
+import { UserModule } from 'carey-user';
+import { environment } from '../environments/environment';
+import { AuthModule } from 'carey-auth';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,8 @@ import { AlertModule } from './ui/alert/alert.module';
     MatButtonModule,
     MatNativeDateModule,
     BreadcrumbModule,
+    UserModule.forRoot({ baseUrl: environment.baseUserServiceUrl }),
+    AuthModule.forRoot({ baseUrl: environment.baseUserServiceUrl }),
     AlertModule
   ],
   providers: [

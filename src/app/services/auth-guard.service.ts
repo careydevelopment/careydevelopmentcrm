@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AlertService } from '../ui/alert/alert.service';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from 'carey-auth';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {

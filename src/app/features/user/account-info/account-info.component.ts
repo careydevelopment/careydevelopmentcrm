@@ -1,12 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Country } from '../../../models/country';
 import { State } from '../../../models/state';
-import { User } from '../../../models/user';
+import { User, UserService } from 'carey-user';
 import { GeoService } from '../../../services/geo.service';
 import { AlertService } from '../../../ui/alert/alert.service';
-import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'app-account-info',

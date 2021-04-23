@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AlertService } from '../../ui/alert/alert.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,6 +12,5 @@ export class DashboardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    
   }
 }

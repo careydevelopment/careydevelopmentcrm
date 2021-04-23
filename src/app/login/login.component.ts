@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService, JwtResponse } from 'carey-auth';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { JwtResponse } from '../models/jwt-response';
 import { UrlService } from '../services/url.service';
-import { UserService } from '../features/service/user.service';
+import { UserService } from 'carey-user';
 import { AlertService } from '../ui/alert/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 

@@ -11,7 +11,7 @@ import { FormService } from '../../../services/form.service';
 import { AccountLightweight } from '../models/account-lightweight';
 import { ContactLightweight } from '../models/contact-lightweight';
 import { Observable, forkJoin } from 'rxjs';
-import { UserService } from '../../service/user.service';
+import { UserService } from 'carey-user';
 import { SalesOwnerLightweight } from '../models/sales-owner-lightweight';
 import { DealService } from '../service/deal.service';
 import { ProductService } from '../service/product.service';

@@ -13,7 +13,7 @@ import { AccountLightweight } from '../models/account-lightweight';
 import { ContactLightweight } from '../models/contact-lightweight';
 import { ActivityTypeLightweight } from '../models/activity-type-lightweight';
 import { Observable, forkJoin, of } from 'rxjs';
-import { UserService } from '../../service/user.service';
+import { UserService } from 'carey-user';
 import { SalesOwnerLightweight } from '../models/sales-owner-lightweight';
 import { ContactService } from '../../contacts/services/contact.service';
 import { DealLightweight } from '../../deals/models/deal-lightweight';
