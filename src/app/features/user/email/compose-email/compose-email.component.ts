@@ -1,7 +1,7 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Navigation, Router } from '@angular/router';
 import { AlertService } from '../../../../ui/alert/alert.service';
 import { UserService } from '../../../service/user.service';
 import { Email } from '../models/email';
@@ -18,6 +18,7 @@ export class ComposeEmailComponent implements OnInit {
   formSubmitted: boolean = false;
 
   email: Email;
+  replyToEmail: Email = {} as Email;
 
   lastField: string = 'to';
 
@@ -41,6 +42,12 @@ export class ComposeEmailComponent implements OnInit {
   constructor(private fb: FormBuilder, private emailService: EmailService,
     private userService: UserService, private alertService: AlertService,
     private router: Router) {
+
+    let nav: Navigation = this.router.getCurrentNavigation();
+
+    if (nav.extras && nav.extras.state && nav.extras.state.currentEmail) {
+      this.replyToEmail = nav.extras.state.currentEmail as Email;
+    }
   }
 
   ngOnInit(): void {
@@ -49,9 +56,21 @@ export class ComposeEmailComponent implements OnInit {
 
   private createFormGroup() {
     this.form = this.fb.group({
-      'html': ['', Validators.compose([Validators.required])],
-      'to': ['', Validators.compose([Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")])],
-      'subject': ['', Validators.compose([Validators.required])]
+      'html': [
+        this.emailService.getEmailHistory(this.replyToEmail),
+        Validators.compose([Validators.required])
+      ],
+      'to': [
+        this.emailService.getEmailAddressFromString(this.replyToEmail.from),
+        Validators.compose([
+          Validators.required,
+          Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")
+        ])
+      ],
+      'subject': [
+        this.emailService.getReplySubject(this.replyToEmail),
+        Validators.compose([Validators.required])
+      ]
     });
   }
 
@@ -60,17 +79,17 @@ export class ComposeEmailComponent implements OnInit {
 
     this.email = {} as Email;
     this.email.date = Date.now();
-    this.email.from = this.userService.user.email;
+    //this.email.from = this.userService.user.email;
     this.email.html = this.form.get('html').value;
     this.email.subject = this.form.get('subject').value;
     this.email.to = this.form.get('to').value;
 
-    console.log(this.email);
+    console.log(this.email.html);
 
-    this.emailService.sendEmail(this.email).subscribe(
+    /*this.emailService.sendEmail(this.email).subscribe(
       (email: Email) => this.handleSendResponse(email),
       (err: Error) => this.handleSendError(err)
-    );
+    );*/
   }
 
   private handleSendResponse(email: Email) {

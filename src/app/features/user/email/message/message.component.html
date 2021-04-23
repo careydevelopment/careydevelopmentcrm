@@ -6,6 +6,14 @@
     <mat-spinner [diameter]="80"></mat-spinner>
   </div>
   <div *ngIf="!loading">
+    <mat-toolbar>
+      <button mat-icon-button aria-label="Back to inbox" (click)="back()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Reply" (click)="reply()">
+        <mat-icon>reply</mat-icon>
+      </button>
+    </mat-toolbar>
     <mat-card>
       <mat-card-title>{{email.subject}}</mat-card-title>
       <mat-card-subtitle>{{email.from}}</mat-card-subtitle>
