@@ -27,7 +27,6 @@
     "@mat-datetimepicker/core": "^5.1.2",
     "@nativescript/schematics": "^10.1.0",
     "@types/quill": "^1.3.10",
-    "carey-user": "file:../usermodule/dist/carey-user",
     "core-js": "^2.5.4",
     "echarts": "^5.0.2",
     "libphonenumber-js": "^1.9.6",
