@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { AlertService } from '../../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 import { Email } from '../models/email';
 import { EmailService } from '../service/email.service';
 import { DateService } from '../../../../services/date.service';

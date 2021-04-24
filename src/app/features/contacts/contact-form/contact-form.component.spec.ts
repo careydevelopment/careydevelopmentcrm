@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlertService } from '../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ContactFormComponent } from './contact-form.component';
 import { AddressesFormComponent } from './addresses-form/addresses-form.component';

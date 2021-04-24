@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, Input } from '@
 import { FormGroup, ValidationErrors } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { AlertService } from '../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 import { Account } from '../models/account';
 import { Contact } from '../models/contact';
 import { ContactService } from '../services/contact.service';

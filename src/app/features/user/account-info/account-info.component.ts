@@ -5,7 +5,7 @@ import { Country } from '../../../models/country';
 import { State } from '../../../models/state';
 import { User, UserService } from 'carey-user';
 import { GeoService } from '../../../services/geo.service';
-import { AlertService } from '../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 
 @Component({
   selector: 'app-account-info',

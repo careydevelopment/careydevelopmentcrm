@@ -4,7 +4,7 @@ import { UploadFileService } from '../../service/file-upload.service';
 import { UserService, User } from 'carey-user';
 import { UploadedImage } from '../../ui/model/uploaded-image';
 import { ImageService } from '../../ui/service/image-service';
-import { AlertService} from '../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 
 const profileImageUploadUrl: string = 'http://localhost:8080/user/profileImage';
 

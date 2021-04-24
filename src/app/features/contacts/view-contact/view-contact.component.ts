@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Contact } from '../models/contact';
-import { AlertService } from '../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { phoneTypes } from '../constants/phone-type';

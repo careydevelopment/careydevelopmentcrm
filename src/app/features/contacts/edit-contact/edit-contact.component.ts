@@ -7,7 +7,7 @@ import { sources } from '../constants/source';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Contact } from '../models/contact';
 import { switchMap } from 'rxjs/operators';
-import { AlertService } from '../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BreadcrumbService } from '../../../ui/breadcrumb/breadcrumb.service';
 import { DisplayValueMap } from '../../../models/name-value-map';

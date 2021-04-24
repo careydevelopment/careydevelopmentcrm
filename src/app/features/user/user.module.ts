@@ -12,7 +12,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AccountInfoComponent } from './account-info/account-info.component';
 import { ProfileImageComponent } from './profile-image/profile-image.component';
 import { ImageUploaderComponent } from '../ui/image-uploader/image-uploader.component';
-import { AlertModule } from '../../ui/alert/alert.module';
 import { InboxComponent } from './email/inbox/inbox.component';
 import { EmailService } from './email/service/email.service';
 import { MatListModule } from '@angular/material/list';
@@ -100,7 +99,6 @@ export const routes = [
     MatToolbarModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    AlertModule,
     QuillModule.forRoot(),
     RouterModule.forChild(routes)
   ],

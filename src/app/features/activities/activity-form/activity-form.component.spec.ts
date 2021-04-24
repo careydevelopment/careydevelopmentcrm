@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ActivityFormComponent } from './activity-form.component';
-import { AlertService } from '../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Activity } from '../models/activity';
 import { ActivityTypeLightweight } from '../models/activity-type-lightweight';

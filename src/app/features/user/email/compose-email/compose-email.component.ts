@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Navigation, Router } from '@angular/router';
-import { AlertService } from '../../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 import { UserService } from 'carey-user';
 import { Email } from '../models/email';
 import { EmailService } from '../service/email.service';

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AlertService } from '../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 import { DealStage } from '../models/deal-stage';
 import { Deal } from '../models/deal';
 import { DealService } from '../service/deal.service';

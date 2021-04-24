@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { AlertService } from '../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 import { AuthenticationService } from 'carey-auth';
 
 @Injectable({ providedIn: 'root' })

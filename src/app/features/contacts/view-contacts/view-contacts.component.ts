@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserService, User } from 'carey-user';
-import { AlertService } from '../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 import { Contact } from '../models/contact';
 import { addressTypes } from '../constants/address-type';
 import { contactStatuses } from '../constants/contact-status';

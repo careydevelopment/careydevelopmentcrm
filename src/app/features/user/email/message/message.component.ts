@@ -3,7 +3,7 @@ import { EmailService } from '../service/email.service';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Email } from '../models/email';
-import { AlertService } from '../../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 
 
 @Component({
