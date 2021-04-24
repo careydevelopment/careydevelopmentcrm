@@ -3,7 +3,6 @@ import { LoginComponent } from './login.component';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
-import { AlertModule } from 'carey-alert';
 import { CommonModule } from '@angular/common';
 import { AuthModule } from 'carey-auth';
 
@@ -20,7 +19,6 @@ export const routes = [
     CommonModule,
     FlexLayoutModule,
     MatIconModule,
-    AlertModule,
     AuthModule,
     RouterModule.forChild(routes)
   ]
