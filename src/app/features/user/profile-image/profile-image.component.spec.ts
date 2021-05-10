@@ -1,8 +1,8 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { User } from '../../../models/user';
-import { AlertService } from '../../../ui/alert/alert.service';
+import { User } from 'carey-user';
+import { AlertService } from 'carey-alert';
 
 import { ProfileImageComponent } from './profile-image.component';
 

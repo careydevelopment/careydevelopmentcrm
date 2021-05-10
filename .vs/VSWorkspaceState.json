@@ -3,8 +3,14 @@
     "",
     "\\src",
     "\\src\\app",
+    "\\src\\app\\features",
+    "\\src\\app\\features\\contacts",
+    "\\src\\app\\features\\contacts\\contact-form",
+    "\\src\\app\\features\\contacts\\contact-form\\phones-form\\phone-type-form",
+    "\\src\\app\\features\\user\\email",
+    "\\src\\app\\features\\user\\email\\inbox",
     "\\src\\app\\login"
   ],
-  "SelectedNode": "\\src\\app\\login\\login.module.ts",
+  "SelectedNode": "\\src\\app\\features\\contacts\\contact-form\\contact-form.component.ts",
   "PreviewInSolutionExplorer": false
 }

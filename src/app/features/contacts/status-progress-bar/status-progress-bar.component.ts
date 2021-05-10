@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Contact } from '../models/contact';
 import { contactStatuses } from '../constants/contact-status';
-import { AlertService } from '../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 import { DisplayValueMap } from '../../../models/name-value-map';
 import { ContactService } from '../services/contact.service';
 

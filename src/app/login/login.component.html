@@ -29,31 +29,8 @@
         </div>
       </div>
 
-      <div fxLayout="column" fxLayoutAlign="center">
-        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
-          <div style="margin-bottom:15px; height:75px">
-            <alert></alert>
-          </div>
-          <div fxLayoutAlign="center">
-            <mat-form-field style="width:50%" appearance="fill">
-              <mat-label>Enter username</mat-label>
-              <input formControlName="username" matInput>
-              <mat-error *ngIf="form.controls['username'].invalid">Please enter a valid username</mat-error>
-            </mat-form-field>
-          </div>
-          <div fxLayoutAlign="center" style="margin-top:10px">
-            <mat-form-field style="width:50%" appearance="fill">
-              <mat-label>Enter password</mat-label>
-              <input type="password" formControlName="password" matInput>
-              <mat-error *ngIf="form.controls['password'].invalid">Please enter a valid password</mat-error>
-            </mat-form-field>
-          </div>
-          <div fxLayoutAlign="center" style="margin-top:20px">
-            <button *ngIf="!formSubmitted" [disabled]="!form.valid" type="submit" mat-raised-button color="primary">Login</button>
-            <mat-spinner *ngIf="formSubmitted" [diameter]="50"></mat-spinner>
-          </div>
-        </form>
-      </div>
+      <mat-short-vertical-login></mat-short-vertical-login>
+      
     </div>
   </div> 
 </div>

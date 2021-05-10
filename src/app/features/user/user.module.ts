@@ -12,7 +12,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AccountInfoComponent } from './account-info/account-info.component';
 import { ProfileImageComponent } from './profile-image/profile-image.component';
 import { ImageUploaderComponent } from '../ui/image-uploader/image-uploader.component';
-import { AlertModule } from '../../ui/alert/alert.module';
 import { InboxComponent } from './email/inbox/inbox.component';
 import { EmailService } from './email/service/email.service';
 import { MatListModule } from '@angular/material/list';
@@ -30,6 +29,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ComposeEmailComponent } from './email/compose-email/compose-email.component';
 import { QuillModule } from 'ngx-quill';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { AlertModule } from 'carey-alert';
 
 export const routes = [
   {
@@ -100,8 +100,8 @@ export const routes = [
     MatToolbarModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    AlertModule,
     QuillModule.forRoot(),
+    AlertModule,
     RouterModule.forChild(routes)
   ],
   providers: [EmailService]

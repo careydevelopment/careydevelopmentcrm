@@ -18,7 +18,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
-import { AlertModule } from '../../ui/alert/alert.module';
+import { AlertModule } from 'carey-alert';
 import { BasicInfoFormComponent } from './contact-form/basic-info-form/basic-info-form.component';
 import { AddressesFormComponent } from './contact-form/addresses-form/addresses-form.component';
 import { PhonesFormComponent } from './contact-form/phones-form/phones-form.component';

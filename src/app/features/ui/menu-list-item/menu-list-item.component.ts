@@ -2,7 +2,7 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { NavItem } from '../model/nav-item';
 import { Router } from '@angular/router';
 import { NavService } from '../service/nav.service';
-import { AuthenticationService } from '../../../services/authentication.service';
+import { AuthenticationService } from 'carey-auth';
 import { ConfirmationDialogComponent } from '../../../ui/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogModel } from '../../../ui/confirmation-dialog/confirmation-dialog';
 import { MatDialog } from '@angular/material/dialog';

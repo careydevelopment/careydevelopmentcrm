@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from 'carey-auth';
 import { Router } from '@angular/router';
-import { AlertService } from '../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {

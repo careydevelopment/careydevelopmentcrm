@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpResponse, HttpEvent } from '@angular/common/http';
 import { UploadFileService } from '../../service/file-upload.service';
-import { UserService } from '../../service/user.service';
+import { UserService, User } from 'carey-user';
 import { UploadedImage } from '../../ui/model/uploaded-image';
 import { ImageService } from '../../ui/service/image-service';
-import { AlertService} from '../../../ui/alert/alert.service';
-import { User } from '../../../models/user';
+import { AlertService } from 'carey-alert';
 
 const profileImageUploadUrl: string = 'http://localhost:8080/user/profileImage';
 

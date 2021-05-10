@@ -22,7 +22,7 @@
         <div>
           <mat-form-field appearance="fill" class="no-label-field" fxFlex="60" fxFlex.lt-md="100">
             <input formControlName="subject" matInput placeholder="Enter subject"
-                   maxlength="90"  (blur)="blur('subject')">
+                   maxlength="90" (blur)="blur('subject')">
             <mat-error *ngIf="form.controls['subject'].invalid">Please enter a valid subject</mat-error>
           </mat-form-field>
         </div>
@@ -30,6 +30,10 @@
       <div>
         <quill-editor #quill [styles]="editorStyle" formControlName="html" placeholder="Enter email message"></quill-editor>
       </div>
+      <mat-card *ngIf="replyToEmail">
+        <mat-card-content *ngIf="replyToEmail.html" [innerHTML]="replyToEmail.html | noSanitize"></mat-card-content>
+        <mat-card-content *ngIf="!replyToEmail.html" [innerText]="replyToEmail.plainText"></mat-card-content>
+      </mat-card>
       <div style="margin-top:20px">
         <button *ngIf="!formSubmitted" [disabled]="!form.valid" type="submit" mat-raised-button color="primary">Send</button>
         <mat-spinner *ngIf="formSubmitted" [diameter]="50"></mat-spinner>

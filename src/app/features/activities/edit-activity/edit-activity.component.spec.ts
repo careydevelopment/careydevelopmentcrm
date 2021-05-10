@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { AlertService } from '../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 import { FormBuilder } from '@angular/forms';
 import { EditActivityComponent } from './edit-activity.component';
 import { RouterTestingModule } from '@angular/router/testing';

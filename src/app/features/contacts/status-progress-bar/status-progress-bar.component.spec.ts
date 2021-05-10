@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { StatusProgressBarComponent } from './status-progress-bar.component';
-import { AlertService } from '../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 
 describe('StatusProgressBarComponent', () => {
   let component: StatusProgressBarComponent;

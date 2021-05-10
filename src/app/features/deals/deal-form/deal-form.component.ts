@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { Contact } from '../../contacts/models/contact';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService } from '../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 import { ValidatorFn, FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Deal } from '../models/deal';
 import { Product } from '../models/product';
@@ -11,7 +11,7 @@ import { FormService } from '../../../services/form.service';
 import { AccountLightweight } from '../models/account-lightweight';
 import { ContactLightweight } from '../models/contact-lightweight';
 import { Observable, forkJoin } from 'rxjs';
-import { UserService } from '../../service/user.service';
+import { UserService } from 'carey-user';
 import { SalesOwnerLightweight } from '../models/sales-owner-lightweight';
 import { DealService } from '../service/deal.service';
 import { ProductService } from '../service/product.service';

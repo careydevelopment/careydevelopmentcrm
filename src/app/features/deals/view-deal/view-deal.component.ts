@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { AlertService } from '../../../ui/alert/alert.service';
+import { AlertService } from 'carey-alert';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Deal } from '../models/deal';
 import { BreadcrumbService } from '../../../ui/breadcrumb/breadcrumb.service';
@@ -9,8 +9,6 @@ import { DealService } from '../service/deal.service';
 import { DateService } from '../../../services/date.service';
 import { DealStage } from '../models/deal-stage';
 import { ContactService } from '../../contacts/services/contact.service';
-import { ActivityService } from '../../activities/service/activity.service';
-import { Activity } from '../../activities/models/activity';
 import { ActivitySearchCriteria } from '../../activities/models/activity-search-criteria';
 
 @Component({

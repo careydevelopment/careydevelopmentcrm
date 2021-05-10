@@ -4,7 +4,7 @@ import { menu } from '../../features/ui/model/menu';
 import { filter, map, distinctUntilChanged } from 'rxjs/operators';
 import { NavItem } from '../../features/ui/model/nav-item';
 import { Breadcrumb } from './breadcrumb';
-import { UrlService } from '../../services/url.service';
+import { UrlService } from 'carey-url-util';
 import { BreadcrumbService } from './breadcrumb.service';
 
 @Component({

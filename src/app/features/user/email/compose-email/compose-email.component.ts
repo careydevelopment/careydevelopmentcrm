@@ -1,9 +1,8 @@
-import { FocusMonitor } from '@angular/cdk/a11y';
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Navigation, Router } from '@angular/router';
-import { AlertService } from '../../../../ui/alert/alert.service';
-import { UserService } from '../../../service/user.service';
+import { AlertService } from 'carey-alert';
+import { UserService } from 'carey-user';
 import { Email } from '../models/email';
 import { EmailService } from '../service/email.service';
 
@@ -27,6 +26,8 @@ export class ComposeEmailComponent implements OnInit {
     backgroundColor: '#ffffff'
   }
 
+  //handles tabbing directly to the editor and skipping all the
+  //buttons
   @HostListener('document:keyup', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.key == 'Tab' && this.lastField == 'subject') {
@@ -57,7 +58,7 @@ export class ComposeEmailComponent implements OnInit {
   private createFormGroup() {
     this.form = this.fb.group({
       'html': [
-        this.emailService.getEmailHistory(this.replyToEmail),
+        "",
         Validators.compose([Validators.required])
       ],
       'to': [
@@ -79,17 +80,22 @@ export class ComposeEmailComponent implements OnInit {
 
     this.email = {} as Email;
     this.email.date = Date.now();
-    //this.email.from = this.userService.user.email;
+    this.email.from = this.userService.user.email;
     this.email.html = this.form.get('html').value;
+
+    if (this.replyToEmail) {
+      this.email.html += '<br/><br/>---<br/><br/>';
+      if (this.replyToEmail.html) this.email.html += this.replyToEmail.html;
+      else if (this.replyToEmail.plainText) this.email.html += this.replyToEmail.plainText;
+    }
+
     this.email.subject = this.form.get('subject').value;
     this.email.to = this.form.get('to').value;
 
-    console.log(this.email.html);
-
-    /*this.emailService.sendEmail(this.email).subscribe(
+    this.emailService.sendEmail(this.email).subscribe(
       (email: Email) => this.handleSendResponse(email),
       (err: Error) => this.handleSendError(err)
-    );*/
+    );
   }
 
   private handleSendResponse(email: Email) {

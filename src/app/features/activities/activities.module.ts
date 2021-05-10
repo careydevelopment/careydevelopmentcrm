@@ -11,7 +11,7 @@ import { ActivityFormComponent } from './activity-form/activity-form.component';
 import { AddActivityComponent } from './add-activity/add-activity.component';
 import { ViewActivityComponent } from './view-activity/view-activity.component';
 import { ViewActivitiesComponent } from './view-activities/view-activities.component';
-import { AlertModule } from '../../ui/alert/alert.module';
+import { AlertModule } from 'carey-alert';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
