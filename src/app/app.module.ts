@@ -21,6 +21,7 @@ import { BreadcrumbModule } from './ui/breadcrumb/breadcrumb.module';
 import { UserModule } from 'carey-user';
 import { environment } from '../environments/environment';
 import { AuthModule } from 'carey-auth';
+import { GeoModule } from 'carey-geo';
 
 @NgModule({
   declarations: [
@@ -44,11 +45,12 @@ import { AuthModule } from 'carey-auth';
     MatNativeDateModule,
     BreadcrumbModule,
     UserModule.forRoot({ baseUrl: environment.baseUserServiceUrl }),
-    AuthModule.forRoot({ baseUrl: environment.baseUserServiceUrl })
+    AuthModule.forRoot({ baseUrl: environment.baseUserServiceUrl }),
+    GeoModule.forRoot({ baseUrl: environment.baseGeoServiceUrl })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
   ],
     bootstrap: [AppComponent]
 })

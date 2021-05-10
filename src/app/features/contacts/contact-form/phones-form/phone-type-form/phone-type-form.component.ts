@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GeoService } from '../../../../../services/geo.service';
+import { GeoService } from 'carey-geo';
 import { Contact } from '../../../models/contact';
 import { Phone } from '../../../models/phone';
 

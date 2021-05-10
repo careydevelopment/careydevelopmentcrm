@@ -29,6 +29,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ComposeEmailComponent } from './email/compose-email/compose-email.component';
 import { QuillModule } from 'ngx-quill';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { AlertModule } from 'carey-alert';
 
 export const routes = [
   {
@@ -100,6 +101,7 @@ export const routes = [
     MatAutocompleteModule,
     ReactiveFormsModule,
     QuillModule.forRoot(),
+    AlertModule,
     RouterModule.forChild(routes)
   ],
   providers: [EmailService]
