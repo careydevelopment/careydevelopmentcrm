@@ -7,6 +7,7 @@ import { ConfirmationDialogComponent } from '../../../ui/confirmation-dialog/con
 import { ConfirmationDialogModel } from '../../../ui/confirmation-dialog/confirmation-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { EmailService } from '../../user/email/service/email.service';
 
 @Component({
     selector: 'app-menu-list-item',
@@ -30,7 +31,8 @@ export class MenuListItemComponent implements OnInit {
     @Input() depth: number;
 
     constructor(public navService: NavService, public router: Router,
-        private authenticationService: AuthenticationService, private dialog: MatDialog) {
+      private authenticationService: AuthenticationService, private dialog: MatDialog,
+      private emailService: EmailService) {
 
         if (this.depth === undefined) {
             this.depth = 0;
@@ -77,9 +79,14 @@ export class MenuListItemComponent implements OnInit {
         })
 
         dialogRef.afterClosed().subscribe(dialogResult => {
-            if (dialogResult) {
-                this.authenticationService.logout();
+          if (dialogResult) {
+              this.cleanupForLogout()
+              this.authenticationService.logout();
             }
         });
-    }
+  }
+
+  private cleanupForLogout() {
+    this.emailService.clearObservables();
+  }
 }

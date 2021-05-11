@@ -342,3 +342,7 @@ ol.breadcrumbs li {
     height: 30px;
   }
 }
+
+.clickable-image {
+    cursor: pointer;
+}

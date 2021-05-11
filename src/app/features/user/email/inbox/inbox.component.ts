@@ -8,6 +8,8 @@ import { Email } from '../models/email';
 import { EmailService } from '../service/email.service';
 import { DateService } from '../../../../services/date.service';
 import { UiUtil } from '../../../../util/ui-util';
+import { HttpErrorResponse } from '@angular/common/http';
+import { GoogleApiError } from '../models/google-api-error';
 
 
 @Component({
@@ -70,8 +72,20 @@ export class InboxComponent implements OnInit, AfterViewInit {
   }
 
   private handleInboxError(err: Error) {
-    console.error(err);
-    this.alertService.error("Problem loading emails!");
+    if (err instanceof HttpErrorResponse) {
+      let httpError: HttpErrorResponse = <HttpErrorResponse>err;
+      let googleApiError: GoogleApiError = httpError.error;
+
+      if (googleApiError.error == 'invalid_grant') {
+        let route = '/user/email/email-choice';
+        this.router.navigate([route]);
+      } else {
+        this.alertService.error("Problem loading emails!");
+      }
+    } else {
+      this.alertService.error("Problem loading emails!");
+    }
+
     this.dataLoading = false;
   }
 

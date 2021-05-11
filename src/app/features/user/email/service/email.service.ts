@@ -4,23 +4,46 @@ import { environment } from '../../../../../environments/environment';
 import { Email } from '../models/email';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
+import { TokenRequest } from '../models/token-request';
+import { User } from 'carey-user';
+import { EmailIntegration } from '../models/email-integration';
+import { AuthenticationService } from 'carey-auth';
 
 const baseUrl: string = environment.baseEmailServiceUrl;
+const gmailRedirectUrl: string = environment.gmailRedirectUrl;
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-  })
-};
+const textHeaders = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
 
 const replyToHtmlSeparator: string = '<br/><br/><br/>-----<br/><br/>';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class EmailService {
 
   private emailMessagesRequest$: Observable<Email[]> = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
+
+  updateUserEmailChoice(user: User, choice: string): Observable<any> {
+    let url = `${baseUrl}/user/${user.id}`;
+    let emailIntegration = { integrationType: choice } as EmailIntegration;
+
+    return this.http.patch(url, emailIntegration);
+  }
+
+  getGoogleAuthCodeFlowUrl(): Observable<string> {
+    let url = `${baseUrl}/email/authorizationCode?redirectUrl=${gmailRedirectUrl}`;
+    return this.http.get(url, { headers: textHeaders, responseType: 'text' });
+  }
+
+  fetchToken(code: string): Observable<any> {
+    console.log("code is " + code);
+    let tokenRequest = { code: code, redirectUrl: gmailRedirectUrl } as TokenRequest;
+    let url = `${baseUrl}/email/token`;
+    console.log("tokenrequest is ", tokenRequest);
+    return this.http.post(url, tokenRequest, { responseType: 'text' });
+  }
 
   fetchInbox(refresh?: boolean): Observable<Email[]> {
     let url = `${baseUrl}/email/inbox`; 
@@ -99,5 +122,9 @@ export class EmailService {
     }
 
     return subject;
+  }
+
+  clearObservables() {
+    this.emailMessagesRequest$ = null;
   }
 }
