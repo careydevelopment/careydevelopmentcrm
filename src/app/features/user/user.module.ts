@@ -30,6 +30,8 @@ import { ComposeEmailComponent } from './email/compose-email/compose-email.compo
 import { QuillModule } from 'ngx-quill';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AlertModule } from 'carey-alert';
+import { EmailChoiceComponent } from './email/email-choice/email-choice.component';
+import { EmailRedirectComponent } from './email/email-redirect/email-redirect.component';
 
 export const routes = [
   {
@@ -47,10 +49,24 @@ export const routes = [
     }
   },
   {
+    path: 'email/redirect',
+    component: EmailRedirectComponent,
+    data: {
+      breadcrumb: ''
+    }
+  },
+  {
     path: 'email/compose-email',
     component: ComposeEmailComponent,
     data: {
       breadcrumb: 'Compose Email'
+    }
+  },
+  {
+    path: 'email/email-choice',
+    component: EmailChoiceComponent,
+    data: {
+      breadcrumb: 'Choose Email'
     }
   },
   {
@@ -77,7 +93,9 @@ export const routes = [
     InboxComponent,
     MessageComponent,
     NoSanitizePipe,
-    ComposeEmailComponent
+    ComposeEmailComponent,
+    EmailChoiceComponent,
+    EmailRedirectComponent
   ],
   imports: [
     CommonModule,
@@ -103,7 +121,6 @@ export const routes = [
     QuillModule.forRoot(),
     AlertModule,
     RouterModule.forChild(routes)
-  ],
-  providers: [EmailService]
+  ]
 })
 export class UserModule { }
