@@ -10,6 +10,8 @@ import { DisplayValueMap } from '../../../../models/name-value-map';
 import { ContactService } from '../../services/contact.service';
 import { AccountService } from '../../services/account.service';
 import { Account } from '../../models/account';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
 
 @Component({
   selector: 'contact-basic-info-form',
@@ -27,6 +29,9 @@ export class BasicInfoFormComponent implements OnInit {
   availableAccounts: Account[] = [{ name: "Loading...", id: "-1"}];
   filteredAccounts: Observable<Account[]> = of(this.availableAccounts);
   newAccount: boolean = false;
+
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  tags: string[] = [];
 
   @Input() contact: Contact;
 
@@ -173,6 +178,28 @@ export class BasicInfoFormComponent implements OnInit {
     }
 
     return account;
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    if ((value || '').trim()) {
+      this.tags.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(tag: string): void {
+    const index = this.tags.indexOf(tag);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
   }
 }
 
