@@ -19,4 +19,5 @@ export interface Contact {
   statusChange: number;
   salesOwner: SalesOwner;
   account: Account;
+  tags: string[];
 }

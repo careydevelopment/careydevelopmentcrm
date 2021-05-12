@@ -31,7 +31,8 @@ export class BasicInfoFormComponent implements OnInit {
   newAccount: boolean = false;
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  tags: string[] = [];
+  selectable = true;
+  removable = true;
 
   @Input() contact: Contact;
 
@@ -96,7 +97,8 @@ export class BasicInfoFormComponent implements OnInit {
       'authority': [authority],
       'title': [this.contact.title, [Validators.pattern('^[a-zA-Z \-\]*$')]],
       'account': [(this.contact.account ? this.contact.account.name : ''),
-          [this.accountValidator(), Validators.required, Validators.pattern('^[a-zA-Z., \-\]*$')]]
+        [this.accountValidator(), Validators.required, Validators.pattern('^[a-zA-Z., \-\]*$')]],
+      'tags': [(this.contact.tags) ? this.contact.tags : []]
     });
   }
 
@@ -164,6 +166,7 @@ export class BasicInfoFormComponent implements OnInit {
     contact.sourceDetails = basicInfo.controls['sourceDetails'].value;
     contact.status = basicInfo.controls['status'].value;
     contact.title = basicInfo.controls['title'].value;
+    contact.tags = basicInfo.controls['tags'].value;
   }
 
   private getAccount(accountName: string): Account {
@@ -180,12 +183,15 @@ export class BasicInfoFormComponent implements OnInit {
     return account;
   }
 
-  add(event: MatChipInputEvent): void {
+  addTag(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
 
     if ((value || '').trim()) {
-      this.tags.push(value.trim());
+      if (value.length < 21) {
+        this.basicInfoFormGroup.controls['tags'].setValue([...this.basicInfoFormGroup.controls['tags'].value, value.trim()]);
+        this.basicInfoFormGroup.controls['tags'].updateValueAndValidity();
+      }
     }
 
     // Reset the input value
@@ -194,11 +200,12 @@ export class BasicInfoFormComponent implements OnInit {
     }
   }
 
-  remove(tag: string): void {
-    const index = this.tags.indexOf(tag);
+  removeTag(tag: string): void {
+    const index = this.basicInfoFormGroup.controls['tags'].value.indexOf(tag);
 
     if (index >= 0) {
-      this.tags.splice(index, 1);
+      this.basicInfoFormGroup.controls['tags'].value.splice(index, 1);
+      this.basicInfoFormGroup.controls['tags'].updateValueAndValidity();
     }
   }
 }

@@ -344,5 +344,10 @@ ol.breadcrumbs li {
 }
 
 .clickable-image {
-    cursor: pointer;
+  cursor: pointer;
+}
+
+.tag-background {
+  background-color: #f0f0f0;
+  padding: 2px 10px 2px 10px;
 }

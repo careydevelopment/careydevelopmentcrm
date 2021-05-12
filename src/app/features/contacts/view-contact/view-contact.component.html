@@ -60,6 +60,18 @@
                 <div class="free-text" *ngIf="contact.sourceDetails">{{contact.sourceDetails}}</div>
               </div>
             </div>
+            <div fxLayout="row wrap" *ngIf="contact.tags">
+              <div class="column-layout">
+                <div class="column-header">
+                  Tags
+                </div>
+                <div style="margin-top: 10px">
+                  <span *ngFor="let tag of contact.tags" class="normal-detail">
+                    <span class="tag-background">{{tag}}</span>&nbsp;
+                  </span>
+                </div>
+              </div>
+            </div>
           </mat-card>
           <mat-expansion-panel class="vertical-layout">
             <mat-expansion-panel-header>
