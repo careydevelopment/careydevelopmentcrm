@@ -176,6 +176,7 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.alertService.clear();
     this.formSubmitted = true;
 
+    //console.log("contact is ", this.contact);
     if (!this.contact.id) this.createContact();
     else this.updateContact();
   }

@@ -125,6 +125,7 @@ export class EmailService {
   }
 
   clearObservables() {
+    //do this to prevent new user logins from viewing the old user's inbox
     this.emailMessagesRequest$ = null;
   }
 }

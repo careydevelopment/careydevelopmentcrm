@@ -36,7 +36,6 @@ export class EmailRedirectComponent implements OnInit {
   }
 
   private handleUpdateEmailChoiceResponse(response: any) {
-    console.log("Updated");
     this.reroute();
   }
 

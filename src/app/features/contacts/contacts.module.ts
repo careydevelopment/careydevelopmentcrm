@@ -36,7 +36,7 @@ import { ActivitiesModule } from '../activities/activities.module';
 import { DealsModule } from '../deals/deals.module';
 import { ViewContactMenuComponent } from './view-contact/view-contact-menu/view-contact-menu.component';
 import { StatusProgressBarComponent } from './status-progress-bar/status-progress-bar.component';
-
+import { MatChipsModule } from '@angular/material/chips';
 
 export const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'add-contact' },
@@ -106,6 +106,7 @@ export const routes = [
     MatListModule,
     MatAutocompleteModule,
     MatMenuModule,
+    MatChipsModule,
     ReactiveFormsModule,
     AlertModule,
     NgxFlagPickerModule,
