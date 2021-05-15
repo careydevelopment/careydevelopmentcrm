@@ -11,9 +11,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AccountInfoComponent } from './account-info/account-info.component';
 import { ProfileImageComponent } from './profile-image/profile-image.component';
-import { ImageUploaderComponent } from '../ui/image-uploader/image-uploader.component';
+import { ImageUploaderModule } from 'carey-image-uploader';
 import { InboxComponent } from './email/inbox/inbox.component';
-import { EmailService } from './email/service/email.service';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -89,7 +88,6 @@ export const routes = [
   declarations: [
     AccountInfoComponent,
     ProfileImageComponent,
-    ImageUploaderComponent,
     InboxComponent,
     MessageComponent,
     NoSanitizePipe,
@@ -120,6 +118,7 @@ export const routes = [
     ReactiveFormsModule,
     QuillModule.forRoot(),
     AlertModule,
+    ImageUploaderModule,
     RouterModule.forChild(routes)
   ]
 })

@@ -30,6 +30,7 @@
     "carey-alert": "0.0.1",
     "carey-auth": "^0.2.3",
     "carey-geo": "0.0.2",
+    "carey-image-uploader": "0.0.2",
     "carey-url-util": "0.0.1",
     "carey-user": "^0.1.0",
     "core-js": "^2.5.4",
