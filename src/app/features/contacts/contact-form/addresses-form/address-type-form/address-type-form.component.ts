@@ -18,6 +18,7 @@ export class AddressTypeFormComponent implements OnInit {
 
   states: State[] = [];
   countries: Country[] = [];
+  zones: string[] = [];
 
   dataLoading: boolean = true;
 
@@ -61,23 +62,35 @@ export class AddressTypeFormComponent implements OnInit {
       .subscribe(
         (states: State[]) => this.handleStateResponse(states),
         err => this.handleGeoError(err)
-      );
+    );
 
     this.geoService.initializeAllCountries()
       .subscribe(
         (countries: Country[]) => this.handleCountryResponse(countries),
         err => this.handleGeoError(err)
-      );
+    );
+
+    this.geoService.initializeAllTimezones()
+      .subscribe(
+        (zones: string[]) => this.handleZonesResponse(zones),
+        err => this.handleGeoError(err)
+    );
   }
 
   private handleStateResponse(states: State[]) {
     this.states = states;
-    if (this.states && this.countries) this.dataLoading = false;
+    if (this.zones && this.states && this.countries) this.dataLoading = false;
   }
 
   private handleCountryResponse(countries: Country[]) {
     this.countries = countries;
-    if (this.states && this.countries) this.dataLoading = false;
+    if (this.zones && this.states && this.countries) this.dataLoading = false;
+  }
+
+  private handleZonesResponse(zones: string[]) {
+    this.zones = zones;
+    console.log("zones is ", zones);
+    if (this.zones && this.states && this.countries) this.dataLoading = false;
   }
 
   private handleGeoError(err: Error) {
