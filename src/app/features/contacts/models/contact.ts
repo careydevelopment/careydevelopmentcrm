@@ -19,5 +19,6 @@ export interface Contact {
   statusChange: number;
   salesOwner: SalesOwner;
   account: Account;
+  timezone: string;
   tags: string[];
 }

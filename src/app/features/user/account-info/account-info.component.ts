@@ -44,13 +44,13 @@ export class AccountInfoComponent implements OnInit {
   }
 
   private loadGeos() {
-    this.geoService.initializeAllStates()
+    this.geoService.fetchAllStates()
       .subscribe(
         (states: State[]) => this.handleStateResponse(states),
         err => this.handleGeoError(err)
       );
 
-    this.geoService.initializeAllCountries()
+    this.geoService.fetchAllCountries()
       .subscribe(
         (countries: Country[]) => this.handleCountryResponse(countries),
         err => this.handleGeoError(err)

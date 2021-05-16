@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AlertService } from 'carey-alert';
 
 @Component({
   selector: 'app-dashboard',

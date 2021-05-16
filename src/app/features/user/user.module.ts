@@ -31,6 +31,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AlertModule } from 'carey-alert';
 import { EmailChoiceComponent } from './email/email-choice/email-choice.component';
 import { EmailRedirectComponent } from './email/email-redirect/email-redirect.component';
+import { EmailService } from './email/service/email.service';
 
 export const routes = [
   {

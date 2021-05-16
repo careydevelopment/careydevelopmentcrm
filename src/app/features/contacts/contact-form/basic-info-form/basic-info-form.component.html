@@ -116,23 +116,36 @@
     </div>
 
     <div class="vertical-form-field">
+      <div class="label">Time Zone</div>
+      <div>
+        <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
+          <mat-select formControlName="timezone" placeholder="Select a time zone">
+            <mat-option *ngFor="let zone of availableTimezones" [value]="zone">
+              {{zone}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="vertical-form-field">
       <div class="label">Tags</div>
-        <div>
-          <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
-            <mat-chip-list #chipList aria-label="Enter tags" formControlName="tags">
-              <mat-chip *ngFor="let tag of basicInfoFormGroup.controls['tags'].value" [selectable]="selectable"
-                        [removable]="removable" (removed)="removeTag(tag)">
-                {{tag}}
-                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-              </mat-chip>
-              <input placeholder="Add tag & hit Enter"
-                     [matChipInputFor]="chipList"
-                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                     [matChipInputAddOnBlur]="addOnBlur"
-                     (matChipInputTokenEnd)="addTag($event)">
-            </mat-chip-list>
-          </mat-form-field>
-        </div>
+      <div>
+        <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+          <mat-chip-list #chipList aria-label="Enter tags" formControlName="tags">
+            <mat-chip *ngFor="let tag of basicInfoFormGroup.controls['tags'].value" [selectable]="selectable"
+                      [removable]="removable" (removed)="removeTag(tag)">
+              {{tag}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Add tag & hit Enter"
+                   [matChipInputFor]="chipList"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]="addOnBlur"
+                   (matChipInputTokenEnd)="addTag($event)">
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
     </div>
 
     <div class="vertical-form-field">

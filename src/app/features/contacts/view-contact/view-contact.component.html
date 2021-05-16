@@ -21,6 +21,9 @@
             <div fxLayout="row wrap" style="margin-bottom:20px">
               <div>
                 <div class="card-header">{{contact.firstName}} {{contact.lastName}}</div>
+                <div fxLayout="row wrap" *ngIf="contact.timezone">
+                  <span>{{contact.timezone}} Time Zone</span>
+                </div>
                 <div fxHide.gt-sm="true" [class.inactive-status]="contact.status == 'INACTIVE'" [class.normal-status]="contact.status != 'INACTIVE'" style="margin-bottom:5px">
                   {{displayValueMapService.getDisplay(contact.status, availableContactStatuses)}}
                 </div>
@@ -60,7 +63,7 @@
                 <div class="free-text" *ngIf="contact.sourceDetails">{{contact.sourceDetails}}</div>
               </div>
             </div>
-            <div fxLayout="row wrap" *ngIf="contact.tags">
+            <div fxLayout="row wrap" *ngIf="contact.tags && contact.tags.length > 0">
               <div class="column-layout">
                 <div class="column-header">
                   Tags
