@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Country, State, GeoService } from 'carey-geo';
+import { forkJoin, Observable } from 'rxjs';
 import { Address } from '../../../models/address';
 import { Contact } from '../../../models/contact';
 
@@ -46,38 +47,31 @@ export class AddressTypeFormComponent implements OnInit {
   }
 
   private initGeos() {
-    this.countries = this.geoService.allCountries;
-    this.states = this.geoService.allStates;
+    let loadCountries$: Observable<Country[]> = this.geoService.fetchAllCountries();
+    let loadStates$: Observable<State[]> = this.geoService.fetchAllStates();
 
-    if (!this.countries || !this.states) {
-      this.loadGeos();
-    } else {
-      this.dataLoading = false;
-    }
+    forkJoin([
+      loadCountries$,
+      loadStates$
+    ]).subscribe(([allCountries, allStates]) => {
+      this.handleCountryResponse(allCountries);
+      this.handleStateResponse(allStates);
+      this.showForm();
+    },
+      (err: Error) => this.handleGeoError(err)
+    );
   }
 
-  private loadGeos() {
-    this.geoService.initializeAllStates()
-      .subscribe(
-        (states: State[]) => this.handleStateResponse(states),
-        err => this.handleGeoError(err)
-      );
-
-    this.geoService.initializeAllCountries()
-      .subscribe(
-        (countries: Country[]) => this.handleCountryResponse(countries),
-        err => this.handleGeoError(err)
-      );
+  private showForm() {
+    this.dataLoading = false;
   }
 
   private handleStateResponse(states: State[]) {
     this.states = states;
-    if (this.states && this.countries) this.dataLoading = false;
   }
 
   private handleCountryResponse(countries: Country[]) {
     this.countries = countries;
-    if (this.states && this.countries) this.dataLoading = false;
   }
 
   private handleGeoError(err: Error) {

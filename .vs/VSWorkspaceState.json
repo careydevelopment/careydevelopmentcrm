@@ -4,13 +4,12 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\features",
+    "\\src\\app\\features\\ui\\service",
     "\\src\\app\\features\\user",
-    "\\src\\app\\features\\user\\email",
     "\\src\\app\\features\\user\\email\\compose-email",
-    "\\src\\app\\features\\user\\email\\inbox",
-    "\\src\\app\\features\\user\\email\\message",
-    "\\src\\app\\login"
+    "\\src\\app\\features\\user\\email\\service",
+    "\\src\\environments"
   ],
-  "SelectedNode": "\\src\\app\\features\\user\\email\\compose-email\\compose-email.component.ts",
+  "SelectedNode": "\\src\\environments\\environment.ts",
   "PreviewInSolutionExplorer": false
 }

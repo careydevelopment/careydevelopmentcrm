@@ -12,6 +12,7 @@ import { AccountService } from '../../services/account.service';
 import { Account } from '../../models/account';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { GeoService } from 'carey-geo';
 
 @Component({
   selector: 'contact-basic-info-form',
@@ -26,6 +27,8 @@ export class BasicInfoFormComponent implements OnInit {
   availableSources: DisplayValueMap[] = sources;
   availableContactStatuses: DisplayValueMap[] = contactStatuses;
   availableLinesOfBusiness: DisplayValueMap[] = linesOfBusiness;
+  availableTimezones: string[] = [];
+
   availableAccounts: Account[] = [{ name: "Loading...", id: "-1"}];
   filteredAccounts: Observable<Account[]> = of(this.availableAccounts);
   newAccount: boolean = false;
@@ -37,7 +40,7 @@ export class BasicInfoFormComponent implements OnInit {
   @Input() contact: Contact;
 
   constructor(private fb: FormBuilder, private contactService: ContactService,
-    private accountService: AccountService) { }
+    private accountService: AccountService, private geoService: GeoService) { }
 
   ngOnInit() {
     this.loadData();
@@ -47,6 +50,7 @@ export class BasicInfoFormComponent implements OnInit {
 
   private loadData() {
     this.loadAccounts();
+    this.loadTimezones();
   }
 
   private loadAccounts() {
@@ -54,6 +58,21 @@ export class BasicInfoFormComponent implements OnInit {
       (accounts: Account[]) => this.handleFetchAccountsResponse(accounts),
       err => this.handleFetchAccountsError(err)
     );
+  }
+
+  private loadTimezones() {
+    this.geoService.fetchAllTimezones().subscribe(
+      (zones: string[]) => this.handleFetchTimezonesResponse(zones),
+      err => this.handleFetchTimezonesError(err)
+    )
+  }
+
+  private handleFetchTimezonesResponse(zones: string[]) {
+    this.availableTimezones = zones;
+  }
+
+  private handleFetchTimezonesError(err: Error) {
+    console.error("Problem fetching time zones!");
   }
 
   private handleFetchAccountsResponse(accounts: Account[]) {
@@ -98,6 +117,7 @@ export class BasicInfoFormComponent implements OnInit {
       'title': [this.contact.title, [Validators.pattern('^[a-zA-Z \-\]*$')]],
       'account': [(this.contact.account ? this.contact.account.name : ''),
         [this.accountValidator(), Validators.required, Validators.pattern('^[a-zA-Z., \-\]*$')]],
+      'timezone': [this.contact.timezone],
       'tags': [(this.contact.tags) ? this.contact.tags : []]
     });
   }
@@ -167,6 +187,7 @@ export class BasicInfoFormComponent implements OnInit {
     contact.status = basicInfo.controls['status'].value;
     contact.title = basicInfo.controls['title'].value;
     contact.tags = basicInfo.controls['tags'].value;
+    contact.timezone = basicInfo.controls['timezone'].value;
   }
 
   private getAccount(accountName: string): Account {

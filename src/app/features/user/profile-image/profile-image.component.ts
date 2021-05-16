@@ -3,10 +3,11 @@ import { HttpResponse, HttpEvent } from '@angular/common/http';
 import { UploadFileService } from '../../service/file-upload.service';
 import { UserService, User } from 'carey-user';
 import { UploadedImage } from '../../ui/model/uploaded-image';
-import { ImageService } from '../../ui/service/image-service';
+import { ImageService } from 'carey-image-uploader';
 import { AlertService } from 'carey-alert';
+import { environment } from '../../../../environments/environment';
 
-const profileImageUploadUrl: string = 'http://localhost:8080/user/profileImage';
+const profileImageUploadUrl: string = `${environment.baseUserServiceUrl}/user/profileImage`;
 
 @Component({
   selector: 'app-profile-image',

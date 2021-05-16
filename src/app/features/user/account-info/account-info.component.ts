@@ -14,8 +14,11 @@ import { AlertService } from 'carey-alert';
 export class AccountInfoComponent implements OnInit {
 
   form: FormGroup;
+
   states: State[] = [];
   countries: Country[] = [];
+  timezones: string[] = [];
+
   formSubmitted: boolean = false;
   user: User = {} as User;
   dataLoading: boolean = true;
@@ -31,6 +34,7 @@ export class AccountInfoComponent implements OnInit {
   private initGeos() {
     this.countries = this.geoService.allCountries;
     this.states = this.geoService.allStates;
+    
 
     if (!this.countries || !this.states) {
       this.loadGeos();
@@ -40,13 +44,13 @@ export class AccountInfoComponent implements OnInit {
   }
 
   private loadGeos() {
-    this.geoService.initializeAllStates()
+    this.geoService.fetchAllStates()
       .subscribe(
         (states: State[]) => this.handleStateResponse(states),
         err => this.handleGeoError(err)
       );
 
-    this.geoService.initializeAllCountries()
+    this.geoService.fetchAllCountries()
       .subscribe(
         (countries: Country[]) => this.handleCountryResponse(countries),
         err => this.handleGeoError(err)
