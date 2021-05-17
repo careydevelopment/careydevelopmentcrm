@@ -41,13 +41,13 @@
                 <app-view-contact-menu [contact]="contact"></app-view-contact-menu>
               </div>
             </div>
-            <div fxLayout="row wrap">
-              <div class="column-layout">
+            <div fxLayout="row wrap" fxLayout.xs="column">
+              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
                 <div *ngIf="contact.title" class="normal-detail">{{contact.title}}</div>
                 <div *ngIf="contact.account" class="normal-detail">{{contact.account.name}}</div>
                 <div *ngIf="contact.email" class="normal-detail">{{contact.email}}</div>
               </div>
-              <div class="column-layout" *ngIf="contact.linesOfBusiness">
+              <div class="column-layout" *ngIf="contact.linesOfBusiness" fxFlex.sm="40" fxFlex.gt-sm="20">
                 <div class="column-header">
                   Lines of Business
                 </div>
@@ -55,14 +55,47 @@
                   {{displayValueMapService.getDisplay(lob, availableLobTypes)}}
                 </div>
               </div>
-              <div class="column-layout">
+              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
                 <div class="column-header">
                   Source
                 </div>
                 <div class="normal-detail" style="margin-bottom:5px">{{displayValueMapService.getDisplay(contact.source, availableSources)}}</div>
                 <div class="free-text" *ngIf="contact.sourceDetails">{{contact.sourceDetails}}</div>
               </div>
+              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="fill">
+                <div class="column-header">
+                  Birthday
+                </div>
+                <div class="normal-detail" style="margin-bottom:5px">{{contact.birthdayMonth}} {{contact.birthdayDay}}</div>
+              </div>
             </div>
+
+            <div fxLayout="row wrap" fxLayout.xs="column">
+              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
+                <div class="column-header">
+                  Can Call?
+                </div>
+                <div class="other-value" *ngIf="contact.canCall">Yes</div>
+                <div class="other-value" *ngIf="!contact.canCall">No</div>
+              </div>
+
+              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
+                <div class="column-header">
+                  Can Text?
+                </div>
+                <div class="other-value" *ngIf="contact.canText">Yes</div>
+                <div class="other-value" *ngIf="!contact.canText">No</div>
+              </div>
+
+              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
+                <div class="column-header">
+                  Can Email?
+                </div>
+                <div class="other-value" *ngIf="contact.canEmail">Yes</div>
+                <div class="other-value" *ngIf="!contact.canEmail">No</div>
+              </div>
+            </div>
+
             <div fxLayout="row wrap" *ngIf="contact.tags && contact.tags.length > 0">
               <div class="column-layout">
                 <div class="column-header">

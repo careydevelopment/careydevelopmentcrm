@@ -21,4 +21,9 @@ export interface Contact {
   account: Account;
   timezone: string;
   tags: string[];
+  canCall: boolean;
+  canText: boolean;
+  canEmail: boolean;
+  birthdayMonth: string;
+  birthdayDay: number;
 }

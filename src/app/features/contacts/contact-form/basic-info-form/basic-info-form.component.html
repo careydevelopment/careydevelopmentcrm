@@ -119,12 +119,42 @@
       <div class="label">Time Zone</div>
       <div>
         <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
-          <mat-select formControlName="timezone" placeholder="Select a time zone">
-            <mat-option *ngFor="let zone of availableTimezones" [value]="zone">
+          <input type="text"
+                 placeholder="Select or enter time zone"
+                 matInput
+                 formControlName="timezone"
+                 [matAutocomplete]="autoTimezone">
+          <mat-autocomplete autoActiveFirstOption #autoTimezone="matAutocomplete">
+            <mat-option *ngFor="let zone of filteredTimezones | async" [value]="zone">
               {{zone}}
             </mat-option>
-          </mat-select>
+          </mat-autocomplete>
         </mat-form-field>
+      </div>
+    </div>
+
+    <div class="vertical-form-field">
+      <div class="label">Birthday Month & Date</div>
+      <div fxLayout="row wrap" fxLayoutGap="25px">
+        <div>
+          <mat-form-field appearance="fill" class="no-label-field">
+            <mat-select formControlName="birthdayMonth" placeholder="Select birthday month" (selectionChange)="getDaysInMonth()">
+              <mat-option *ngFor="let month of availableMonths" [value]="month">
+                {{month}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field appearance="fill" class="no-label-field">
+            <mat-select formControlName="birthdayDay" placeholder="Select birthday date">
+              <mat-option *ngFor="let day of daysInMonth" [value]="day">
+                {{day}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
     </div>
 
@@ -153,6 +183,36 @@
       <div>
         <mat-radio-group formControlName="authority">
           <mat-radio-button value="true">Yes</mat-radio-button>
+          <mat-radio-button value="false">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+
+    <div class="vertical-form-field radio-separator">
+      <div class="label">Call?</div>
+      <div>
+        <mat-radio-group formControlName="canCall">
+          <mat-radio-button value="true" selected>Yes</mat-radio-button>
+          <mat-radio-button value="false">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+
+    <div class="vertical-form-field radio-separator">
+      <div class="label">Text?</div>
+      <div>
+        <mat-radio-group formControlName="canText">
+          <mat-radio-button value="true" selected>Yes</mat-radio-button>
+          <mat-radio-button value="false">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+
+    <div class="vertical-form-field radio-separator">
+      <div class="label">Email?</div>
+      <div>
+        <mat-radio-group formControlName="canEmail">
+          <mat-radio-button value="true" selected>Yes</mat-radio-button>
           <mat-radio-button value="false">No</mat-radio-button>
         </mat-radio-group>
       </div>

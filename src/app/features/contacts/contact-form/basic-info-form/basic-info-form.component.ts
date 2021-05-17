@@ -13,6 +13,7 @@ import { Account } from '../../models/account';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { GeoService } from 'carey-geo';
+import { DateService } from '../../../../services/date.service';
 
 @Component({
   selector: 'contact-basic-info-form',
@@ -27,11 +28,16 @@ export class BasicInfoFormComponent implements OnInit {
   availableSources: DisplayValueMap[] = sources;
   availableContactStatuses: DisplayValueMap[] = contactStatuses;
   availableLinesOfBusiness: DisplayValueMap[] = linesOfBusiness;
-  availableTimezones: string[] = [];
+  availableMonths: string[] = [];
 
   availableAccounts: Account[] = [{ name: "Loading...", id: "-1"}];
   filteredAccounts: Observable<Account[]> = of(this.availableAccounts);
   newAccount: boolean = false;
+
+  availableTimezones: string[] = ['Loading...'];
+  filteredTimezones: Observable<string[]> = of(this.availableTimezones);
+
+  daysInMonth: number[] = [];
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   selectable = true;
@@ -40,7 +46,7 @@ export class BasicInfoFormComponent implements OnInit {
   @Input() contact: Contact;
 
   constructor(private fb: FormBuilder, private contactService: ContactService,
-    private accountService: AccountService, private geoService: GeoService) { }
+    private accountService: AccountService, private geoService: GeoService, private dateService: DateService) { }
 
   ngOnInit() {
     this.loadData();
@@ -69,6 +75,11 @@ export class BasicInfoFormComponent implements OnInit {
 
   private handleFetchTimezonesResponse(zones: string[]) {
     this.availableTimezones = zones;
+
+    this.filteredTimezones = this.basicInfoFormGroup.controls['timezone'].valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterTimezone(value))
+    );
   }
 
   private handleFetchTimezonesError(err: Error) {
@@ -89,8 +100,26 @@ export class BasicInfoFormComponent implements OnInit {
     return this.availableAccounts.filter(account => account.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
+  private filterTimezone(name: string): string[] {
+    const filterValue = name.toLowerCase();
+    return this.availableTimezones.filter(zone => zone.toLowerCase().indexOf(filterValue) === 0);
+  }
+
   private handleFetchAccountsError(err: Error) {
     console.log(err);
+  }
+
+  getDaysInMonth() {
+    let month: string = this.basicInfoFormGroup.controls['birthdayMonth'].value;
+
+    if (month) {
+      let days: number = this.dateService.getNumberOfDaysInMonth(month);
+      this.daysInMonth = [];
+
+      for (let i = 1; i <= days; i++) {
+        this.daysInMonth.push(i);
+      }
+    }
   }
 
   private saveForm() {
@@ -101,6 +130,11 @@ export class BasicInfoFormComponent implements OnInit {
     if (!this.contact) this.contact = { 'status': 'NEW', 'authority': false } as Contact;
 
     let authority: string = this.contact.authority ? 'true' : 'false';
+    let canCall: string = this.contact.canCall ? 'true' : 'false';
+    let canText: string = this.contact.canText ? 'true' : 'false';
+    let canEmail: string = this.contact.canEmail ? 'true' : 'false';
+
+    this.availableMonths = this.dateService.getAvailableMonths();
 
     this.basicInfoFormGroup = this.fb.group({
       'firstName': [this.contact.firstName, [Validators.required, Validators.pattern('^[a-zA-Z \-\]*$')]],
@@ -118,6 +152,11 @@ export class BasicInfoFormComponent implements OnInit {
       'account': [(this.contact.account ? this.contact.account.name : ''),
         [this.accountValidator(), Validators.required, Validators.pattern('^[a-zA-Z., \-\]*$')]],
       'timezone': [this.contact.timezone],
+      'birthdayDay': [this.contact.birthdayDay],
+      'birthdayMonth': [this.contact.birthdayMonth],
+      'canCall': [canCall],
+      'canText': [canText],
+      'canEmail': [canEmail],
       'tags': [(this.contact.tags) ? this.contact.tags : []]
     });
   }
@@ -188,6 +227,11 @@ export class BasicInfoFormComponent implements OnInit {
     contact.title = basicInfo.controls['title'].value;
     contact.tags = basicInfo.controls['tags'].value;
     contact.timezone = basicInfo.controls['timezone'].value;
+    contact.canCall = (basicInfo.controls['canCall'].value == 'true');
+    contact.canText = (basicInfo.controls['canText'].value == 'true');
+    contact.canEmail = (basicInfo.controls['canEmail'].value == 'true');
+    contact.birthdayDay = basicInfo.controls['birthdayDay'].value;
+    contact.birthdayMonth = basicInfo.controls['birthdayMonth'].value;
   }
 
   private getAccount(accountName: string): Account {

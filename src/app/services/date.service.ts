@@ -172,4 +172,21 @@ export class DateService {
 
     return dateVal;
   }
+
+  getAvailableMonths(): string[] {
+    return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+      'October', 'November', 'December'];
+  }
+
+  getNumberOfDaysInMonth(month: string): number {
+    const monthsWith30Days: string[] = ['March', 'May', 'July', 'September', 'November'];
+    const monthsWith29Days: string[] = ['February'];
+
+    let days: number = 31;
+
+    if (monthsWith30Days.indexOf(month) > -1) days = 30
+    else if (monthsWith29Days.indexOf(month) > -1) days = 29;
+
+    return days;
+  }
 }
