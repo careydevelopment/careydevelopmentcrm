@@ -40,7 +40,7 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     if (!this.contact) {
-      this.contact = {} as Contact;
+      this.initContact();
     } else {
       this.setPageTitle();
     }
@@ -53,6 +53,14 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     //gotta do this here so we have a handle on the child components
     this.handleSubscriptions();
+  }
+
+  private initContact() {
+    this.contact = {} as Contact;
+
+    this.contact.canEmail = true;
+    this.contact.canCall = true;
+    this.contact.canText = true;
   }
 
   private setPageTitle() {

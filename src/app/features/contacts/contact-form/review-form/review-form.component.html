@@ -76,6 +76,27 @@
         <span class="other-value" *ngIf="contact.authority">Yes</span>
         <span class="other-value" *ngIf="!contact.authority">No</span>
       </div>
+      <div class="other-line" *ngIf="contact.timezone">
+        <span class="other-label">Time Zone:</span> <span class="other-value">{{contact.timezone}}</span>
+      </div>
+      <div class="other-line" *ngIf="contact.birthdayMonth">
+        <span class="other-label">Birth Month & Day:</span> <span class="other-value">{{contact.birthdayMonth}} {{contact.birthdayDay}}</span>
+      </div>
+      <div class="other-line">
+        <span class="other-label">Can Call:</span>
+        <span class="other-value" *ngIf="contact.canCall">Yes</span>
+        <span class="other-value" *ngIf="!contact.canCall">No</span>
+      </div>
+      <div class="other-line">
+        <span class="other-label">Can Text:</span>
+        <span class="other-value" *ngIf="contact.canText">Yes</span>
+        <span class="other-value" *ngIf="!contact.canText">No</span>
+      </div>
+      <div class="other-line">
+        <span class="other-label">Can Email:</span>
+        <span class="other-value" *ngIf="contact.canEmail">Yes</span>
+        <span class="other-value" *ngIf="!contact.canEmail">No</span>
+      </div>
     </div>
   </div>
 </div>
