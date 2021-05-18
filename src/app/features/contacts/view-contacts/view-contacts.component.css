@@ -1,5 +1,6 @@
 table {
-  width: 950px;
+  min-width: 1150px;
+  max-width: 100%;
 }
 
 .table-container {

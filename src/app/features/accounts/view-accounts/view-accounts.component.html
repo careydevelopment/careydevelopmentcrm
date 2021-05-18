@@ -84,7 +84,7 @@
         </ng-container>
 
         <ng-container matColumnDef="location">
-          <tr><th mat-header-cell *matHeaderCellDef> Location </th></tr>
+          <tr><th mat-header-cell *matHeaderCellDef style="width:500px"> Location </th></tr>
           <tr>
             <td mat-cell *matCellDef="let row" style="width:20%">
               <span *ngIf="row.address && row.address.city">{{row.address.city}}</span><span *ngIf="row.address && row.address.state">, {{row.address.state}}</span>

@@ -1,0 +1,71 @@
+.vertical-layout {
+  margin-bottom: 15px !important;
+}
+
+.empty-set-status-message {
+  font-size: 14pt;
+  font-weight: 400;
+}
+
+.address-type {
+  font-size: 14pt;
+  font-weight: 400;
+  text-decoration: underline;
+  margin-bottom: 5px;
+}
+
+.normal-detail {
+  font-size: 12pt;
+  font-weight: 500;
+}
+
+.phone-label {
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+
+.has-authority {
+  font-size: 12pt;
+  color: limegreen;
+  font-weight: 500;
+}
+
+.no-authority {
+  font-size: 12pt;
+  color: crimson;
+  font-weight: 500;
+}
+
+.column-header {
+  font-size: 12pt;
+  font-weight: 500;
+  text-decoration: underline;
+  margin-bottom: 5px;
+}
+
+.column-layout {
+  margin-bottom: 20px;
+  margin-right: 80px;
+}
+
+.normal-status {
+  font-size: 14pt;
+  color: green;
+}
+
+yellow-status {
+  font-size: 14pt;
+  color: goldenrod;
+}
+
+.inactive-status {
+  font-size: 14pt;
+  font-weight: 500;
+  color: crimson;
+}
+
+.free-text {
+  font-size: 11pt;
+  font-weight: 300;
+}

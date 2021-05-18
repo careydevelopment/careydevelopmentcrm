@@ -23,6 +23,7 @@ import { DirectivesModule } from '../../directives/directives.module';
 import { AccountFormComponent } from './account-form/account-form.component';
 import { ViewAccountsComponent } from './view-accounts/view-accounts.component';
 import { EditAccountComponent } from './edit-account/edit-account.component';
+import { ViewAccountComponent } from './view-account/view-account.component';
 
 
 export const routes = [
@@ -47,6 +48,14 @@ export const routes = [
       breadcrumb: 'Edit Account',
       pauseDisplay: true
     }
+  },
+  {
+    path: 'view-account',
+    component: ViewAccountComponent,
+    data: {
+      breadcrumb: 'View Account',
+      pauseDisplay: true
+    }
   }
 ];
 
@@ -55,7 +64,8 @@ export const routes = [
     AddAccountComponent,
     AccountFormComponent,
     ViewAccountsComponent,
-    EditAccountComponent
+    EditAccountComponent,
+    ViewAccountComponent
   ],
   imports: [
     CommonModule,

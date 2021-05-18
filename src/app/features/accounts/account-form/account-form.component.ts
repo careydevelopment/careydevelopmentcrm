@@ -149,6 +149,8 @@ export class AccountFormComponent implements OnInit {
   }
 
   private handleAccountSaveResponse(account: Account) {
+    this.alertService.success("Account successfully saved!");
+    this.scrollToTop();
     console.log("account successfully saved ", account);
   }
 
@@ -187,5 +189,10 @@ export class AccountFormComponent implements OnInit {
 
   private handleGeoError(err: Error) {
     console.error("Problem getting geographies!", err);
+  }
+
+  private scrollToTop() {
+    const element = document.querySelector('mat-sidenav-content') || window;
+    element.scrollTo(0, 0);
   }
 }

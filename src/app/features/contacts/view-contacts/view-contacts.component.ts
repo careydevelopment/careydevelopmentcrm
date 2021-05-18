@@ -24,7 +24,7 @@ import { phoneTypes } from '../../../models/phone-type';
 })
 export class ViewContactsComponent implements OnInit {
 
-  displayedColumns: string[] = ['action', 'lastName', 'firstName', 'status', 'title', 'company'];
+  displayedColumns: string[] = ['action', 'lastName', 'firstName', 'status', 'title', 'account'];
 
   dataSource: MatTableDataSource<Contact>;
   currentUser: User;
