@@ -24,13 +24,30 @@ export let menu: NavItem[] = [
     ]
   },
   {
+    displayName: 'Accounts',
+    iconName: 'business',
+    route: 'accounts',
+    children: [
+      {
+        displayName: 'View Accounts',
+        iconName: 'list',
+        route: 'accounts/view-accounts'
+      },
+      {
+        displayName: 'Add Account',
+        iconName: 'add_box',
+        route: 'accounts/add-account'
+      }
+    ]
+  },
+  {
     displayName: 'Activities',
     iconName: 'grading',
     route: 'activities',
     children: [
       {
         displayName: 'Add Activity',
-        iconName: 'add_task',
+        iconName: 'add_box',
         route: 'activities/add-activity'
       }
     ]
@@ -42,7 +59,7 @@ export let menu: NavItem[] = [
     children: [
       {
         displayName: 'Add Deal',
-        iconName: 'library_add',
+        iconName: 'add_box',
         route: 'deals/add-deal'
       }
     ]

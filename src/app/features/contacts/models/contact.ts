@@ -1,7 +1,7 @@
-import { Address } from './address';
-import { Phone } from './phone';
-import { SalesOwner } from './sales-owner';
-import { Account } from './account';
+import { Address } from '../../../models/address';
+import { Phone } from '../../../models/phone';
+import { SalesOwner } from '../../../models/sales-owner';
+import { Account } from '../../accounts/models/account';
 
 export interface Contact {
   id: string;
@@ -26,4 +26,5 @@ export interface Contact {
   canEmail: boolean;
   birthdayMonth: string;
   birthdayDay: number;
+  notes;
 }

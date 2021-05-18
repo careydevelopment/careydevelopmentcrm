@@ -15,13 +15,13 @@
         </mat-expansion-panel-header>
 
         <div class="vertical-form-field">
-          <div class="label">Source</div>
+          <div class="label">Industry</div>
           <div>
             <mat-form-field appearance="fill" class="no-label-field">
-              <mat-select [formControl]="sourceFilter">
-                <mat-option value="">-- Select a Source --</mat-option>
-                <mat-option *ngFor="let source of availableSources" [value]="source.value">
-                  {{source.display}}
+              <mat-select [formControl]="industryFilter">
+                <mat-option value="">-- Select an Industry --</mat-option>
+                <mat-option *ngFor="let industry of availableIndustries" [value]="industry.value">
+                  {{industry.display}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -34,7 +34,7 @@
             <mat-form-field appearance="fill" class="no-label-field">
               <mat-select [formControl]="statusFilter">
                 <mat-option value="">-- Select a Status --</mat-option>
-                <mat-option *ngFor="let status of availableContactStatuses" [value]="status.value">
+                <mat-option *ngFor="let status of availableAccountStatuses" [value]="status.value">
                   {{status.display}}
                 </mat-option>
               </mat-select>
@@ -53,40 +53,43 @@
         <ng-container matColumnDef="action">
           <tr><th mat-header-cell *matHeaderCellDef> Action </th></tr>
           <tr>
-            <td mat-cell *matCellDef="let row" style="width:20%">
-              <button mat-icon-button color="primary" (click)="viewContact(row)" title="View Contact"><mat-icon>preview</mat-icon></button>
-              <button mat-icon-button color="primary" (click)="editContact(row)" title="Edit Contact"><mat-icon>edit</mat-icon></button>
+            <td mat-cell *matCellDef="let row" style="width:10%">
+              <button mat-icon-button color="primary" (click)="viewAccount(row)" title="View Account"><mat-icon>preview</mat-icon></button>
+              <button mat-icon-button color="primary" (click)="editAccount(row)" title="Edit Account"><mat-icon>edit</mat-icon></button>
             </td>
           <tr>
         </ng-container>
 
-        <ng-container matColumnDef="lastName">
-          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th></tr>
-          <tr><td mat-cell *matCellDef="let row" style="width:20%"> {{row.lastName}} </td><tr>
+        <ng-container matColumnDef="name">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:20%"> {{row.name}} </td><tr>
         </ng-container>
 
-        <ng-container matColumnDef="firstName">
-          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th></tr>
-          <tr><td mat-cell *matCellDef="let row" style="width:15%"> {{row.firstName}} </td></tr>
-        </ng-container>
-
-        <ng-container matColumnDef="status">
-          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header style="width:500px"> Status </th></tr>
+        <ng-container matColumnDef="industry" style="width: 10%">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Industry </th></tr>
           <tr>
             <td mat-cell *matCellDef="let row" style="width:10%">
-              {{displayValueMapService.getDisplay(row.status, availableContactStatuses)}}
+              {{displayValueMapService.getDisplay(row.industry, availableIndustries)}}
             </td>
           </tr>
         </ng-container>
 
-        <ng-container matColumnDef="title">
-          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header style="width:500px"> Title </th></tr>
-          <tr><td mat-cell *matCellDef="let row" style="width:20%"> {{row.title}} </td></tr>
+        <ng-container matColumnDef="status">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th></tr>
+          <tr>
+            <td mat-cell *matCellDef="let row" style="width:10%">
+              {{displayValueMapService.getDisplay(row.status, availableAccountStatuses)}}
+            </td>
+          </tr>
         </ng-container>
 
-        <ng-container matColumnDef="company">
-          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header style="width:500px"> Company </th></tr>
-          <tr><td mat-cell *matCellDef="let row" style="width:15%"> {{row.company}} </td></tr>
+        <ng-container matColumnDef="location">
+          <tr><th mat-header-cell *matHeaderCellDef> Location </th></tr>
+          <tr>
+            <td mat-cell *matCellDef="let row" style="width:20%">
+              <span *ngIf="row.address && row.address.city">{{row.address.city}}</span><span *ngIf="row.address && row.address.state">, {{row.address.state}}</span>
+            </td>
+          <tr>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -1,5 +1,5 @@
 table {
-  width: 950px;
+  width: 1150px;
 }
 
 .table-container {
@@ -20,4 +20,3 @@ table {
 .mat-row:hover {
   background-color: #E8EAF6;
 }
-

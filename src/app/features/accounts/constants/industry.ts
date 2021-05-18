@@ -1,0 +1,30 @@
+import { DisplayValueMap } from '../../../models/name-value-map';
+
+export const industries: DisplayValueMap[] = [
+  { display: 'Administrative Support', value: 'ADMINISTRATIVE_SUPPORT' },
+  { display: 'Agriculture', value: 'AGRICULTURE' },
+  { display: 'Amusement', value: 'AMUSEMENT' },
+  { display: 'Apparel', value: 'APPAREL' },
+  { display: 'Arts', value: 'ARTS' },
+  { display: 'Beverage', value: 'BEVERAGE' },
+  { display: 'Broadcasting', value: 'BROADCASTING' },
+  { display: 'Chemical Manufacturing', value: 'CHEMICAL_MANUFACTURING' },
+  { display: 'Construction', value: 'CONSTRUCTION' },
+  { display: 'Data Processing', value: 'DATA_PROCESSING' },
+  { display: 'Education', value: 'EDUCATION' },
+  { display: 'Electronics', value: 'ELECTRONICS' },
+  { display: 'Energy', value: 'ENERGY' },
+  { display: 'Finance', value: 'FINANCE' },
+  { display: 'Food Service', value: 'FOOD_SERVICE' },
+  { display: 'Furniture', value: 'FURNITURE' },
+  { display: 'Healthcare', value: 'HEALTHCARE' },
+  { display: 'Hospitality', value: 'HOSPITALITY' },
+  { display: 'Insurance', value: 'INSURANCE' },
+  { display: 'Material', value: 'MATERIALS' },
+  { display: 'Mining', value: 'MINING' },
+  { display: 'Public Sector', value: 'PUBLIC_SECTOR' },
+  { display: 'Real Estate', value: 'REAL_ESTATE' },
+  { display: 'Retail', value: 'RETAIL' },
+  { display: 'Transportation', value: 'TRANSPORTATION' },
+  { display: 'Other', value: 'OTHER' }
+];

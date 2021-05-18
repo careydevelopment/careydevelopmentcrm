@@ -5,15 +5,15 @@ import { Contact } from '../models/contact';
 import { AlertService } from 'carey-alert';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { phoneTypes } from '../constants/phone-type';
-import { addressTypes } from '../constants/address-type';
 import { linesOfBusiness } from '../constants/line-of-business';
 import { contactStatuses } from '../constants/contact-status';
-import { sources } from '../constants/source';
 import { BreadcrumbService } from '../../../ui/breadcrumb/breadcrumb.service';
 import { DisplayValueMap } from '../../../models/name-value-map';
 import { DisplayValueMapService } from '../../ui/service/display-map.service';
 import { ContactService } from '../services/contact.service';
+import { sources } from '../../../models/source';
+import { addressTypes } from '../../../models/address-type';
+import { phoneTypes } from '../../../models/phone-type';
 
 
 @Component({

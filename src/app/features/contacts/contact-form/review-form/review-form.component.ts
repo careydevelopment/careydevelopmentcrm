@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { addressTypes } from '../../../../models/address-type';
 import { DisplayValueMap } from '../../../../models/name-value-map';
+import { phoneTypes } from '../../../../models/phone-type';
+import { sources } from '../../../../models/source';
 import { DisplayValueMapService } from '../../../ui/service/display-map.service';
-import { addressTypes } from '../../constants/address-type';
 import { contactStatuses } from '../../constants/contact-status';
 import { linesOfBusiness } from '../../constants/line-of-business';
-import { phoneTypes } from '../../constants/phone-type';
-import { sources } from '../../constants/source';
 import { Contact } from '../../models/contact';
 
 @Component({

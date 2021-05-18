@@ -1,4 +1,4 @@
-import { DisplayValueMap } from '../../../models/name-value-map';
+import { DisplayValueMap } from "./name-value-map";
 
 export const phoneTypes: DisplayValueMap[] = [
   { display: 'Home', value: 'HOME' },

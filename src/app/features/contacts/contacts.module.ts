@@ -26,7 +26,6 @@ import { AddressTypeFormComponent } from './contact-form/addresses-form/address-
 import { PhoneTypeFormComponent } from './contact-form/phones-form/phone-type-form/phone-type-form.component';
 import { ReviewFormComponent } from './contact-form/review-form/review-form.component';
 import { NgxFlagPickerModule } from 'ngx-flag-picker';
-import { PhoneMaskDirective } from '../../util/phone-mask.directive';
 import { EditContactComponent } from './edit-contact/edit-contact.component';
 import { ViewContactsComponent } from './view-contacts/view-contacts.component';
 import { ViewContactComponent } from './view-contact/view-contact.component';
@@ -37,6 +36,7 @@ import { DealsModule } from '../deals/deals.module';
 import { ViewContactMenuComponent } from './view-contact/view-contact-menu/view-contact-menu.component';
 import { StatusProgressBarComponent } from './status-progress-bar/status-progress-bar.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { DirectivesModule } from '../../directives/directives.module';
 
 export const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'add-contact' },
@@ -81,7 +81,6 @@ export const routes = [
     AddressTypeFormComponent,
     PhoneTypeFormComponent,
     ReviewFormComponent,
-    PhoneMaskDirective,
     EditContactComponent,
     ViewContactsComponent,
     ViewContactComponent,
@@ -112,6 +111,7 @@ export const routes = [
     NgxFlagPickerModule,
     ActivitiesModule,
     DealsModule,
+    DirectivesModule,
     RouterModule.forChild(routes)
   ]
 })

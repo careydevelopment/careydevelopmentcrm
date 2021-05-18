@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ValidationErrors, FormGroup, ValidatorFn, AsyncValidatorFn, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { sources } from '../../constants/source';
 import { contactStatuses } from '../../constants/contact-status';
 import { linesOfBusiness } from '../../constants/line-of-business';
 import { Contact } from '../../models/contact';
@@ -8,12 +7,14 @@ import { Observable, of } from 'rxjs';
 import { map, delay, switchMap, startWith } from 'rxjs/operators';
 import { DisplayValueMap } from '../../../../models/name-value-map';
 import { ContactService } from '../../services/contact.service';
-import { AccountService } from '../../services/account.service';
-import { Account } from '../../models/account';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { GeoService } from 'carey-geo';
 import { DateService } from '../../../../services/date.service';
+import { Account } from '../../../accounts/models/account';
+import { AccountService } from '../../../accounts/services/account.service';
+import { sources } from '../../../../models/source';
+
 
 @Component({
   selector: 'contact-basic-info-form',
@@ -30,7 +31,7 @@ export class BasicInfoFormComponent implements OnInit {
   availableLinesOfBusiness: DisplayValueMap[] = linesOfBusiness;
   availableMonths: string[] = [];
 
-  availableAccounts: Account[] = [{ name: "Loading...", id: "-1"}];
+  availableAccounts: Account[] = [{ name: "Loading...", id: "-1" } as Account];
   filteredAccounts: Observable<Account[]> = of(this.availableAccounts);
   newAccount: boolean = false;
 
@@ -49,8 +50,8 @@ export class BasicInfoFormComponent implements OnInit {
     private accountService: AccountService, private geoService: GeoService, private dateService: DateService) { }
 
   ngOnInit() {
-    this.loadData();
     this.createForm();
+    this.loadData();
     this.saveForm();
   }
 
@@ -137,18 +138,18 @@ export class BasicInfoFormComponent implements OnInit {
     this.availableMonths = this.dateService.getAvailableMonths();
 
     this.basicInfoFormGroup = this.fb.group({
-      'firstName': [this.contact.firstName, [Validators.required, Validators.pattern('^[a-zA-Z \-\]*$')]],
-      'lastName': [this.contact.lastName, [Validators.required, Validators.pattern('^[a-zA-Z \-\]*$')]],
+      'firstName': [this.contact.firstName, [Validators.required, Validators.pattern('^[a-zA-Z. \-\]*$')]],
+      'lastName': [this.contact.lastName, [Validators.required, Validators.pattern('^[a-zA-Z. \-\]*$')]],
       'email': [this.contact.email, [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
       [this.emailExistsValidator()],
         'blur'
       ],
       'source': [this.contact.source, [Validators.required]],
-      'sourceDetails': [this.contact.sourceDetails, [Validators.pattern('^[a-zA-Z0-9 \-\]*$')]],
+      'sourceDetails': [this.contact.sourceDetails, [Validators.pattern('^[a-zA-Z0-9., \-\]*$')]],
       'status': [this.contact.status, [Validators.required]],
       'lineOfBusiness': [this.contact.linesOfBusiness],
       'authority': [authority],
-      'title': [this.contact.title, [Validators.pattern('^[a-zA-Z \-\]*$')]],
+      'title': [this.contact.title, [Validators.pattern('^[a-zA-Z. \-\]*$')]],
       'account': [(this.contact.account ? this.contact.account.name : ''),
         [this.accountValidator(), Validators.required, Validators.pattern('^[a-zA-Z., \-\]*$')]],
       'timezone': [this.contact.timezone],
@@ -157,7 +158,8 @@ export class BasicInfoFormComponent implements OnInit {
       'canCall': [canCall],
       'canText': [canText],
       'canEmail': [canEmail],
-      'tags': [(this.contact.tags) ? this.contact.tags : []]
+      'tags': [(this.contact.tags) ? this.contact.tags : []],
+      'notes': [this.contact.notes, [Validators.pattern('^[a-zA-Z0-9., \-\]*$')]]
     });
   }
 
@@ -232,6 +234,7 @@ export class BasicInfoFormComponent implements OnInit {
     contact.canEmail = (basicInfo.controls['canEmail'].value == 'true');
     contact.birthdayDay = basicInfo.controls['birthdayDay'].value;
     contact.birthdayMonth = basicInfo.controls['birthdayMonth'].value;
+    contact.notes = basicInfo.controls['notes'].value;
   }
 
   private getAccount(accountName: string): Account {
@@ -241,7 +244,7 @@ export class BasicInfoFormComponent implements OnInit {
       account = this.availableAccounts.find(a => a.name.toLowerCase() == accountName.toLowerCase());
 
       if (!account) {
-        account = { name: accountName, id: null };
+        account = { name: accountName, id: null } as Account;
       }
     }
 
