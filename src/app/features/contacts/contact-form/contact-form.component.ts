@@ -3,7 +3,6 @@ import { FormGroup, ValidationErrors } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AlertService } from 'carey-alert';
-import { Account } from '../models/account';
 import { Contact } from '../models/contact';
 import { ContactService } from '../services/contact.service';
 import { AddressesFormComponent } from './addresses-form/addresses-form.component';

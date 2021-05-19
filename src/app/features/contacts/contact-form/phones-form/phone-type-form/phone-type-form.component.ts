@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GeoService } from 'carey-geo';
+import { Phone } from '../../../../../models/phone';
 import { Contact } from '../../../models/contact';
-import { Phone } from '../../../models/phone';
 
 @Component({
   selector: 'contact-phone-type-form',
@@ -15,7 +15,7 @@ export class PhoneTypeFormComponent implements OnInit {
 
   @Input() phoneType: string;
   @Input() contact: Contact;
-
+  
   selectedCountryCode = 'us';
   phoneCode = '1';
   countryCodes = ['us', 'ca', 'de', 'mx', 'br', 'pt', 'cn', 'be', 'jp', 'ph', 'lu', 'bs'];

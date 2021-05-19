@@ -1,60 +1,58 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Contact } from '../models/contact';
 import { AlertService } from 'carey-alert';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { linesOfBusiness } from '../constants/line-of-business';
-import { contactStatuses } from '../constants/contact-status';
 import { BreadcrumbService } from '../../../ui/breadcrumb/breadcrumb.service';
 import { DisplayValueMap } from '../../../models/name-value-map';
 import { DisplayValueMapService } from '../../ui/service/display-map.service';
-import { ContactService } from '../services/contact.service';
 import { sources } from '../../../models/source';
 import { addressTypes } from '../../../models/address-type';
 import { phoneTypes } from '../../../models/phone-type';
+import { accountStatuses } from '../constants/account-status';
+import { industries } from '../constants/industry';
+import { AccountService } from '../services/account.service';
+import { Account } from '../models/account';
 
 
 @Component({
-  selector: 'app-view-contact',
+  selector: 'app-view-account',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './view-contact.component.html',
-  styleUrls: ['./view-contact.component.css']
+  templateUrl: './view-account.component.html',
+  styleUrls: ['./view-account.component.css']
 })
-export class ViewContactComponent implements OnInit {
+export class ViewAccountComponent implements OnInit {
 
-  availableAddressTypes: DisplayValueMap[] = addressTypes;
-  availablePhoneTypes: DisplayValueMap[] = phoneTypes;
-  availableLobTypes: DisplayValueMap[] = linesOfBusiness;
-  availableContactStatuses: DisplayValueMap[] = contactStatuses;
   availableSources: DisplayValueMap[] = sources;
+  availableAccountStatuses: DisplayValueMap[] = accountStatuses;
+  availableIndustries: DisplayValueMap[] = industries;
 
   loading: boolean = true;
-  contact: Contact = {} as Contact;
+  account: Account = {} as Account;
 
-  constructor(private route: ActivatedRoute, private contactService: ContactService,
+  constructor(private route: ActivatedRoute, private accountService: AccountService,
     private alertService: AlertService, private router: Router, private displayValueMapService: DisplayValueMapService,
     private breadcrumbService: BreadcrumbService) { }
 
   ngOnInit(): void {
-    let contact$ = this.route.queryParamMap.pipe(
+    let account$ = this.route.queryParamMap.pipe(
       switchMap((params: ParamMap) =>
-        this.contactService.fetchById(params.get('id')))
+        this.accountService.fetchById(params.get('id')))
     );
 
-    contact$.subscribe(
-      (contact: Contact) => this.handleResponse(contact),
+    account$.subscribe(
+      (account: Account) => this.handleResponse(account),
       err => this.handleError(err)
     );
   }
 
-  private handleResponse(contact: Contact) {
-    this.contact = contact;
+  private handleResponse(account: Account) {
+    this.account = account;
     this.loading = false;
 
-    if (this.contact) {
-      this.breadcrumbService.updateBreadcrumb("View " + this.contact.firstName + " " + this.contact.lastName);
+    if (this.account) {
+      this.breadcrumbService.updateBreadcrumb("View " + this.account.name);
     }
   }
 
@@ -67,7 +65,7 @@ export class ViewContactComponent implements OnInit {
     if (err instanceof HttpErrorResponse) {
       if (err.status) {
         if (err.status == 404) {
-          alertMessage = 'Contact with that ID does not exist';
+          alertMessage = 'Account with that ID does not exist';
         }
       }
     }
@@ -75,8 +73,8 @@ export class ViewContactComponent implements OnInit {
     this.alertService.error(alertMessage);
   }
 
-  editContact() {
-    let route = '/contacts/edit-contact';
-    this.router.navigate([route], { queryParams: { id: this.contact.id } });
+  editAccount() {
+    let route = '/accounts/edit-account';
+    this.router.navigate([route], { queryParams: { id: this.account.id } });
   }
 }

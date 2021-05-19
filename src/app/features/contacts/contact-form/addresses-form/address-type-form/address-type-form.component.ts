@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Country, State, GeoService } from 'carey-geo';
 import { forkJoin, Observable } from 'rxjs';
-import { Address } from '../../../models/address';
+import { Address } from '../../../../../models/address';
 import { Contact } from '../../../models/contact';
 
 @Component({
@@ -37,9 +37,9 @@ export class AddressTypeFormComponent implements OnInit {
     
     this.addressTypeFormGroup = this.fb.group({
       'addressType': [this.addressType],
-      'street1': [address.street1, [Validators.pattern('^[a-zA-Z0-9, \-\']+')]],
-      'street2': [address.street2, [Validators.pattern('^[a-zA-Z0-9, \-\']+')]],
-      'city': [address.city, [Validators.pattern('^[a-zA-Z0-9, \-\']+')]],
+      'street1': [address.street1, [Validators.pattern('^[a-zA-Z0-9., \-\']+')]],
+      'street2': [address.street2, [Validators.pattern('^[a-zA-Z0-9., \-\']+')]],
+      'city': [address.city, [Validators.pattern('^[a-zA-Z0-9., \-\']+')]],
       'state': [address.state],
       'zip': [address.zip],
       'country': [address.country]

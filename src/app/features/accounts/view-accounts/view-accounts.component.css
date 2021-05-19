@@ -1,5 +1,5 @@
 table {
-  min-width: 1150px;
+  min-width: 1050px;
   max-width: 100%;
 }
 
@@ -21,4 +21,3 @@ table {
 .mat-row:hover {
   background-color: #E8EAF6;
 }
-

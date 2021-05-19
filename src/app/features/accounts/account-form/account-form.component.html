@@ -1,0 +1,204 @@
+<div fxFlex fxLayout="column" fxLayoutGap="0px">
+  <div fxLayout="row wrap">
+    <div fxFlex="100" fxLayout="column">
+      <div>
+        <alert></alert>
+      </div>
+      <div class="absolute-center" *ngIf="dataLoading">
+        <mat-spinner [diameter]="80"></mat-spinner>
+      </div>
+      <div *ngIf="!dataLoading">
+        <form [formGroup]="accountInfoFormGroup">
+          <div fxLayout="column">
+            <div class="vertical-form-field">
+              <div class="label">Account Name</div>
+              <div>
+                <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+                  <input formControlName="name" matInput placeholder="Enter account name" maxlength="50">
+                  <mat-error *ngIf="accountInfoFormGroup.controls['name'].invalid">Please enter a valid account name</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label">Industry</div>
+              <div>
+                <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+                  <mat-select formControlName="industry" placeholder="Select an industry">
+                    <mat-option *ngFor="let industry of availableIndustries" [value]="industry.value">
+                      {{industry.display}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="accountInfoFormGroup.controls['industry'].invalid">Please select an industry</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label">Number of Employees</div>
+              <div>
+                <mat-form-field appearance="fill" class="no-label-field" fxFlex="20" fxFlex.lt-md="50">
+                  <input formControlName="numberOfEmployees" matInput type="number" placeholder="# of employees" maxlength="6">
+                  <mat-error *ngIf="accountInfoFormGroup.controls['numberOfEmployees'].invalid">Please enter a valid number of employees</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label">Stock Symbol</div>
+              <div>
+                <mat-form-field appearance="fill" class="no-label-field" fxFlex="20" fxFlex.lt-md="50">
+                  <input formControlName="stockSymbol" matInput placeholder="Enter stock symbol" maxlength="8">
+                  <mat-error *ngIf="accountInfoFormGroup.controls['stockSymbol'].invalid">Please enter a valid stock symbol</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label">Annual Revenue</div>
+              <div>
+                <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
+                  <input formControlName="annualRevenue" matInput type="number" placeholder="Enter annual revenue" maxlength="12">
+                  <mat-error *ngIf="accountInfoFormGroup.controls['annualRevenue'].invalid">Please enter a valid revenue amount</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label">Status</div>
+              <div>
+                <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="50">
+                  <mat-select formControlName="status" placeholder="Select a status">
+                    <mat-option *ngFor="let status of availableAccountStatuses" [value]="status.value">
+                      {{status.display}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="accountInfoFormGroup.controls['status'].invalid">Please select a status</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label">Source</div>
+              <div>
+                <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="50">
+                  <mat-select formControlName="source" placeholder="Select a source">
+                    <mat-option *ngFor="let source of availableSources" [value]="source.value">
+                      {{source.display}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="accountInfoFormGroup.controls['source'].invalid">Please select a source</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label">Street 1</div>
+              <div>
+                <mat-form-field appearance="fill" class="no-label-field" fxFlex="80" fxFlex.lt-md="100">
+                  <input formControlName="street1" matInput placeholder="Enter street 1 address" maxlength="80">
+                  <mat-error *ngIf="accountInfoFormGroup.controls['street1'].invalid">Please enter a valid street name</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label">Street 2</div>
+              <div>
+                <mat-form-field appearance="fill" class="no-label-field" fxFlex="80" fxFlex.lt-md="100">
+                  <input formControlName="street2" matInput placeholder="Enter street 2 address" maxlength="80">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label">City</div>
+              <div>
+                <mat-form-field appearance="fill" class="no-label-field" fxFlex="40" fxFlex.lt-md="100">
+                  <input formControlName="city" matInput placeholder="Enter city" maxlength="50">
+                  <mat-error *ngIf="accountInfoFormGroup.controls['city'].invalid">Please enter a valid city</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label">State</div>
+              <div>
+                <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
+                  <mat-select formControlName="state" placeholder="Select a state">
+                    <mat-option *ngFor="let state of states" [value]="state.twoLetterCode">
+                      {{state.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="accountInfoFormGroup.controls['state'].invalid">Please select a state</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label">Postal Code</div>
+              <div>
+                <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
+                  <input formControlName="zip" matInput placeholder="Enter zip code" maxlength="12">
+                  <mat-error *ngIf="accountInfoFormGroup.controls['zip'].invalid">Please enter a valid zip code</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label">Country</div>
+              <div>
+                <mat-form-field appearance="fill" class="no-label-field" fxFlex="40" fxFlex.lt-md="100">
+                  <mat-select formControlName="country" placeholder="Select a country">
+                    <mat-option *ngFor="let country of countries" [value]="country.twoLetterCode">
+                      {{country.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="accountInfoFormGroup.controls['country'].invalid">Please select a country</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div>
+              <div class="label">Phone</div>
+              <div fxLayout="column"
+                   style="height: 50px; background-color: white; margin-bottom: 35px"
+                   [ngStyle.lt-md]="{'width': '100%'}" [ngStyle.gt-sm]="{'width': '50%'}">
+                <div fxLayout="row wrap" fxFlexFill fxLayoutAlign="left center">
+                  <div fxFlex="30">
+                    <ngx-flag-picker [selectedCountryCode]="selectedCountryCode"
+                                     [countryCodes]="countryCodes"
+                                     (changedCountryCode)="changeSelectedCountryCode($event)">
+                    </ngx-flag-picker>
+                  </div>
+                  <div fxFlex="10">
+                    {{phoneCode}}
+                  </div>
+                  <div fxFlex="50">
+                    <input appPhoneMask formControlName="phone" [countryCode]="selectedCountryCode" matInput placeholder="Enter a phone number" maxlength="20">
+                  </div>
+                </div>
+                <mat-error *ngIf="accountInfoFormGroup.controls['phone'].invalid">Please enter a valid phone number</mat-error>
+              </div>
+            </div>
+
+            <div class="vertical-form-field">
+              <div class="label">Description</div>
+              <div>
+                <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
+                  <textarea formControlName="description" matInput placeholder="Enter description" rows="5" cols="40" maxlength="256"></textarea>
+                  <mat-error *ngIf="accountInfoFormGroup.controls['description'].invalid">Please enter a valid description</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:20px">
+            <button *ngIf="!formSubmitted" mat-raised-button color="primary" (click)="saveForm()">Save Account</button>
+            <mat-spinner *ngIf="formSubmitted" [diameter]="50"></mat-spinner>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

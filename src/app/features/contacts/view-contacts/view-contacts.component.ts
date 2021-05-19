@@ -5,16 +5,16 @@ import { MatTableDataSource } from '@angular/material/table';
 import { UserService, User } from 'carey-user';
 import { AlertService } from 'carey-alert';
 import { Contact } from '../models/contact';
-import { addressTypes } from '../constants/address-type';
 import { contactStatuses } from '../constants/contact-status';
 import { linesOfBusiness } from '../constants/line-of-business';
-import { phoneTypes } from '../constants/phone-type';
-import { sources } from '../constants/source';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DisplayValueMap } from '../../../models/name-value-map';
 import { DisplayValueMapService } from '../../ui/service/display-map.service';
 import { ContactService } from '../services/contact.service';
+import { sources } from '../../../models/source';
+import { addressTypes } from '../../../models/address-type';
+import { phoneTypes } from '../../../models/phone-type';
 
 
 @Component({
@@ -24,7 +24,7 @@ import { ContactService } from '../services/contact.service';
 })
 export class ViewContactsComponent implements OnInit {
 
-  displayedColumns: string[] = ['action', 'lastName', 'firstName', 'status', 'title', 'company'];
+  displayedColumns: string[] = ['action', 'lastName', 'firstName', 'status', 'title', 'account'];
 
   dataSource: MatTableDataSource<Contact>;
   currentUser: User;
