@@ -1,1 +1,98 @@
-<p>view-activities works!</p>
+<div>
+  <div style="margin-bottom:20px">
+    <alert></alert>
+  </div>
+  <div class="absolute-center" *ngIf="dataLoading">
+    <mat-spinner [diameter]="80"></mat-spinner>
+  </div>
+  <div [style.visibility]="dataLoading ? 'hidden' : 'visible'">
+    <div style="margin-bottom: 30px">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Filter
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="vertical-form-field">
+          <div class="label">Type</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field">
+              <mat-select [formControl]="typeFilter">
+                <mat-option value="">-- Select a Type --</mat-option>
+                <mat-option *ngFor="let type of availableActivityTypes" [value]="type.name">
+                  {{type.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="vertical-form-field">
+          <div class="label">Contact</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field">
+              <mat-select [formControl]="contactFilter">
+                <mat-option value="">-- Select a Contact --</mat-option>
+                <mat-option *ngFor="let contact of availableContacts" [value]="contact.id">
+                  {{contact.firstName}} {{contact.lastName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div>
+          <button mat-raised-button color="primary" (click)="clearFilter()">Clear Filter</button>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <div class="table-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="action">
+          <tr><th mat-header-cell *matHeaderCellDef> Action </th></tr>
+          <tr>
+            <td mat-cell *matCellDef="let row" style="width:10%">
+              <button mat-icon-button color="primary" (click)="viewActivity(row)" title="View Activity"><mat-icon>preview</mat-icon></button>
+              <button mat-icon-button color="primary" (click)="editActiviy(row)" title="Edit Activity"><mat-icon>edit</mat-icon></button>
+            </td>
+          <tr>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:20%"> {{row.title}} </td><tr>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th></tr>
+          <tr>
+            <td mat-cell *matCellDef="let row" style="width:20%">
+              {{dateService.getShortDateAndTimeDisplay(row.startDate)}}
+            </td>
+          <tr>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:15%"> {{row.type.name}} </td></tr>
+        </ng-container>
+
+        <ng-container matColumnDef="contact">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Contact </th></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:15%"> {{row.contact.firstName}} {{row.contact.lastName}}</td></tr>
+        </ng-container>
+
+        <ng-container matColumnDef="deal">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header style="width:500px"> Deal </th></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:20%"> <span *ngIf="row.deal">{{row.deal.name}}</span> </td></tr>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+</div>

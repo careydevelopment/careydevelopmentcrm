@@ -46,6 +46,11 @@ export let menu: NavItem[] = [
     route: 'activities',
     children: [
       {
+        displayName: 'View Activities',
+        iconName: 'list',
+        route: 'activities/view-activities'
+      },
+      {
         displayName: 'Add Activity',
         iconName: 'add_box',
         route: 'activities/add-activity'

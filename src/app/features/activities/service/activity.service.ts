@@ -22,8 +22,11 @@ export class ActivityService {
     let orderType: string = criteria.orderType;
     let contactId: string = criteria.contactId;
     let dealId: string = criteria.dealId;
+    let salesOwnerId: string = criteria.salesOwnerId;
 
-    let url = `${baseUrl}/activities/search?dealId=${dealId}&contactId=${contactId}&minDate=${minDate}&maxDate=${maxDate}&orderBy=${orderBy}&orderType=${orderType}`;
+    let url = `${baseUrl}/activities/search?dealId=${dealId}&contactId=${contactId}&minDate=${minDate}&
+              maxDate=${maxDate}&orderBy=${orderBy}&orderType=${orderType}&salesOwnerId=${salesOwnerId}`;
+
     console.log("Fetch activities by deal URL is " + url);
 
     return this.http.get<Activity[]>(url);

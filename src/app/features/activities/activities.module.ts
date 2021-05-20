@@ -19,6 +19,12 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { EditActivityComponent } from './edit-activity/edit-activity.component';
 import { ActivitiesListComponent } from './activities-list/activities-list.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatListModule } from '@angular/material/list';
+
 
 export const routes = [
   {
@@ -79,6 +85,11 @@ export const routes = [
     MatSelectModule,
     MatRadioModule,
     MatDatepickerModule,
+    MatExpansionModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatListModule,
     RouterModule.forChild(routes)
   ]
 })

@@ -6,4 +6,5 @@ export class ActivitySearchCriteria {
   orderBy: string = 'startDate';
   orderType: string = 'DESC';
   maxResults: number = 50;
+  salesOwnerId: string = '';
 }
