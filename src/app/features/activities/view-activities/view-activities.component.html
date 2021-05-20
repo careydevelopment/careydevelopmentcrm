@@ -55,20 +55,20 @@
           <tr>
             <td mat-cell *matCellDef="let row" style="width:10%">
               <button mat-icon-button color="primary" (click)="viewActivity(row)" title="View Activity"><mat-icon>preview</mat-icon></button>
-              <button mat-icon-button color="primary" (click)="editActiviy(row)" title="Edit Activity"><mat-icon>edit</mat-icon></button>
+              <button mat-icon-button color="primary" (click)="editActivity(row)" title="Edit Activity"><mat-icon>edit</mat-icon></button>
             </td>
           <tr>
         </ng-container>
 
         <ng-container matColumnDef="title">
           <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th></tr>
-          <tr><td mat-cell *matCellDef="let row" style="width:20%"> {{row.title}} </td><tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:25%"> {{row.title}} </td><tr>
         </ng-container>
 
         <ng-container matColumnDef="date">
           <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th></tr>
           <tr>
-            <td mat-cell *matCellDef="let row" style="width:20%">
+            <td mat-cell *matCellDef="let row" style="width:15%">
               {{dateService.getShortDateAndTimeDisplay(row.startDate)}}
             </td>
           <tr>
@@ -76,17 +76,17 @@
 
         <ng-container matColumnDef="type">
           <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th></tr>
-          <tr><td mat-cell *matCellDef="let row" style="width:15%"> {{row.type.name}} </td></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width: 15%; position:relative; padding: 5px; vertical-align: middle">{{row.type.name}}</td></tr>
         </ng-container>
 
         <ng-container matColumnDef="contact">
           <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Contact </th></tr>
-          <tr><td mat-cell *matCellDef="let row" style="width:15%"> {{row.contact.firstName}} {{row.contact.lastName}}</td></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width: 20%"> {{row.contact.firstName}} {{row.contact.lastName}}</td></tr>
         </ng-container>
 
         <ng-container matColumnDef="deal">
           <tr><th mat-header-cell *matHeaderCellDef mat-sort-header style="width:500px"> Deal </th></tr>
-          <tr><td mat-cell *matCellDef="let row" style="width:20%"> <span *ngIf="row.deal">{{row.deal.name}}</span> </td></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:25%"> <span *ngIf="row.deal">{{row.deal.name}}</span> </td></tr>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

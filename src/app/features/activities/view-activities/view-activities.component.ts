@@ -83,17 +83,21 @@ export class ViewActivitiesComponent implements OnInit {
   }
 
   private setAvailableContacts() {
+    let tempContacts: ContactLightweight[] = [];
+
     this.dataSource.data.forEach(activity => {
       if (activity.contact) {
         let contact = activity.contact;
-        let isPresent: boolean = this.availableContacts.some(function (el) { return el.id === contact.id });
+        let isPresent: boolean = tempContacts.some(function (el) { return el.id === contact.id });
 
         if (!isPresent) {
           let contactLight: ContactLightweight = { firstName: contact.firstName, lastName: contact.lastName, id: contact.id };
-          this.availableContacts.push(contactLight);
+          tempContacts.push(contactLight);
         }
       }
     });
+
+    this.availableContacts = tempContacts.sort((a, b) => a.lastName > b.lastName ? 1 : a.lastName === b.lastName ? 0 : -1);
   }
 
   private handleActivityTypesError(err: Error) {
@@ -106,6 +110,14 @@ export class ViewActivitiesComponent implements OnInit {
       .subscribe(
         type => {
           this.filterValues.type = type;
+          this.dataSource.filter = JSON.stringify(this.filterValues);
+        }
+    )
+
+    this.contactFilter.valueChanges
+      .subscribe(
+        contact => {
+          this.filterValues.contact = contact;
           this.dataSource.filter = JSON.stringify(this.filterValues);
         }
       )
@@ -123,7 +135,11 @@ export class ViewActivitiesComponent implements OnInit {
       let qualifies: boolean = true;
 
       if (searchTerms.type) {
-        qualifies = qualifies && (activity.type && activity.type.name && activity.type.name.indexOf(searchTerms.type) !== -1);
+        qualifies = (activity.type && activity.type.name && activity.type.name.indexOf(searchTerms.type) !== -1);
+      }
+
+      if (searchTerms.contact) {
+        qualifies = qualifies && (activity.contact && activity.contact.id && activity.contact.id.indexOf(searchTerms.contact) !== -1);
       }
 
       return qualifies;
@@ -166,12 +182,12 @@ export class ViewActivitiesComponent implements OnInit {
     this.alertService.error("Problem loading activities!");
   }
 
-  /*editContact(contact: Contact) {
-    let route = '/contacts/edit-contact';
-    this.router.navigate([route], { queryParams: { id: contact.id } });
+  editActivity(activity: Activity) {
+    let route = '/activities/edit-activity';
+    this.router.navigate([route], { queryParams: { activityId: activity.id } });
   }
 
-  viewContact(contact: Contact) {
+  /*viewContact(contact: Contact) {
     let route = '/contacts/view-contact';
     this.router.navigate([route], { queryParams: { id: contact.id } });
   }*/
