@@ -73,4 +73,21 @@ export class ActivityService {
     let url = `${baseUrl}/activities/${activityId}`;
     return this.http.get<Activity>(url);
   }
+
+  isOverdue(activity: Activity): boolean {
+    let overdue: boolean = false;
+
+    if (activity && activity.type && activity.type.usesStatus) {
+      if (activity.status == 'PENDING') {
+        if (activity.startDate) {
+          let localDueDate: number = this.dateService.convertToLocal(activity.startDate);
+          let now: number = Date.now();
+
+          overdue = (now > localDueDate);
+        }
+      }
+    }
+
+    return overdue;
+  }
  }

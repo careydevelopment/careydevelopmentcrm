@@ -106,15 +106,18 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private initializeCalendarsForEdit() {
-    this.currentStartDate = this.activity.startDate;
-    this.currentEndDate = this.activity.endDate;
+    let localEndDate: number = this.dateService.convertToLocal(this.activity.endDate);
+    let localStartDate: number = this.dateService.convertToLocal(this.activity.startDate);
+
+    this.currentEndDate = localEndDate;
+    this.currentStartDate = localStartDate;
 
     this.setCalendarInputs();
-    
-    this.activityFormGroup.get('endDate').setValue(new Date(this.activity.endDate));
+
+    this.activityFormGroup.get('endDate').setValue(new Date(localEndDate));
     this.activityFormGroup.get('endDate').enable();
 
-    this.activityFormGroup.get('startDate').setValue(new Date(this.activity.startDate));
+    this.activityFormGroup.get('startDate').setValue(new Date(localStartDate));
     this.activityFormGroup.get('startDate').enable();
   }
 
@@ -186,7 +189,7 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private handleActivityTypesResponse(activityTypes: ActivityType[]) {
-     this.availableActivityTypes = activityTypes.filter(type => type.activityTypeCreator === 'USER');
+    this.availableActivityTypes = activityTypes.filter(type => type.activityTypeCreator === 'USER');
 
     if (this.activity.type) {
       //we're editing instead of adding if we get here
@@ -443,7 +446,7 @@ export class ActivityFormComponent implements OnInit {
     let salesOwner: SalesOwnerLightweight = { id: user.id, firstName: user.firstName, lastName: user.lastName, username: user.username }
     let account: AccountLightweight = { id: this.contact.account.id, name: this.contact.account.name };
     let contact: ContactLightweight = { id: this.contact.id, firstName: this.contact.firstName, lastName: this.contact.lastName, account: account, salesOwner: salesOwner };
-    let activityType: ActivityTypeLightweight = { id: this.selectedActivityType.id, name: this.selectedActivityType.name, icon: this.selectedActivityType.icon, activityTypeCreator: this.selectedActivityType.activityTypeCreator };
+    let activityType: ActivityTypeLightweight = { id: this.selectedActivityType.id, name: this.selectedActivityType.name, icon: this.selectedActivityType.icon, activityTypeCreator: this.selectedActivityType.activityTypeCreator, usesStatus: this.selectedActivityType.usesStatus };
     let outcome: ActivityOutcome = this.availableActivityOutcomes.find(outcome => outcome.id == this.activityFormGroup.controls['outcome'].value);
     let deal: DealLightweight = this.getDealLightweight();
 
@@ -455,12 +458,12 @@ export class ActivityFormComponent implements OnInit {
     this.activity.location = this.activityFormGroup.controls['location'].value;
     this.activity.notes = this.activityFormGroup.controls['notes'].value;
     this.activity.outcome = outcome;
-    this.activity.startDate = this.currentStartDate;
+    this.activity.startDate = this.dateService.convertToUtc(this.currentStartDate);
     this.activity.title = this.activityFormGroup.controls['title'].value;
     this.activity.type = activityType;
     this.activity.deal = deal;
 
-    if (this.selectedActivityType.usesEndDate) this.activity.endDate = this.currentEndDate;
+    if (this.selectedActivityType.usesEndDate) this.activity.endDate = this.dateService.convertToUtc(this.currentEndDate);
   }
 
   private scrollToTop() {

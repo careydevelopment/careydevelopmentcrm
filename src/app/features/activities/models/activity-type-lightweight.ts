@@ -3,4 +3,5 @@ export interface ActivityTypeLightweight {
   name: string;
   icon: string;
   activityTypeCreator: string;
+  usesStatus: boolean;
 }

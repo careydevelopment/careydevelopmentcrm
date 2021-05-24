@@ -168,6 +168,10 @@ h4 {
   background-color: red;
 }
 
+.badge-warning {
+  background-color: goldenrod;
+}
+
 .badge-muted {
   background-color: #CCCCCC;
   color: #000000;
@@ -324,12 +328,28 @@ ol.breadcrumbs li {
   font-weight: bold;
 }
 
+.full-notification {
+  padding: 10px 10px 10px 10px;
+  color: #ffffff;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.info-background {
+  background-color: #3F51B5;
+}
+
 .success-background {
   background-color: green;
 }
 
 .error-background {
   background-color: red;
+}
+
+.warning-background {
+  background-color:goldenrod;
 }
 
 @media only screen and (min-width: 960px) {

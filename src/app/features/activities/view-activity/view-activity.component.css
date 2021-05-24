@@ -1,0 +1,39 @@
+.vertical-layout {
+  margin-bottom: 15px !important;
+}
+
+.empty-set-status-message {
+  font-size: 14pt;
+  font-weight: 400;
+}
+
+.normal-detail {
+  font-size: 12pt;
+  font-weight: 500;
+}
+
+.column-header {
+  font-size: 12pt;
+  font-weight: 500;
+  text-decoration: underline;
+  margin-bottom: 5px;
+}
+
+.column-layout {
+  margin-bottom: 20px;
+  margin-right: 80px;
+}
+
+.normal-status {
+  font-size: 14pt;
+  color: green;
+}
+
+.free-text {
+  font-size: 11pt;
+  font-weight: 300;
+}
+
+.labeled-line-item {
+  margin-top: 10px;
+}

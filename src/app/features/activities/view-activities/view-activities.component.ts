@@ -187,8 +187,8 @@ export class ViewActivitiesComponent implements OnInit {
     this.router.navigate([route], { queryParams: { activityId: activity.id } });
   }
 
-  /*viewContact(contact: Contact) {
-    let route = '/contacts/view-contact';
-    this.router.navigate([route], { queryParams: { id: contact.id } });
-  }*/
+  viewActivity(activity: Activity) {
+    let route = '/activities/view-activity';
+    this.router.navigate([route], { queryParams: { id: activity.id } });
+  }
 }

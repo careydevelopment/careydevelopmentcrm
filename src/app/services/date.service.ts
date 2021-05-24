@@ -8,6 +8,29 @@ export class DateService {
 
   constructor() { }
 
+  convertToUtc(localTime: number): number {
+    let date = new Date(localTime);
+    let offset = date.getTimezoneOffset();
+
+    let newDate = localTime + (offset * 60 * 1000);
+
+    console.log(pipe.transform(newDate, 'full'));
+
+    return newDate;
+  }
+
+
+  convertToLocal(utcTime: number): number {
+    let date = new Date(utcTime);
+    let offset = date.getTimezoneOffset();
+
+    let newDate = utcTime - (offset * 60 * 1000);
+
+    console.log(pipe.transform(newDate, 'full'));
+
+    return newDate;
+  }
+
   roundToNearest15Minutes(minutes: number): number {
     let min: number = 45;
 
