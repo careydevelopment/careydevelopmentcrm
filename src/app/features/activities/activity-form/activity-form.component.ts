@@ -442,17 +442,19 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private setActivity() {
+    let outcome: ActivityOutcome = null;
+
     let user = this.userService.user;
     let salesOwner: SalesOwnerLightweight = { id: user.id, firstName: user.firstName, lastName: user.lastName, username: user.username }
     let account: AccountLightweight = { id: this.contact.account.id, name: this.contact.account.name };
     let contact: ContactLightweight = { id: this.contact.id, firstName: this.contact.firstName, lastName: this.contact.lastName, account: account, salesOwner: salesOwner };
     let activityType: ActivityTypeLightweight = { id: this.selectedActivityType.id, name: this.selectedActivityType.name, icon: this.selectedActivityType.icon, activityTypeCreator: this.selectedActivityType.activityTypeCreator, usesStatus: this.selectedActivityType.usesStatus };
-    let outcome: ActivityOutcome = this.availableActivityOutcomes.find(outcome => outcome.id == this.activityFormGroup.controls['outcome'].value);
-    let deal: DealLightweight = this.getDealLightweight();
 
-    if (!this.isDateInPast()) {
-      outcome = null;
+    if (this.availableActivityOutcomes && this.isDateInPast()) {
+      outcome = this.availableActivityOutcomes.find(outcome => outcome.id == this.activityFormGroup.controls['outcome'].value);
     }
+
+    let deal: DealLightweight = this.getDealLightweight();
 
     this.activity.contact = contact;
     this.activity.location = this.activityFormGroup.controls['location'].value;

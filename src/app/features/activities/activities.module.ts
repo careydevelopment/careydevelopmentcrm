@@ -24,6 +24,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatListModule } from '@angular/material/list';
+import { ActivityDateDisplayPipe } from './pipes/activity-date-display.pipe';
+import { TimeDifferencePipe } from '../../pipes/time-difference.pipe';
 
 
 export const routes = [
@@ -60,6 +62,8 @@ export const routes = [
 
 @NgModule({
   declarations: [
+    ActivityDateDisplayPipe,
+    TimeDifferencePipe,
     RecentActivitiesByContactComponent,
     ActivityFormComponent,
     AddActivityComponent,

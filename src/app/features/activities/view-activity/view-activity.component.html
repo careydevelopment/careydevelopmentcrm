@@ -38,6 +38,13 @@
               </div>
             </div>
 
+            <div fxLayout="row wrap">
+              <div class="column-layout" fxFlex="100">
+                <div style="font-weight: 600">{{activity | activityDateDisplay}}</div>
+                <div><span>{{currentDateDifference | timeDifference}}</span></div>
+              </div>
+            </div>
+
             <div fxLayout="row wrap" fxLayout.xs="column">
               <div class="column-layout" fxFlex.sm="100" fxFlex.gt-sm="40">
                 <div class="normal-detail labeled-line-item" fxLayout="row wrap">

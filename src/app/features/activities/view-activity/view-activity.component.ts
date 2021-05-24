@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AlertService } from 'carey-alert';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -11,6 +11,8 @@ import { ActivityOutcome } from '../models/activity-outcome';
 import { DealLightweight } from '../../deals/models/deal-lightweight';
 import { Activity } from '../models/activity';
 import { ActivityService } from '../service/activity.service';
+import { interval, Observable } from 'rxjs';
+import { DateService } from '../../../services/date.service';
 
 
 @Component({
@@ -28,11 +30,27 @@ export class ViewActivityComponent implements OnInit {
   loading: boolean = true;
   activity: Activity  = {} as Activity;
 
+  currentDateDifference: number;
+
   constructor(private route: ActivatedRoute, private activityService: ActivityService,
     private alertService: AlertService, private router: Router, private displayValueMapService: DisplayValueMapService,
-    private breadcrumbService: BreadcrumbService) { }
+    private breadcrumbService: BreadcrumbService, private dateService: DateService) { }
 
   ngOnInit(): void {
+    this.initializeActivity();
+  }
+
+  private initializeCounter() {
+    let localStartDate: number = this.dateService.convertToLocal(this.activity.startDate);
+
+    this.dateService.counterBySecond.subscribe(
+      timestamp => {
+        this.currentDateDifference = localStartDate - timestamp;
+      }
+    );
+  }
+
+  private initializeActivity() {
     let activity$ = this.route.queryParamMap.pipe(
       switchMap((params: ParamMap) =>
         this.activityService.fetchActivityById(params.get('id')))
@@ -50,6 +68,7 @@ export class ViewActivityComponent implements OnInit {
 
     if (this.activity) {
       this.breadcrumbService.updateBreadcrumb("View " + this.activity.title);
+      this.initializeCounter();
     }
   }
 

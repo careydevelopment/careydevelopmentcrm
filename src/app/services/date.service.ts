@@ -1,12 +1,28 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { interval, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const pipe = new DatePipe('en-US');
 
 @Injectable({ providedIn: 'root' })
 export class DateService {
 
+  private $_counterBySecond: Observable<number>;
+
   constructor() { }
+
+  get counterBySecond(): Observable<number> {
+    if (!this.$_counterBySecond) {
+      this.$_counterBySecond = interval(1000).pipe(
+        map((x) => {
+          return Date.now();
+        })
+      );
+    }
+
+    return this.$_counterBySecond;
+  }
 
   convertToUtc(localTime: number): number {
     let date = new Date(localTime);
