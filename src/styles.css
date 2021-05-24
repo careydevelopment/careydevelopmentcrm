@@ -169,7 +169,7 @@ h4 {
 }
 
 .badge-warning {
-  background-color: goldenrod;
+  background-color: darkkhaki;
 }
 
 .badge-muted {
@@ -349,7 +349,24 @@ ol.breadcrumbs li {
 }
 
 .warning-background {
-  background-color:goldenrod;
+  background-color: darkkhaki;
+}
+
+.info-text {
+  color: #3F51B5;
+}
+
+.success-text {
+  color: green;
+}
+
+.error-text {
+  color: red;
+}
+
+
+.warning-text {
+  color: darkkhaki
 }
 
 @media only screen and (min-width: 960px) {

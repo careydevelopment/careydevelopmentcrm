@@ -42,8 +42,6 @@ export class DateService {
 
     let newDate = utcTime - (offset * 60 * 1000);
 
-    console.log(pipe.transform(newDate, 'full'));
-
     return newDate;
   }
 

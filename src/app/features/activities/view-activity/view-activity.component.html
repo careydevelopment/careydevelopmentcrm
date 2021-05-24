@@ -41,11 +41,15 @@
             <div fxLayout="row wrap">
               <div class="column-layout" fxFlex="100">
                 <div style="font-weight: 600">{{activity | activityDateDisplay}}</div>
-                <div><span>{{currentDateDifference | timeDifference}}</span></div>
+                <div [class.info-text]="currentDateDifference > 0 && currentDateDifference < 3600000"
+                     [class.error-text]="currentDateDifference < 0 && activity.type.usesStatus"
+                     [class.warning-text]="currentDateDifference < 0 && !activity.type.usesStatus">
+                  {{currentDateDifference | timeDifference}}
+                </div>
               </div>
             </div>
 
-            <div fxLayout="row wrap" fxLayout.xs="column">
+            <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.gt-xs="5">
               <div class="column-layout" fxFlex.sm="100" fxFlex.gt-sm="40">
                 <div class="normal-detail labeled-line-item" fxLayout="row wrap">
                   <div style="font-weight: bold" fxFlex.xs="100" fxFlex.gt-xs="30">Contact: </div>

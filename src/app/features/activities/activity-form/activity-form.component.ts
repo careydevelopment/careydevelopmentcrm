@@ -18,6 +18,8 @@ import { SalesOwnerLightweight } from '../models/sales-owner-lightweight';
 import { ContactService } from '../../contacts/services/contact.service';
 import { DealLightweight } from '../../deals/models/deal-lightweight';
 import { DealService } from '../../deals/service/deal.service';
+import { activityStatuses } from '../constants/activity-status';
+import { DisplayValueMap } from '../../../models/name-value-map';
 
 //5 years
 const maximumTimeSpan: number = 5 * 365 * 24 * 60 * 60 * 1000;
@@ -52,6 +54,7 @@ export class ActivityFormComponent implements OnInit {
   availableActivityTypes: ActivityType[] = [this.loadingActivityType];
   availableActivityOutcomes: ActivityOutcome[] = [];
   availableDeals: DealLightweight[] = [];
+  availableStatuses: DisplayValueMap[] = activityStatuses;
 
   saving: boolean = false;
   loading: boolean = true;
@@ -83,8 +86,9 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private setDefaultActivity() { 
-    if (!this.activity) this.activity = <Activity>{};
-    else {
+    if (!this.activity) {
+      this.activity = <Activity>{};
+    } else {
       this.pageTitle = 'Edit Activity';
 
       if (!this.activity.type || this.activity.type.activityTypeCreator != 'USER') {
@@ -237,7 +241,8 @@ export class ActivityFormComponent implements OnInit {
       'contact': [(this.activity.contact) ? this.activity.contact.id : '', [Validators.required]],
       'outcome': [(this.activity.outcome) ? this.activity.outcome.id : ''],
       'notes': [this.activity.notes, [Validators.pattern('^[a-zA-Z0-9,.\' \-\]*$')]],
-      'deal': [(this.activity.deal) ? this.activity.deal.id : '']
+      'deal': [(this.activity.deal) ? this.activity.deal.id : ''],
+      'status': [(this.activity.type && this.activity.type.usesStatus) ? this.activity.status : null]
     });
   }
 
@@ -315,6 +320,8 @@ export class ActivityFormComponent implements OnInit {
     if (this.availableActivityTypes && name) {
       this.selectedActivityType = this.availableActivityTypes.find(type => type.name === name);
       this.availableActivityOutcomes = this.selectedActivityType.possibleOutcomes;
+
+      if (this.selectedActivityType.usesStatus) this.activityFormGroup.controls['status'].setValue('PENDING');
     }
 
     this.setCalendarInputs();
@@ -466,6 +473,8 @@ export class ActivityFormComponent implements OnInit {
     this.activity.deal = deal;
 
     if (this.selectedActivityType.usesEndDate) this.activity.endDate = this.dateService.convertToUtc(this.currentEndDate);
+
+    if (this.selectedActivityType.usesStatus) this.activity.status = this.activityFormGroup.controls['status'].value;
   }
 
   private scrollToTop() {

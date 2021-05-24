@@ -11,6 +11,15 @@ const PLURAL_HOUR: string = 'hours';
 const SINGLE_MINUTE: string = 'minute';
 const PLURAL_MINUTE: string = 'minutes';
 
+/**
+ * This pipe spits out the difference between two dates in readable format.
+ *
+ * It accepts a number that represents the difference between two dates. In milliseconds.
+ *
+ * If that number is negative, then the event happened in the past.
+ *
+ * The pipe translates the difference to something like "43 minutes ago" or "3 days ago."
+ * */
 @Pipe({
   name: 'timeDifference'
 })

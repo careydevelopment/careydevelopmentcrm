@@ -69,6 +69,7 @@ export class ViewActivityComponent implements OnInit {
     if (this.activity) {
       this.breadcrumbService.updateBreadcrumb("View " + this.activity.title);
       this.initializeCounter();
+      console.log(this.activity);
     }
   }
 
