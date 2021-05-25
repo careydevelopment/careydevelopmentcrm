@@ -12,6 +12,9 @@ import { ActivityService } from '../service/activity.service';
 import { ActivitySearchCriteria } from '../models/activity-search-criteria';
 import { Activity } from '../models/activity';
 import { DateService } from '../../../services/date.service';
+import { DisplayValueMap } from '../../../models/name-value-map';
+import { activityStatuses } from '../constants/activity-status';
+import { ActivityOutcome } from '../models/activity-outcome';
 
 const sortingDataAccessor = (item, property) => {
   switch (property) {
@@ -35,26 +38,32 @@ interface ContactLightweight {
 })
 export class ViewActivitiesComponent implements OnInit {
 
-  displayedColumns: string[] = ['action', 'title', 'date', 'type', 'contact', 'deal'];
+  displayedColumns: string[] = ['action', 'title', 'contact', 'type', 'date', 'deal'];
 
   dataSource: MatTableDataSource<Activity>;
   currentUser: User;
   dataLoading: boolean = true;
 
   availableActivityTypes: ActivityType[] = [];
+  availableStatuses: DisplayValueMap[] = activityStatuses;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   typeFilter = new FormControl('');
   contactFilter = new FormControl('');
+  statusFilter = new FormControl('');
+  outcomeFilter = new FormControl('');
 
   filterValues: any = {
     type: '',
-    contact: ''
+    contact: '',
+    status: '',
+    outcome: ''
   }
 
   availableContacts: ContactLightweight[] = [];
+  availableOutcomes: ActivityOutcome[] = [];
 
   constructor(private userService: UserService, private activityService: ActivityService,
     private alertService: AlertService, private displayValueMapService: DisplayValueMapService,
@@ -82,8 +91,9 @@ export class ViewActivitiesComponent implements OnInit {
     this.loadActivities();
   }
 
-  private setAvailableContacts() {
+  private setFilterData() {
     let tempContacts: ContactLightweight[] = [];
+    let tempOutcomes: ActivityOutcome[] = [];
 
     this.dataSource.data.forEach(activity => {
       if (activity.contact) {
@@ -95,9 +105,19 @@ export class ViewActivitiesComponent implements OnInit {
           tempContacts.push(contactLight);
         }
       }
+
+      if (activity.outcome) {
+        let outcome = activity.outcome;
+        let isPresent: boolean = tempOutcomes.some(function (el) { return el.id === outcome.id });
+
+        if (!isPresent) {
+          tempOutcomes.push(outcome);
+        }
+      }
     });
 
     this.availableContacts = tempContacts.sort((a, b) => a.lastName > b.lastName ? 1 : a.lastName === b.lastName ? 0 : -1);
+    this.availableOutcomes = tempOutcomes.sort((a, b) => a.name > b.name ? 1 : a.name === b.name ? 0 : -1);
   }
 
   private handleActivityTypesError(err: Error) {
@@ -120,12 +140,30 @@ export class ViewActivitiesComponent implements OnInit {
           this.filterValues.contact = contact;
           this.dataSource.filter = JSON.stringify(this.filterValues);
         }
-      )
+    )
+
+    this.statusFilter.valueChanges
+      .subscribe(
+        status => {
+          this.filterValues.status = status;
+          this.dataSource.filter = JSON.stringify(this.filterValues);
+        }
+    )
+
+    this.outcomeFilter.valueChanges
+      .subscribe(
+        outcome => {
+          this.filterValues.outcome = outcome;
+          this.dataSource.filter = JSON.stringify(this.filterValues);
+        }
+    )
   }
 
   clearFilter() {
     this.typeFilter.setValue('');
     this.contactFilter.setValue('');
+    this.statusFilter.setValue('');
+    this.outcomeFilter.setValue('');
   }
 
   private createFilter(): (activity: Activity, filter: string) => boolean {
@@ -140,6 +178,14 @@ export class ViewActivitiesComponent implements OnInit {
 
       if (searchTerms.contact) {
         qualifies = qualifies && (activity.contact && activity.contact.id && activity.contact.id.indexOf(searchTerms.contact) !== -1);
+      }
+
+      if (searchTerms.status) {
+        qualifies = qualifies && (activity.status && activity.status.indexOf(searchTerms.status) !== -1);
+      }
+
+      if (searchTerms.outcome) {
+        qualifies = qualifies && (activity.outcome && activity.outcome.name && activity.outcome.name.indexOf(searchTerms.outcome) !== -1);
       }
 
       return qualifies;
@@ -174,7 +220,7 @@ export class ViewActivitiesComponent implements OnInit {
     this.dataSource.filterPredicate = this.createFilter();
 
     this.fieldListener();
-    this.setAvailableContacts();
+    this.setFilterData();
   }
 
   private handleActivitiesError(err) {
@@ -191,4 +237,5 @@ export class ViewActivitiesComponent implements OnInit {
     let route = '/activities/view-activity';
     this.router.navigate([route], { queryParams: { id: activity.id } });
   }
+
 }

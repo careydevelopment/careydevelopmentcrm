@@ -1,0 +1,21 @@
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Dropdown Menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button *ngIf="activity.type && activity.type.usesStatus && activity.status != 'COMPLETED'" mat-menu-item (click)="complete()">
+    <mat-icon>done</mat-icon>
+    <span>Quick Complete</span>
+  </button>
+  <button *ngIf="activity.status != 'COMPLETED' && activity.status != 'ON_HOLD'" mat-menu-item (click)="putOnHold()">
+    <mat-icon>pan_tool</mat-icon>
+    <span>Put On Hold</span>
+  </button>
+  <button mat-menu-item (click)="updateNotes()">
+    <mat-icon>notes</mat-icon>
+    <span>Update Notes</span>
+  </button>
+  <button *ngIf="activity.status != 'COMPLETED' && activity.status != 'CANCELLED'" mat-menu-item (click)="cancel()">
+    <mat-icon>close</mat-icon>
+    <span>Cancel</span>
+  </button>
+</mat-menu>

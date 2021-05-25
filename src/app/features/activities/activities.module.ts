@@ -26,6 +26,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatListModule } from '@angular/material/list';
 import { ActivityDateDisplayPipe } from './pipes/activity-date-display.pipe';
 import { TimeDifferencePipe } from '../../pipes/time-difference.pipe';
+import { ViewActivityMenuComponent } from './view-activity/view-activity-menu/view-activity-menu.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { UpdateNotesDialog } from './ui/update-notes-dialog/update-notes-dialog.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 export const routes = [
@@ -70,7 +75,9 @@ export const routes = [
     ViewActivityComponent,
     ViewActivitiesComponent,
     EditActivityComponent,
-    ActivitiesListComponent
+    ActivitiesListComponent,
+    ViewActivityMenuComponent,
+    UpdateNotesDialog
   ],
   exports: [
     RecentActivitiesByContactComponent,
@@ -94,6 +101,9 @@ export const routes = [
     MatPaginatorModule,
     MatSortModule,
     MatListModule,
+    MatMenuModule,
+    MatDialogModule,
+    MatCheckboxModule,
     RouterModule.forChild(routes)
   ]
 })

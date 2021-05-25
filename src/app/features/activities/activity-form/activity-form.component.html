@@ -3,12 +3,9 @@
 </div>
 <div *ngIf="!loading" fxFlex="100" fxLayout="column" fxLayoutGap="20px">
   <div>
-    <h4>{{pageTitle}}</h4>
-  </div>
-  <div>
     <alert></alert>
   </div>
-  <div style="margin-right:10px;">
+  <div style="margin-right:10px;" *ngIf="displayForm">
     <form [formGroup]="activityFormGroup">
       <div fxLayout="column">
 
@@ -73,7 +70,13 @@
           </div>
         </div>
 
-        <div class="vertical-form-field" *ngIf="selectedActivityType && selectedActivityType.usesStatus">
+        <div class="vertical-form-field" style="margin-bottom: 30px">
+          <div fxFlex="50" fxFlex.lt-md="100">
+            <mat-checkbox color="primary" formControlName="trackStatus" (change)="trackStatusChange()"> Track Status?</mat-checkbox>
+          </div>
+        </div>
+
+        <div class="vertical-form-field" *ngIf="(selectedActivityType && selectedActivityType.usesStatus) || activityFormGroup.controls['trackStatus'].value==true">
           <div class="label">Status</div>
           <div>
             <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">

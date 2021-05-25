@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AlertService } from 'carey-alert';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -11,7 +11,6 @@ import { ActivityOutcome } from '../models/activity-outcome';
 import { DealLightweight } from '../../deals/models/deal-lightweight';
 import { Activity } from '../models/activity';
 import { ActivityService } from '../service/activity.service';
-import { interval, Observable } from 'rxjs';
 import { DateService } from '../../../services/date.service';
 
 
@@ -75,6 +74,7 @@ export class ViewActivityComponent implements OnInit {
 
   private handleError(err: Error) {
     console.log(err);
+    this.activity = null;
     this.loading = false;
 
     let alertMessage: string = 'Something went wrong, please call support';
