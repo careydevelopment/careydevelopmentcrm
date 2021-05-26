@@ -31,6 +31,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { UpdateNotesDialog } from './ui/update-notes-dialog/update-notes-dialog.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DisplayOutcomeStatusDirective } from './directives/display-outcome-status.directive';
 
 
 export const routes = [
@@ -69,6 +70,7 @@ export const routes = [
   declarations: [
     ActivityDateDisplayPipe,
     TimeDifferencePipe,
+    DisplayOutcomeStatusDirective,
     RecentActivitiesByContactComponent,
     ActivityFormComponent,
     AddActivityComponent,

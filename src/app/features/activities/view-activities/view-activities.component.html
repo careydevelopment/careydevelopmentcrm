@@ -92,19 +92,14 @@
           <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th></tr>
           <tr>
             <td mat-cell *matCellDef="let row" style="width:25%">
-              <div>
-                <span>{{row.title}} </span>
-                <span *ngIf="row.outcome" class="badge" [class.badge-success]="row.outcome.sentiment=='POSITIVE'"
-                      [class.badge-error]="row.outcome.sentiment=='NEGATIVE'"
-                      [class.badge-info]="row.outcome.sentiment=='NEUTRAL'">
+              <div fxLayout="row wrap" fxLayoutGap="15px">
+                <div>{{row.title}} </div>
+                <div *ngIf="row.outcome" [displayOutcomeStatus]="row">
                   {{row.outcome.name}}
-                </span>
-                <span *ngIf="!row.outcome && row.type.usesStatus" class="badge"
-                      [class.badge-success]="row.status=='COMPLETED'"
-                      [class.badge-error]="activityService.isOverdue(row)"
-                      [class.badge-warning]="row.status=='ON_HOLD'">
+                </div>
+                <div *ngIf="!row.outcome && row.type.usesStatus" [displayOutcomeStatus]="row">
                   {{displayValueMapService.getDisplay(row.status, availableStatuses)}}
-                </span>
+                </div>
               </div>
               </td>
           <tr>

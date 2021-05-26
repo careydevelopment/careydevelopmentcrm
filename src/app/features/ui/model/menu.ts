@@ -63,6 +63,11 @@ export let menu: NavItem[] = [
     route: 'deals',
     children: [
       {
+        displayName: 'View Deals',
+        iconName: 'list',
+        route: 'deals/view-deals'
+      },
+      {
         displayName: 'Add Deal',
         iconName: 'add_box',
         route: 'deals/add-deal'

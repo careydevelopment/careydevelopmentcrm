@@ -24,10 +24,7 @@
                     @ {{activity.location}}
                   </span>
                 </div>
-                <div *ngIf="activity.outcome" class="badge"
-                     [class.badge-success]="activity.outcome.sentiment=='POSITIVE'"
-                     [class.badge-error]="activity.outcome.sentiment=='NEGATIVE'"
-                     [class.badge-info]="activity.outcome.sentiment=='NEUTRAL'">{{activity.outcome.name}}</div>
+                <div *ngIf="activity.outcome" [displayOutcomeStatus]="row">{{activity.outcome.name}}</div>
               </div>
               <div *ngIf="activity.notes" class="icon-list-line">
                 {{activity.notes}}

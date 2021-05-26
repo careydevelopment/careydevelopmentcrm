@@ -47,8 +47,9 @@ export class ActivityService {
     let minDate = this.dateService.getDaysBackwardAsNumber(recentActivitiesDays);
     let orderBy = 'startDate';
     let orderType = 'DESC';
+    let status = 'COMPLETED';
 
-    let url = `${baseUrl}/activities/search?contactId=${contactId}&minDate=${minDate}&orderBy=${orderBy}&orderType=${orderType}`;
+    let url = `${baseUrl}/activities/search?contactId=${contactId}&minDate=${minDate}&orderBy=${orderBy}&orderType=${orderType}&status=${status}`;
     console.log("Fetch activities by contact URL is " + url);
 
     return this.http.get<Activity[]>(url);

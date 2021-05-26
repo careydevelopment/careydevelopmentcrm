@@ -24,6 +24,13 @@ import { DealShareByContactComponent } from './charts/deal-share-by-contact/deal
 import { RevenueContributionComponent } from './charts/revenue-contribution/revenue-contribution.component';
 import { AccountsRankedComponent } from './charts/accounts-ranked/accounts-ranked.component';
 import { ActivitiesModule } from '../activities/activities.module';
+import { DisplayStageDirective } from './directives/display-stage.directive';
+import { ViewDealsComponent } from './view-deals/view-deals.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatListModule } from '@angular/material/list';
 
  
 export const routes = [
@@ -49,12 +56,20 @@ export const routes = [
       breadcrumb: 'View Deal',
       pauseDisplay: true
     }
+  },
+  {
+    path: 'view-deals',
+    component: ViewDealsComponent,
+    data: {
+      breadcrumb: 'View Deals'
+    }
   }
 ];
 
 
 @NgModule({
   declarations: [
+    DisplayStageDirective,
     DealsByContactComponent,
     DealFormComponent,
     EditDealComponent,
@@ -64,7 +79,8 @@ export const routes = [
     FuturePipelineComponent,
     DealShareByContactComponent,
     RevenueContributionComponent,
-    AccountsRankedComponent
+    AccountsRankedComponent,
+    ViewDealsComponent
   ],
   exports: [
     DealsByContactComponent,
@@ -86,6 +102,11 @@ export const routes = [
     MatSelectModule,
     MatRadioModule,
     MatDatepickerModule,
+    MatExpansionModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatListModule,
     ActivitiesModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')

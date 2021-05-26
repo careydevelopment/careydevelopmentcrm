@@ -168,28 +168,28 @@ export class ViewActivitiesComponent implements OnInit {
 
   private createFilter(): (activity: Activity, filter: string) => boolean {
     let filterFunction = function (activity, filter): boolean {
-      let searchTerms = JSON.parse(filter);
+    let searchTerms = JSON.parse(filter);
 
-      let qualifies: boolean = true;
+    let qualifies: boolean = true;
 
-      if (searchTerms.type) {
-        qualifies = (activity.type && activity.type.name && activity.type.name.indexOf(searchTerms.type) !== -1);
-      }
-
-      if (searchTerms.contact) {
-        qualifies = qualifies && (activity.contact && activity.contact.id && activity.contact.id.indexOf(searchTerms.contact) !== -1);
-      }
-
-      if (searchTerms.status) {
-        qualifies = qualifies && (activity.status && activity.status.indexOf(searchTerms.status) !== -1);
-      }
-
-      if (searchTerms.outcome) {
-        qualifies = qualifies && (activity.outcome && activity.outcome.name && activity.outcome.name.indexOf(searchTerms.outcome) !== -1);
-      }
-
-      return qualifies;
+    if (searchTerms.type) {
+      qualifies = (activity.type && activity.type.name && activity.type.name.indexOf(searchTerms.type) !== -1);
     }
+
+    if (searchTerms.contact) {
+      qualifies = qualifies && (activity.contact && activity.contact.id && activity.contact.id.indexOf(searchTerms.contact) !== -1);
+    }
+
+    if (searchTerms.status) {
+      qualifies = qualifies && (activity.status && activity.status.indexOf(searchTerms.status) !== -1);
+    }
+
+    if (searchTerms.outcome) {
+      qualifies = qualifies && (activity.outcome && activity.outcome.name && activity.outcome.name.indexOf(searchTerms.outcome) !== -1);
+    }
+
+    return qualifies;
+  }
 
     return filterFunction;
   }

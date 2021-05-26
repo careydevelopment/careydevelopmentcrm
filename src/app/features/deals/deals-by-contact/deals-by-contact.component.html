@@ -22,10 +22,7 @@
                 <div class="icon-list-line icon-list-title">
                   {{deal.name}}
                 </div>
-                <div *ngIf="deal.stage" class="badge"
-                     [class.badge-success]="deal.stage.name == 'Won'"
-                     [class.badge-error]="deal.stage.name == 'Lost'"
-                     [class.badge-info]="deal.stage.name != 'Won' && deal.stage.name != 'Lost'">{{deal.stage.name}}</div>
+                <div *ngIf="deal.stage" [displayStage]="deal">{{deal.stage.name}}</div>
               </div>
               <div class="icon-list-line">
                 {{deal.description}}
