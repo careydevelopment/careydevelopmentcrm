@@ -84,7 +84,7 @@ export class ActivityFormComponent implements OnInit {
     if (this.addingForContact)
       this.activityFormGroup.controls['contact'].setValue(this.contact.id);
 
-    if (this.route.snapshot.queryParams['type']) {
+    if (this.addingActivityType) {
       this.route.queryParamMap.subscribe(
         (params: ParamMap) => this.prepopulateType(params.get('type'))
       )
@@ -224,7 +224,7 @@ export class ActivityFormComponent implements OnInit {
 
       this.selectedActivityType = this.availableActivityTypes.find(type => this.activity.type.id === type.id);
       if (this.selectedActivityType) this.availableActivityOutcomes = this.selectedActivityType.possibleOutcomes;
-    } else if (this.route.snapshot.queryParams['activityTypeId']) {
+    } else if (this.route.snapshot.queryParams['type']) {
       this.addingActivityType = true;
     } 
   }
@@ -273,8 +273,8 @@ export class ActivityFormComponent implements OnInit {
 
   private startDateValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      //this.startDateChanged();
-      //this.endDateChanged();
+      this.startDateChanged();
+      this.endDateChanged();
 
       if (this.selectedActivityType) {
         if (!control.value || control.value.toString().trim() == '') {
@@ -294,8 +294,8 @@ export class ActivityFormComponent implements OnInit {
 
   private endDateValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      //this.startDateChanged();
-      //this.endDateChanged();
+      this.startDateChanged();
+      this.endDateChanged();
 
       if (this.selectedActivityType && this.selectedActivityType.usesEndDate) {
         if (!control.value || control.value.toString().trim() == '') {
@@ -511,7 +511,6 @@ export class ActivityFormComponent implements OnInit {
     this.activity.deal = deal;
 
     if (this.selectedActivityType.usesEndDate) this.activity.endDate = this.dateService.convertToUtc(this.currentEndDate);
-
     if (this.selectedActivityType.usesStatus) this.activity.status = this.activityFormGroup.controls['status'].value;
   }
 
