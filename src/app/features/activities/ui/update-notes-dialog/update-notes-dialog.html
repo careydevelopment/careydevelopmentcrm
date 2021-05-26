@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Add Notes</h1>
+<div mat-dialog-content>
+  <form [formGroup]="notesFormGroup">
+    <mat-form-field style="width: 300px">
+      <mat-label>Notes</mat-label>
+      <textarea formControlName="notes" matInput placeholder="Enter notes" maxlength="512" rows="5" cols="80"></textarea>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="cancel()" cdkFocusInitial>Cancel</button>
+  <button mat-raised-button (click)="save()">Save</button>
+</div>

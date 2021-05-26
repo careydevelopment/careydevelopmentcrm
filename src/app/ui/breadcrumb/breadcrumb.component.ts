@@ -50,7 +50,7 @@ export class BreadcrumbComponent implements OnInit {
     //so the breadcrumb we need to update is the latest one
     let lastBreadcrumb: Breadcrumb = this.breadcrumbs[this.breadcrumbs.length - 1];
 
-    if (lastBreadcrumb.pauseDisplay) {
+    if (lastBreadcrumb && lastBreadcrumb.pauseDisplay) {
       lastBreadcrumb.pauseDisplay = false;
       lastBreadcrumb.name = str;
     }

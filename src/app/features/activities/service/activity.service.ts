@@ -22,8 +22,11 @@ export class ActivityService {
     let orderType: string = criteria.orderType;
     let contactId: string = criteria.contactId;
     let dealId: string = criteria.dealId;
+    let salesOwnerId: string = criteria.salesOwnerId;
 
-    let url = `${baseUrl}/activities/search?dealId=${dealId}&contactId=${contactId}&minDate=${minDate}&maxDate=${maxDate}&orderBy=${orderBy}&orderType=${orderType}`;
+    let url = `${baseUrl}/activities/search?dealId=${dealId}&contactId=${contactId}&minDate=${minDate}&
+              maxDate=${maxDate}&orderBy=${orderBy}&orderType=${orderType}&salesOwnerId=${salesOwnerId}`;
+
     console.log("Fetch activities by deal URL is " + url);
 
     return this.http.get<Activity[]>(url);
@@ -44,8 +47,9 @@ export class ActivityService {
     let minDate = this.dateService.getDaysBackwardAsNumber(recentActivitiesDays);
     let orderBy = 'startDate';
     let orderType = 'DESC';
+    let status = 'COMPLETED';
 
-    let url = `${baseUrl}/activities/search?contactId=${contactId}&minDate=${minDate}&orderBy=${orderBy}&orderType=${orderType}`;
+    let url = `${baseUrl}/activities/search?contactId=${contactId}&minDate=${minDate}&orderBy=${orderBy}&orderType=${orderType}&status=${status}`;
     console.log("Fetch activities by contact URL is " + url);
 
     return this.http.get<Activity[]>(url);
@@ -69,5 +73,22 @@ export class ActivityService {
   fetchActivityById(activityId: string): Observable<Activity> {
     let url = `${baseUrl}/activities/${activityId}`;
     return this.http.get<Activity>(url);
+  }
+
+  isOverdue(activity: Activity): boolean {
+    let overdue: boolean = false;
+
+    if (activity && activity.type && activity.type.usesStatus) {
+      if (activity.status == 'PENDING') {
+        if (activity.startDate) {
+          let localDueDate: number = this.dateService.convertToLocal(activity.startDate);
+          let now: number = Date.now();
+
+          overdue = (now > localDueDate);
+        }
+      }
+    }
+
+    return overdue;
   }
  }

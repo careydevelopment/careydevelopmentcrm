@@ -1,1 +1,94 @@
-<p>view-activity works!</p>
+<div class="absolute-center" *ngIf="loading">
+  <mat-spinner [diameter]="80"></mat-spinner>
+</div>
+<div *ngIf="!loading">
+  <div fxFlex fxLayout="column" fxLayoutGap="0px">
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxLayout="column">
+        <div>
+          <alert></alert>
+        </div>
+        <div *ngIf="activity">
+          <div style="margin-bottom: 15px">
+            <div *ngIf="activity.status == 'COMPLETED'" class="medium-notification success-background">
+              Completed
+            </div>
+            <div *ngIf="activity.status == 'ON_HOLD'" class="medium-notification warning-background">
+              On Hold
+            </div>
+            <div *ngIf="activityService.isOverdue(activity)" class="medium-notification error-background">
+              Overdue
+            </div>
+          </div>
+          <div>
+            <mat-card class="vertical-layout">
+              <div fxLayout="row wrap" style="margin-bottom:20px">
+                <div>
+                  <div class="card-header">{{activity.title}}</div>
+                  <div class="card-header-medium">{{activity.type.name}}</div>
+                  <div *ngIf="activity.type.usesStatus && activity.status=='PENDING'" style="margin-bottom:5px">
+                    Pending
+                  </div>
+                  <div fxHide.gt-xs="true">
+                    <button mat-icon-button color="primary" (click)="editActivity()" title="Edit Activity"><mat-icon>edit</mat-icon></button>
+                  </div>
+                </div>
+                <div fxFlex="auto">&nbsp;</div>
+                <div fxFlex="40px" style="text-align: left" fxHide.xs="true">
+                  <button mat-icon-button color="primary" (click)="editActivity()" title="Edit Activity"><mat-icon>edit</mat-icon></button>
+                </div>
+                <div fxFlex="40px" style="text-align:left" fxHide.xs="true">
+                  <app-view-activity-menu [activity]="activity"></app-view-activity-menu>
+                </div>
+              </div>
+
+              <div fxLayout="row wrap">
+                <div class="column-layout" fxFlex="100">
+                  <div style="font-weight: 600">{{activity | activityDateDisplay}}</div>
+                  <div [class.info-text]="currentDateDifference > 0 && currentDateDifference < 3600000"
+                       [class.error-text]="currentDateDifference < 0 && activity.type.usesStatus"
+                       [class.warning-text]="currentDateDifference < 0 && !activity.type.usesStatus">
+                    {{currentDateDifference | timeDifference}}
+                  </div>
+                </div>
+              </div>
+
+              <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.gt-xs="5">
+                <div class="column-layout" fxFlex.sm="100" fxFlex.gt-sm="40">
+                  <div class="normal-detail labeled-line-item" fxLayout="row wrap">
+                    <div style="font-weight: bold" fxFlex.xs="100" fxFlex.gt-xs="30">Contact: </div>
+                    <div>{{activity.contact.firstName}} {{activity.contact.lastName}}</div>
+                  </div>
+                  <div *ngIf="activity.deal" class="normal-detail labeled-line-item" fxLayout="row wrap">
+                    <div style="font-weight:bold" fxFlex.xs="100" fxFlex.gt-xs="30">Deal: </div>
+                    <div>{{activity.deal.name}}</div>
+                  </div>
+                </div>
+                <div class="column-layout" fxFlex.sm="100" fxFlex.gt-sm="40">
+                  <div>
+                    <div class="column-header">
+                      Notes
+                    </div>
+                    <div *ngIf="activity.notes" class="normal-detail" [innerText]="activity.notes"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div fxLayout="row wrap" style="margin-top:45px" *ngIf="activity.outcome">
+                <div class="column-layout" fxFlex.xs="100" fxFlex.gt-xs="50">
+                  <div class="full-notification"
+                       [class.success-background]="activity.outcome.sentiment == 'POSITIVE'"
+                       [class.error-background]="activity.outcome.sentiment == 'NEGATIVE'"
+                       [class.info-background]="activity.outcome.sentiment == 'NEUTRAL'">
+                    {{activity.outcome.name}}
+                  </div>
+                </div>
+              </div>
+
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

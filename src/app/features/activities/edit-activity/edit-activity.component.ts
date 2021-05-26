@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AlertService } from 'carey-alert';
@@ -40,14 +40,14 @@ export class EditActivityComponent implements OnInit {
   private handleActivityResponse(activity: Activity) {
     this.activity = activity;
     this.loading = false;
-    this.breadcrumbService.updateBreadcrumb("Edit " + this.activity.type.name + " Activity");
+    this.breadcrumbService.updateBreadcrumb("Edit " + this.activity.type.name);
   }
 
   private handleActivityError(err: Error) {
     this.loading = false;
     console.error(err);
 
-    let alertMessage: string = 'Problem loading activity';
+    let alertMessage: string = 'Problem loading data';
 
     if (err instanceof HttpErrorResponse) {
       if (err.status) {

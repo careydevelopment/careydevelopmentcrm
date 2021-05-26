@@ -13,5 +13,6 @@ export interface Activity {
   startDate: number;
   endDate: number;
   contact: ContactLightweight;
-  deal: DealLightweight
+  deal: DealLightweight;
+  status: string;
 }

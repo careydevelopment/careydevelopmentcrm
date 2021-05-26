@@ -1,0 +1,112 @@
+<div>
+  <div style="margin-bottom:20px">
+    <alert></alert>
+  </div>
+  <div class="absolute-center" *ngIf="dataLoading">
+    <mat-spinner [diameter]="80"></mat-spinner>
+  </div>
+  <div [style.visibility]="dataLoading ? 'hidden' : 'visible'">
+    <div style="margin-bottom: 30px">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Filter
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="vertical-form-field">
+          <div class="label">Stage</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field">
+              <mat-select [formControl]="stageFilter">
+                <mat-option value="">-- Select a Stage --</mat-option>
+                <mat-option *ngFor="let stage of availableDealStages" [value]="stage.name">
+                  {{stage.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="vertical-form-field">
+          <div class="label">Contact</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field">
+              <mat-select [formControl]="contactFilter">
+                <mat-option value="">-- Select a Contact --</mat-option>
+                <mat-option *ngFor="let contact of availableContacts" [value]="contact.id">
+                  {{contact.firstName}} {{contact.lastName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="vertical-form-field">
+          <div class="label">Account</div>
+          <div>
+            <mat-form-field appearance="fill" class="no-label-field">
+              <mat-select [formControl]="accountFilter">
+                <mat-option value="">-- Select an Account --</mat-option>
+                <mat-option *ngFor="let account of availableAccounts" [value]="account.id">
+                  {{account.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div>
+          <button mat-raised-button color="primary" (click)="clearFilter()">Clear Filter</button>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <div class="table-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="action">
+          <tr><th mat-header-cell *matHeaderCellDef> Action </th></tr>
+          <tr>
+            <td mat-cell *matCellDef="let row" style="width:10%">
+              <button mat-icon-button color="primary" (click)="viewDeal(row)" title="View Deal"><mat-icon>preview</mat-icon></button>
+              <button mat-icon-button color="primary" (click)="editDeal(row)" title="Edit Deal"><mat-icon>edit</mat-icon></button>
+            </td>
+          <tr>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:20%"> {{row.name}} </td><tr>
+        </ng-container>
+
+        <ng-container matColumnDef="stage">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Stage </th></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:15%"> {{row.stage.name}} </td></tr>
+        </ng-container>
+
+        <ng-container matColumnDef="expectedClose">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Close </th></tr>
+          <tr>
+            <td mat-cell *matCellDef="let row" style="width:10%">
+              {{dateService.getShortDateDisplay(dateService.convertToLocal(row.expectedClosureDate))}}
+            </td>
+          </tr>
+        </ng-container>
+
+        <ng-container matColumnDef="contact">
+          <tr><th mat-header-cell *matHeaderCellDef mat-sort-header> Contact </th></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:20%"> {{row.contact.firstName}} {{row.contact.lastName}} </td></tr>
+        </ng-container>
+
+        <ng-container matColumnDef="account">
+          <tr><th mat-header-cell *matHeaderCellDef style="width: 500px"> Account </th></tr>
+          <tr><td mat-cell *matCellDef="let row" style="width:15%"> {{row.contact.account.name}} </td></tr>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+</div>

@@ -19,6 +19,20 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { EditActivityComponent } from './edit-activity/edit-activity.component';
 import { ActivitiesListComponent } from './activities-list/activities-list.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatListModule } from '@angular/material/list';
+import { ActivityDateDisplayPipe } from './pipes/activity-date-display.pipe';
+import { TimeDifferencePipe } from '../../pipes/time-difference.pipe';
+import { ViewActivityMenuComponent } from './view-activity/view-activity-menu/view-activity-menu.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { UpdateNotesDialog } from './ui/update-notes-dialog/update-notes-dialog.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DisplayOutcomeStatusDirective } from './directives/display-outcome-status.directive';
+
 
 export const routes = [
   {
@@ -54,13 +68,18 @@ export const routes = [
 
 @NgModule({
   declarations: [
+    ActivityDateDisplayPipe,
+    TimeDifferencePipe,
+    DisplayOutcomeStatusDirective,
     RecentActivitiesByContactComponent,
     ActivityFormComponent,
     AddActivityComponent,
     ViewActivityComponent,
     ViewActivitiesComponent,
     EditActivityComponent,
-    ActivitiesListComponent
+    ActivitiesListComponent,
+    ViewActivityMenuComponent,
+    UpdateNotesDialog
   ],
   exports: [
     RecentActivitiesByContactComponent,
@@ -79,6 +98,14 @@ export const routes = [
     MatSelectModule,
     MatRadioModule,
     MatDatepickerModule,
+    MatExpansionModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatListModule,
+    MatMenuModule,
+    MatDialogModule,
+    MatCheckboxModule,
     RouterModule.forChild(routes)
   ]
 })

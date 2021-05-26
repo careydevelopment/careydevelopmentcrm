@@ -168,6 +168,10 @@ h4 {
   background-color: red;
 }
 
+.badge-warning {
+  background-color: darkkhaki;
+}
+
 .badge-muted {
   background-color: #CCCCCC;
   color: #000000;
@@ -324,12 +328,45 @@ ol.breadcrumbs li {
   font-weight: bold;
 }
 
+.full-notification {
+  padding: 10px 10px 10px 10px;
+  color: #ffffff;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.info-background {
+  background-color: #3F51B5;
+}
+
 .success-background {
   background-color: green;
 }
 
 .error-background {
   background-color: red;
+}
+
+.warning-background {
+  background-color: darkkhaki;
+}
+
+.info-text {
+  color: #3F51B5;
+}
+
+.success-text {
+  color: green;
+}
+
+.error-text {
+  color: red;
+}
+
+
+.warning-text {
+  color: darkkhaki
 }
 
 @media only screen and (min-width: 960px) {

@@ -46,6 +46,11 @@ export let menu: NavItem[] = [
     route: 'activities',
     children: [
       {
+        displayName: 'View Activities',
+        iconName: 'list',
+        route: 'activities/view-activities'
+      },
+      {
         displayName: 'Add Activity',
         iconName: 'add_box',
         route: 'activities/add-activity'
@@ -57,6 +62,11 @@ export let menu: NavItem[] = [
     iconName: 'paid',
     route: 'deals',
     children: [
+      {
+        displayName: 'View Deals',
+        iconName: 'list',
+        route: 'deals/view-deals'
+      },
       {
         displayName: 'Add Deal',
         iconName: 'add_box',

@@ -18,9 +18,11 @@ import { SalesOwnerLightweight } from '../models/sales-owner-lightweight';
 import { ContactService } from '../../contacts/services/contact.service';
 import { DealLightweight } from '../../deals/models/deal-lightweight';
 import { DealService } from '../../deals/service/deal.service';
+import { activityStatuses } from '../constants/activity-status';
+import { DisplayValueMap } from '../../../models/name-value-map';
 
-//5 years
-const maximumTimeSpan: number = 5 * 365 * 24 * 60 * 60 * 1000;
+//1 year
+const maximumTimeSpan: number = 365 * 24 * 60 * 60 * 1000;
 
 //1 week
 const maxAppointmentLength: number = 7 * 24 * 60 * 60 * 1000;
@@ -52,9 +54,11 @@ export class ActivityFormComponent implements OnInit {
   availableActivityTypes: ActivityType[] = [this.loadingActivityType];
   availableActivityOutcomes: ActivityOutcome[] = [];
   availableDeals: DealLightweight[] = [];
+  availableStatuses: DisplayValueMap[] = activityStatuses;
 
   saving: boolean = false;
   loading: boolean = true;
+  displayForm: boolean = false;
 
   prohibitedEdit: boolean = false;
 
@@ -72,8 +76,14 @@ export class ActivityFormComponent implements OnInit {
     this.setDefaultActivity();
     this.loadData();
     this.createForm();
+    this.prepopulateForm();
     this.intitializeCalendars();
     this.handleProhibition();
+  }
+
+  private prepopulateForm() {
+    if (this.addingForContact)
+      this.activityFormGroup.controls['contact'].setValue(this.contact.id);
   }
 
   private handleProhibition() {
@@ -83,8 +93,9 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private setDefaultActivity() { 
-    if (!this.activity) this.activity = <Activity>{};
-    else {
+    if (!this.activity) {
+      this.activity = <Activity>{};
+    } else {
       this.pageTitle = 'Edit Activity';
 
       if (!this.activity.type || this.activity.type.activityTypeCreator != 'USER') {
@@ -106,15 +117,18 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private initializeCalendarsForEdit() {
-    this.currentStartDate = this.activity.startDate;
-    this.currentEndDate = this.activity.endDate;
+    let localEndDate: number = this.dateService.convertToLocal(this.activity.endDate);
+    let localStartDate: number = this.dateService.convertToLocal(this.activity.startDate);
+
+    this.currentEndDate = localEndDate;
+    this.currentStartDate = localStartDate;
 
     this.setCalendarInputs();
-    
-    this.activityFormGroup.get('endDate').setValue(new Date(this.activity.endDate));
+
+    this.activityFormGroup.get('endDate').setValue(new Date(localEndDate));
     this.activityFormGroup.get('endDate').enable();
 
-    this.activityFormGroup.get('startDate').setValue(new Date(this.activity.startDate));
+    this.activityFormGroup.get('startDate').setValue(new Date(localStartDate));
     this.activityFormGroup.get('startDate').enable();
   }
 
@@ -154,6 +168,7 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private showForm() {
+    this.displayForm = true;
     this.loading = false;
   }
 
@@ -186,7 +201,7 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private handleActivityTypesResponse(activityTypes: ActivityType[]) {
-     this.availableActivityTypes = activityTypes.filter(type => type.activityTypeCreator === 'USER');
+    this.availableActivityTypes = activityTypes.filter(type => type.activityTypeCreator === 'USER');
 
     if (this.activity.type) {
       //we're editing instead of adding if we get here
@@ -202,6 +217,7 @@ export class ActivityFormComponent implements OnInit {
   private handleDataLoadError(err: Error) {
     console.error(err);
     this.alertService.error("Problem loading supporting data")
+    this.loading = false;
   }
 
   private loadContacts() {
@@ -233,15 +249,17 @@ export class ActivityFormComponent implements OnInit {
       'endMeridian': ['AM'],
       'contact': [(this.activity.contact) ? this.activity.contact.id : '', [Validators.required]],
       'outcome': [(this.activity.outcome) ? this.activity.outcome.id : ''],
-      'notes': [this.activity.notes, [Validators.pattern('^[a-zA-Z0-9,.\' \-\]*$')]],
-      'deal': [(this.activity.deal) ? this.activity.deal.id : '']
+      'notes': [this.activity.notes],
+      'deal': [(this.activity.deal) ? this.activity.deal.id : ''],
+      'status': [(this.activity.type && this.activity.type.usesStatus) ? this.activity.status : null],
+      'trackStatus': [(this.activity.type) ? this.activity.type.usesStatus : false]
     });
   }
 
   private startDateValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      this.startDateChanged();
-      this.endDateChanged();
+      //this.startDateChanged();
+      //this.endDateChanged();
 
       if (this.selectedActivityType) {
         if (!control.value || control.value.toString().trim() == '') {
@@ -261,8 +279,8 @@ export class ActivityFormComponent implements OnInit {
 
   private endDateValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      this.startDateChanged();
-      this.endDateChanged();
+      //this.startDateChanged();
+      //this.endDateChanged();
 
       if (this.selectedActivityType && this.selectedActivityType.usesEndDate) {
         if (!control.value || control.value.toString().trim() == '') {
@@ -312,9 +330,21 @@ export class ActivityFormComponent implements OnInit {
     if (this.availableActivityTypes && name) {
       this.selectedActivityType = this.availableActivityTypes.find(type => type.name === name);
       this.availableActivityOutcomes = this.selectedActivityType.possibleOutcomes;
+
+      this.updateFormForStatus();
     }
 
     this.setCalendarInputs();
+  }
+
+  private updateFormForStatus() {
+    if (this.selectedActivityType.usesStatus) {
+      this.activityFormGroup.controls['status'].setValue('PENDING');
+      this.activityFormGroup.controls['trackStatus'].setValue(true);
+    } else {
+      this.activityFormGroup.controls['status'].setValue(null);
+      this.activityFormGroup.controls['trackStatus'].setValue(false);
+    }
   }
 
   contactChanged(id: string) {
@@ -341,7 +371,7 @@ export class ActivityFormComponent implements OnInit {
 
       let newDateVal: number = this.dateService.getDateVal(date, hour, minute, meridian);
 
-      this.currentStartDate = newDateVal;
+      this.currentStartDate = newDateVal; 
     }
   }
 
@@ -439,32 +469,49 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private setActivity() {
+    let outcome: ActivityOutcome = null;
+
     let user = this.userService.user;
     let salesOwner: SalesOwnerLightweight = { id: user.id, firstName: user.firstName, lastName: user.lastName, username: user.username }
     let account: AccountLightweight = { id: this.contact.account.id, name: this.contact.account.name };
     let contact: ContactLightweight = { id: this.contact.id, firstName: this.contact.firstName, lastName: this.contact.lastName, account: account, salesOwner: salesOwner };
-    let activityType: ActivityTypeLightweight = { id: this.selectedActivityType.id, name: this.selectedActivityType.name, icon: this.selectedActivityType.icon, activityTypeCreator: this.selectedActivityType.activityTypeCreator };
-    let outcome: ActivityOutcome = this.availableActivityOutcomes.find(outcome => outcome.id == this.activityFormGroup.controls['outcome'].value);
-    let deal: DealLightweight = this.getDealLightweight();
+    let activityType: ActivityTypeLightweight = { id: this.selectedActivityType.id, name: this.selectedActivityType.name, icon: this.selectedActivityType.icon, activityTypeCreator: this.selectedActivityType.activityTypeCreator, usesStatus: this.selectedActivityType.usesStatus };
 
-    if (!this.isDateInPast()) {
-      outcome = null;
+    if (this.availableActivityOutcomes && this.isDateInPast()) {
+      outcome = this.availableActivityOutcomes.find(outcome => outcome.id == this.activityFormGroup.controls['outcome'].value);
     }
+
+    let deal: DealLightweight = this.getDealLightweight();
 
     this.activity.contact = contact;
     this.activity.location = this.activityFormGroup.controls['location'].value;
+
+    //don't want 'undefined' in here
     this.activity.notes = this.activityFormGroup.controls['notes'].value;
+    if (!this.activity.notes) this.activity.notes = '';
+
     this.activity.outcome = outcome;
-    this.activity.startDate = this.currentStartDate;
+    this.activity.startDate = this.dateService.convertToUtc(this.currentStartDate);
     this.activity.title = this.activityFormGroup.controls['title'].value;
     this.activity.type = activityType;
     this.activity.deal = deal;
 
-    if (this.selectedActivityType.usesEndDate) this.activity.endDate = this.currentEndDate;
+    if (this.selectedActivityType.usesEndDate) this.activity.endDate = this.dateService.convertToUtc(this.currentEndDate);
+
+    if (this.selectedActivityType.usesStatus) this.activity.status = this.activityFormGroup.controls['status'].value;
   }
 
   private scrollToTop() {
     const element = document.querySelector('mat-sidenav-content') || window;
     element.scrollTo(0, 0);
+  }
+
+  trackStatusChange() {
+    if (this.selectedActivityType) {
+      let trackStatus: boolean = this.activityFormGroup.controls['trackStatus'].value;
+      this.selectedActivityType.usesStatus = trackStatus;
+      
+      this.updateFormForStatus();
+    }
   }
 }
