@@ -21,23 +21,26 @@ export class DisplayOutcomeStatusDirective extends MultipleClassesBaseDirective 
   }
 
   private addExtraClass() {
-    let extraClass: string = null;
-    let outcome: ActivityOutcome = this.activity.outcome;
-    let status: string = this.activity.status;
+    console.log("activity is", this.activity);
+    if (this.activity) {
+      let extraClass: string = null;
+      let outcome: ActivityOutcome = this.activity.outcome;
+      let status: string = this.activity.status;
 
-    if (outcome && outcome.sentiment) {
-      let sentiment = outcome.sentiment;
+      if (outcome && outcome.sentiment) {
+        let sentiment = outcome.sentiment;
 
-      if (sentiment == 'POSITIVE') extraClass = 'badge-success';
-      else if (sentiment == 'NEGATIVE') extraClass = 'badge-error';
-      else extraClass = 'badge-info';
-    } else {
-      if (status == 'COMPLETED') extraClass = 'badge-success';
-      else if (this.activityService.isOverdue(this.activity)) extraClass = 'badge-error';
-      else if (status == 'ON_HOLD') extraClass = 'badge-warning';
+        if (sentiment == 'POSITIVE') extraClass = 'badge-success';
+        else if (sentiment == 'NEGATIVE') extraClass = 'badge-error';
+        else extraClass = 'badge-info';
+      } else {
+        if (status == 'COMPLETED') extraClass = 'badge-success';
+        else if (this.activityService.isOverdue(this.activity)) extraClass = 'badge-error';
+        else if (status == 'ON_HOLD') extraClass = 'badge-warning';
+      }
+
+
+      if (extraClass) this._elementClass.push(extraClass);
     }
-
-
-    if (extraClass) this._elementClass.push(extraClass);
   }
 } 

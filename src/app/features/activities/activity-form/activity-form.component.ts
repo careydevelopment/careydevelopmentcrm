@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { Contact } from '../../contacts/models/contact';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AlertService } from 'carey-alert';
 import { ValidatorFn, FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Activity } from '../models/activity';
@@ -76,7 +76,6 @@ export class ActivityFormComponent implements OnInit {
     this.setDefaultActivity();
     this.loadData();
     this.createForm();
-    this.prepopulateForm();
     this.intitializeCalendars();
     this.handleProhibition();
   }
@@ -84,6 +83,21 @@ export class ActivityFormComponent implements OnInit {
   private prepopulateForm() {
     if (this.addingForContact)
       this.activityFormGroup.controls['contact'].setValue(this.contact.id);
+
+    if (this.route.snapshot.queryParams['type']) {
+      this.route.queryParamMap.subscribe(
+        (params: ParamMap) => this.prepopulateType(params.get('type'))
+      )
+    }
+  }
+
+  private prepopulateType(type: string) {
+    let found: ActivityType = this.availableActivityTypes.find(activityType => activityType.name.toLowerCase() === type.toLowerCase());
+
+    if (found) {
+      this.activityFormGroup.controls['type'].setValue(found.name);
+      this.activityTypeChanged(found.name);
+    }
   }
 
   private handleProhibition() {
@@ -170,6 +184,7 @@ export class ActivityFormComponent implements OnInit {
   private showForm() {
     this.displayForm = true;
     this.loading = false;
+    this.prepopulateForm();
   }
 
   private checkForActivityType() {
@@ -442,11 +457,10 @@ export class ActivityFormComponent implements OnInit {
   }
 
   private handleActivitySaveResponse(activity: Activity) {
-    //console.log("got back", activity);
-    this.alertService.success("Activity successfully saved!");
+    this.alertService.success("Activity successfully saved!", { keepAfterRouteChange: true });
     this.activity = activity;
-    this.scrollToTop();
-    this.saving = false;
+    let route = '/activities/view-activity';
+    this.router.navigate([route], { queryParams: { id: activity.id } });
   }
 
   private handleActivitySaveError(err: Error) {

@@ -24,7 +24,7 @@
                     @ {{activity.location}}
                   </span>
                 </div>
-                <div *ngIf="activity.outcome" [displayOutcomeStatus]="row">{{activity.outcome.name}}</div>
+                <div *ngIf="activity.outcome" [displayOutcomeStatus]="activity">{{activity.outcome.name}}</div>
               </div>
               <div *ngIf="activity.notes" class="icon-list-line">
                 {{activity.notes}}
