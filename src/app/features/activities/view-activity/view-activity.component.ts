@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AlertService } from 'carey-alert';
@@ -12,6 +12,7 @@ import { DealLightweight } from '../../deals/models/deal-lightweight';
 import { Activity } from '../models/activity';
 import { ActivityService } from '../service/activity.service';
 import { DateService } from '../../../services/date.service';
+import { Observable, Subscription } from 'rxjs';
 
 
 @Component({
@@ -20,7 +21,7 @@ import { DateService } from '../../../services/date.service';
   templateUrl: './view-activity.component.html',
   styleUrls: ['./view-activity.component.css']
 })
-export class ViewActivityComponent implements OnInit {
+export class ViewActivityComponent implements OnInit, OnDestroy {
 
   availableActivityTypes: ActivityType[] = [];
   availableActivityOutcomes: ActivityOutcome[] = [];
@@ -30,6 +31,7 @@ export class ViewActivityComponent implements OnInit {
   activity: Activity  = {} as Activity;
 
   currentDateDifference: number;
+  counterSubscription: Subscription;
 
   constructor(private route: ActivatedRoute, private activityService: ActivityService,
     private alertService: AlertService, private router: Router, private displayValueMapService: DisplayValueMapService,
@@ -39,10 +41,16 @@ export class ViewActivityComponent implements OnInit {
     this.initializeActivity();
   }
 
+  ngOnDestroy(): void {
+    if (this.counterSubscription) {
+      this.counterSubscription.unsubscribe();
+    }
+  }
+
   private initializeCounter() {
     let localStartDate: number = this.dateService.convertToLocal(this.activity.startDate);
 
-    this.dateService.counterBySecond.subscribe(
+    this.counterSubscription = this.dateService.counterBySecond.subscribe(
       timestamp => {
         this.currentDateDifference = localStartDate - timestamp;
       }

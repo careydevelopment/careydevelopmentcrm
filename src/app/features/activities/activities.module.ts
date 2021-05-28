@@ -20,7 +20,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { EditActivityComponent } from './edit-activity/edit-activity.component';
 import { ActivitiesListComponent } from './activities-list/activities-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatTableModule } from '@angular/material/table';
+import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatListModule } from '@angular/material/list';
@@ -32,6 +32,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { UpdateNotesDialog } from './ui/update-notes-dialog/update-notes-dialog.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DisplayOutcomeStatusDirective } from './directives/display-outcome-status.directive';
+import { DisplayActivityDateDifferenceDirective } from './directives/display-activity-date-difference.directive';
 
 
 export const routes = [
@@ -71,6 +72,7 @@ export const routes = [
     ActivityDateDisplayPipe,
     TimeDifferencePipe,
     DisplayOutcomeStatusDirective,
+    DisplayActivityDateDifferenceDirective,
     RecentActivitiesByContactComponent,
     ActivityFormComponent,
     AddActivityComponent,

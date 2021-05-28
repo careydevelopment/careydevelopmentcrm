@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostBinding, HostListener, Input, OnInit } from '@angular/core';
+import { Directive, Input, OnInit } from '@angular/core';
 import { MultipleClassesBaseDirective } from '../../../directives/multiple-classes-base.directive';
 import { Activity } from '../models/activity';
 import { ActivityOutcome } from '../models/activity-outcome';
@@ -21,7 +21,6 @@ export class DisplayOutcomeStatusDirective extends MultipleClassesBaseDirective 
   }
 
   private addExtraClass() {
-    console.log("activity is", this.activity);
     if (this.activity) {
       let extraClass: string = null;
       let outcome: ActivityOutcome = this.activity.outcome;
@@ -38,7 +37,6 @@ export class DisplayOutcomeStatusDirective extends MultipleClassesBaseDirective 
         else if (this.activityService.isOverdue(this.activity)) extraClass = 'badge-error';
         else if (status == 'ON_HOLD') extraClass = 'badge-warning';
       }
-
 
       if (extraClass) this._elementClass.push(extraClass);
     }
