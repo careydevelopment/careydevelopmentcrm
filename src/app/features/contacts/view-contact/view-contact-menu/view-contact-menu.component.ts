@@ -17,8 +17,8 @@ export class ViewContactMenuComponent implements OnInit {
   }
 
   addAppointment() {
-    console.log("Adding appointment for " + this.contact);
-  }
+    let route = '/activities/add-activity';
+    this.router.navigate([route], { queryParams: { contactId: this.contact.id, type: 'APPOINTMENT' } });  }
 
   addActivity() {
     let route = '/activities/add-activity';
