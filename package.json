@@ -28,7 +28,7 @@
     "@nativescript/schematics": "^10.1.0",
     "@types/quill": "^1.3.10",
     "carey-alert": "0.0.1",
-    "carey-auth": "^0.2.6",
+    "carey-auth": "^0.2.9",
     "carey-geo": "0.0.4",
     "carey-image-uploader": "0.0.2",
     "carey-url-util": "0.0.1",

@@ -15,6 +15,9 @@ import { ContactService } from '../services/contact.service';
 import { sources } from '../../../models/source';
 import { addressTypes } from '../../../models/address-type';
 import { phoneTypes } from '../../../models/phone-type';
+import { Observable, of } from 'rxjs';
+import { catchError, shareReplay, switchMap, tap } from 'rxjs/operators';
+import { DataSource } from '@angular/cdk/table';
 
 
 @Component({
@@ -26,9 +29,7 @@ export class ViewContactsComponent implements OnInit {
 
   displayedColumns: string[] = ['action', 'lastName', 'firstName', 'status', 'title', 'account'];
 
-  dataSource: MatTableDataSource<Contact>;
   currentUser: User;
-  dataLoading: boolean = true;
 
   availableAddressTypes: DisplayValueMap[] = addressTypes;
   availablePhoneTypes: DisplayValueMap[] = phoneTypes;
@@ -47,6 +48,9 @@ export class ViewContactsComponent implements OnInit {
     source: ''
   }
 
+  dataSource$: Observable<MatTableDataSource<Contact>>;
+  localDataSource: MatTableDataSource<Contact>;
+
   constructor(private userService: UserService, private contactService: ContactService,
     private alertService: AlertService, private displayValueMapService: DisplayValueMapService,
     private router: Router) {
@@ -63,16 +67,22 @@ export class ViewContactsComponent implements OnInit {
       .subscribe(
         status => {
           this.filterValues.status = status;
-          this.dataSource.filter = JSON.stringify(this.filterValues);
+          this.updateFilter();
         }
-      )
+    )
+
     this.sourceFilter.valueChanges
       .subscribe(
         source => {
           this.filterValues.source = source;
-          this.dataSource.filter = JSON.stringify(this.filterValues);
+          this.updateFilter();
         }
-      )
+    )
+  }
+
+  private updateFilter() {
+    this.localDataSource.filter = JSON.stringify(this.filterValues);
+    this.dataSource$ = of(this.localDataSource);
   }
 
   clearFilter() {
@@ -91,31 +101,38 @@ export class ViewContactsComponent implements OnInit {
     return filterFunction;
   }
 
-
   private loadContacts() {
     if (this.currentUser) {
-      this.contactService.fetchMyContacts()
-        .subscribe(
-          (contacts: Contact[]) => this.handleContacts(contacts),
-          err => this.handleContactsError(err)
+      this.dataSource$ = this.contactService.fetchMyContacts()
+        .pipe(
+          switchMap(contacts => this.handleContacts(contacts)),
+          catchError(err => this.handleContactsError(err))
         );
     } else {
       this.alertService.error("Problem identifying user!");
-      this.dataLoading = false;
     }
   }
 
-  private handleContacts(contacts: Contact[]) {
-    this.dataLoading = false;
-    this.dataSource = new MatTableDataSource(contacts);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.dataSource.filterPredicate = this.createFilter();
+  private handleContacts(contacts: Contact[]): Observable<MatTableDataSource<Contact>> {
+    this.localDataSource = this.setUpDataSource(contacts);
+    return of(this.localDataSource);
   }
 
-  private handleContactsError(err) {
+  private setUpDataSource(contacts: Contact[]): MatTableDataSource<Contact> {
+    let dataSource: MatTableDataSource<Contact> = new MatTableDataSource(contacts);
+    dataSource.paginator = this.paginator;
+    dataSource.sort = this.sort;
+    dataSource.filterPredicate = this.createFilter();
+
+    return dataSource;
+  }
+
+  private handleContactsError(err): Observable<MatTableDataSource<Contact>> {
     console.error(err);
     this.alertService.error("Problem loading contacts!");
+
+    this.localDataSource = this.setUpDataSource([]);
+    return of(this.localDataSource);
   }
 
   editContact(contact: Contact) {

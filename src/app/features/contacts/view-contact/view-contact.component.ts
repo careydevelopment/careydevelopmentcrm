@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Contact } from '../models/contact';
 import { AlertService } from 'carey-alert';
@@ -14,6 +14,7 @@ import { ContactService } from '../services/contact.service';
 import { sources } from '../../../models/source';
 import { addressTypes } from '../../../models/address-type';
 import { phoneTypes } from '../../../models/phone-type';
+import { Observable, of } from 'rxjs';
 
 
 @Component({
@@ -30,38 +31,31 @@ export class ViewContactComponent implements OnInit {
   availableContactStatuses: DisplayValueMap[] = contactStatuses;
   availableSources: DisplayValueMap[] = sources;
 
-  loading: boolean = true;
-  contact: Contact = {} as Contact;
+  contact$: Observable<Contact>;
 
   constructor(private route: ActivatedRoute, private contactService: ContactService,
     private alertService: AlertService, private router: Router, private displayValueMapService: DisplayValueMapService,
     private breadcrumbService: BreadcrumbService) { }
 
   ngOnInit(): void {
-    let contact$ = this.route.queryParamMap.pipe(
+    this.contact$ = this.route.queryParamMap.pipe(
       switchMap((params: ParamMap) =>
-        this.contactService.fetchById(params.get('id')))
-    );
-
-    contact$.subscribe(
-      (contact: Contact) => this.handleResponse(contact),
-      err => this.handleError(err)
+        this.contactService.fetchById(params.get('id')).pipe(
+          tap(contact => this.handleBreadcrumb(contact)),
+          catchError(err => this.handleError(err))
+        )
+      )
     );
   }
 
-  private handleResponse(contact: Contact) {
-    this.contact = contact;
-    this.loading = false;
-
-    if (this.contact) {
-      this.breadcrumbService.updateBreadcrumb("View " + this.contact.firstName + " " + this.contact.lastName);
+  private handleBreadcrumb(contact: Contact) {
+    if (contact) {
+      this.breadcrumbService.updateBreadcrumb("View " + contact.firstName + " " + contact.lastName);
     }
   }
 
-  private handleError(err: Error) {
+  private handleError(err: Error): Observable<Contact> {
     console.log(err);
-    this.loading = false;
-
     let alertMessage: string = 'Something went wrong, please call support';
 
     if (err instanceof HttpErrorResponse) {
@@ -73,10 +67,12 @@ export class ViewContactComponent implements OnInit {
     }
 
     this.alertService.error(alertMessage);
+
+    return of(null);
   }
 
-  editContact() {
+  editContact(id: string) {
     let route = '/contacts/edit-contact';
-    this.router.navigate([route], { queryParams: { id: this.contact.id } });
+    this.router.navigate([route], { queryParams: { id: id } });
   }
 }

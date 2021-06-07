@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Country, State, GeoService } from 'carey-geo';
 import { forkJoin, Observable } from 'rxjs';
@@ -8,7 +8,8 @@ import { Contact } from '../../../models/contact';
 @Component({
   selector: 'contact-address-type-form',
   templateUrl: './address-type-form.component.html',
-  styleUrls: ['./address-type-form.component.css']
+  styleUrls: ['./address-type-form.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AddressTypeFormComponent implements OnInit {
 

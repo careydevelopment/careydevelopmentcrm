@@ -2,10 +2,12 @@
   <div style="margin-bottom:20px">
     <alert></alert>
   </div>
-  <div class="absolute-center" *ngIf="dataLoading">
-    <mat-spinner [diameter]="80"></mat-spinner>
-  </div>
-  <div [style.visibility]="dataLoading ? 'hidden' : 'visible'">
+  <ng-template #loading>
+    <div class="absolute-center">
+      <mat-spinner [diameter]="80"></mat-spinner>
+    </div>
+  </ng-template>
+  <div *ngIf="dataSource$ | async as dataSource; else loading">
     <div style="margin-bottom: 30px">
       <mat-expansion-panel>
         <mat-expansion-panel-header>

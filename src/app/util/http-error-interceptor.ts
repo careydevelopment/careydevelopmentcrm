@@ -22,6 +22,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       //retry(1),
       catchError((returnedError) => {
         let errorMessage = null;
+        console.log("Returned error", returnedError.error);
 
         if (returnedError.error instanceof ErrorEvent) {
           errorMessage = `Error: ${returnedError.error.message}`;
@@ -53,6 +54,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           this.authenticationService.logout();
           handled = true;
         }
+
         break;
       case 403:
         this.alertService.info("Please login again.", { keepAfterRouteChange: false });
