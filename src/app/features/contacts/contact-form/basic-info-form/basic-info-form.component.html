@@ -5,7 +5,7 @@
       <div>
         <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
           <input formControlName="firstName" matInput placeholder="Enter first name" maxlength="50">
-          <mat-error *ngIf="basicInfoFormGroup.controls['firstName'].invalid">Please enter a valid first name</mat-error>
+          <mat-error fieldLabel="First name" [simpleValidation]="basicInfoFormGroup.get('firstName')"></mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -15,7 +15,7 @@
       <div>
         <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
           <input formControlName="lastName" matInput placeholder="Enter last name" maxlength="50">
-          <mat-error *ngIf="basicInfoFormGroup.controls['lastName'].invalid">Please enter a valid last name</mat-error>
+          <mat-error fieldLabel="Last name" [simpleValidation]="basicInfoFormGroup.get('lastName')"></mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -25,10 +25,7 @@
       <div>
         <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
           <input formControlName="email" matInput placeholder="Enter email address" maxlength="50">
-          <mat-error *ngIf="basicInfoFormGroup.get('email').hasError('emailExists'); else otherErrorCheck">That email already exists!</mat-error>
-          <ng-template #otherErrorCheck>
-            <mat-error *ngIf="basicInfoFormGroup.controls['email'].invalid">Please enter a valid email address</mat-error>
-          </ng-template>
+          <mat-error fieldLabel="email" [simpleValidation]="basicInfoFormGroup.get('email')"></mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -38,7 +35,7 @@
       <div>
         <mat-form-field appearance="fill" class="no-label-field" fxFlex="30" fxFlex.lt-md="100">
           <input formControlName="title" matInput placeholder="Enter title" maxlength="30">
-          <mat-error *ngIf="basicInfoFormGroup.controls['title'].invalid">Please enter a valid title</mat-error>
+          <mat-error fieldLabel="Title" [simpleValidation]="basicInfoFormGroup.get('title')"></mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -58,7 +55,7 @@
               {{account.name}}
             </mat-option>
           </mat-autocomplete>
-          <mat-error *ngIf="basicInfoFormGroup.controls['account'].invalid">Please enter or select a valid account name</mat-error>
+          <mat-error fieldLabel="Account" [simpleValidation]="basicInfoFormGroup.get('account')"></mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -72,7 +69,7 @@
               {{source.display}}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="basicInfoFormGroup.controls['source'].invalid">Please select a source</mat-error>
+          <mat-error fieldLabel="Source" [simpleValidation]="basicInfoFormGroup.get('source')"></mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -82,7 +79,7 @@
       <div>
         <mat-form-field appearance="fill" class="no-label-field" fxFlex="50" fxFlex.lt-md="100">
           <input formControlName="sourceDetails" matInput placeholder="Enter source details" maxlength="100">
-          <mat-error *ngIf="basicInfoFormGroup.controls['sourceDetails'].invalid">Please enter valid source details</mat-error>
+          <mat-error fieldLabel="Source details" [simpleValidation]="basicInfoFormGroup.get('sourceDetails')"></mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -96,7 +93,7 @@
               {{status.display}}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="basicInfoFormGroup.controls['status'].invalid">Please select a status</mat-error>
+          <mat-error fieldLabel="Status" [simpleValidation]="basicInfoFormGroup.get('status')"></mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -110,7 +107,7 @@
               {{lob.display}}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="basicInfoFormGroup.controls['lineOfBusiness'].invalid">Please select a line of business</mat-error>
+          <mat-error fieldLabel="LOB" [simpleValidation]="basicInfoFormGroup.get('lineOfBusiness')"></mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -224,7 +221,7 @@
         <mat-form-field appearance="fill" class="no-label-field" fxFlex="50"
                         fxFlex.lt-md="100" style="border: 1px solid black; margin-top: 5px">
           <textarea formControlName="notes" matInput placeholder="Enter notes" rows="6" cols="40" maxlength="512"></textarea>
-          <mat-error *ngIf="basicInfoFormGroup.controls['notes'].invalid">Please enter valid notes</mat-error>
+          <mat-error fieldLabel="notes" [simpleValidation]="basicInfoFormGroup.get('notes')"></mat-error>
         </mat-form-field>
       </div>
     </div>

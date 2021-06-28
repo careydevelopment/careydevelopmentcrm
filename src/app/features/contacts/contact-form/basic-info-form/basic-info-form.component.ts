@@ -140,7 +140,7 @@ export class BasicInfoFormComponent implements OnInit {
     this.basicInfoFormGroup = this.fb.group({
       'firstName': [this.contact.firstName, [Validators.required, Validators.pattern('^[a-zA-Z. \-\]*$')]],
       'lastName': [this.contact.lastName, [Validators.required, Validators.pattern('^[a-zA-Z. \-\]*$')]],
-      'email': [this.contact.email, [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")],
+      'email': [this.contact.email, [Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)],
       [this.emailExistsValidator()],
         'blur'
       ],
@@ -167,7 +167,7 @@ export class BasicInfoFormComponent implements OnInit {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       if (control.value == 'Loading...') {
         return { 'invalid': true };
-      } 
+      }  
 
       this.getAccount(control.value);
 
@@ -184,7 +184,7 @@ export class BasicInfoFormComponent implements OnInit {
         //if the user has an ID, that means a duplicate email is okay - it could be the
         //user's original email address
         if (this.originalFormState && this.originalFormState.email == control.value) {
-        //if we get here the user has the same email address as always - no conflict
+          //if we get here the user has the same email address as always - no conflict
           return of(null);
         } else {
           //the user changed the email address - need to check

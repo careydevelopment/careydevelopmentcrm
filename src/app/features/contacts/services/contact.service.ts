@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Contact } from '../models/contact';
 import { map, switchMap, tap } from 'rxjs/operators';
+import { FormGroup, ValidationErrors } from '@angular/forms';
+import { BasicInfoFormComponent } from '../contact-form/basic-info-form/basic-info-form.component';
 
 const baseUrl: string = environment.baseCustomerServiceUrl;
 

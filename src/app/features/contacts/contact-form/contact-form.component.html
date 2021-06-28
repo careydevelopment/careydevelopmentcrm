@@ -4,6 +4,12 @@
       <div>
         <alert></alert>
       </div>
+      <div *ngIf="serverSideErrors && serverSideErrors.length > 0">
+        <div class="error-spree-header">Please fix the errors below</div>
+        <ul>
+          <li *ngFor="let error of serverSideErrors" class="error-spree">{{error.defaultMessage}}</li>
+        </ul>
+      </div>
       <div class="absolute-center" *ngIf="dataLoading">
         <mat-spinner [diameter]="80"></mat-spinner>
       </div>

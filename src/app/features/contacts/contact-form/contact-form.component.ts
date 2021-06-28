@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
-import { FormGroup, ValidationErrors } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AlertService } from 'carey-alert';
@@ -8,6 +7,8 @@ import { ContactService } from '../services/contact.service';
 import { AddressesFormComponent } from './addresses-form/addresses-form.component';
 import { BasicInfoFormComponent } from './basic-info-form/basic-info-form.component';
 import { PhonesFormComponent } from './phones-form/phones-form.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ContactValidationService } from '../services/contact-validation.service';
 
 const BASIC_INFO_INDEX: number = 0;
 const ADDRESSES_INDEX: number = 1;
@@ -26,6 +27,7 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   basicInfoFormSubscription: Subscription;
   formSubmitted: boolean = false;
   allFormsValid: boolean = false;
+  serverSideErrors: any[] = [];
   pageTitle: string = 'Add Contact';
   accounts: Account[];
 
@@ -35,7 +37,8 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() contact: Contact;
 
-  constructor(private alertService: AlertService, private contactService: ContactService) { }
+  constructor(private alertService: AlertService, private contactService: ContactService,
+    private contactValidationService: ContactValidationService) { }
 
   ngOnInit() {
     if (!this.contact) {
@@ -124,7 +127,7 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     if (currentIndex == REVIEW_INDEX) {
-      this.validateForms();
+      this.errorMessages = this.contactValidationService.validateForms(this.basicInfoComponent, this.contact);
     }
   }
 
@@ -143,40 +146,6 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
     let node: Node = nodeList.item(index);
 
     return (<HTMLElement>node);
-  }
-
-  private validateForms() {    
-    this.errorMessages = [];
-
-    this.validateBasicInfoForm();
-    this.validateAtLeastOneContactMethod();
-  }
-
-  private validateBasicInfoForm() {
-    let basicInfoForm: FormGroup = this.basicInfoComponent.basicInfoFormGroup;
-
-    Object.keys(basicInfoForm.controls).forEach(key => {
-      const controlErrors: ValidationErrors = basicInfoForm.get(key).errors;
-      if (controlErrors != null) {
-        this.addErrorByKey(key);    
-      }
-    });
-  }
-
-  private validateAtLeastOneContactMethod() {
-    if (!this.contact.email
-      && (!this.contact.addresses || this.contact.addresses.length == 0)
-      && (!this.contact.phones || this.contact.phones.length == 0)) {
-
-        this.errorMessages.push("Please include at least one method of contact (phone, email, address)")
-    }
-  }
-
-  private addErrorByKey(key: string) {
-    if (key == 'firstName') this.errorMessages.push("Please enter a valid first name");
-    if (key == 'lastName') this.errorMessages.push("Please enter a valid last name");
-    if (key == 'source') this.errorMessages.push("Please select a source");
-    if (key == 'status') this.errorMessages.push("Please select a status");
   }
 
   saveInfo() {
@@ -215,6 +184,20 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   private handleContactSaveError(err) {
     console.error(err);
     this.formSubmitted = false;
+
+    if (err instanceof HttpErrorResponse) {
+      let httpError: HttpErrorResponse = err as HttpErrorResponse;
+
+      if (httpError.status == 400) {
+        if (httpError.error && httpError.error.errors && httpError.error.errors.length > 0) {
+          this.serverSideErrors = httpError.error.errors;
+          this.scrollToTop();
+
+          return;
+        }
+      }
+    }
+
     this.alertService.error("There was a problem - please contact support");
     this.scrollToTop();
   }

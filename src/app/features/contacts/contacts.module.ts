@@ -37,6 +37,7 @@ import { ViewContactMenuComponent } from './view-contact/view-contact-menu/view-
 import { StatusProgressBarComponent } from './status-progress-bar/status-progress-bar.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { DirectivesModule } from '../../directives/directives.module';
+import { ValidationModule } from 'carey-validation';
 
 export const routes = [
   { path: '', pathMatch: 'full', redirectTo: 'add-contact' },
@@ -112,6 +113,7 @@ export const routes = [
     ActivitiesModule,
     DealsModule,
     DirectivesModule,
+    ValidationModule,
     RouterModule.forChild(routes)
   ]
 })
