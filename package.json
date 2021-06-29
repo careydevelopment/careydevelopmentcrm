@@ -33,7 +33,7 @@
     "carey-image-uploader": "0.0.2",
     "carey-url-util": "0.0.1",
     "carey-user": "^0.1.0",
-    "carey-validation": "^0.4.0-f",
+    "carey-validation": "^0.4.2",
     "core-js": "^2.5.4",
     "echarts": "^5.0.2",
     "libphonenumber-js": "^1.9.6",

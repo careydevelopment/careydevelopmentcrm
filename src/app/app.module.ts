@@ -49,8 +49,7 @@ import { allFieldSummaries } from './config/validation/field-summaries';
     UserModule.forRoot({ baseUrl: environment.baseUserServiceUrl }),
     AuthModule.forRoot({ baseUrl: environment.baseUserServiceUrl }),
     GeoModule.forRoot({ baseUrl: environment.baseGeoServiceUrl }),
-    ValidationModule.forRoot({ fieldSummaries : allFieldSummaries
-    })
+    ValidationModule.forRoot({ fieldSummaries : allFieldSummaries })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

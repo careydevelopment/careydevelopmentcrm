@@ -1,13 +1,4 @@
-<div *ngIf="errorMessages && errorMessages.length > 0">
-  <div>
-    <p style="margin-left: 16px" class="error-spree-header">Form Contains Errors</p>
-  </div>
-  <div>
-    <ul>
-      <li *ngFor="let errorMessage of errorMessages" class="error-spree">{{errorMessage}}</li>
-    </ul>
-  </div>
-</div>
+<error-spree [errorMessages]="errorMessages"></error-spree>
 
 <div *ngIf="errorMessages.length == 0" style="margin-left:17px">
   <div>

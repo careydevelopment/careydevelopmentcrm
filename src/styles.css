@@ -127,19 +127,6 @@ h4 {
   margin-top:15px;
 }
 
-.error-spree {
-  font-weight: 500;
-  font-size: 12pt;
-  line-height: 16pt;
-  color: red;
-}
-
-.error-spree-header {
-  font-size: 14pt;
-  font-weight: 500;
-  color:red;
-}
-
 .mat-step-icon-invalid {
     background-color: red !important;
 }
