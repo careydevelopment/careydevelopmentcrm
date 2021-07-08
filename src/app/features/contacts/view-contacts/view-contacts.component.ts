@@ -16,9 +16,7 @@ import { sources } from '../../../models/source';
 import { addressTypes } from '../../../models/address-type';
 import { phoneTypes } from '../../../models/phone-type';
 import { Observable, of } from 'rxjs';
-import { catchError, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { DataSource } from '@angular/cdk/table';
-
+import { catchError, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-view-contacts',

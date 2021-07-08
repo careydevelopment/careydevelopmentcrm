@@ -34,7 +34,14 @@ export class BreadcrumbComponent implements OnInit {
 
       if (navItem) {
         let breadcrumb: Breadcrumb = { name: navItem.displayName, url: this.currentUrl };
-        this.breadcrumbs.push(breadcrumb);
+        this.pushBreadcrumb(breadcrumb);
+      } else {
+        let breadcrumbsStr: string = localStorage.getItem("breadcrumbs");
+        if (breadcrumbsStr) {
+          if (breadcrumbsStr.includes(this.currentUrl)) {
+            this.breadcrumbs = JSON.parse(breadcrumbsStr) as Breadcrumb[];
+          }
+        }
       }
     }
   }
@@ -106,7 +113,7 @@ export class BreadcrumbComponent implements OnInit {
         breadcrumb = { name: data.breadcrumb, url: this.currentUrl, pauseDisplay: data.pauseDisplay };
       });
 
-      if (breadcrumb) {
+      if (breadcrumb && this.breadcrumbs && this.breadcrumbs[this.breadcrumbs.length - 1]) {
          //we only add a new breadcrumb if the person isn't visiting a page that's
          //already in the breadcrumbs array
         if (breadcrumb.url != this.breadcrumbs[this.breadcrumbs.length - 1].url) {
@@ -116,7 +123,7 @@ export class BreadcrumbComponent implements OnInit {
             }
           });
 
-          this.breadcrumbs.push(breadcrumb);
+          this.pushBreadcrumb(breadcrumb);
         }
       }
     }
@@ -127,7 +134,7 @@ export class BreadcrumbComponent implements OnInit {
 
     let breadcrumb: Breadcrumb = { name: navItem.displayName, url: navItem.route };
 
-    this.breadcrumbs.push(breadcrumb);
+    this.pushBreadcrumb(breadcrumb);
   }
 
   private findRoute(navItems?: NavItem[]): NavItem {
@@ -161,5 +168,10 @@ export class BreadcrumbComponent implements OnInit {
 
     let route = breadcrumb.url;
     this.router.navigate([route], { queryParams: breadcrumb.queryParams });
+  }
+
+  private pushBreadcrumb(breadcrumb: Breadcrumb) {
+    this.breadcrumbs.push(breadcrumb);
+    localStorage.setItem("breadcrumbs", JSON.stringify(this.breadcrumbs));
   }
 }

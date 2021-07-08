@@ -9,6 +9,7 @@ import { BasicInfoFormComponent } from './basic-info-form/basic-info-form.compon
 import { PhonesFormComponent } from './phones-form/phones-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ContactValidationService } from '../services/contact-validation.service';
+import { Router } from '@angular/router';
 
 const BASIC_INFO_INDEX: number = 0;
 const ADDRESSES_INDEX: number = 1;
@@ -38,7 +39,7 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() contact: Contact;
 
   constructor(private alertService: AlertService, private contactService: ContactService,
-    private contactValidationService: ContactValidationService) { }
+    private contactValidationService: ContactValidationService, private router: Router) { }
 
   ngOnInit() {
     if (!this.contact) {
@@ -150,6 +151,7 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   saveInfo() {
     this.alertService.clear();
+    this.serverSideErrors = null;
     this.formSubmitted = true;
 
     console.log("contact is ", this.contact);
@@ -174,11 +176,9 @@ export class ContactFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private handleContactSaveResponse(contact: Contact) {
-    this.contact = contact;
-    this.formSubmitted = false;
-    this.alertService.success("Contact successfully saved!");
-    this.setPageTitle();
-    this.scrollToTop();
+    this.alertService.success("Contact successfully saved!", { keepAfterRouteChange: true });
+    let route = '/contacts/view-contact';
+    this.router.navigate([route], { queryParams: { id: contact.id } });
   }
 
   private handleContactSaveError(err) {

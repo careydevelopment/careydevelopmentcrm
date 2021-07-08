@@ -1,0 +1,23 @@
+table {
+  min-width: 1150px;
+  max-width: 100%;
+}
+
+.table-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.mat-row:nth-child(even) {
+  background-color: #F8F8F8;
+}
+
+.mat-row:nth-child(odd) {
+  background-color: #FFFFFF;
+}
+
+.mat-row:hover {
+  background-color: #E8EAF6;
+}

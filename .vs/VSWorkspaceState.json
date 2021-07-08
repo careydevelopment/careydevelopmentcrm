@@ -4,9 +4,7 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\config",
-    "\\src\\app\\config\\validation",
-    "\\src\\app\\features\\contacts",
-    "\\src\\app\\features\\contacts\\services"
+    "\\src\\app\\config\\validation"
   ],
   "SelectedNode": "\\src\\app\\app.module.ts",
   "PreviewInSolutionExplorer": false

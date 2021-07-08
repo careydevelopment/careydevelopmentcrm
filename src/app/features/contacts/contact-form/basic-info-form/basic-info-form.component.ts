@@ -167,9 +167,9 @@ export class BasicInfoFormComponent implements OnInit {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       if (control.value == 'Loading...') {
         return { 'invalid': true };
-      }  
+      } 
 
-      this.getAccount(control.value);
+      this.getAccount(control.value); 
 
       return null;
     };

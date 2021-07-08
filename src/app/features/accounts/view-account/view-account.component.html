@@ -37,7 +37,6 @@
     </div>-->
             </div>
 
-
             <div fxLayout="row wrap" fxLayout.xs="column">
               <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20" *ngIf="account.address">
                 <div *ngIf="account.address.street1" class="normal-detail">{{account.address.street1}}</div>
@@ -49,58 +48,53 @@
                 </div>
                 <div *ngIf="account.address.country" class="normal-detail">{{account.address.country}}</div>
               </div>
-              <div class="column-layout" *ngIf="account.industry" fxFlex.sm="40" fxFlex.gt-sm="20">
-                <div class="column-header">
-                  Industry
-                </div>
+            </div>
+
+
+            <div fxLayout.xs="column" fxLayout.gt-xs="row wrap">
+              <div fxFlex="45">
+                <div class="view-label label-spacing" fxFlex="40">Industry</div>
                 <div class="normal-detail">
                   {{displayValueMapService.getDisplay(account.industry, availableIndustries)}}
                 </div>
               </div>
-              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
-                <div class="column-header">
-                  Source
+              <div fxFlex="45">
+                <div class="view-label label-spacing" fxFlex="40">Source</div>
+                <div class="normal-detail">
+                  {{displayValueMapService.getDisplay(account.source, availableSources)}}
                 </div>
-                <div class="normal-detail" style="margin-bottom:5px">{{displayValueMapService.getDisplay(account.source, availableSources)}}</div>
               </div>
-              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="fill" *ngIf="account.phone">
-                <div class="column-header">
-                  Phone Number
+              <div fxFlex="45">
+                <div class="view-label label-spacing" fxFlex="40">Phone</div>
+                <div class="normal-detail">
+                  {{account.phone.phone}}
                 </div>
-                <div class="normal-detail" style="margin-bottom:5px">{{account.phone.phone}}</div>
+              </div>
+              <div fxFlex="45">
+                <div class="view-label label-spacing" fxFlex="40"># Employees</div>
+                <div class="normal-detail">
+                  {{account.numberOfEmployees | number}}
+                </div>
+              </div>
+              <div fxFlex="45">
+                <div class="view-label label-spacing" fxFlex="40">Revenue</div>
+                <div class="normal-detail">
+                  {{account.annualRevenue | currency}}
+                </div>
+              </div>
+            </div>
+            <div>
+              <div fxLayout.xs="column" fxLayout.gt-xs="row wrap" fxFlex="90">
+                <div class="view-label" fxFlex="20">Description</div>
+                <div class="normal-detail">
+                  {{account.description}}
+                </div>
               </div>
             </div>
 
-            <div fxLayout="row wrap" fxLayout.xs="column">
-              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
-                <div class="column-header">
-                  # Employees
-                </div>
-                <div class="normal-detail" style="margin-bottom:5px">{{account.numberOfEmployees}}</div>
-              </div>
-
-              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
-                <div class="column-header">
-                  Annual Revenue
-                </div>
-                <div class="normal-detail">{{account.annualRevenue}}</div>
-              </div>
-
-              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
-                <div class="column-header">
-                </div>
-                <div class="other-value"></div>
-              </div>
-            </div>
-
-            <div fxLayout="row wrap" style="margin-top:15px">
-              <div class="column-layout" fxFlex.sm="100" fxFlex.gt-sm="50">
-                <div class="column-header">
-                  Description
-                </div>
-                <div class="normal-detail">{{account.description}}</div>
-              </div>
-            </div>
+            <!--<div *ngIf="leanData">
+    <div class="lean-data">This account is lean on data. Please edit and enter some info.</div>
+  </div>-->
           </mat-card>
         </div>
       </div>

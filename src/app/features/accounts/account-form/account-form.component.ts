@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertService } from 'carey-alert';
 import { Country, GeoService, State } from 'carey-geo';
 import { forkJoin, Observable } from 'rxjs';
@@ -39,7 +40,8 @@ export class AccountFormComponent implements OnInit {
   pageTitle: string = 'Add Account';
 
   constructor(private fb: FormBuilder, private geoService: GeoService,
-    private accountService: AccountService, private alertService: AlertService) { }
+    private accountService: AccountService, private alertService: AlertService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.initializeAccount();
@@ -110,7 +112,6 @@ export class AccountFormComponent implements OnInit {
     this.account.address = address;
   }
 
-
   private setPhone() {
     let formControls = this.accountInfoFormGroup.controls;
     let phone: Phone = {} as Phone;
@@ -128,6 +129,7 @@ export class AccountFormComponent implements OnInit {
   }
 
   saveForm() {
+    this.alertService.clear();
     this.populateAccount();
     console.log(this.account);
     if (this.account.id) this.updateAccount();
@@ -149,9 +151,9 @@ export class AccountFormComponent implements OnInit {
   }
 
   private handleAccountSaveResponse(account: Account) {
-    this.alertService.success("Account successfully saved!");
-    this.scrollToTop();
-    console.log("account successfully saved ", account);
+    this.alertService.success("Account successfully saved!", { keepAfterRouteChange: true });
+    let route = '/accounts/view-account';
+    this.router.navigate([route], { queryParams: { id: account.id } });
   }
 
   private handleAccountSaveError(err: Error) {
