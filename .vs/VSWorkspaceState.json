@@ -3,9 +3,12 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\config",
-    "\\src\\app\\config\\validation"
+    "\\src\\app\\features\\accounts\\view-account",
+    "\\src\\app\\features\\accounts\\view-accounts",
+    "\\src\\app\\features\\activities",
+    "\\src\\app\\features\\activities\\activity-form",
+    "\\src\\app\\features\\activities\\pipes"
   ],
-  "SelectedNode": "\\src\\app\\app.module.ts",
+  "SelectedNode": "\\src\\app\\features",
   "PreviewInSolutionExplorer": false
 }

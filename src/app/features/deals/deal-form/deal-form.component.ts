@@ -315,7 +315,7 @@ export class DealFormComponent implements OnInit {
     this.saving = false;
     this.alertService.success("Deal successfully saved!", { keepAfterRouteChange: true });
     let route = '/deals/view-deal';
-    this.router.navigate([route], { queryParams: { dealId: this.deal.id } });
+    this.router.navigate([route], { queryParams: { dealId: deal.id } });
   }
 
   private handleDealSaveError(err: Error) {

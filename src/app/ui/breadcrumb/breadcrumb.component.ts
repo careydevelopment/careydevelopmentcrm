@@ -173,5 +173,6 @@ export class BreadcrumbComponent implements OnInit {
   private pushBreadcrumb(breadcrumb: Breadcrumb) {
     this.breadcrumbs.push(breadcrumb);
     localStorage.setItem("breadcrumbs", JSON.stringify(this.breadcrumbs));
+    sessionStorage.setItem("breadcrumbs", JSON.stringify(this.breadcrumbs));
   }
 }
