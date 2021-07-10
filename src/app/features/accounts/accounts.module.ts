@@ -24,6 +24,7 @@ import { AccountFormComponent } from './account-form/account-form.component';
 import { ViewAccountsComponent } from './view-accounts/view-accounts.component';
 import { EditAccountComponent } from './edit-account/edit-account.component';
 import { ViewAccountComponent } from './view-account/view-account.component';
+import { NoValueDisplayPipe } from '../../pipes/no-value-display.pipe';
 
 
 export const routes = [
@@ -65,7 +66,8 @@ export const routes = [
     AccountFormComponent,
     ViewAccountsComponent,
     EditAccountComponent,
-    ViewAccountComponent
+    ViewAccountComponent,
+    NoValueDisplayPipe
   ],
   imports: [
     CommonModule,

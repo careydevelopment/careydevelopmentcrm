@@ -63,7 +63,7 @@ export class DealFormComponent implements OnInit {
     private alertService: AlertService, private fb: FormBuilder,
     private dealService: DealService, private dateService: DateService,
     private formService: FormService, private userService: UserService,
-    private productService: ProductService) { }
+    private productService: ProductService, private router: Router) { }
 
   ngOnInit(): void {
     this.setDefaultDeal();
@@ -312,11 +312,10 @@ export class DealFormComponent implements OnInit {
   }
 
   private handleDealSaveResponse(deal: Deal) {
-    //console.log("got back", deal);
-    this.alertService.success("Deal successfully saved!");
-    this.deal = deal;
-    this.scrollToTop();
     this.saving = false;
+    this.alertService.success("Deal successfully saved!", { keepAfterRouteChange: true });
+    let route = '/deals/view-deal';
+    this.router.navigate([route], { queryParams: { dealId: deal.id } });
   }
 
   private handleDealSaveError(err: Error) {

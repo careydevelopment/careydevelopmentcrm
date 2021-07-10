@@ -3,13 +3,12 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\features",
-    "\\src\\app\\features\\ui\\service",
-    "\\src\\app\\features\\user",
-    "\\src\\app\\features\\user\\email\\compose-email",
-    "\\src\\app\\features\\user\\email\\service",
-    "\\src\\environments"
+    "\\src\\app\\features\\accounts\\view-account",
+    "\\src\\app\\features\\accounts\\view-accounts",
+    "\\src\\app\\features\\activities",
+    "\\src\\app\\features\\activities\\activity-form",
+    "\\src\\app\\features\\activities\\pipes"
   ],
-  "SelectedNode": "\\src\\environments\\environment.ts",
+  "SelectedNode": "\\src\\app\\features",
   "PreviewInSolutionExplorer": false
 }

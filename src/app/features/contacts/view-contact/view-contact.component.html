@@ -8,152 +8,154 @@
         <div>
           <alert></alert>
         </div>
-        <div *ngIf="contact" style="margin-bottom: 15px">
-          <div *ngIf="contact.status != 'CUSTOMER'" fxHide.lt-md="true">
-            <app-status-progress-bar [contact]="contact"></app-status-progress-bar>
+        <div *ngIf="contact$ | async as contact; else loading">
+          <div style="margin-bottom: 15px">
+            <div *ngIf="contact.status != 'CUSTOMER'" fxHide.lt-md="true">
+              <app-status-progress-bar [contact]="contact"></app-status-progress-bar>
+            </div>
+            <div *ngIf="contact.status == 'CUSTOMER'" class="medium-notification success-background">
+              Customer
+            </div>
           </div>
-          <div *ngIf="contact.status == 'CUSTOMER'" class="medium-notification success-background">
-            Customer
-          </div>
-        </div>
-        <div>
-          <mat-card class="vertical-layout">
-            <div fxLayout="row wrap" style="margin-bottom:20px">
-              <div>
-                <div class="card-header">{{contact.firstName}} {{contact.lastName}}</div>
-                <div fxLayout="row wrap" *ngIf="contact.timezone">
-                  <span>{{contact.timezone}} Time Zone</span>
-                </div>
-                <div fxHide.gt-sm="true" [class.inactive-status]="contact.status == 'INACTIVE'" [class.normal-status]="contact.status != 'INACTIVE'" style="margin-bottom:5px">
-                  {{displayValueMapService.getDisplay(contact.status, availableContactStatuses)}}
-                </div>
-                <div *ngIf="contact.authority" class="has-authority">Authorized</div>
-                <div *ngIf="!contact.authority" class="no-authority">Not authorized</div>
-                <div fxHide.gt-xs="true">
-                  <button mat-icon-button color="primary" (click)="editContact()" title="Edit Contact"><mat-icon>edit</mat-icon></button>
-                </div>
-              </div>
-              <div fxFlex="auto">&nbsp;</div>
-              <div fxFlex="40px" style="text-align: left" fxHide.xs="true">
-                <button mat-icon-button color="primary" (click)="editContact()" title="Edit Contact"><mat-icon>edit</mat-icon></button>
-              </div>
-              <div fxFlex="40px" style="text-align:left" fxHide.xs="true">
-                <app-view-contact-menu [contact]="contact"></app-view-contact-menu>
-              </div>
-            </div>
-            <div fxLayout="row wrap" fxLayout.xs="column">
-              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
-                <div *ngIf="contact.title" class="normal-detail">{{contact.title}}</div>
-                <div *ngIf="contact.account" class="normal-detail">{{contact.account.name}}</div>
-                <div *ngIf="contact.email" class="normal-detail">{{contact.email}}</div>
-              </div>
-              <div class="column-layout" *ngIf="contact.linesOfBusiness" fxFlex.sm="40" fxFlex.gt-sm="20">
-                <div class="column-header">
-                  Lines of Business
-                </div>
-                <div *ngFor="let lob of contact.linesOfBusiness" class="normal-detail">
-                  {{displayValueMapService.getDisplay(lob, availableLobTypes)}}
-                </div>
-              </div>
-              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
-                <div class="column-header">
-                  Source
-                </div>
-                <div class="normal-detail" style="margin-bottom:5px">{{displayValueMapService.getDisplay(contact.source, availableSources)}}</div>
-                <div class="free-text" *ngIf="contact.sourceDetails">{{contact.sourceDetails}}</div>
-              </div>
-              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="fill">
-                <div class="column-header">
-                  Birthday
-                </div>
-                <div class="normal-detail" style="margin-bottom:5px">{{contact.birthdayMonth}} {{contact.birthdayDay}}</div>
-              </div>
-            </div>
-
-            <div fxLayout="row wrap" fxLayout.xs="column">
-              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
-                <div class="column-header">
-                  Can Call?
-                </div>
-                <div class="other-value" *ngIf="contact.canCall">Yes</div>
-                <div class="other-value" *ngIf="!contact.canCall">No</div>
-              </div>
-
-              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
-                <div class="column-header">
-                  Can Text?
-                </div>
-                <div class="other-value" *ngIf="contact.canText">Yes</div>
-                <div class="other-value" *ngIf="!contact.canText">No</div>
-              </div>
-
-              <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
-                <div class="column-header">
-                  Can Email?
-                </div>
-                <div class="other-value" *ngIf="contact.canEmail">Yes</div>
-                <div class="other-value" *ngIf="!contact.canEmail">No</div>
-              </div>
-            </div>
-
-            <div fxLayout="row wrap" *ngIf="contact.tags && contact.tags.length > 0">
-              <div class="column-layout">
-                <div class="column-header">
-                  Tags
-                </div>
-                <div style="margin-top: 10px">
-                  <span *ngFor="let tag of contact.tags" class="normal-detail">
-                    <span class="tag-background">{{tag}}</span>&nbsp;
-                  </span>
-                </div>
-              </div>
-            </div>
-          </mat-card>
-          <mat-expansion-panel class="vertical-layout">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Addresses
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div *ngIf="contact.addresses && contact.addresses.length > 0" fxLayout="row wrap" fxLayoutGap="40px">
-              <div *ngFor="let address of contact.addresses">
-                <div style="margin-bottom: 30px">
-                  <div class="address-type">{{displayValueMapService.getDisplay(address.addressType, availableAddressTypes)}} Address</div>
-                  <div class="normal-detail" *ngIf="address.street1">{{address.street1}}</div>
-                  <div class="normal-detail" *ngIf="address.street2">{{address.street2}}</div>
-                  <div class="normal-detail">
-                    <span *ngIf="address.city">{{address.city}}, </span>
-                    <span *ngIf="address.state">{{address.state}} </span>
-                    <span *ngIf="address.zip">{{address.zip}}</span>
-                  </div>
-                  <div class="normal-detail" *ngIf="address.country">{{address.country}}</div>
-                </div>
-              </div>
-            </div>
-            <div *ngIf="!contact.addresses || contact.addresses.length == 0">
-              <div class="empty-set-status-message">No addresses to display</div>
-            </div>
-          </mat-expansion-panel>
-          <mat-expansion-panel class="vertical-layout">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Phones
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div *ngIf="contact.phones && contact.phones.length > 0">
-              <div *ngFor="let phone of contact.phones" style="margin-bottom:10px">
-                <span class="phone-label">{{displayValueMapService.getDisplay(phone.phoneType, availablePhoneTypes)}} Phone: </span> <span class="normal-detail">{{phone.phone}}</span>
-              </div>
-            </div>
-            <div *ngIf="!contact.phones || contact.phones.length == 0">
-              <div class="empty-set-status-message">No phones to display</div>
-            </div>
-          </mat-expansion-panel>
           <div>
-            <app-recent-activities-by-contact [contactId]="contact.id"></app-recent-activities-by-contact>
-          </div>
-          <div style="margin-top:20px; margin-bottom: 20px">
-            <app-deals-by-contact [contactId]="contact.id"></app-deals-by-contact>
+            <mat-card class="vertical-layout">
+              <div fxLayout="row wrap" style="margin-bottom:20px">
+                <div>
+                  <div class="card-header">{{contact.firstName}} {{contact.lastName}}</div>
+                  <div fxLayout="row wrap" *ngIf="contact.timezone">
+                    <span>{{contact.timezone}} Time Zone</span>
+                  </div>
+                  <div fxHide.gt-sm="true" [class.inactive-status]="contact.status == 'INACTIVE'" [class.normal-status]="contact.status != 'INACTIVE'" style="margin-bottom:5px">
+                    {{displayValueMapService.getDisplay(contact.status, availableContactStatuses)}}
+                  </div>
+                  <div *ngIf="contact.authority" class="has-authority">Authorized</div>
+                  <div *ngIf="!contact.authority" class="no-authority">Not authorized</div>
+                  <div fxHide.gt-xs="true">
+                    <button mat-icon-button color="primary" (click)="editContact()" title="Edit Contact"><mat-icon>edit</mat-icon></button>
+                  </div>
+                </div>
+                <div fxFlex="auto">&nbsp;</div>
+                <div fxFlex="40px" style="text-align: left" fxHide.xs="true">
+                  <button mat-icon-button color="primary" (click)="editContact(contact.id)" title="Edit Contact"><mat-icon>edit</mat-icon></button>
+                </div>
+                <div fxFlex="40px" style="text-align:left" fxHide.xs="true">
+                  <app-view-contact-menu [contact]="contact"></app-view-contact-menu>
+                </div>
+              </div>
+              <div fxLayout="row wrap" fxLayout.xs="column">
+                <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
+                  <div *ngIf="contact.title" class="normal-detail">{{contact.title}}</div>
+                  <div *ngIf="contact.account" class="normal-detail">{{contact.account.name}}</div>
+                  <div *ngIf="contact.email" class="normal-detail">{{contact.email}}</div>
+                </div>
+                <div class="column-layout" *ngIf="contact.linesOfBusiness" fxFlex.sm="40" fxFlex.gt-sm="20">
+                  <div class="column-header">
+                    Lines of Business
+                  </div>
+                  <div *ngFor="let lob of contact.linesOfBusiness" class="normal-detail">
+                    {{displayValueMapService.getDisplay(lob, availableLobTypes)}}
+                  </div>
+                </div>
+                <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
+                  <div class="column-header">
+                    Source
+                  </div>
+                  <div class="normal-detail" style="margin-bottom:5px">{{displayValueMapService.getDisplay(contact.source, availableSources)}}</div>
+                  <div class="free-text" *ngIf="contact.sourceDetails">{{contact.sourceDetails}}</div>
+                </div>
+                <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="fill">
+                  <div class="column-header">
+                    Birthday
+                  </div>
+                  <div class="normal-detail" style="margin-bottom:5px">{{contact.birthdayMonth}} {{contact.birthdayDay}}</div>
+                </div>
+              </div>
+
+              <div fxLayout="row wrap" fxLayout.xs="column">
+                <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
+                  <div class="column-header">
+                    Can Call?
+                  </div>
+                  <div class="other-value" *ngIf="contact.canCall">Yes</div>
+                  <div class="other-value" *ngIf="!contact.canCall">No</div>
+                </div>
+
+                <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
+                  <div class="column-header">
+                    Can Text?
+                  </div>
+                  <div class="other-value" *ngIf="contact.canText">Yes</div>
+                  <div class="other-value" *ngIf="!contact.canText">No</div>
+                </div>
+
+                <div class="column-layout" fxFlex.sm="40" fxFlex.gt-sm="20">
+                  <div class="column-header">
+                    Can Email?
+                  </div>
+                  <div class="other-value" *ngIf="contact.canEmail">Yes</div>
+                  <div class="other-value" *ngIf="!contact.canEmail">No</div>
+                </div>
+              </div>
+
+              <div fxLayout="row wrap" *ngIf="contact.tags && contact.tags.length > 0">
+                <div class="column-layout">
+                  <div class="column-header">
+                    Tags
+                  </div>
+                  <div style="margin-top: 10px">
+                    <span *ngFor="let tag of contact.tags" class="normal-detail">
+                      <span class="tag-background">{{tag}}</span>&nbsp;
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </mat-card>
+            <mat-expansion-panel class="vertical-layout">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Addresses
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div *ngIf="contact.addresses && contact.addresses.length > 0" fxLayout="row wrap" fxLayoutGap="40px">
+                <div *ngFor="let address of contact.addresses">
+                  <div style="margin-bottom: 30px">
+                    <div class="address-type">{{displayValueMapService.getDisplay(address.addressType, availableAddressTypes)}} Address</div>
+                    <div class="normal-detail" *ngIf="address.street1">{{address.street1}}</div>
+                    <div class="normal-detail" *ngIf="address.street2">{{address.street2}}</div>
+                    <div class="normal-detail">
+                      <span *ngIf="address.city">{{address.city}}, </span>
+                      <span *ngIf="address.state">{{address.state}} </span>
+                      <span *ngIf="address.zip">{{address.zip}}</span>
+                    </div>
+                    <div class="normal-detail" *ngIf="address.country">{{address.country}}</div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="!contact.addresses || contact.addresses.length == 0">
+                <div class="empty-set-status-message">No addresses to display</div>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel class="vertical-layout">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Phones
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div *ngIf="contact.phones && contact.phones.length > 0">
+                <div *ngFor="let phone of contact.phones" style="margin-bottom:10px">
+                  <span class="phone-label">{{displayValueMapService.getDisplay(phone.phoneType, availablePhoneTypes)}} Phone: </span> <span class="normal-detail">{{phone.phone}}</span>
+                </div>
+              </div>
+              <div *ngIf="!contact.phones || contact.phones.length == 0">
+                <div class="empty-set-status-message">No phones to display</div>
+              </div>
+            </mat-expansion-panel>
+            <div>
+              <app-recent-activities-by-contact [contactId]="contact.id"></app-recent-activities-by-contact>
+            </div>
+            <div style="margin-top:20px; margin-bottom: 20px">
+              <app-deals-by-contact [contactId]="contact.id"></app-deals-by-contact>
+            </div>
           </div>
         </div>
       </div>

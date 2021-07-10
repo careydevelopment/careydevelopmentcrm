@@ -22,6 +22,8 @@ import { UserModule } from 'carey-user';
 import { environment } from '../environments/environment';
 import { AuthModule } from 'carey-auth';
 import { GeoModule } from 'carey-geo';
+import { ValidationModule } from 'carey-validation';
+import { allFieldSummaries } from './config/validation/field-summaries';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { GeoModule } from 'carey-geo';
     BreadcrumbModule,
     UserModule.forRoot({ baseUrl: environment.baseUserServiceUrl }),
     AuthModule.forRoot({ baseUrl: environment.baseUserServiceUrl }),
-    GeoModule.forRoot({ baseUrl: environment.baseGeoServiceUrl })
+    GeoModule.forRoot({ baseUrl: environment.baseGeoServiceUrl }),
+    ValidationModule.forRoot({ fieldSummaries : allFieldSummaries })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

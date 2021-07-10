@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, Input } from '@angular/core';
+import { Component, OnInit, ViewChildren, Input, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Address } from '../../../../models/address';
 import { addressTypes } from '../../../../models/address-type';
@@ -8,7 +8,8 @@ import { AddressTypeFormComponent } from './address-type-form/address-type-form.
 @Component({
   selector: 'contact-addresses-form',
   templateUrl: './addresses-form.component.html',
-  styleUrls: ['./addresses-form.component.css']
+  styleUrls: ['./addresses-form.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AddressesFormComponent implements OnInit {
 

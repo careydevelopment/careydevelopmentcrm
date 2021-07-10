@@ -32,7 +32,7 @@ describe('ViewContactComponent', () => {
 
     //TODO: fix this
     let contact: Contact = {} as Contact;
-    component.contact = contact;
+    //component.contact = contact;
 
     fixture.detectChanges();
   });

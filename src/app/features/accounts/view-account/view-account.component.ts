@@ -30,6 +30,7 @@ export class ViewAccountComponent implements OnInit {
 
   loading: boolean = true;
   account: Account = {} as Account;
+  leanData: boolean = false;
 
   constructor(private route: ActivatedRoute, private accountService: AccountService,
     private alertService: AlertService, private router: Router, private displayValueMapService: DisplayValueMapService,
@@ -53,6 +54,15 @@ export class ViewAccountComponent implements OnInit {
 
     if (this.account) {
       this.breadcrumbService.updateBreadcrumb("View " + this.account.name);
+    }
+
+    this.checkForLeanData();
+  }
+
+  private checkForLeanData() {
+    if (!this.account.annualRevenue && !this.account.numberOfEmployees && !this.account.description
+      && !this.account.source) {
+      this.leanData = true;
     }
   }
 

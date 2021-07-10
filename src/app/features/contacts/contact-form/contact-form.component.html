@@ -4,6 +4,7 @@
       <div>
         <alert></alert>
       </div>
+      <server-side-error-spree [serverSideErrors]="serverSideErrors"></server-side-error-spree>
       <div class="absolute-center" *ngIf="dataLoading">
         <mat-spinner [diameter]="80"></mat-spinner>
       </div>

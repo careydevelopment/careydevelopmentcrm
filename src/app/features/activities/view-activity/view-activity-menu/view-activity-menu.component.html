@@ -6,7 +6,7 @@
     <mat-icon>done</mat-icon>
     <span>Quick Complete</span>
   </button>
-  <button *ngIf="activity.status != 'COMPLETED' && activity.status != 'ON_HOLD'" mat-menu-item (click)="putOnHold()">
+  <button *ngIf="activity.type && activity.type.usesStatus && activity.status != 'COMPLETED' && activity.status != 'ON_HOLD'" mat-menu-item (click)="putOnHold()">
     <mat-icon>pan_tool</mat-icon>
     <span>Put On Hold</span>
   </button>
@@ -14,7 +14,7 @@
     <mat-icon>notes</mat-icon>
     <span>Update Notes</span>
   </button>
-  <button *ngIf="activity.status != 'COMPLETED' && activity.status != 'CANCELLED'" mat-menu-item (click)="cancel()">
+  <button *ngIf="activity.type && activity.type.usesStatus && activity.status != 'COMPLETED' && activity.status != 'CANCELLED'" mat-menu-item (click)="cancel()">
     <mat-icon>close</mat-icon>
     <span>Cancel</span>
   </button>
