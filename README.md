@@ -1,4 +1,10 @@
+![Carey Development Logo](http://careydevelopment.us/img/branding/careydevelopment-logo-sm.png)
+
 # Carey Development CRM
+
+![license](https://img.shields.io/badge/license-MIT-blue.svg) 
+
+
 This is an ongoing project that demonstrates how to build a customer relationship management (CRM) application
 using Angular, Spring Boot, and MongoDB.
 
@@ -8,7 +14,9 @@ Each lesson is a separate branch. The latest state of the whole project is in th
 DON'T FORGET TO INSTALL THE DEPENDENCIES! You can do that easily by opening a command prompt, going to
 the directory where this project is located, and typing:
 
+```
 npm install
+```
 
 That's it. That should do it.
 
@@ -26,7 +34,10 @@ Keep in mind: this Angular app runs alongside a microservice architecture. Here'
 microservices the app uses as well as links to their source code on GitHub.
 
 * <a href="https://github.com/careydevelopment/ecosystem-user-service">User Service</a> - handles authentication and features related to user info (updating account details, adding a profile image, etc.)
-* <a href="https://github.com/careydevelopment/contact-service">Contact Service</a> - handles CRUD activities related to contacts (sales leads, customers, etc.) in the system
+* <a href="https://github.com/careydevelopment/ecosystem-customer-service">Customer Service</a> - handles CRUD activities related to contacts (sales leads, customers, etc.) and accounts
+* <a href="https://github.com/careydevelopment/ecosystem-email-service">Email Service</a> - for integration with email (currently only supports Gmail)
+* <a href="https://github.com/careydevelopment/ecosystem-product-service">Product Service</a> - handles CRUD activities related to products
+* <a href="https://github.com/careydevelopment/crm-service">CRM Service</a> - handles CRUD activities related to CRM-specific objects such as appointments, meetings, and more
 * Geo Service - retrieves lists of geographies such as states and countries (currently not public)
 
 ## Configuration

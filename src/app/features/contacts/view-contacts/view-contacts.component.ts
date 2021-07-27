@@ -41,6 +41,8 @@ export class ViewContactsComponent implements OnInit {
   statusFilter = new FormControl('');
   sourceFilter = new FormControl('');
 
+  contacts: Contact[];
+
   filterValues: any = {
     status: '',
     source: ''
@@ -112,6 +114,7 @@ export class ViewContactsComponent implements OnInit {
   }
 
   private handleContacts(contacts: Contact[]): Observable<MatTableDataSource<Contact>> {
+    this.contacts = contacts;
     this.localDataSource = this.setUpDataSource(contacts);
     return of(this.localDataSource);
   }

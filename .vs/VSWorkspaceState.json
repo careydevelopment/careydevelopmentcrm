@@ -3,12 +3,11 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\features\\accounts\\view-account",
+    "\\src\\app\\features\\accounts",
     "\\src\\app\\features\\accounts\\view-accounts",
-    "\\src\\app\\features\\activities",
-    "\\src\\app\\features\\activities\\activity-form",
-    "\\src\\app\\features\\activities\\pipes"
+    "\\src\\app\\features\\contacts",
+    "\\src\\app\\features\\contacts\\view-contacts"
   ],
-  "SelectedNode": "\\src\\app\\features",
+  "SelectedNode": "\\README.md",
   "PreviewInSolutionExplorer": false
 }
